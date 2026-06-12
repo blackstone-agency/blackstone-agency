@@ -151,7 +151,7 @@ const ServiceModal = ({ svc, dark, onClose, onContact }) => {
             <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${bd?'bg-zinc-800':'bg-zinc-100'}`}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={bd?'#a1a1aa':'#52525b'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{icons[svc.icon]}</svg>
             </div>
-            <button onClick={onClose} className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${bd?'hover:bg-zinc-800 text-zinc-500 hover:text-white':'hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900'}`}>
+            <button onClick={onClose} aria-label="Schließen" className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${bd?'hover:bg-zinc-800 text-zinc-500 hover:text-white':'hover:bg-zinc-100 text-zinc-400 hover:text-zinc-900'}`}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
           </div>
@@ -216,11 +216,11 @@ const Navigation = ({ t, lang, setLang, dark: bd, setDark, page, navigate, scrol
                 <button key={l} onClick={()=>setLang(l)} className={`text-xs font-bold px-2.5 py-1 rounded-full transition-all duration-200 ${lang===l?(bd?'bg-white text-zinc-900':'bg-zinc-900 text-white'):(bd?'text-zinc-500 hover:text-white':'text-zinc-400 hover:text-zinc-900')}`}>{l}</button>
               ))}
             </div>
-            <button onClick={()=>setDark(!bd)} className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all ${bd?'border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-white hover:border-zinc-600':'border-zinc-200 bg-white text-zinc-500 hover:text-zinc-900 hover:border-zinc-300'}`}>
+            <button onClick={()=>setDark(!bd)} aria-label={bd?'Helles Design aktivieren':'Dunkles Design aktivieren'} className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all ${bd?'border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-white hover:border-zinc-600':'border-zinc-200 bg-white text-zinc-500 hover:text-zinc-900 hover:border-zinc-300'}`}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">{bd?<><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></>:<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>}</svg>
             </button>
             <button onClick={()=>navigate('#contact')} className="hidden sm:block btn-p text-sm px-5 py-2 rounded-full">{t.nav.contact}</button>
-            <button onClick={()=>setMenuOpen(!menuOpen)} className="md:hidden p-1">
+            <button onClick={()=>setMenuOpen(!menuOpen)} aria-label={menuOpen?'Menü schließen':'Menü öffnen'} aria-expanded={menuOpen} className="md:hidden p-1">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={bd?'white':'#09090b'} strokeWidth="2">{menuOpen?<><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></>:<><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></>}</svg>
             </button>
           </div>
@@ -1174,7 +1174,7 @@ const ContactSection = ({ t, dark: bd }) => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.name} *</label>
-                      <input required type="text" placeholder="Imrahn Sadat" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm`}/>
+                      <input required type="text" placeholder="Max Mustermann" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm`}/>
                     </div>
                     <div>
                       <label className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.email} *</label>
@@ -1229,8 +1229,8 @@ const AboutPage = ({ dark: bd, t, navigate }) => {
             <div className="w-20 h-20 rounded-2xl flex-shrink-0 flex items-center justify-center text-2xl font-black text-white" style={{background:'linear-gradient(135deg,#3f3f46,#09090b)',border:'1px solid rgba(255,255,255,0.1)'}}>IS</div>
             <div className="flex-1">
               <div className={`text-xs font-semibold tracking-widest uppercase mb-2 ${bd?'text-zinc-600':'text-zinc-400'}`}>{ta.founder}</div>
-              <h2 className={`text-2xl font-black mb-1 ${bd?'text-white':'text-zinc-900'}`}>Imrahn Sadat</h2>
-              <p className={`text-sm mb-4 ${bd?'text-zinc-500':'text-zinc-400'}`}>Hamburg, Deutschland · seit 2026</p>
+              <h2 className={`text-2xl font-black mb-1 ${bd?'text-white':'text-zinc-900'}`}>Blackstone Agency</h2>
+              <p className={`text-sm mb-4 ${bd?'text-zinc-500':'text-zinc-400'}`}>Hamburg, Deutschland · seit 2023</p>
               <div className="flex flex-wrap gap-2">{['Strategie','Brand Architecture','Performance Marketing','Business Development'].map(skill=>(<span key={skill} className={`text-xs px-3 py-1 rounded-full font-medium ${bd?'bg-zinc-800 text-zinc-400':'bg-zinc-100 text-zinc-500'}`}>{skill}</span>))}</div>
             </div>
           </div>
@@ -1329,10 +1329,10 @@ const LP = ({ children }) => <p className="text-sm leading-relaxed">{children}</
 
 const ImpressumPage = ({ dark: bd }) => (
   <LegalSection title="Impressum" dark={bd}>
-    <LH dark={bd}>Angaben gemäß § 5 TMG</LH><LP>Imrahn Sadat<br/>Blackstone Agency<br/>Musterstraße 12<br/>20099 Hamburg<br/>Deutschland</LP>
+    <LH dark={bd}>Angaben gemäß § 5 TMG</LH><LP>Blackstone Agency<br/>Musterstraße 12<br/>20099 Hamburg<br/>Deutschland</LP>
     <LH dark={bd}>Kontakt</LH><LP>E-Mail: info@blackstone-agency.de<br/>Web: www.blackstone-agency.de</LP>
     <LH dark={bd}>Umsatzsteuer-ID</LH><LP>DE000000000 (wird nach Registrierung ergänzt)</LP>
-    <LH dark={bd}>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</LH><LP>Imrahn Sadat, Musterstraße 12, 20099 Hamburg</LP>
+    <LH dark={bd}>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</LH><LP>Blackstone Agency, Musterstraße 12, 20099 Hamburg</LP>
     <LH dark={bd}>Streitschlichtung</LH><LP>Die EU-Kommission stellt eine OS-Plattform bereit: https://ec.europa.eu/consumers/odr/. Wir nehmen nicht an Verbraucherstreitbeilegungsverfahren teil.</LP>
     <LH dark={bd}>Haftung für Inhalte</LH><LP>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte verantwortlich. Nach §§ 8–10 TMG sind wir nicht verpflichtet, fremde Informationen zu überwachen.</LP>
     <LH dark={bd}>Urheberrecht</LH><LP>Die erstellten Inhalte unterliegen dem deutschen Urheberrecht. Vervielfältigung bedarf der schriftlichen Zustimmung des Erstellers.</LP>
@@ -1341,7 +1341,7 @@ const ImpressumPage = ({ dark: bd }) => (
 
 const DatenschutzPage = ({ dark: bd }) => (
   <LegalSection title="Datenschutzerklärung" dark={bd}>
-    <LH dark={bd}>1. Verantwortlicher</LH><LP>Imrahn Sadat, Blackstone Agency, Musterstraße 12, 20099 Hamburg, E-Mail: info@blackstone-agency.de</LP>
+    <LH dark={bd}>1. Verantwortlicher</LH><LP>Blackstone Agency, Musterstraße 12, 20099 Hamburg, E-Mail: info@blackstone-agency.de</LP>
     <LH dark={bd}>2. Erhebung personenbezogener Daten</LH><LP>Beim Websitebesuch werden Server-Log-Daten gespeichert: Browsertyp, Betriebssystem, Referrer-URL, Hostname, Uhrzeit. Diese sind nicht bestimmten Personen zuordenbar.</LP>
     <LH dark={bd}>3. Kontaktformular</LH><LP>Angaben aus Kontaktformularen werden zur Bearbeitung gespeichert und nicht ohne Einwilligung weitergegeben. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO.</LP>
     <LH dark={bd}>4. Cookies</LH><LP>Wir verwenden Session-Cookies (werden nach Browserschluss gelöscht) und persistente Cookies. Sie können Cookies im Browser deaktivieren.</LP>
@@ -1353,7 +1353,7 @@ const DatenschutzPage = ({ dark: bd }) => (
 
 const AGBPage = ({ dark: bd }) => (
   <LegalSection title="Allgemeine Geschäftsbedingungen" dark={bd}>
-    <LH dark={bd}>§ 1 Geltungsbereich</LH><LP>Diese AGB gelten für alle Verträge zwischen Imrahn Sadat, Blackstone Agency, Hamburg und dem Kunden.</LP>
+    <LH dark={bd}>§ 1 Geltungsbereich</LH><LP>Diese AGB gelten für alle Verträge zwischen Blackstone Agency, Hamburg und dem Kunden.</LP>
     <LH dark={bd}>§ 2 Leistungen</LH><LP>Die Agentur erbringt Leistungen in Digital Marketing, Web Design, Branding, Social Media und Performance Marketing gemäß Angebot.</LP>
     <LH dark={bd}>§ 3 Vergütung</LH><LP>Zahlung innerhalb 14 Tagen nach Rechnungsstellung. Retainer monatlich im Voraus. Bei Verzug behält sich die Agentur Leistungseinstellung vor.</LP>
     <LH dark={bd}>§ 4 Urheberrecht</LH><LP>Erstellte Werke bleiben bis zur vollständigen Zahlung Eigentum der Agentur. Mit Zahlung erhält der Kunde exklusive Nutzungsrechte.</LP>
@@ -1579,7 +1579,6 @@ function App() {
       <main style={{position:'relative',zIndex:3,minHeight:'100vh'}}>{pages[page]||pages.home}</main>
       <Footer t={t} dark={dark} navigate={navigate}/>
       {modal&&<ServiceModal svc={modal} dark={dark} onClose={()=>setModal(null)} onContact={goContact}/>}
-      {cookie&&<CookieBanner dark={dark} t={t} onAccept={()=>{sessionStorage.setItem('cookieOk','1');setCookie(false);}} onDecline={()=>{sessionStorage.setItem('cookieOk','1');setCookie(false);}}/>}
     </>
   );
 }

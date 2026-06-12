@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://finaler-code-ende.vercel.app/sitemap.xml

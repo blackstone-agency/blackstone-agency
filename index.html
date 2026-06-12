@@ -3,18 +3,30 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Blackstone Agency — Digital Dominance</title>
+<title>Blackstone Agency — Digitalagentur Hamburg für Web Design & Performance Marketing</title>
 <meta name="description" content="Blackstone Agency — Premium Digital Agency für Web Design, Performance Marketing & Brand Architecture. Wir bauen digitale Marktführer." />
 <meta name="theme-color" content="#030303"/>
-<meta property="og:title" content="Blackstone Agency — Digital Dominance"/>
+<meta property="og:title" content="Blackstone Agency — Digitalagentur Hamburg"/>
 <meta property="og:description" content="Premium Digital Agency für Web Design, Performance Marketing & Brand Architecture."/>
 <meta property="og:type" content="website"/>
-<meta property="og:url" content="https://blackstone-agency.de"/>
+<meta property="og:url" content="https://finaler-code-ende.vercel.app/"/>
 <meta property="og:locale" content="de_DE"/>
-<link rel="canonical" href="https://blackstone-agency.de/"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Blackstone Agency"/>
-<meta name="twitter:description" content="We build digital dominance."/>
+<link rel="canonical" href="https://finaler-code-ende.vercel.app/"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Blackstone Agency — Digitalagentur Hamburg"/>
+<meta name="twitter:description" content="Premium Digitalagentur aus Hamburg — Web Design, Performance Marketing & Brand Architecture."/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Blackstone Agency",
+  "description": "Digitalagentur für Web Design, Performance Marketing & Brand Architecture",
+  "url": "https://finaler-code-ende.vercel.app/",
+  "address": { "@type": "PostalAddress", "addressLocality": "Hamburg", "addressCountry": "DE" },
+  "areaServed": "DE",
+  "foundingDate": "2023"
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 120 120' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='10' y='10' width='100' height='100' rx='24' fill='%2309090B'/%3E%3Cpath d='M60 25L90 42L60 59L30 42L60 25Z' fill='%233F3F46'/%3E%3Cpath d='M30 42L60 59V93L30 76V42Z' fill='%2327272A'/%3E%3Cpath d='M60 59L90 42V76L60 93V59Z' fill='%2371717A'/%3E%3Cpath d='M60 25V59L60 93' stroke='white' stroke-width='1.2' opacity='0.65'/%3E%3C/svg%3E" />
@@ -420,6 +432,15 @@ button:focus-visible,a:focus-visible{outline:2px solid rgba(255,255,255,.4);outl
 
 /* ══ PROCESS v2 ══ */
 .proc-number{font-size:clamp(100px,18vw,220px);font-weight:900;letter-spacing:-.06em;line-height:1;opacity:.035;position:absolute;top:-30px;right:-15px;pointer-events:none;user-select:none}
+
+/* ── A11y & Motion ── */
+:root{color-scheme:dark light}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #818cf8;outline-offset:2px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .reveal,.reveal-l,.reveal-r{opacity:1!important;transform:none!important}
+}
 </style>
 </head>
 <body>
@@ -442,8 +463,8 @@ window.PORTFOLIO = [
     category:'Healthcare', color:'#0ea5e9',
     tags:['Web Design','Local SEO','Google Ads'],
     desc_de:'Kompletter Neuaufbau des digitalen Auftritts für einen ambulanten Pflegedienst. Von der modernen Website über Google My Business bis zu gezielten Local-SEO-Maßnahmen — heute ist Pflegedienst Impuls die erste Adresse in der Region.',
-    desc_en:'Complete digital rebuild for an outpatient care service — from website to Google Business Profile to targeted local SEO. Now the #1 care service in the region.',
-    metrics:[{v:'Garantiert',l:'Mehr Patienten'},{v:'#1',l:'Im Ranking'}],
+    desc_en:'Complete digital rebuild for an outpatient care service — from website to Google Business Profile to targeted local SEO. Now a leading care provider in the region.',
+    metrics:[{v:'Komplett',l:'Digitaler Neuaufbau'},{v:'Local SEO',l:'Regionale Sichtbarkeit'}],
     preview_bg:'linear-gradient(135deg,#0c2a3e,#0a1a2b)',
   },
   {
@@ -461,7 +482,7 @@ window.PORTFOLIO = [
     tags:['Branding','Web Design','Performance Marketing'],
     desc_de:'Aus einem lokalen Reinigungsservice wurde eine starke Marke. Mit vollständigem Brand-Relaunch, konvertierender Website und gezielten Google-Ads-Kampagnen hat DeinGlanz seinen Marktanteil in Q1 verdreifacht.',
     desc_en:'A local cleaning service transformed into a powerful brand. Full rebrand, conversion-optimised website and targeted Google Ads campaigns tripled market share in Q1.',
-    metrics:[{v:'Glasklare',l:'Neukunden'},{v:'Maximale',l:'Google-Präsenz'}],
+    metrics:[{v:'Rebrand',l:'Marke & Website'},{v:'Google Ads',l:'Neukunden-Kampagnen'}],
     preview_bg:'linear-gradient(135deg,#052a1a,#041a10)',
   },
   {
@@ -470,7 +491,7 @@ window.PORTFOLIO = [
     tags:['Brand Redesign','Web Design','Content Strategy'],
     desc_de:'Auch ein Gutachter braucht eine Marke, der man folgen will. Für Crashover haben wir eine Community-Identität erschaffen, die in der Gutachter-Szene Wellen schlägt — von der Website bis zum Content-Ökosystem.',
     desc_en:'Experts also need a brand worth following. For Crashover, we built a community identity that makes waves in the car-expert scene — from website to content ecosystem.',
-    metrics:[{v:'+50%',l:'Aufträge'},{v:'Eine echte',l:'Internet-Präsenz'}],
+    metrics:[{v:'+50%',l:'Aufträge'},{v:'Community',l:'Brand-Identität'}],
     preview_bg:'linear-gradient(135deg,#1a0a2e,#0f0520)',
   },
 ];
@@ -591,7 +612,7 @@ window.T = {
       sub:'Wir sind Blackstone Agency — ein Team aus Strategen, Designern, Entwicklern und Marketing-Experten mit einer gemeinsamen Passion: außergewöhnliche Ergebnisse.',
       founder:'Gründer & CEO',
       story_h:'Die Geschichte hinter Blackstone',
-      story:'Blackstone Agency wurde 2023 von Imrahn Sadat in Hamburg gegründet — mit einer klaren Vision: Digitale Exzellenz, die messbares Wachstum erzeugt, nicht nur schön aussieht. Was als ambitioniertes Ein-Mann-Projekt begann, ist heute ein eingespieltes Team aus acht Spezialisten, die täglich für die Marken ihrer Kunden brennen.\n\nDer Anspruch war von Anfang an kompromisslos: keine Templates, keine Halbherzigkeit, keine Ausreden. Nur Lösungen, die wirklich funktionieren. Dieser Ansatz hat sich bewährt — mit Kunden aus dem Gesundheitswesen, der Gastronomie, dem Service-Bereich und der Gaming-Industrie.',
+      story:'Blackstone Agency wurde 2023 in Hamburg gegründet — mit einer klaren Vision: Digitale Exzellenz, die messbares Wachstum erzeugt, nicht nur schön aussieht. Was als ambitioniertes Ein-Mann-Projekt begann, ist heute ein eingespieltes Spezialisten-Team, das täglich für die Marken seiner Kunden brennt.\n\nDer Anspruch war von Anfang an kompromisslos: keine Templates, keine Halbherzigkeit, keine Ausreden. Nur Lösungen, die wirklich funktionieren. Dieser Ansatz hat sich bewährt — mit Kunden aus dem Gesundheitswesen, der Gastronomie, dem Service-Bereich und der Gaming-Industrie.',
       values_h:'Unsere Werte',
       values:[
         {t:'Exzellenz',d:'Alles, was unseren Namen trägt, ist auf höchstem Niveau ausgeführt. Mittelmäßigkeit ist keine Option.'},
@@ -601,7 +622,7 @@ window.T = {
       ],
       team_h:'Das Team',
       team:[
-        {name:'Imrahn Sadat',role:'CEO & Gründer',bg:'Strategie, Brand & Vertrieb'},
+        {name:'Founder & CEO',role:'Geschäftsführung',bg:'Strategie, Brand & Vertrieb'},
         {name:'Head of Design',role:'Lead Designer',bg:'UX/UI, Branding & Visual Direction'},
         {name:'Head of Dev',role:'Lead Developer',bg:'React, Next.js, Performance'},
         {name:'Head of Growth',role:'Marketing Lead',bg:'Paid Ads, SEO & Analytics'},
@@ -627,7 +648,7 @@ window.T = {
       comp_routes:['about','portfolio','blog','karriere'],
       legal_links:['Impressum','Datenschutz','AGB','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
-      copy:'© 2026 Blackstone Agency · Imrahn Sadat · Hamburg',
+      copy:'© 2026 Blackstone Agency · Hamburg',
       status:'Alle Systeme aktiv',
     },
     cookie:{
@@ -703,7 +724,7 @@ window.T = {
       sub:'We are Blackstone Agency — a team of strategists, designers, developers and marketing experts with one shared passion: extraordinary results.',
       founder:'Founder & CEO',
       story_h:'The story behind Blackstone',
-      story:'Blackstone Agency was founded in 2023 by Imrahn Sadat in Hamburg — with a clear vision: digital excellence that generates measurable growth, not just beautiful aesthetics. What started as an ambitious solo project is now a well-coordinated team of eight specialists who are passionate about their clients\' brands every day.\n\nThe standard was uncompromising from the start: no templates, no half-measures, no excuses. Only solutions that actually work. This approach has proven itself — with clients in healthcare, gastronomy, service industries, and gaming.',
+      story:'Blackstone Agency was founded in 2023 in Hamburg — with a clear vision: digital excellence that generates measurable growth, not just beautiful aesthetics. What started as an ambitious solo project is now a well-coordinated team of specialists who are passionate about their clients\' brands every day.\n\nThe standard was uncompromising from the start: no templates, no half-measures, no excuses. Only solutions that actually work. This approach has proven itself — with clients in healthcare, gastronomy, service industries, and gaming.',
       values_h:'Our values',
       values:[
         {t:'Excellence',d:'Everything that bears our name is executed at the highest level. Mediocrity is not an option.'},
@@ -713,7 +734,7 @@ window.T = {
       ],
       team_h:'The team',
       team:[
-        {name:'Imrahn Sadat',role:'CEO & Founder',bg:'Strategy, Brand & Sales'},
+        {name:'Founder & CEO',role:'Management',bg:'Strategy, Brand & Sales'},
         {name:'Head of Design',role:'Lead Designer',bg:'UX/UI, Branding & Visual Direction'},
         {name:'Head of Dev',role:'Lead Developer',bg:'React, Next.js, Performance'},
         {name:'Head of Growth',role:'Marketing Lead',bg:'Paid Ads, SEO & Analytics'},
@@ -734,7 +755,7 @@ window.T = {
       comp_routes:['about','portfolio','blog','karriere'],
       legal_links:['Imprint','Privacy Policy','T&Cs','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
-      copy:'© 2025 Blackstone Agency · Imrahn Sadat · Hamburg',
+      copy:'© 2026 Blackstone Agency · Hamburg',
       status:'All systems operational',
     },
     cookie:{text:'We use cookies to provide you with the best possible experience and to improve our website.',accept:'Accept all',decline:'Necessary only',settings:'Settings'},
@@ -787,11 +808,11 @@ window.T = {
       badge:'Sobre nosotros',h:'Detrás de la agencia.',sub:'Somos Blackstone Agency — un equipo de estrategas, diseñadores, desarrolladores y expertos en marketing con una pasión compartida: resultados extraordinarios.',
       founder:'Fundador & CEO',
       story_h:'La historia detrás de Blackstone',
-      story:'Blackstone Agency fue fundada en 2023 por Imrahn Sadat en Hamburgo — con una visión clara: excelencia digital que genera crecimiento medible, no solo estética. Lo que comenzó como un proyecto en solitario es hoy un equipo coordinado de ocho especialistas que se apasionan cada día por las marcas de sus clientes.',
+      story:'Blackstone Agency fue fundada en 2023 en Hamburgo — con una visión clara: excelencia digital que genera crecimiento medible, no solo estética. Lo que comenzó como un proyecto en solitario es hoy un equipo coordinado de especialistas que se apasionan cada día por las marcas de sus clientes.',
       values_h:'Nuestros valores',
       values:[{t:'Excelencia',d:'Todo lo que lleva nuestro nombre se ejecuta al más alto nivel.'},{t:'Transparencia',d:'Sin sorpresas. Comunicación, precios y expectativas claros desde el principio.'},{t:'Orientación a resultados',d:'Medimos nuestro éxito exclusivamente por tu crecimiento.'},{t:'Innovación',d:'Marcamos tendencias en lugar de seguirlas. Continuamente.'}],
       team_h:'El equipo',
-      team:[{name:'Imrahn Sadat',role:'CEO & Fundador',bg:'Estrategia, Marca & Ventas'},{name:'Head of Design',role:'Lead Designer',bg:'UX/UI, Branding & Visual'},{name:'Head of Dev',role:'Lead Developer',bg:'React, Next.js, Rendimiento'},{name:'Head of Growth',role:'Marketing Lead',bg:'Paid Ads, SEO & Analytics'}],
+      team:[{name:'Founder & CEO',role:'Dirección',bg:'Estrategia, Marca & Ventas'},{name:'Head of Design',role:'Lead Designer',bg:'UX/UI, Branding & Visual'},{name:'Head of Dev',role:'Lead Developer',bg:'React, Next.js, Rendimiento'},{name:'Head of Growth',role:'Marketing Lead',bg:'Paid Ads, SEO & Analytics'}],
       why_h:'¿Por qué Blackstone?',
       why:[{t:'Sin subcontratistas',d:'Todo interno. Trabajas con las mismas personas que ejecutan tu proyecto.'},{t:'Garantía de resultados',d:'Definimos KPIs claros por adelantado. Si no los alcanzamos, seguimos trabajando gratis.'},{t:'Con sede en Hamburgo',d:'Caminos cortos, reuniones personales, red local — con estándares de calidad globales.'},{t:'Sin contratos vinculantes',d:'Cancelación mensual. Retenemos a nuestros clientes a través del rendimiento, no de cláusulas.'}],
     },
@@ -803,7 +824,7 @@ window.T = {
       comp_routes:['about','portfolio','blog','karriere'],
       legal_links:['Aviso legal','Privacidad','T&C','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
-      copy:'© 2025 Blackstone Agency · Imrahn Sadat · Hamburgo',
+      copy:'© 2026 Blackstone Agency · Hamburgo',
       status:'Todos los sistemas activos',
     },
     cookie:{text:'Utilizamos cookies para brindarte la mejor experiencia posible y mejorar nuestro sitio web.',accept:'Aceptar todo',decline:'Solo necesarias',settings:'Ajustes'},
