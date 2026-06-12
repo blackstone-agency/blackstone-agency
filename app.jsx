@@ -1226,7 +1226,7 @@ const AboutPage = ({ dark: bd, t, navigate }) => {
         </div>
         <div className={`rounded-2xl p-8 mb-12 reveal ${bd?'card-dark':'card-light'}`}>
           <div className="flex flex-col sm:flex-row items-start gap-6">
-            <div className="w-20 h-20 rounded-2xl flex-shrink-0 flex items-center justify-center text-2xl font-black text-white" style={{background:'linear-gradient(135deg,#3f3f46,#09090b)',border:'1px solid rgba(255,255,255,0.1)'}}>IS</div>
+            <div className="w-20 h-20 rounded-2xl flex-shrink-0 flex items-center justify-center text-2xl font-black text-white" style={{background:'linear-gradient(135deg,#3f3f46,#09090b)',border:'1px solid rgba(255,255,255,0.1)'}}>BA</div>
             <div className="flex-1">
               <div className={`text-xs font-semibold tracking-widest uppercase mb-2 ${bd?'text-zinc-600':'text-zinc-400'}`}>{ta.founder}</div>
               <h2 className={`text-2xl font-black mb-1 ${bd?'text-white':'text-zinc-900'}`}>Blackstone Agency</h2>
