@@ -208,6 +208,8 @@ const Navigation = ({ t, lang, setLang, dark: bd, setDark, page, navigate, scrol
             {['services','process','cases','pricing'].map(k=>(
               <button key={k} onClick={()=>navigate('#'+k)} className={`text-sm font-medium h-line transition-colors ${bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900'}`}>{t.nav[k]}</button>
             ))}
+            <button onClick={()=>navigate('leistungen')} className={`text-sm font-medium h-line transition-colors ${page==='leistungen'?(bd?'text-white':'text-zinc-900'):(bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900')}`}>{t.nav.leistungen}</button>
+            <button onClick={()=>navigate('branchen')} className={`text-sm font-medium h-line transition-colors ${page==='branchen'?(bd?'text-white':'text-zinc-900'):(bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900')}`}>{t.nav.branchen}</button>
             <button onClick={()=>navigate('about')} className={`text-sm font-medium h-line transition-colors ${page==='about'?(bd?'text-white':'text-zinc-900'):(bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900')}`}>{t.nav.about}</button>
           </div>
           <div className="flex items-center gap-2.5">
@@ -227,8 +229,8 @@ const Navigation = ({ t, lang, setLang, dark: bd, setDark, page, navigate, scrol
         </div>
         {menuOpen&&(
           <div className={`md:hidden pb-4 border-t ${bd?'border-zinc-800':'border-zinc-200'} mt-1 anim-slide-down`}>
-            {['services','process','cases','pricing','about','contact'].map(k=>(
-              <button key={k} onClick={()=>{navigate(k==='about'?'about':'#'+k);setMenuOpen(false);}} className={`block w-full text-left py-3 px-1 text-sm font-medium ${bd?'text-zinc-300 hover:text-white':'text-zinc-600 hover:text-zinc-900'}`}>{t.nav[k]}</button>
+            {[['services','#services'],['process','#process'],['cases','#cases'],['pricing','#pricing'],['leistungen','leistungen'],['branchen','branchen'],['about','about'],['contact','#contact']].map(([k,target])=>(
+              <button key={k} onClick={()=>{navigate(target);setMenuOpen(false);}} className={`block w-full text-left py-3 px-1 text-sm font-medium ${bd?'text-zinc-300 hover:text-white':'text-zinc-600 hover:text-zinc-900'}`}>{t.nav[k]}</button>
             ))}
             <div className="flex gap-1 mt-3 px-1">
               {['DE','EN','ES'].map(l=>(
@@ -1856,6 +1858,148 @@ const FAQSection = ({ t, dark: bd }) => {
   );
 };
 
+const MasteryOrbit = ({ t, dark: bd }) => {
+  const to = t.orbit;
+  const tiltRef=useRef(null);
+  useEffect(()=>{
+    const tilt=tiltRef.current; if(!tilt)return;
+    const sec=tilt.closest('.orbit-section');
+    const onMove=(e)=>{ const r=sec.getBoundingClientRect(); const y=(e.clientY-r.top)/r.height-0.5; tilt.style.setProperty('--tilt',(-y*16-8)+'deg'); };
+    sec.addEventListener('mousemove',onMove,{passive:true});
+    return()=>sec.removeEventListener('mousemove',onMove);
+  },[]);
+  const items=to.items, n=items.length, R=270;
+  const icons=[
+    <><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></>,
+    <><path d="M3 3v18h18"/><path d="M7 14l3-4 3 2 4-6"/></>,
+    <><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 9h18"/></>,
+    <><path d="M12 2l3 7 7 .5-5.5 4.5 2 7L12 17l-6.5 4 2-7L2 9.5 9 9z"/></>,
+    <><path d="M4 5h16"/><path d="M4 12h10"/><path d="M4 19h7"/></>,
+    <><path d="M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6"/><circle cx="12" cy="6" r="3"/><path d="M9 20h6"/></>,
+    <><path d="M3 12h4l3 8 4-16 3 8h4"/></>,
+    <><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 7v5l3 2"/></>,
+  ];
+  return (
+    <section className={`orbit-section border-t ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3,position:'relative'}}>
+      <div className="max-w-7xl mx-auto px-5 text-center">
+        <div className={`${bd?'badge-dark':'badge-light'} mb-5 reveal inline-block`}>{to.badge}</div>
+        <h2 className={`text-[clamp(30px,4.5vw,56px)] font-black tracking-tight reveal ${bd?'text-white':'text-zinc-900'}`}>{to.h}</h2>
+        <p className={`text-base max-w-xl mx-auto mt-4 mb-12 reveal ${bd?'text-zinc-500':'text-zinc-400'}`}>{to.sub}</p>
+        <div className="orbit-viewport reveal">
+          <div className="orbit-core" aria-hidden="true"><Logo size={54}/></div>
+          <div ref={tiltRef} className="orbit-tilt">
+            <div className="orbit-stage">
+              {items.map((it,i)=>(
+                <div key={i} className={`orbit-card ${bd?'glass-dark':'glass-light'}`}
+                  style={{transform:`rotateY(${i*(360/n)}deg) translateZ(${R}px)`}}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={bd?'#8b7cff':'#5a46d2'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{icons[i]}</svg>
+                  <span className={bd?'text-white':'text-zinc-900'}>{it}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className={`text-xs mt-12 reveal ${bd?'text-zinc-600':'text-zinc-400'}`} style={{letterSpacing:'.2em',textTransform:'uppercase',fontWeight:600}}>{to.hint}</div>
+      </div>
+    </section>
+  );
+};
+
+const LeistungenPage = ({ dark: bd, t, navigate }) => {
+  const tl = t.leistungen;
+  return (
+    <div className="page-enter pt-24 pb-20 px-5" style={{zIndex:3,position:'relative'}}>
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-16 reveal">
+          <div className={`${bd?'badge-dark':'badge-light'} mb-6`}>{tl.badge}</div>
+          <h1 className={`text-[clamp(38px,6.5vw,76px)] font-black tracking-tight mb-6 ${bd?'text-white':'text-zinc-900'}`}>{tl.h}</h1>
+          <p className={`text-xl max-w-2xl leading-relaxed ${bd?'text-zinc-400':'text-zinc-500'}`}>{tl.sub}</p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-5 mb-16">
+          {tl.services.map((s,i)=>(
+            <div key={i} className={`rounded-2xl p-8 glow-card reveal d${(i%6)+1} ${bd?'card-dark':'card-light'}`}>
+              <div className={`text-xs font-bold tracking-widest uppercase mb-3 ${bd?'text-zinc-600':'text-zinc-400'}`}>0{i+1}</div>
+              <h3 className={`text-2xl font-black mb-3 ${bd?'text-white':'text-zinc-900'}`}>{s.t}</h3>
+              <p className={`text-sm leading-relaxed mb-5 ${bd?'text-zinc-400':'text-zinc-500'}`}>{s.d}</p>
+              <div className="flex flex-wrap gap-2">{s.tags.map(tag=>(<span key={tag} className={`text-xs font-semibold px-3 py-1.5 rounded-full ${bd?'bg-zinc-800/80 text-zinc-400':'bg-zinc-100 text-zinc-500'}`}>{tag}</span>))}</div>
+            </div>
+          ))}
+        </div>
+        <div className={`rounded-2xl p-10 text-center reveal ${bd?'glass-dark':'glass-light'}`} style={{border:bd?'1px solid rgba(255,255,255,0.1)':'1px solid rgba(0,0,0,0.08)'}}>
+          <h3 className={`text-2xl font-black mb-3 ${bd?'text-white':'text-zinc-900'}`}>{tl.cta_h}</h3>
+          <p className={`text-sm mb-6 ${bd?'text-zinc-400':'text-zinc-500'}`}>{tl.cta_sub}</p>
+          <button onClick={()=>navigate('#contact')} className="btn-p px-8 py-3.5 rounded-full font-bold text-sm cursor-pointer">{tl.cta}</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const BranchenPage = ({ dark: bd, t, navigate }) => {
+  const tb = t.branchen;
+  const icons=[
+    <><path d="M12 2a3 3 0 0 0-3 3v1a4 4 0 0 0-2 7c0 4 5 8 5 8s5-4 5-8a4 4 0 0 0-2-7V5a3 3 0 0 0-3-3z"/></>,
+    <><path d="M5 11h14l-1 9H6z"/><path d="M9 11V7a3 3 0 0 1 6 0v4"/></>,
+    <><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></>,
+    <><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 3H5l2.5 13h11l2-8H6.5"/></>,
+    <><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M10 12l4-2v4z"/></>,
+    <><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 18v3"/></>,
+  ];
+  return (
+    <div className="page-enter pt-24 pb-20 px-5" style={{zIndex:3,position:'relative'}}>
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-16 reveal">
+          <div className={`${bd?'badge-dark':'badge-light'} mb-6`}>{tb.badge}</div>
+          <h1 className={`text-[clamp(38px,6.5vw,76px)] font-black tracking-tight mb-6 ${bd?'text-white':'text-zinc-900'}`}>{tb.h}</h1>
+          <p className={`text-xl max-w-2xl leading-relaxed ${bd?'text-zinc-400':'text-zinc-500'}`}>{tb.sub}</p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+          {tb.items.map((it,i)=>(
+            <div key={i} className={`rounded-2xl p-7 glow-card reveal d${(i%6)+1} ${bd?'card-dark':'card-light'}`}>
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${bd?'bg-zinc-800':'bg-zinc-100'}`}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={bd?'#8b7cff':'#5a46d2'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{icons[i]}</svg>
+              </div>
+              <h3 className={`text-lg font-black mb-2 ${bd?'text-white':'text-zinc-900'}`}>{it.t}</h3>
+              <p className={`text-sm leading-relaxed ${bd?'text-zinc-500':'text-zinc-400'}`}>{it.d}</p>
+            </div>
+          ))}
+        </div>
+        <div className={`rounded-2xl p-10 text-center reveal ${bd?'glass-dark':'glass-light'}`} style={{border:bd?'1px solid rgba(255,255,255,0.1)':'1px solid rgba(0,0,0,0.08)'}}>
+          <h3 className={`text-2xl font-black mb-3 ${bd?'text-white':'text-zinc-900'}`}>{tb.cta_h}</h3>
+          <p className={`text-sm mb-6 ${bd?'text-zinc-400':'text-zinc-500'}`}>{tb.cta_sub}</p>
+          <button onClick={()=>navigate('#contact')} className="btn-p px-8 py-3.5 rounded-full font-bold text-sm cursor-pointer">{tb.cta}</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const KontaktPage = ({ dark: bd, t }) => {
+  const tk = t.kontaktpage;
+  return (
+    <div className="page-enter" style={{zIndex:3,position:'relative'}}>
+      <div className="pt-24 pb-2 px-5">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-10 reveal">
+            <div className={`${bd?'badge-dark':'badge-light'} mb-6`}>{tk.badge}</div>
+            <h1 className={`text-[clamp(38px,6.5vw,76px)] font-black tracking-tight mb-6 ${bd?'text-white':'text-zinc-900'}`}>{tk.h}</h1>
+            <p className={`text-xl max-w-2xl leading-relaxed ${bd?'text-zinc-400':'text-zinc-500'}`}>{tk.sub}</p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4">
+            {tk.channels.map((c,i)=>(
+              <div key={i} className={`rounded-2xl p-6 reveal d${i+1} ${bd?'card-dark':'card-light'}`}>
+                <div className={`text-xs font-semibold tracking-widest uppercase mb-2 ${bd?'text-zinc-600':'text-zinc-400'}`}>{c.t}</div>
+                <div className={`text-base font-bold ${bd?'text-white':'text-zinc-900'}`}>{c.v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <ContactSection t={t} dark={bd}/>
+    </div>
+  );
+};
+
 function App() {
   const [page,setPage]=useState('home');
   const [lang,setLang]=useState('DE');
@@ -1896,7 +2040,7 @@ function App() {
 
   const goContact=()=>navigate('#contact');
   const pages={
-    home:<><HeroSection t={t} dark={dark} navigate={navigate}/><TrustSection t={t} dark={dark}/><ServicesSection t={t} dark={dark} onService={svc=>setModal(svc)}/><ChipSection dark={dark}/><ProcessSection t={t} dark={dark}/><PortfolioSection t={t} dark={dark} navigate={navigate}/><GrowthCalculator t={t} dark={dark} navigate={navigate}/><GuaranteeSection t={t} dark={dark}/><FlowFieldSection t={t} dark={dark}/><PricingSection t={t} dark={dark} billing={billing} setBilling={setBilling} navigate={navigate}/><FAQSection t={t} dark={dark}/><ContactSection t={t} dark={dark}/></>,
+    home:<><HeroSection t={t} dark={dark} navigate={navigate}/><TrustSection t={t} dark={dark}/><ServicesSection t={t} dark={dark} onService={svc=>setModal(svc)}/><ChipSection dark={dark}/><ProcessSection t={t} dark={dark}/><MasteryOrbit t={t} dark={dark}/><PortfolioSection t={t} dark={dark} navigate={navigate}/><GrowthCalculator t={t} dark={dark} navigate={navigate}/><GuaranteeSection t={t} dark={dark}/><FlowFieldSection t={t} dark={dark}/><PricingSection t={t} dark={dark} billing={billing} setBilling={setBilling} navigate={navigate}/><FAQSection t={t} dark={dark}/><ContactSection t={t} dark={dark}/></>,
     about:<AboutPage dark={dark} t={t} navigate={navigate}/>,
     portfolio:<PortfolioPage t={t} dark={dark}/>,
     impressum:<ImpressumPage dark={dark}/>,
@@ -1905,6 +2049,9 @@ function App() {
     cookies:<CookiesPage dark={dark}/>,
     blog:<BlogPage dark={dark}/>,
     karriere:<KarrierePage dark={dark} navigate={navigate}/>,
+    leistungen:<LeistungenPage dark={dark} t={t} navigate={navigate}/>,
+    branchen:<BranchenPage dark={dark} t={t} navigate={navigate}/>,
+    kontakt:<KontaktPage dark={dark} t={t}/>,
   };
 
   return (

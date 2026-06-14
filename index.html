@@ -509,7 +509,18 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .faq-think span:nth-child(2){animation-delay:.15s}.faq-think span:nth-child(3){animation-delay:.3s}
 @keyframes think-bounce{0%,80%,100%{transform:translateY(0);opacity:.35}40%{transform:translateY(-5px);opacity:.9}}
 
-@media (prefers-reduced-motion:reduce){.hero-aurora,.hero-beam,.proc-ring,.faq-orb,.faq-caret,.faq-think span{animation:none}}
+/* ── Mastery Orbit (3D) ── */
+.orbit-section{padding:7rem 0}
+.orbit-viewport{position:relative;height:440px;perspective:1200px;display:flex;align-items:center;justify-content:center}
+.orbit-core{position:absolute;z-index:2;width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(139,124,255,.28),transparent 70%);filter:drop-shadow(0 0 34px rgba(139,124,255,.45));animation:core-pulse 4s ease-in-out infinite}
+@keyframes core-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.orbit-tilt{position:absolute;transform-style:preserve-3d;transform:rotateX(var(--tilt,-10deg));transition:transform .3s ease-out}
+.orbit-stage{position:relative;transform-style:preserve-3d;animation:orbit-spin 36s linear infinite}
+@keyframes orbit-spin{to{transform:rotateY(360deg)}}
+.orbit-viewport:hover .orbit-stage{animation-play-state:paused}
+.orbit-card{position:absolute;top:-42px;left:-82px;width:164px;height:84px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-weight:700;font-size:13px;letter-spacing:-.01em;backface-visibility:hidden;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+@media(max-width:640px){.orbit-viewport{perspective:900px;height:380px}.orbit-card{width:140px;left:-70px}}
+@media (prefers-reduced-motion:reduce){.hero-aurora,.hero-beam,.proc-ring,.faq-orb,.faq-caret,.faq-think span,.orbit-stage,.orbit-core{animation:none}.orbit-tilt{transform:rotateX(-10deg)}}
 </style>
 </head>
 <body>
@@ -614,7 +625,7 @@ window.SERVICES_DETAIL = [
 // ── Translations ──
 window.T = {
   DE: {
-    nav:{services:'Services',process:'Prozess',cases:'Portfolio',pricing:'Preise',about:'Über uns',contact:'Kontakt'},
+    nav:{services:'Services',process:'Prozess',cases:'Portfolio',pricing:'Preise',about:'Über uns',leistungen:'Leistungen',branchen:'Branchen',contact:'Kontakt'},
     hero:{
       badge:'High Class Digital Agency · Hamburg',
       h1:'We build', h2:'digital presence.',
@@ -623,6 +634,10 @@ window.T = {
       s1v:'+100%',s1l:'Generierter Umsatz',s2v:'Perfekte',s2l:'Kundenzufriedenheit',s3v:'Unzählige',s3l:'Projekte geliefert',s4v:'100%',s4l:'Zufriedene Kunden',
     },
     trust:{label:'Betreute Branchen'},
+    orbit:{badge:'Unser Können',h:'Acht Disziplinen. Ein System.',sub:'Jede Kompetenz greift in die nächste. Bewege die Maus und dreh das System.',hint:'Hover stoppt die Rotation',items:['SEO','Performance Ads','Web Design','Branding','Content','Social Media','Analytics','Conversion']},
+    leistungen:{badge:'Leistungen',h:'Alles, was deine Marke nach vorne bringt.',sub:'Sechs Disziplinen, ein Ziel: messbares Wachstum. Jede Leistung ist ein eigener Hebel — kombiniert werden sie zur Dominanz.',services:[{t:'Web Design & Development',d:'Schnelle, conversion-optimierte Websites, die nicht nur gut aussehen, sondern verkaufen. Von der ersten Skizze bis zum 100/100 Performance-Score.',tags:['React / Next.js','Core Web Vitals','CMS & Backend']},{t:'Performance Marketing',d:'Paid Ads mit chirurgischer Präzision. Wir testen, skalieren und optimieren, bis jeder Euro mehrfach zurückkommt.',tags:['Google Ads','Meta Ads','ROAS-Tracking']},{t:'SEO & Content',d:'Sichtbarkeit, die bleibt. Wir bauen Autorität auf, dominieren Rankings und liefern Inhalte, die ranken und verkaufen.',tags:['Technical SEO','Keyword-Strategie','Content-Cluster']},{t:'Branding & Identity',d:'Marken, die im Kopf bleiben. Identität, Stimme und Design, die Vertrauen schaffen und höhere Preise rechtfertigen.',tags:['Logo & System','Brand Voice','Guidelines']},{t:'Social Media',d:'Organisches Wachstum trifft virales Potenzial. Strategie, Kreativität und Community-Aufbau auf allen relevanten Kanälen.',tags:['Instagram','TikTok','LinkedIn']},{t:'Analytics & CRO',d:'Daten statt Bauchgefühl. Sauberes Tracking, klare Dashboards und kontinuierliche Conversion-Optimierung.',tags:['GA4','A/B-Testing','Dashboards']}],cta_h:'Welche Leistung bringt dich weiter?',cta_sub:'In einem kostenlosen Erstgespräch finden wir den stärksten Hebel für dein Wachstum.',cta:'Kostenlos beraten lassen'},
+    branchen:{badge:'Branchen',h:'Spezialisiert auf Wachstum — in jeder Branche.',sub:'Wir kennen die Mechaniken unterschiedlichster Märkte. Diese Branchen begleiten wir mit maßgeschneiderten Strategien.',items:[{t:'Gesundheit & Pflege',d:'Mehr Patienten, mehr Sichtbarkeit. Local SEO, Google Business und Vertrauen, das Termine bringt.'},{t:'Gastronomie',d:'Volle Tische statt leerer Stühle. Atmosphärische Websites, Bestellsysteme und Social, das hungrig macht.'},{t:'Dienstleistung & Handwerk',d:'Anfragen am Fließband. Klare Angebote, lokale Reichweite und Kampagnen, die Aufträge generieren.'},{t:'E-Commerce',d:'Skalierbarer Umsatz. Conversion-optimierte Shops, Performance Ads und ein profitabler ROAS.'},{t:'Gaming & Esports',d:'Community, die bleibt. Reichweite, Content und Branding für eine Szene, die Authentizität fordert.'},{t:'B2B & SaaS',d:'Qualifizierte Leads statt Streuverlust. Funnels, Content und Paid-Strategien für längere Sales-Zyklen.'}],cta_h:'Deine Branche ist nicht dabei?',cta_sub:'Wir arbeiten uns in jeden Markt ein. Erzähl uns von deinem — wir liefern die Strategie.',cta:'Branche besprechen'},
+    kontaktpage:{badge:'Kontakt',h:'Lass uns dein Wachstum starten.',sub:'Schildere uns deine Situation — wir antworten innerhalb von 4 Stunden mit einem konkreten Plan. Kostenlos und unverbindlich.',channels:[{t:'E-Mail',v:'info@blackstone-agency.de'},{t:'Standort',v:'Hamburg, Deutschland'},{t:'Reaktionszeit',v:'< 4 Stunden'}]},
     flow:{badge:'Die Blackstone-Philosophie',h:'Aus Daten wird Bewegung.',sub:'Jeder Punkt ein Datensignal. Jede Linie eine Entscheidung. So verwandeln wir Komplexität in Wachstum — beweg deinen Cursor und sieh, wie das Feld reagiert.',hint:'Interaktiv · beweg deinen Cursor'},
     calc:{badge:'Wachstums-Simulator',h:'Berechne dein Potenzial.',sub:'Verschiebe die Regler und sieh, was strategisches Marketing aus deinem Budget machen kann. Unverbindliche Orientierung — keine garantierten Werte.',budgetLabel:'Monatliches Marketing-Budget',perMonth:' /Monat',industryLabel:'Branche',out_reach:'Geschätzte Reichweite / Monat',out_leads:'Qualifizierte Leads / Monat',out_roas:'Möglicher ROAS',disclaimer:'Simulationswerte basieren auf Branchen-Durchschnitten und Erfahrungswerten. Tatsächliche Ergebnisse hängen von Markt, Angebot und Umsetzung ab.',cta:'Echte Strategie besprechen',industries:['E-Commerce','Gastronomie','Gesundheit','Dienstleistung','B2B / SaaS','Lokales Geschäft']},
     guarantee:{badge:'Unser Versprechen',h:'Null Risiko. Volle Verbindlichkeit.',sub:'Wir binden Kunden durch Ergebnisse — nicht durch Verträge.',items:[{t:'KPI-Garantie',d:'Wir definieren messbare Ziele vorab. Erreichen wir sie nicht, arbeiten wir kostenlos weiter — bis sie stehen.'},{t:'Monatlich kündbar',d:'Keine Knebelverträge, keine Mindestlaufzeit. Du bleibst, weil es funktioniert.'},{t:'Alles in-house',d:'Keine Subunternehmer. Dieselben Menschen, die planen, setzen auch um.'},{t:'Transparente Reportings',d:'Jeden Monat klare Zahlen. Du siehst genau, wohin jeder Euro fließt.'}]},
@@ -717,8 +732,8 @@ window.T = {
     footer:{
       tagline:'Wir erschaffen digitale Dominanz für Marken, die führen wollen.',
       company:'Unternehmen',legal:'Rechtliches',
-      comp_links:['Über uns','Portfolio','Blog','Karriere'],
-      comp_routes:['about','portfolio','blog','karriere'],
+      comp_links:['Über uns','Leistungen','Branchen','Portfolio','Blog','Karriere','Kontakt'],
+      comp_routes:['about','leistungen','branchen','portfolio','blog','karriere','kontakt'],
       legal_links:['Impressum','Datenschutz','AGB','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
       copy:'© 2026 Blackstone Agency · Hamburg',
@@ -730,7 +745,7 @@ window.T = {
     },
   },
   EN: {
-    nav:{services:'Services',process:'Process',cases:'Portfolio',pricing:'Pricing',about:'About',contact:'Contact'},
+    nav:{services:'Services',process:'Process',cases:'Portfolio',pricing:'Pricing',about:'About',leistungen:'Solutions',branchen:'Industries',contact:'Contact'},
     hero:{
       badge:'Premium Digital Agency · Hamburg',
       h1:'We build', h2:'digital presence.',
@@ -739,6 +754,10 @@ window.T = {
       s1v:'+100%',s1l:'Revenue generated',s2v:'100%',s2l:'Client satisfaction',s3v:'Many',s3l:'Projects delivered',s4v:'Uncountable',s4l:'Happy clients',
     },
     trust:{label:'Industries served'},
+    orbit:{badge:'Our craft',h:'Eight disciplines. One system.',sub:'Every skill feeds the next. Move your mouse and rotate the system.',hint:'Hover pauses the rotation',items:['SEO','Performance Ads','Web Design','Branding','Content','Social Media','Analytics','Conversion']},
+    leistungen:{badge:'Solutions',h:'Everything that moves your brand forward.',sub:'Six disciplines, one goal: measurable growth. Each service is its own lever — combined, they become dominance.',services:[{t:'Web Design & Development',d:'Fast, conversion-optimized websites that not only look great but sell. From first sketch to a 100/100 performance score.',tags:['React / Next.js','Core Web Vitals','CMS & Backend']},{t:'Performance Marketing',d:'Paid ads with surgical precision. We test, scale and optimize until every euro returns several times over.',tags:['Google Ads','Meta Ads','ROAS tracking']},{t:'SEO & Content',d:'Visibility that lasts. We build authority, dominate rankings and deliver content that ranks and sells.',tags:['Technical SEO','Keyword strategy','Content clusters']},{t:'Branding & Identity',d:'Brands that stick. Identity, voice and design that build trust and justify higher prices.',tags:['Logo & system','Brand voice','Guidelines']},{t:'Social Media',d:'Organic growth meets viral potential. Strategy, creativity and community building across every relevant channel.',tags:['Instagram','TikTok','LinkedIn']},{t:'Analytics & CRO',d:'Data over gut feeling. Clean tracking, clear dashboards and continuous conversion optimization.',tags:['GA4','A/B testing','Dashboards']}],cta_h:'Which service moves you forward?',cta_sub:'In a free initial call we find the strongest lever for your growth.',cta:'Get free advice'},
+    branchen:{badge:'Industries',h:'Specialized in growth — in every industry.',sub:'We know the mechanics of the most diverse markets. These are the industries we support with tailored strategies.',items:[{t:'Healthcare & Care',d:'More patients, more visibility. Local SEO, Google Business and trust that books appointments.'},{t:'Hospitality',d:'Full tables instead of empty chairs. Atmospheric websites, ordering systems and social that makes people hungry.'},{t:'Services & Trades',d:'Enquiries on tap. Clear offers, local reach and campaigns that generate jobs.'},{t:'E-Commerce',d:'Scalable revenue. Conversion-optimized stores, performance ads and a profitable ROAS.'},{t:'Gaming & Esports',d:'Community that stays. Reach, content and branding for a scene that demands authenticity.'},{t:'B2B & SaaS',d:'Qualified leads instead of waste. Funnels, content and paid strategies for longer sales cycles.'}],cta_h:'Your industry not listed?',cta_sub:'We dive into any market. Tell us about yours — we deliver the strategy.',cta:'Discuss your industry'},
+    kontaktpage:{badge:'Contact',h:'Let us start your growth.',sub:'Tell us your situation — we reply within 4 hours with a concrete plan. Free and non-binding.',channels:[{t:'Email',v:'info@blackstone-agency.de'},{t:'Location',v:'Hamburg, Germany'},{t:'Response time',v:'< 4 hours'}]},
     flow:{badge:'The Blackstone philosophy',h:'Data becomes momentum.',sub:'Every point a data signal. Every line a decision. This is how we turn complexity into growth — move your cursor and watch the field respond.',hint:'Interactive · move your cursor'},
     calc:{badge:'Growth Simulator',h:'Calculate your potential.',sub:'Move the sliders and see what strategic marketing can do with your budget. Non-binding orientation — not guaranteed figures.',budgetLabel:'Monthly marketing budget',perMonth:' /mo',industryLabel:'Industry',out_reach:'Est. reach / month',out_leads:'Qualified leads / month',out_roas:'Potential ROAS',disclaimer:'Simulated values are based on industry averages and experience. Actual results depend on market, offer and execution.',cta:'Discuss a real strategy',industries:['E-Commerce','Hospitality','Healthcare','Services','B2B / SaaS','Local business']},
     guarantee:{badge:'Our promise',h:'Zero risk. Full commitment.',sub:'We keep clients through results — not contracts.',items:[{t:'KPI guarantee',d:'We define measurable goals upfront. If we miss them, we keep working for free until they are met.'},{t:'Cancel monthly',d:'No lock-in contracts, no minimum term. You stay because it works.'},{t:'All in-house',d:'No subcontractors. The same people who plan also execute.'},{t:'Transparent reporting',d:'Clear numbers every month. You see exactly where every euro goes.'}]},
@@ -828,8 +847,8 @@ window.T = {
     footer:{
       tagline:'We create digital dominance for brands that want to lead.',
       company:'Company',legal:'Legal',
-      comp_links:['About us','Portfolio','Blog','Careers'],
-      comp_routes:['about','portfolio','blog','karriere'],
+      comp_links:['About us','Solutions','Industries','Portfolio','Blog','Careers','Contact'],
+      comp_routes:['about','leistungen','branchen','portfolio','blog','karriere','kontakt'],
       legal_links:['Imprint','Privacy Policy','T&Cs','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
       copy:'© 2026 Blackstone Agency · Hamburg',
@@ -838,7 +857,7 @@ window.T = {
     cookie:{text:'We use cookies to provide you with the best possible experience and to improve our website.',accept:'Accept all',decline:'Necessary only',settings:'Settings'},
   },
   ES: {
-    nav:{services:'Servicios',process:'Proceso',cases:'Portafolio',pricing:'Precios',about:'Nosotros',contact:'Contacto'},
+    nav:{services:'Servicios',process:'Proceso',cases:'Portafolio',pricing:'Precios',about:'Nosotros',leistungen:'Soluciones',branchen:'Sectores',contact:'Contacto'},
     hero:{
       badge:'Agencia Digital Premium · Hamburgo',
       h1:'Construimos', h2:'dominancia digital.',
@@ -847,6 +866,10 @@ window.T = {
       s1v:'€48M+',s1l:'Ingresos generados',s2v:'97%',s2l:'Satisfacción del cliente',s3v:'340+',s3l:'Proyectos entregados',s4v:'4',s4l:'Clientes satisfechos',
     },
     trust:{label:'Sectores atendidos'},
+    orbit:{badge:'Nuestro oficio',h:'Ocho disciplinas. Un sistema.',sub:'Cada habilidad alimenta la siguiente. Mueve el ratón y gira el sistema.',hint:'El hover pausa la rotación',items:['SEO','Performance Ads','Diseño Web','Branding','Contenido','Redes Sociales','Analítica','Conversión']},
+    leistungen:{badge:'Soluciones',h:'Todo lo que impulsa tu marca.',sub:'Seis disciplinas, un objetivo: crecimiento medible. Cada servicio es una palanca — combinados, se convierten en dominio.',services:[{t:'Diseño y Desarrollo Web',d:'Webs rápidas y optimizadas para conversión que no solo lucen bien, sino que venden. Desde el primer boceto hasta un rendimiento de 100/100.',tags:['React / Next.js','Core Web Vitals','CMS & Backend']},{t:'Performance Marketing',d:'Publicidad pagada con precisión quirúrgica. Probamos, escalamos y optimizamos hasta que cada euro vuelve multiplicado.',tags:['Google Ads','Meta Ads','ROAS']},{t:'SEO y Contenido',d:'Visibilidad que perdura. Construimos autoridad, dominamos rankings y creamos contenido que posiciona y vende.',tags:['SEO técnico','Estrategia keyword','Clusters']},{t:'Branding e Identidad',d:'Marcas que se recuerdan. Identidad, voz y diseño que generan confianza y justifican precios más altos.',tags:['Logo & sistema','Brand voice','Guidelines']},{t:'Redes Sociales',d:'Crecimiento orgánico con potencial viral. Estrategia, creatividad y comunidad en cada canal relevante.',tags:['Instagram','TikTok','LinkedIn']},{t:'Analítica y CRO',d:'Datos en vez de intuición. Tracking limpio, dashboards claros y optimización continua de la conversión.',tags:['GA4','Tests A/B','Dashboards']}],cta_h:'¿Qué servicio te impulsa?',cta_sub:'En una primera llamada gratuita encontramos la palanca más fuerte para tu crecimiento.',cta:'Asesoría gratuita'},
+    branchen:{badge:'Sectores',h:'Especializados en crecimiento — en cada sector.',sub:'Conocemos las mecánicas de los mercados más diversos. Estos son los sectores que acompañamos con estrategias a medida.',items:[{t:'Salud y Cuidados',d:'Más pacientes, más visibilidad. SEO local, Google Business y confianza que llena la agenda.'},{t:'Hostelería',d:'Mesas llenas en vez de sillas vacías. Webs con atmósfera, sistemas de pedido y social que abre el apetito.'},{t:'Servicios y Oficios',d:'Solicitudes en cadena. Ofertas claras, alcance local y campañas que generan encargos.'},{t:'E-Commerce',d:'Ingresos escalables. Tiendas optimizadas para conversión, performance ads y un ROAS rentable.'},{t:'Gaming y Esports',d:'Comunidad que permanece. Alcance, contenido y branding para una escena que exige autenticidad.'},{t:'B2B y SaaS',d:'Leads cualificados sin desperdicio. Funnels, contenido y estrategias de pago para ciclos de venta largos.'}],cta_h:'¿Tu sector no aparece?',cta_sub:'Nos metemos en cualquier mercado. Cuéntanos el tuyo — entregamos la estrategia.',cta:'Hablar de tu sector'},
+    kontaktpage:{badge:'Contacto',h:'Empecemos tu crecimiento.',sub:'Cuéntanos tu situación — respondemos en menos de 4 horas con un plan concreto. Gratis y sin compromiso.',channels:[{t:'Email',v:'info@blackstone-agency.de'},{t:'Ubicación',v:'Hamburgo, Alemania'},{t:'Tiempo de respuesta',v:'< 4 horas'}]},
     flow:{badge:'La filosofía Blackstone',h:'Los datos se vuelven impulso.',sub:'Cada punto una señal de datos. Cada línea una decisión. Así convertimos la complejidad en crecimiento — mueve el cursor y observa cómo reacciona el campo.',hint:'Interactivo · mueve tu cursor'},
     calc:{badge:'Simulador de crecimiento',h:'Calcula tu potencial.',sub:'Mueve los controles y descubre qué puede lograr el marketing estratégico con tu presupuesto. Orientación no vinculante — no son cifras garantizadas.',budgetLabel:'Presupuesto mensual de marketing',perMonth:' /mes',industryLabel:'Sector',out_reach:'Alcance est. / mes',out_leads:'Leads cualificados / mes',out_roas:'ROAS potencial',disclaimer:'Los valores simulados se basan en promedios del sector y experiencia. Los resultados reales dependen del mercado, la oferta y la ejecución.',cta:'Hablar de una estrategia real',industries:['E-Commerce','Hostelería','Salud','Servicios','B2B / SaaS','Negocio local']},
     guarantee:{badge:'Nuestra promesa',h:'Cero riesgo. Compromiso total.',sub:'Retenemos clientes por resultados — no por contratos.',items:[{t:'Garantía de KPI',d:'Definimos objetivos medibles desde el inicio. Si no los alcanzamos, seguimos trabajando gratis hasta lograrlo.'},{t:'Cancela cada mes',d:'Sin contratos de permanencia, sin plazo mínimo. Te quedas porque funciona.'},{t:'Todo interno',d:'Sin subcontratistas. Las mismas personas que planifican también ejecutan.'},{t:'Informes transparentes',d:'Cifras claras cada mes. Ves exactamente a dónde va cada euro.'}]},
@@ -901,8 +924,8 @@ window.T = {
     footer:{
       tagline:'Creamos dominancia digital para marcas que quieren liderar.',
       company:'Empresa',legal:'Legal',
-      comp_links:['Sobre nosotros','Portafolio','Blog','Empleo'],
-      comp_routes:['about','portfolio','blog','karriere'],
+      comp_links:['Sobre nosotros','Soluciones','Sectores','Portafolio','Blog','Empleo','Contacto'],
+      comp_routes:['about','leistungen','branchen','portfolio','blog','karriere','kontakt'],
       legal_links:['Aviso legal','Privacidad','T&C','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
       copy:'© 2026 Blackstone Agency · Hamburgo',
