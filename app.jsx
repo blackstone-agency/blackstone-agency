@@ -1520,6 +1520,134 @@ function initMagneticBtns() {
   window.addEventListener('scroll', attach, { once: true, passive: true });
 }
 
+const GrowthCalculator = ({ t, dark: bd, navigate }) => {
+  const tc = t.calc;
+  const [budget,setBudget]=useState(2500);
+  const [ind,setInd]=useState(0);
+  const mult=[
+    {reach:38,lead:0.011,roas:5.2},
+    {reach:30,lead:0.014,roas:4.4},
+    {reach:26,lead:0.018,roas:4.0},
+    {reach:28,lead:0.013,roas:4.6},
+    {reach:18,lead:0.022,roas:6.1},
+    {reach:34,lead:0.012,roas:3.8},
+  ];
+  const m=mult[ind]||mult[0];
+  const reach=Math.round(budget*m.reach);
+  const leads=Math.round(budget*m.reach*m.lead);
+  const roas=m.roas.toFixed(1);
+  const fmt=n=>new Intl.NumberFormat('de-DE').format(n);
+  return (
+    <section id="calculator" className={`py-28 px-5 border-t ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3}}>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <div className={`${bd?'badge-dark':'badge-light'} mb-5 reveal inline-block`}>{tc.badge}</div>
+          <h2 className={`text-[clamp(30px,4.5vw,56px)] font-black tracking-tight reveal ${bd?'text-white':'text-zinc-900'}`}>{tc.h}</h2>
+          <p className={`text-base max-w-xl mx-auto mt-4 reveal ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.sub}</p>
+        </div>
+        <div className="grid lg:grid-cols-2 gap-5 reveal">
+          <div className={`rounded-2xl p-8 ${bd?'card-dark':'card-light'}`}>
+            <label className={`block text-xs font-semibold tracking-widest uppercase mb-3 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.budgetLabel}</label>
+            <div className={`text-4xl font-black mb-5 ${bd?'text-white':'text-zinc-900'}`}>€{fmt(budget)}<span className={`text-base font-medium ${bd?'text-zinc-600':'text-zinc-400'}`}>{tc.perMonth}</span></div>
+            <input type="range" min="500" max="20000" step="100" value={budget} onChange={e=>setBudget(+e.target.value)} className="growth-slider" aria-label={tc.budgetLabel}/>
+            <div className={`flex justify-between text-xs mt-2 ${bd?'text-zinc-600':'text-zinc-400'}`}><span>€500</span><span>€20.000</span></div>
+            <label className={`block text-xs font-semibold tracking-widest uppercase mt-8 mb-3 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.industryLabel}</label>
+            <div className="flex flex-wrap gap-2">
+              {tc.industries.map((label,i)=>(
+                <button key={i} onClick={()=>setInd(i)} className={`text-sm px-4 py-2 rounded-full font-medium transition-all duration-200 cursor-pointer ${ind===i?(bd?'bg-white text-zinc-900':'bg-zinc-900 text-white'):(bd?'bg-zinc-800/60 text-zinc-400 hover:text-white':'bg-zinc-100 text-zinc-500 hover:text-zinc-900')}`}>{label}</button>
+              ))}
+            </div>
+          </div>
+          <div className={`rounded-2xl p-8 relative overflow-hidden ${bd?'card-dark':'card-light'}`}>
+            <div className="cta-orb" style={{width:240,height:240,top:-60,right:-60,background:'radial-gradient(circle,rgba(124,108,246,.45),transparent 70%)'}}/>
+            <div className="relative space-y-6">
+              <div>
+                <div className={`text-xs font-semibold tracking-widest uppercase mb-1 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.out_reach}</div>
+                <div className={`calc-num text-3xl md:text-4xl font-black ${bd?'text-white':'text-zinc-900'}`} key={'r'+reach}>{fmt(reach)}+</div>
+              </div>
+              <div className={`w-full h-px ${bd?'bg-zinc-800':'bg-zinc-100'}`}/>
+              <div>
+                <div className={`text-xs font-semibold tracking-widest uppercase mb-1 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.out_leads}</div>
+                <div className={`calc-num text-3xl md:text-4xl font-black ${bd?'text-white':'text-zinc-900'}`} key={'l'+leads}>~{fmt(leads)}</div>
+              </div>
+              <div className={`w-full h-px ${bd?'bg-zinc-800':'bg-zinc-100'}`}/>
+              <div>
+                <div className={`text-xs font-semibold tracking-widest uppercase mb-1 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.out_roas}</div>
+                <div className="calc-num text-3xl md:text-4xl font-black g-text" key={'o'+roas}>{roas}×</div>
+              </div>
+              <button onClick={()=>navigate('#contact')} className="btn-p w-full py-3.5 rounded-xl text-sm font-bold mt-2 cursor-pointer">{tc.cta}</button>
+            </div>
+          </div>
+        </div>
+        <p className={`text-center text-xs mt-8 max-w-2xl mx-auto reveal ${bd?'text-zinc-700':'text-zinc-300'}`}>{tc.disclaimer}</p>
+      </div>
+    </section>
+  );
+};
+
+const GuaranteeSection = ({ t, dark: bd }) => {
+  const tg = t.guarantee;
+  const icons=[
+    <><path d="M9 12l2 2 4-4"/><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></>,
+    <><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="M9 16l2 2 4-4"/></>,
+    <><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h.01"/><path d="M9 13h.01"/></>,
+    <><path d="M3 3v18h18"/><path d="M7 14l3-3 3 2 4-5"/></>,
+  ];
+  return (
+    <section className={`py-28 px-5 border-t ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3}}>
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <div className={`${bd?'badge-dark':'badge-light'} mb-5 reveal inline-block`}>{tg.badge}</div>
+          <h2 className={`text-[clamp(30px,4.5vw,56px)] font-black tracking-tight reveal ${bd?'text-white':'text-zinc-900'}`}>{tg.h}</h2>
+          <p className={`text-base max-w-xl mx-auto mt-4 reveal ${bd?'text-zinc-500':'text-zinc-400'}`}>{tg.sub}</p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {tg.items.map((it,i)=>(
+            <div key={i} className={`guarantee-card rounded-2xl p-7 glow-card reveal d${i+1} ${bd?'card-dark':'card-light'}`}>
+              <div className={`guarantee-icon w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${bd?'bg-zinc-800':'bg-zinc-100'}`}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={bd?'#a78bfa':'#7c6cf6'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{icons[i]}</svg>
+              </div>
+              <h3 className={`text-lg font-black mb-2 ${bd?'text-white':'text-zinc-900'}`}>{it.t}</h3>
+              <p className={`text-sm leading-relaxed ${bd?'text-zinc-500':'text-zinc-400'}`}>{it.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FAQSection = ({ t, dark: bd }) => {
+  const tf = t.faq;
+  const [open,setOpen]=useState(0);
+  return (
+    <section id="faq" className={`py-28 px-5 border-t ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3}}>
+      <div className="max-w-3xl mx-auto">
+        <div className="text-center mb-14">
+          <div className={`${bd?'badge-dark':'badge-light'} mb-5 reveal inline-block`}>{tf.badge}</div>
+          <h2 className={`text-[clamp(30px,4.5vw,56px)] font-black tracking-tight reveal ${bd?'text-white':'text-zinc-900'}`}>{tf.h}</h2>
+        </div>
+        <div className="space-y-3">
+          {tf.items.map((it,i)=>{
+            const isOpen=open===i;
+            return (
+              <div key={i} className={`faq-item rounded-2xl reveal d${(i%6)+1} ${bd?'card-dark':'card-light'}`}>
+                <button onClick={()=>setOpen(isOpen?-1:i)} aria-expanded={isOpen} className={`w-full flex items-center justify-between gap-4 text-left px-6 py-5 cursor-pointer ${bd?'text-white':'text-zinc-900'}`}>
+                  <span className="font-bold text-base">{it.q}</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,transform:isOpen?'rotate(45deg)':'none',transition:'transform .3s cubic-bezier(.4,0,.2,1)'}}><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+                <div className="faq-body" style={{maxHeight:isOpen?'260px':'0',opacity:isOpen?1:0}}>
+                  <p className={`px-6 pb-5 text-sm leading-relaxed ${bd?'text-zinc-400':'text-zinc-500'}`}>{it.a}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 function App() {
   const [page,setPage]=useState('home');
   const [lang,setLang]=useState('DE');
@@ -1560,7 +1688,7 @@ function App() {
 
   const goContact=()=>navigate('#contact');
   const pages={
-    home:<><HeroSection t={t} dark={dark} navigate={navigate}/><TrustSection t={t} dark={dark}/><ServicesSection t={t} dark={dark} onService={svc=>setModal(svc)}/><ChipSection dark={dark}/><ProcessSection t={t} dark={dark}/><PortfolioSection t={t} dark={dark} navigate={navigate}/><PricingSection t={t} dark={dark} billing={billing} setBilling={setBilling} navigate={navigate}/><ContactSection t={t} dark={dark}/></>,
+    home:<><HeroSection t={t} dark={dark} navigate={navigate}/><TrustSection t={t} dark={dark}/><ServicesSection t={t} dark={dark} onService={svc=>setModal(svc)}/><ChipSection dark={dark}/><ProcessSection t={t} dark={dark}/><PortfolioSection t={t} dark={dark} navigate={navigate}/><GrowthCalculator t={t} dark={dark} navigate={navigate}/><GuaranteeSection t={t} dark={dark}/><PricingSection t={t} dark={dark} billing={billing} setBilling={setBilling} navigate={navigate}/><FAQSection t={t} dark={dark}/><ContactSection t={t} dark={dark}/></>,
     about:<AboutPage dark={dark} t={t} navigate={navigate}/>,
     portfolio:<PortfolioPage t={t} dark={dark}/>,
     impressum:<ImpressumPage dark={dark}/>,

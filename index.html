@@ -441,6 +441,24 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   html{scroll-behavior:auto}
   .reveal,.reveal-l,.reveal-r{opacity:1!important;transform:none!important}
 }
+
+/* ── Growth calculator ── */
+.growth-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;background:rgba(124,108,246,.25);outline:none;cursor:pointer}
+.growth-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#fff,#c7c7d1);border:2px solid #7c6cf6;cursor:pointer;box-shadow:0 4px 14px rgba(124,108,246,.5);transition:transform .15s}
+.growth-slider::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.growth-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #7c6cf6;cursor:pointer}
+.calc-num{animation:calc-pop .45s cubic-bezier(.2,.7,.3,1.3)}
+@keyframes calc-pop{0%{opacity:0;transform:translateY(8px) scale(.96)}100%{opacity:1;transform:none}}
+
+/* ── Guarantee cards ── */
+.guarantee-card{transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.guarantee-card:hover{transform:translateY(-6px)}
+.guarantee-icon{transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.guarantee-card:hover .guarantee-icon{transform:scale(1.1) rotate(-6deg)}
+
+/* ── FAQ accordion ── */
+.faq-item{overflow:hidden;transition:border-color .3s}
+.faq-body{overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s}
 </style>
 </head>
 <body>
@@ -554,6 +572,9 @@ window.T = {
       s1v:'+100%',s1l:'Generierter Umsatz',s2v:'Perfekte',s2l:'Kundenzufriedenheit',s3v:'Unzählige',s3l:'Projekte geliefert',s4v:'100%',s4l:'Zufriedene Kunden',
     },
     trust:{label:'Betreute Branchen'},
+    calc:{badge:'Wachstums-Simulator',h:'Berechne dein Potenzial.',sub:'Verschiebe die Regler und sieh, was strategisches Marketing aus deinem Budget machen kann. Unverbindliche Orientierung — keine garantierten Werte.',budgetLabel:'Monatliches Marketing-Budget',perMonth:' /Monat',industryLabel:'Branche',out_reach:'Geschätzte Reichweite / Monat',out_leads:'Qualifizierte Leads / Monat',out_roas:'Möglicher ROAS',disclaimer:'Simulationswerte basieren auf Branchen-Durchschnitten und Erfahrungswerten. Tatsächliche Ergebnisse hängen von Markt, Angebot und Umsetzung ab.',cta:'Echte Strategie besprechen',industries:['E-Commerce','Gastronomie','Gesundheit','Dienstleistung','B2B / SaaS','Lokales Geschäft']},
+    guarantee:{badge:'Unser Versprechen',h:'Null Risiko. Volle Verbindlichkeit.',sub:'Wir binden Kunden durch Ergebnisse — nicht durch Verträge.',items:[{t:'KPI-Garantie',d:'Wir definieren messbare Ziele vorab. Erreichen wir sie nicht, arbeiten wir kostenlos weiter — bis sie stehen.'},{t:'Monatlich kündbar',d:'Keine Knebelverträge, keine Mindestlaufzeit. Du bleibst, weil es funktioniert.'},{t:'Alles in-house',d:'Keine Subunternehmer. Dieselben Menschen, die planen, setzen auch um.'},{t:'Transparente Reportings',d:'Jeden Monat klare Zahlen. Du siehst genau, wohin jeder Euro fließt.'}]},
+    faq:{badge:'Häufige Fragen',h:'Alles, was du wissen musst.',items:[{q:'Wie schnell sehe ich erste Ergebnisse?',a:'Bei Paid Ads typischerweise ab Woche 2–4. SEO und organisches Wachstum brauchen 3–6 Monate für nachhaltige Effekte. Wir kommunizieren realistische Zeitrahmen von Anfang an.'},{q:'Was kostet eine Zusammenarbeit?',a:'Projekte starten ab €1.200/Monat, Web-Projekte ab €3.500. Den genauen Umfang definieren wir nach einem kostenlosen Erstgespräch — passend zu deinen Zielen.'},{q:'Arbeitet ihr auch mit kleinen Unternehmen?',a:'Ja. Vom lokalen Handwerksbetrieb bis zum wachsenden B2B-Unternehmen — entscheidend ist der Wille zu wachsen, nicht die Größe.'},{q:'Bin ich an einen Vertrag gebunden?',a:'Nein. Alle laufenden Leistungen sind monatlich kündbar. Wir halten unsere Kunden durch Leistung.'},{q:'Wie läuft die Zusammenarbeit ab?',a:'Strategiegespräch → Konzept → Umsetzung → kontinuierliche Optimierung. Du hast einen festen Ansprechpartner und monatliche Reportings.'}]},
     services:{
       badge:'Was wir liefern',
       h:'Keine Kompromisse. Nur Ergebnisse.',
@@ -666,6 +687,9 @@ window.T = {
       s1v:'+100%',s1l:'Revenue generated',s2v:'100%',s2l:'Client satisfaction',s3v:'Many',s3l:'Projects delivered',s4v:'Uncountable',s4l:'Happy clients',
     },
     trust:{label:'Industries served'},
+    calc:{badge:'Growth Simulator',h:'Calculate your potential.',sub:'Move the sliders and see what strategic marketing can do with your budget. Non-binding orientation — not guaranteed figures.',budgetLabel:'Monthly marketing budget',perMonth:' /mo',industryLabel:'Industry',out_reach:'Est. reach / month',out_leads:'Qualified leads / month',out_roas:'Potential ROAS',disclaimer:'Simulated values are based on industry averages and experience. Actual results depend on market, offer and execution.',cta:'Discuss a real strategy',industries:['E-Commerce','Hospitality','Healthcare','Services','B2B / SaaS','Local business']},
+    guarantee:{badge:'Our promise',h:'Zero risk. Full commitment.',sub:'We keep clients through results — not contracts.',items:[{t:'KPI guarantee',d:'We define measurable goals upfront. If we miss them, we keep working for free until they are met.'},{t:'Cancel monthly',d:'No lock-in contracts, no minimum term. You stay because it works.'},{t:'All in-house',d:'No subcontractors. The same people who plan also execute.'},{t:'Transparent reporting',d:'Clear numbers every month. You see exactly where every euro goes.'}]},
+    faq:{badge:'FAQ',h:'Everything you need to know.',items:[{q:'How fast will I see results?',a:'For paid ads typically from week 2–4. SEO and organic growth need 3–6 months for sustainable effects. We communicate realistic timelines from the start.'},{q:'What does working together cost?',a:'Projects start at €1,200/month, web projects from €3,500. We define the exact scope after a free initial call — tailored to your goals.'},{q:'Do you work with small businesses?',a:'Yes. From the local craftsman to the growing B2B company — what matters is the will to grow, not company size.'},{q:'Am I locked into a contract?',a:'No. All ongoing services can be cancelled monthly. We keep our clients through performance.'},{q:'How does the collaboration work?',a:'Strategy call → concept → execution → continuous optimization. You get a dedicated contact and monthly reporting.'}]},
     services:{
       badge:'What we deliver',
       h:'No compromises. Only results.',
@@ -770,6 +794,9 @@ window.T = {
       s1v:'€48M+',s1l:'Ingresos generados',s2v:'97%',s2l:'Satisfacción del cliente',s3v:'340+',s3l:'Proyectos entregados',s4v:'4',s4l:'Clientes satisfechos',
     },
     trust:{label:'Sectores atendidos'},
+    calc:{badge:'Simulador de crecimiento',h:'Calcula tu potencial.',sub:'Mueve los controles y descubre qué puede lograr el marketing estratégico con tu presupuesto. Orientación no vinculante — no son cifras garantizadas.',budgetLabel:'Presupuesto mensual de marketing',perMonth:' /mes',industryLabel:'Sector',out_reach:'Alcance est. / mes',out_leads:'Leads cualificados / mes',out_roas:'ROAS potencial',disclaimer:'Los valores simulados se basan en promedios del sector y experiencia. Los resultados reales dependen del mercado, la oferta y la ejecución.',cta:'Hablar de una estrategia real',industries:['E-Commerce','Hostelería','Salud','Servicios','B2B / SaaS','Negocio local']},
+    guarantee:{badge:'Nuestra promesa',h:'Cero riesgo. Compromiso total.',sub:'Retenemos clientes por resultados — no por contratos.',items:[{t:'Garantía de KPI',d:'Definimos objetivos medibles desde el inicio. Si no los alcanzamos, seguimos trabajando gratis hasta lograrlo.'},{t:'Cancela cada mes',d:'Sin contratos de permanencia, sin plazo mínimo. Te quedas porque funciona.'},{t:'Todo interno',d:'Sin subcontratistas. Las mismas personas que planifican también ejecutan.'},{t:'Informes transparentes',d:'Cifras claras cada mes. Ves exactamente a dónde va cada euro.'}]},
+    faq:{badge:'Preguntas frecuentes',h:'Todo lo que necesitas saber.',items:[{q:'¿Con qué rapidez veré resultados?',a:'En paid ads normalmente desde la semana 2–4. El SEO y el crecimiento orgánico necesitan 3–6 meses para efectos sostenibles. Comunicamos plazos realistas desde el principio.'},{q:'¿Cuánto cuesta trabajar juntos?',a:'Los proyectos empiezan en 1.200 €/mes, los proyectos web desde 3.500 €. Definimos el alcance exacto tras una primera llamada gratuita.'},{q:'¿Trabajáis con pequeñas empresas?',a:'Sí. Desde el negocio local hasta la empresa B2B en crecimiento — lo que importa es la voluntad de crecer, no el tamaño.'},{q:'¿Estoy atado a un contrato?',a:'No. Todos los servicios continuos se pueden cancelar mensualmente. Retenemos a nuestros clientes por rendimiento.'},{q:'¿Cómo es la colaboración?',a:'Llamada estratégica → concepto → ejecución → optimización continua. Tienes un contacto dedicado e informes mensuales.'}]},
     services:{
       badge:'Lo que entregamos',
       h:'Sin compromisos. Solo resultados.',
