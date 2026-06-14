@@ -310,6 +310,10 @@ const ChipSVG = ({ dark: bd, progress }) => {
   const pc=bd?'#3a3a45':'#b0b0bc';
   const ic=bd?'#caa44e':'#c79a3e';
   const gc_on=bd?'#22c55e':'#16a34a';
+  const pp=(progress*2)%1;
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  const ringGlow=0.10+Math.abs(Math.sin(progress*6))*0.24;
+  const holoX=CX+pp*CS-CS*0.5;
   return (
     <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}
       style={{filter:bd
@@ -337,6 +341,11 @@ const ChipSVG = ({ dark: bd, progress }) => {
           <stop offset="0%" stopColor={bd?'rgba(139,124,255,.12)':'rgba(90,70,210,.07)'}/>
           <stop offset="50%" stopColor={bd?'rgba(16,185,129,.06)':'rgba(5,150,105,.04)'}/>
           <stop offset="100%" stopColor={bd?'rgba(59,130,246,.11)':'rgba(40,90,200,.06)'}/>
+        </linearGradient>
+        <linearGradient id="holoSweep" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="rgba(255,255,255,0)"/>
+          <stop offset="50%" stopColor={bd?'rgba(190,180,255,.16)':'rgba(255,255,255,.5)'}/>
+          <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
         </linearGradient>
       </defs>
 
@@ -455,6 +464,32 @@ const ChipSVG = ({ dark: bd, progress }) => {
         fill="none" stroke={bd?'rgba(255,255,255,.05)':'rgba(0,0,0,.04)'} strokeWidth={.8}/>
       <path d={`M ${CX} ${CY+CS-34} L ${CX-16} ${CY+CS-34} L ${CX-16} ${CY+CS-60}`}
         fill="none" stroke={bd?'rgba(255,255,255,.05)':'rgba(0,0,0,.04)'} strokeWidth={.8}/>
+
+      {/* ── Pulsing outer glow ring ── */}
+      <rect x={CX-7} y={CY-7} width={CS+14} height={CS+14} rx="23" fill="none"
+        stroke={bd?`rgba(139,124,255,${ringGlow})`:`rgba(90,70,210,${ringGlow})`} strokeWidth={1.5}/>
+
+      {/* ── Holographic sweep ── */}
+      <g clipPath="url(#chipClip)">
+        <rect x={holoX} y={CY} width={CS*0.5} height={CS} fill="url(#holoSweep)" pointerEvents="none"/>
+      </g>
+
+      {/* ── Traveling data pulses along the bus ── */}
+      {[
+        {x:lerp(CX+coreOff+coreS,juncX,pp), y:juncY},
+        {x:lerp(CX+coreOff+coreS+coreGap,juncX,pp), y:juncY},
+        {x:juncX, y:lerp(CY+coreOff+coreS,juncY,pp)},
+        {x:juncX, y:lerp(CY+coreOff+coreS+coreGap,juncY,pp)},
+      ].map((p,i)=>(
+        <g key={`pulse${i}`}>
+          <circle cx={p.x} cy={p.y} r={3.4} fill={bd?'#5eead4':'#16a34a'} style={{filter:`drop-shadow(0 0 5px ${bd?'#22c55e':'#16a34a'})`}}/>
+          <circle cx={p.x} cy={p.y} r={1.4} fill="#fff" opacity={.92}/>
+        </g>
+      ))}
+
+      {/* ── Junction supercharge ── */}
+      <circle cx={juncX} cy={juncY} r={5+Math.abs(Math.sin(progress*8))*4} fill="none"
+        stroke={bd?'rgba(94,234,212,.55)':'rgba(22,163,74,.5)'} strokeWidth={1}/>
     </svg>
   );
 };
@@ -650,6 +685,7 @@ const HeroSection = ({ t, dark: bd, navigate }) => {
       <div aria-hidden="true" style={{position:'absolute',top:'-20%',right:'5%',width:700,height:700,borderRadius:'60% 40% 30% 70%/60% 30% 70% 40%',background:'rgba(124,58,237,0.1)',filter:'blur(110px)',animation:'blob 13s ease-in-out infinite',pointerEvents:'none'}}/>
       <div aria-hidden="true" style={{position:'absolute',bottom:'-15%',left:'-5%',width:600,height:600,borderRadius:'50%',background:'rgba(16,185,129,0.07)',filter:'blur(110px)',animation:'blob 15s ease-in-out infinite',animationDelay:'-6s',pointerEvents:'none'}}/>
       <div aria-hidden="true" style={{position:'absolute',top:'30%',right:'-8%',width:400,height:400,borderRadius:'50%',background:'rgba(59,130,246,0.06)',filter:'blur(90px)',animation:'blob 11s ease-in-out infinite',animationDelay:'-3s',pointerEvents:'none'}}/>
+      <div className="hero-beam" aria-hidden="true"/>
       <div className="hero-aurora" aria-hidden="true"/>
       <div className="hero-spotlight" aria-hidden="true"/>
 
@@ -1737,14 +1773,68 @@ const GuaranteeSection = ({ t, dark: bd }) => {
 
 const FAQSection = ({ t, dark: bd }) => {
   const tf = t.faq;
+  const ta = tf.assist;
   const [open,setOpen]=useState(0);
+  const [q,setQ]=useState('');
+  const [ans,setAns]=useState(null);
+  const [typed,setTyped]=useState('');
+  const [thinking,setThinking]=useState(false);
+  const timer=useRef(null); const think=useRef(null);
+  const ask=(text)=>{
+    const raw = text!=null ? text : q;
+    const query=(raw||'').toLowerCase().trim();
+    if(!query)return;
+    if(text!=null)setQ(text);
+    let best=null,score=0;
+    for(const e of tf.kb){ let s=0; for(const k of e.k){ if(query.includes(k)) s+=k.length; } if(s>score){score=s;best=e;} }
+    const answer = score>0 ? best.a : ta.fallback;
+    clearInterval(timer.current); clearTimeout(think.current);
+    setThinking(true); setAns(null); setTyped('');
+    think.current=setTimeout(()=>{
+      setThinking(false); setAns({matched:score>0});
+      let i=0;
+      timer.current=setInterval(()=>{ i+=2; setTyped(answer.slice(0,i)); if(i>=answer.length)clearInterval(timer.current); },14);
+    },520);
+  };
+  useEffect(()=>()=>{clearInterval(timer.current);clearTimeout(think.current);},[]);
   return (
     <section id="faq" className={`py-28 px-5 border-t ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3}}>
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-14">
+        <div className="text-center mb-12">
           <div className={`${bd?'badge-dark':'badge-light'} mb-5 reveal inline-block`}>{tf.badge}</div>
           <h2 className={`text-[clamp(30px,4.5vw,56px)] font-black tracking-tight reveal ${bd?'text-white':'text-zinc-900'}`}>{tf.h}</h2>
         </div>
+
+        {/* ── Knowledge Assistant ── */}
+        <div className={`faq-assist rounded-2xl p-6 mb-12 reveal ${bd?'card-dark':'card-light'}`}>
+          <div className="flex items-center gap-2.5 mb-4">
+            <span className="faq-orb" aria-hidden="true"/>
+            <span className={`text-sm font-bold ${bd?'text-white':'text-zinc-900'}`}>{ta.title}</span>
+          </div>
+          <form onSubmit={e=>{e.preventDefault();ask();}} className="flex gap-2">
+            <input value={q} onChange={e=>setQ(e.target.value)} placeholder={ta.placeholder} aria-label={ta.title}
+              autoComplete="off" spellCheck={false}
+              className={`flex-1 px-4 py-3 rounded-xl text-sm ${bd?'inp-dark':'inp-light'}`}/>
+            <button type="submit" aria-label={ta.send}
+              className="btn-p px-5 rounded-xl flex items-center justify-center cursor-pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </form>
+          <div className="flex flex-wrap gap-2 mt-3">
+            {ta.chips.map((c,i)=>(
+              <button key={i} onClick={()=>ask(c)}
+                className={`text-xs px-3 py-1.5 rounded-full font-medium cursor-pointer transition-all duration-200 ${bd?'bg-zinc-800/60 text-zinc-400 hover:text-white hover:bg-zinc-800':'bg-zinc-100 text-zinc-500 hover:text-zinc-900'}`}>{c}</button>
+            ))}
+          </div>
+          {(thinking||ans)&&(
+            <div className={`faq-answer mt-4 p-4 rounded-xl text-sm leading-relaxed ${bd?'bg-zinc-900/70 text-zinc-300':'bg-zinc-50 text-zinc-600'}`} aria-live="polite">
+              {thinking
+                ? <span className="faq-think"><span/><span/><span/></span>
+                : <>{typed}<span className="faq-caret" aria-hidden="true"/></>}
+            </div>
+          )}
+        </div>
+
         <div className="space-y-3">
           {tf.items.map((it,i)=>{
             const isOpen=open===i;
