@@ -29,7 +29,7 @@
 </script>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg"/>
 <link rel="preload" href="./inter-var.woff2" as="font" type="font/woff2" crossorigin/>
-<link rel="stylesheet" href="./tailwind.css?v=3"/>
+<link rel="stylesheet" href="./tailwind.css?v=5"/>
 <style>
 /* ── Self-hosted Inter (variable, 400-900) ── */
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:swap;src:url('./inter-var.woff2') format('woff2')}
@@ -521,6 +521,441 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .orbit-card{position:absolute;top:-42px;left:-82px;width:164px;height:84px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-weight:700;font-size:13px;letter-spacing:-.01em;backface-visibility:hidden;box-shadow:0 18px 40px rgba(0,0,0,.4)}
 @media(max-width:640px){.orbit-viewport{perspective:900px;height:380px}.orbit-card{width:140px;left:-70px}}
 @media (prefers-reduced-motion:reduce){.hero-aurora,.hero-beam,.proc-ring,.faq-orb,.faq-caret,.faq-think span,.orbit-stage,.orbit-core{animation:none}.orbit-tilt{transform:rotateX(-10deg)}}
+/* ── Kinetic Manifest hero (HeroSection 4.0) ── */
+.kx-hero{position:relative;overflow:hidden;min-height:100vh;min-height:100dvh;display:flex;align-items:center;background:#030303}
+.page-light .kx-hero{background:#fafafb}
+/* Static near-black mesh: two soft off-axis orbs (violet TL, emerald BR), under ~8% */
+.kx-mesh{position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:
+    radial-gradient(48% 42% at 18% 14%, rgba(139,124,255,.075), transparent 70%),
+    radial-gradient(46% 44% at 82% 86%, rgba(16,185,129,.07), transparent 72%)}
+.page-light .kx-mesh{background:
+    radial-gradient(48% 42% at 18% 14%, rgba(124,58,237,.07), transparent 70%),
+    radial-gradient(46% 44% at 82% 86%, rgba(5,150,105,.06), transparent 72%)}
+/* Faint perspective guide-lines receding to a vanishing point (no animation) */
+.kx-vanish{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.5;
+  background:
+    linear-gradient(115deg, transparent 49.85%, rgba(255,255,255,.035) 50%, transparent 50.15%),
+    linear-gradient(65deg, transparent 49.85%, rgba(255,255,255,.025) 50%, transparent 50.15%);
+  -webkit-mask:radial-gradient(70% 70% at 60% 55%, #000 0%, transparent 75%);
+          mask:radial-gradient(70% 70% at 60% 55%, #000 0%, transparent 75%)}
+.page-light .kx-vanish{background:
+    linear-gradient(115deg, transparent 49.85%, rgba(0,0,0,.04) 50%, transparent 50.15%),
+    linear-gradient(65deg, transparent 49.85%, rgba(0,0,0,.03) 50%, transparent 50.15%)}
+.kx-grain{position:absolute;z-index:2;opacity:.5}
+
+.kx-wrap{position:relative;max-width:1040px}
+/* Left-edge baseline tick + blinking caret signature */
+.kx-caret{position:absolute;left:-22px;top:6px;width:2px;height:54px;border-radius:2px;
+  background:linear-gradient(180deg,#a78bfa,#34d399);animation:kxBlink 1.15s steps(1,end) infinite;opacity:.85}
+@media(max-width:1024px){.kx-caret{display:none}}
+@keyframes kxBlink{0%,55%{opacity:.85}56%,100%{opacity:.12}}
+
+.kx-eyebrow{font-size:10px;letter-spacing:.2em}
+
+/* Oversized variable-weight manifesto headline */
+.kx-head{position:relative;margin:26px 0 30px;font-weight:400;line-height:.92;
+  letter-spacing:-.02em;text-wrap:balance;
+  font-size:clamp(2.8rem,8vw,8rem);font-feature-settings:"ss01" 1}
+.kx-line{display:block}
+.kx-dark{color:#fff}.kx-light{color:#0a0a0c}
+/* Per-glyph weight gravity well: JS writes only --w; transition gives spring decay */
+.kx-g{display:inline-block;font-variation-settings:'wght' var(--w,400);
+  transition:font-variation-settings .42s cubic-bezier(0.32,0.72,0,1), letter-spacing .42s cubic-bezier(0.32,0.72,0,1);
+  will-change:font-variation-settings}
+.kx-g-bold{font-variation-settings:'wght' var(--w,850)}
+/* Emphasized word: violet→emerald gradient clip (brand) */
+.kx-emph .kx-g,.kx-emph.kx-rot{
+  background:linear-gradient(135deg,#a78bfa 0%,#60a5fa 45%,#34d399 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-light .kx-emph .kx-g,.page-light .kx-emph.kx-rot{
+  background:linear-gradient(135deg,#7c3aed 0%,#2563eb 45%,#059669 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.kx-emph{display:inline-block}
+.kx-line-rot{margin-top:.04em}
+.kx-rot{font-variation-settings:'wght' 850;font-weight:850}
+
+/* One-shot light-seam: gradient clone masked by a translating gradient, transform-only */
+.kx-seam{position:absolute;inset:0;pointer-events:none;opacity:0}
+.kx-seam .kx-g,.kx-seam .kx-emph .kx-g{
+  background:linear-gradient(90deg,#34d399,#a78bfa);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  font-variation-settings:'wght' 850}
+.kx-seam-run .kx-seam{opacity:1;
+  -webkit-mask:linear-gradient(90deg,transparent 0%,#000 8%,#000 14%,transparent 22%);
+          mask:linear-gradient(90deg,transparent 0%,#000 8%,#000 14%,transparent 22%);
+  -webkit-mask-size:260% 100%;mask-size:260% 100%;
+  animation:kxSeam .8s cubic-bezier(0.32,0.72,0,1) forwards}
+@keyframes kxSeam{from{-webkit-mask-position:120% 0;mask-position:120% 0}to{-webkit-mask-position:-160% 0;mask-position:-160% 0}}
+
+.kx-sub{font-size:1.075rem;line-height:1.65;max-width:520px;margin:0 0 36px}
+
+/* CTAs */
+.kx-cta-p{display:inline-flex;align-items:center;gap:14px;padding:6px 6px 6px 26px;border-radius:9999px;font-weight:700;font-size:.9rem}
+.kx-cta-circ{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#09090b;color:#fff;transition:transform .35s cubic-bezier(0.32,0.72,0,1)}
+.kx-cta-p:hover .kx-cta-circ{transform:rotate(45deg)}
+.kx-cta-s{padding:14px 30px;border-radius:9999px;font-weight:600;font-size:.9rem}
+.kx-stats{padding-top:46px;margin-top:8px}
+
+/* Static fallback (reduced-motion OR touch): tasteful two-weight contrast, no reactivity */
+.kx-static .kx-g{transition:none!important}
+.kx-static .kx-g{font-variation-settings:'wght' 380}
+.kx-static .kx-g-bold,.kx-static .kx-rot{font-variation-settings:'wght' 850}
+
+/* Mobile: no hover reactivity, scale via clamp, stack CTAs full-width */
+@media(max-width:640px){
+  .kx-head{font-size:clamp(2.6rem,11vw,3.4rem);margin:20px 0 24px}
+  .kx-sub{font-size:1rem;margin-bottom:28px}
+  .kx-cta-p,.kx-cta-s{width:100%;justify-content:center}
+  .kx-stats{padding-top:34px}
+}
+@media (prefers-reduced-motion: reduce){
+  .kx-caret{animation:none;opacity:.6}
+  .kx-g{transition:none!important}
+  .kx-seam{display:none}        /* seam appears via static weights, no sweep */
+}
+
+/* ── CodeLab — live code runner ── */
+.codelab-editor{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  line-height:1.6;tab-size:2;min-height:340px;white-space:pre;overflow:auto;outline:none}
+.codelab-frame{border:0;min-height:340px;background:#fff}
+.codelab-console{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  line-height:1.6;padding:16px;min-height:340px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+.codelab-console.codelab-err{color:#f87171}
+.codelab-placeholder{display:flex;align-items:center;justify-content:center;gap:10px;
+  min-height:340px;font-size:13px;text-align:center;padding:20px}
+.codelab-spin{width:13px;height:13px;border-radius:50%;display:inline-block;
+  border:2px solid rgba(0,0,0,.25);border-top-color:currentColor;animation:codelab-rot .7s linear infinite}
+.codelab-spin-dark{border-color:rgba(255,255,255,.2);border-top-color:currentColor;width:16px;height:16px}
+@keyframes codelab-rot{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.codelab-spin{animation:none}}
+
+/* ── Craft / Live Build Terminal ── */
+.craft-grid{align-items:stretch}
+.craft-term-shell{display:flex;flex-direction:column;overflow:hidden;min-height:420px}
+.craft-bar{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid}
+.craft-dots{display:inline-flex;gap:7px;flex-shrink:0}
+.craft-dots i{width:11px;height:11px;border-radius:50%;display:block}
+.craft-file{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;letter-spacing:-.01em}
+.craft-pill{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.craft-pill-dark{background:rgba(167,139,250,.12);color:#c4b5fd}
+.craft-pill-light{background:rgba(124,108,246,.1);color:#6d5de0}
+.craft-pill.is-ok{background:rgba(52,211,153,.14);color:#34d399}
+.craft-pill-light.is-ok{background:rgba(16,185,129,.12);color:#059669}
+.craft-pill-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:craft-blink 1.2s ease-in-out infinite}
+.craft-pill.is-ok .craft-pill-dot{animation:none}
+@keyframes craft-blink{0%,100%{opacity:1}50%{opacity:.25}}
+.craft-screen{flex:1;padding:18px 18px 14px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.75;overflow:hidden;max-height:300px}
+.craft-line{display:flex;gap:9px;align-items:baseline;animation:craft-lineIn .26s cubic-bezier(.22,.61,.36,1) both}
+@keyframes craft-lineIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.craft-pfx{flex-shrink:0;font-weight:800;width:11px;text-align:center}
+.craft-txt{word-break:break-word}
+.craft-caret{display:inline-block;width:7px;height:13px;margin-left:2px;vertical-align:middle;background:currentColor;opacity:.75;animation:craft-caret 1s steps(1) infinite}
+@keyframes craft-caret{50%{opacity:0}}
+.craft-success{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12.5px;font-weight:700;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;animation:craft-lineIn .4s cubic-bezier(.22,.61,.36,1) both}
+.craft-progress-wrap{display:flex;align-items:center;gap:14px;padding:13px 16px;border-top:1px solid}
+.craft-progress-track{position:relative;flex:1;height:6px;border-radius:999px;overflow:hidden}
+.craft-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#7c6cf6,#34d399);transition:width .45s cubic-bezier(.32,.72,0,1);box-shadow:0 0 14px rgba(124,108,246,.5)}
+.craft-pct{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;font-weight:700;min-width:38px;text-align:right;font-variant-numeric:tabular-nums}
+.craft-replay{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;background:none;border:none;transition:color .25s ease}
+.craft-score-card{display:flex;flex-direction:column;justify-content:center}
+.craft-gauges{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 12px}
+.craft-gauge{display:flex;flex-direction:column;align-items:center;text-align:center;opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.32,.72,0,1),transform .7s cubic-bezier(.32,.72,0,1)}
+.craft-score-card.is-revealed .craft-gauge{opacity:1;transform:translateY(0)}
+.craft-ring{transition:stroke-dashoffset 1.1s cubic-bezier(.32,.72,0,1)}
+.craft-gauge-num{font-size:22px;font-weight:900;line-height:1;margin-top:-46px;margin-bottom:30px;pointer-events:none}
+.craft-gauge-lbl{font-size:11px;font-weight:600;letter-spacing:.02em}
+@media(max-width:640px){
+  .craft-screen{font-size:11.5px;max-height:248px;padding:14px}
+  .craft-gauges{gap:18px 8px}
+  .craft-gauge-num{font-size:20px}
+  .craft-term-shell{min-height:0}
+}
+@media (prefers-reduced-motion:reduce){
+  .craft-line,.craft-success,.craft-gauge{animation:none}
+  .craft-pill-dot,.craft-caret{animation:none}
+  .craft-progress-fill,.craft-ring,.craft-gauge{transition:none}
+  .craft-score-card .craft-gauge{opacity:1;transform:none}
+}
+
+/* ── Tutorials / CodeRunner — append before <\/style> (line 524 in index.html) ── */
+.coderunner{ backdrop-filter:blur(6px); }
+.cr-dark{ background:rgba(255,255,255,0.02); border-color:rgba(255,255,255,0.08); }
+.cr-light{ background:rgba(0,0,0,0.015); border-color:rgba(0,0,0,0.07); }
+.cr-dot{ width:11px;height:11px;border-radius:50%;display:inline-block; }
+.cr-editor{ tab-size:2; -moz-tab-size:2; white-space:pre; overflow:auto; }
+.cr-editor::placeholder{ color:#52525b; }
+.cr-output{ overflow:auto; }
+.cr-output pre{ overflow:auto; }
+.tut-diff{ white-space:nowrap; }
+/* Mobile: stack editor over output already handled by grid-cols-1; keep iframe min-height sane */
+@media (max-width:640px){ .coderunner iframe{ min-height:180px; } }
+
+/* NOTE: This is a FULL REPLACEMENT for the existing "Mastery Orbit (3D)" block
+   (currently index.html lines 513-522). Replace those lines in place; do NOT
+   append a second copy. Keep the prefers-reduced-motion rule at line 523 as-is
+   (it still references .orbit-core for core-pulse; the stage is now handled in JS). */
+
+/* ── Mastery Orbit (3D) ── */
+.orbit-section{padding:7rem 0}
+.orbit-viewport{position:relative;height:440px;perspective:1200px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.orbit-viewport.orbit-grabbing{cursor:grabbing}
+.orbit-core{position:absolute;z-index:2;width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(139,124,255,.28),transparent 70%);filter:drop-shadow(0 0 34px rgba(139,124,255,.45));animation:core-pulse 4s ease-in-out infinite;pointer-events:none}
+@keyframes core-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.orbit-tilt{position:absolute;transform-style:preserve-3d;transform:rotateX(var(--tilt,-10deg));transition:transform .3s ease-out;pointer-events:none}
+.orbit-stage{position:relative;transform-style:preserve-3d;will-change:transform}
+.orbit-card{position:absolute;top:-42px;left:-82px;width:164px;height:84px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-weight:700;font-size:13px;letter-spacing:-.01em;backface-visibility:hidden;box-shadow:0 18px 40px rgba(0,0,0,.4);pointer-events:none}
+@media(max-width:640px){.orbit-viewport{perspective:900px;height:380px}.orbit-card{width:140px;left:-70px}}
+
+/* Branchen page */
+.anim-fade{animation:fade-in .4s ease-out}
+
+/* ============================================================
+   GLOBAL DESIGN POLISH — append-only / safe overrides
+   Inserted immediately before the closing <\/style> tag.
+   No class renames. Pure CSS. Respects prefers-reduced-motion.
+   ============================================================ */
+
+/* --- 1. Refined type rhythm on big headings ---------------- */
+/* Tighter optical tracking + calmer line-height for display
+   text. Scoped to large Tailwind sizes only, so body copy and
+   small UI labels are untouched. text-wrap:balance kills
+   orphans on multi-line headers. */
+h1, h2,
+.text-4xl, .text-5xl, .text-6xl, .text-7xl, .text-8xl {
+  letter-spacing: -0.022em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+h3, .text-2xl, .text-3xl {
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+/* Gradient-clip headings can clip descenders at tight leading;
+   give them a hair of breathing room. */
+.g-text, .g-text-light {
+  padding-bottom: 0.02em;
+}
+
+/* --- 2. Richer card surfaces ------------------------------- */
+/* Gradient hairline border (via border-image), layered soft
+   shadows, and a faint inset top highlight. Uses the existing
+   hover translateY from card-dark/card-light without overriding
+   transform, so motion stays intact. */
+.card-dark {
+  border-color: transparent;
+  border-image: linear-gradient(
+      160deg,
+      rgba(255,255,255,0.14),
+      rgba(255,255,255,0.04) 38%,
+      rgba(255,255,255,0) 70%
+    ) 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 1px 2px rgba(0,0,0,0.35),
+    0 14px 40px -18px rgba(0,0,0,0.65);
+}
+.card-light {
+  border-color: transparent;
+  border-image: linear-gradient(
+      160deg,
+      rgba(255,255,255,0.9),
+      rgba(0,0,0,0.05) 42%,
+      rgba(0,0,0,0.02) 72%
+    ) 1;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 1px 2px rgba(20,20,30,0.06),
+    0 18px 44px -22px rgba(20,20,30,0.22);
+}
+.card-dark:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.09),
+    0 2px 4px rgba(0,0,0,0.4),
+    0 26px 60px -22px rgba(0,0,0,0.78);
+}
+.card-light:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    0 2px 6px rgba(20,20,30,0.08),
+    0 32px 66px -26px rgba(20,20,30,0.30);
+}
+
+/* --- 3. Glass surfaces: edge refraction -------------------- */
+/* A 1px inner highlight + soft inner shadow simulates the
+   refractive edge premium glass has. Background blur stays as
+   defined by glass-dark/glass-light. */
+.glass-dark {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 0 0 0 1px rgba(255,255,255,0.04),
+    0 20px 50px -24px rgba(0,0,0,0.7);
+}
+.glass-light {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    inset 0 0 0 1px rgba(255,255,255,0.5),
+    0 22px 54px -26px rgba(20,20,30,0.2);
+}
+
+/* --- 4. More tactile buttons ------------------------------- */
+/* Hover lift, pressed feedback, and a moving sheen highlight.
+   btn-p already owns an ::after sheen, so the sheen below is
+   applied via a layered background-image on the element itself
+   to avoid colliding with that pseudo-element. */
+.btn-p,
+.btn-s-dark,
+.btn-s-light {
+  transition:
+    transform 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+  will-change: transform;
+}
+.btn-p:hover,
+.btn-s-dark:hover,
+.btn-s-light:hover {
+  transform: translateY(-2px);
+}
+.btn-p:active,
+.btn-s-dark:active,
+.btn-s-light:active {
+  transform: translateY(0) scale(0.985);
+}
+.btn-p:hover {
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.18),
+    0 16px 34px -14px rgba(0,0,0,0.4);
+}
+/* Faint top sheen on the primary button surface (additive,
+   sits under the existing ::after sweep). */
+.btn-p {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0) 46%),
+    linear-gradient(135deg, #ffffff, #d4d4d8);
+}
+.btn-s-dark:hover {
+  box-shadow: 0 14px 30px -16px rgba(0,0,0,0.55);
+}
+.btn-s-light:hover {
+  box-shadow: 0 14px 30px -18px rgba(20,20,30,0.28);
+}
+
+/* --- 5. Badge polish --------------------------------------- */
+/* Gentle inset highlight so pills read as etched, not flat. */
+.badge-dark {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+.badge-light {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    inset 0 0 0 1px rgba(20,20,30,0.04);
+}
+
+/* --- 6. Smoother focus-visible rings ----------------------- */
+/* Keyboard-only ring (mouse clicks won't trigger it). Soft,
+   branded, offset — accessible without being harsh. */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.btn-p:focus-visible,
+.btn-s-dark:focus-visible,
+.btn-s-light:focus-visible {
+  outline: none;
+  border-radius: inherit;
+  box-shadow:
+    0 0 0 2px rgba(10,10,12,0.9),
+    0 0 0 4px rgba(255,255,255,0.55),
+    0 0 0 6px rgba(255,255,255,0.12);
+  transition: box-shadow 0.2s ease;
+}
+.page-light a:focus-visible,
+.page-light button:focus-visible,
+.page-light [role="button"]:focus-visible,
+.page-light input:focus-visible,
+.page-light textarea:focus-visible,
+.page-light select:focus-visible {
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 4px rgba(20,20,30,0.78),
+    0 0 0 6px rgba(20,20,30,0.10);
+}
+
+/* --- 7. Faint grain / noise overlay ------------------------ */
+/* Fixed, pointer-events-none, very low opacity. Uses an inline
+   SVG fractal-noise data URI so no asset is required. Sits above
+   content but never blocks interaction. Reduced-motion-safe by
+   construction (static), and disabled entirely if the user has
+   reduced data/motion preferences for extra restraint. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+.page-light body::after,
+body.page-light::after {
+  opacity: 0.028;
+  mix-blend-mode: multiply;
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after { opacity: 0.025; }
+}
+
+/* --- 8. Selection color ------------------------------------ */
+::selection {
+  background: rgba(255,255,255,0.22);
+  color: #ffffff;
+  text-shadow: none;
+}
+.page-light ::selection {
+  background: rgba(20,20,30,0.14);
+  color: #0a0a0c;
+}
+
+/* --- 9. Refined scrollbars --------------------------------- */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.18) transparent;
+}
+.page-light * {
+  scrollbar-color: rgba(20,20,30,0.22) transparent;
+}
+/* WebKit / Blink */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.16);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+  background-clip: padding-box;
+}
+.page-light ::-webkit-scrollbar-thumb {
+  background: rgba(20,20,30,0.2);
+  background-clip: padding-box;
+}
+.page-light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(20,20,30,0.34);
+  background-clip: padding-box;
+}
 </style>
 </head>
 <body>
@@ -625,7 +1060,7 @@ window.SERVICES_DETAIL = [
 // ── Translations ──
 window.T = {
   DE: {
-    nav:{services:'Services',process:'Prozess',cases:'Portfolio',pricing:'Preise',about:'Über uns',leistungen:'Leistungen',branchen:'Branchen',contact:'Kontakt'},
+    nav:{services:'Services',process:'Prozess',cases:'Portfolio',pricing:'Preise',about:'Über uns',leistungen:'Leistungen',branchen:'Branchen',tut:'Tutorials',contact:'Kontakt'},
     hero:{
       badge:'High Class Digital Agency · Hamburg',
       h1:'We build', h2:'digital presence.',
@@ -634,10 +1069,44 @@ window.T = {
       s1v:'+100%',s1l:'Generierter Umsatz',s2v:'Perfekte',s2l:'Kundenzufriedenheit',s3v:'Unzählige',s3l:'Projekte geliefert',s4v:'100%',s4l:'Zufriedene Kunden',
     },
     trust:{label:'Betreute Branchen'},
-    orbit:{badge:'Unser Können',h:'Acht Disziplinen. Ein System.',sub:'Jede Kompetenz greift in die nächste. Bewege die Maus und dreh das System.',hint:'Hover stoppt die Rotation',items:['SEO','Performance Ads','Web Design','Branding','Content','Social Media','Analytics','Conversion']},
+orbit:{badge:'Unser Können',h:'Acht Disziplinen. Ein System.',sub:'Jede Kompetenz greift in die nächste. Ziehe, um das System zu drehen.',hint:'Ziehen zum Drehen',items:['SEO','Performance Ads','Web Design','Branding','Content','Social Media','Analytics','Conversion']},
+
     leistungen:{badge:'Leistungen',h:'Alles, was deine Marke nach vorne bringt.',sub:'Sechs Disziplinen, ein Ziel: messbares Wachstum. Jede Leistung ist ein eigener Hebel — kombiniert werden sie zur Dominanz.',services:[{t:'Web Design & Development',d:'Schnelle, conversion-optimierte Websites, die nicht nur gut aussehen, sondern verkaufen. Von der ersten Skizze bis zum 100/100 Performance-Score.',tags:['React / Next.js','Core Web Vitals','CMS & Backend']},{t:'Performance Marketing',d:'Paid Ads mit chirurgischer Präzision. Wir testen, skalieren und optimieren, bis jeder Euro mehrfach zurückkommt.',tags:['Google Ads','Meta Ads','ROAS-Tracking']},{t:'SEO & Content',d:'Sichtbarkeit, die bleibt. Wir bauen Autorität auf, dominieren Rankings und liefern Inhalte, die ranken und verkaufen.',tags:['Technical SEO','Keyword-Strategie','Content-Cluster']},{t:'Branding & Identity',d:'Marken, die im Kopf bleiben. Identität, Stimme und Design, die Vertrauen schaffen und höhere Preise rechtfertigen.',tags:['Logo & System','Brand Voice','Guidelines']},{t:'Social Media',d:'Organisches Wachstum trifft virales Potenzial. Strategie, Kreativität und Community-Aufbau auf allen relevanten Kanälen.',tags:['Instagram','TikTok','LinkedIn']},{t:'Analytics & CRO',d:'Daten statt Bauchgefühl. Sauberes Tracking, klare Dashboards und kontinuierliche Conversion-Optimierung.',tags:['GA4','A/B-Testing','Dashboards']}],cta_h:'Welche Leistung bringt dich weiter?',cta_sub:'In einem kostenlosen Erstgespräch finden wir den stärksten Hebel für dein Wachstum.',cta:'Kostenlos beraten lassen'},
-    branchen:{badge:'Branchen',h:'Spezialisiert auf Wachstum — in jeder Branche.',sub:'Wir kennen die Mechaniken unterschiedlichster Märkte. Diese Branchen begleiten wir mit maßgeschneiderten Strategien.',items:[{t:'Gesundheit & Pflege',d:'Mehr Patienten, mehr Sichtbarkeit. Local SEO, Google Business und Vertrauen, das Termine bringt.'},{t:'Gastronomie',d:'Volle Tische statt leerer Stühle. Atmosphärische Websites, Bestellsysteme und Social, das hungrig macht.'},{t:'Dienstleistung & Handwerk',d:'Anfragen am Fließband. Klare Angebote, lokale Reichweite und Kampagnen, die Aufträge generieren.'},{t:'E-Commerce',d:'Skalierbarer Umsatz. Conversion-optimierte Shops, Performance Ads und ein profitabler ROAS.'},{t:'Gaming & Esports',d:'Community, die bleibt. Reichweite, Content und Branding für eine Szene, die Authentizität fordert.'},{t:'B2B & SaaS',d:'Qualifizierte Leads statt Streuverlust. Funnels, Content und Paid-Strategien für längere Sales-Zyklen.'}],cta_h:'Deine Branche ist nicht dabei?',cta_sub:'Wir arbeiten uns in jeden Markt ein. Erzähl uns von deinem — wir liefern die Strategie.',cta:'Branche besprechen'},
+    branchen:{badge:'Sectores',h:'Especializados en crecimiento — en cada sector.',sub:'Conocemos las mecánicas de los mercados más diversos. Elige un sector y descubre cómo lo hacemos crecer.',painLabel:'Reto',approachLabel:'Nuestro enfoque',items:[{t:'Salud y Cuidados',pain:'Poca visibilidad, agendas vacías, competencia en la página 1.',approach:'SEO local, optimización de Google Business y una web que genera confianza — visibles donde buscan los pacientes.',result:'#1',resultLabel:'en la búsqueda local',tags:['SEO local','Google Business','Diseño Web']},{t:'Hostelería',pain:'Mesas vacías entre semana, pocos pedidos online.',approach:'Web con atmósfera, sistema de pedidos y social que abre el apetito.',result:'+80%',resultLabel:'pedidos online',tags:['Diseño Web','Redes Sociales','Pedidos']},{t:'Servicios y Oficios',pain:'Carga de trabajo irregular, solicitudes intermitentes.',approach:'Ofertas claras, campañas locales y landing pages que generan solicitudes.',result:'+50%',resultLabel:'más solicitudes',tags:['Google Ads','Landing Pages','SEO local']},{t:'E-Commerce',pain:'Tráfico sin ingresos, anuncios no rentables.',approach:'Tienda optimizada para conversión, tracking limpio y performance ads escalables.',result:'8.4×',resultLabel:'ROAS',tags:['Performance Ads','CRO','Analítica']},{t:'Gaming y Esports',pain:'Alcance sí, pero sin comunidad leal.',approach:'Contenido auténtico, branding y comunidad en las plataformas correctas.',result:'2×',resultLabel:'crecimiento de comunidad',tags:['Branding','Contenido','Redes Sociales']},{t:'B2B y SaaS',pain:'Ciclos de venta largos, leads de baja calidad.',approach:'Estrategia de funnel, autoridad de contenido y campañas de pago para leads cualificados.',result:'+3×',resultLabel:'leads cualificados',tags:['Funnel','Contenido','LinkedIn Ads']}],cta_h:'¿Tu sector no aparece?',cta_sub:'Nos metemos en cualquier mercado. Cuéntanos el tuyo — entregamos la estrategia.',cta:'Hablar de tu sector'},
     kontaktpage:{badge:'Kontakt',h:'Lass uns dein Wachstum starten.',sub:'Schildere uns deine Situation — wir antworten innerhalb von 4 Stunden mit einem konkreten Plan. Kostenlos und unverbindlich.',channels:[{t:'E-Mail',v:'info@blackstone-agency.de'},{t:'Standort',v:'Hamburg, Deutschland'},{t:'Reaktionszeit',v:'< 4 Stunden'}]},
+codelab:{badge:'Live Code',h:'Ausführen. Direkt hier.',sub:'Ein echter Editor und eine echte Laufzeit — schreibe HTML oder Python und führe es live im Browser aus. Kein Setup, nichts zu installieren.',run:'Ausführen',running:'Läuft…',loadingPy:'Lädt…',loadingRuntime:'Python-Laufzeit wird geladen…',output:'Ausgabe',langLabel:'Sprache',editorLabel:'Code-Editor',idleHtml:'Klicke auf Ausführen, um dein HTML zu rendern.',idlePy:'Klicke auf Ausführen, um dein Python auszuführen.',htmlHint:'Läuft in einem sandboxed iframe (Scripts erlaubt).',pyHint:'Powered by Pyodide — wird beim ersten Lauf geladen.',empty:'(keine Ausgabe)',loadError:'Python-Laufzeit konnte nicht geladen werden.'},
+craft:{badge:'So geht es live',h:'Großartige Websites sind schwer zu bauen.',sub:'Kein Template, keine Abkürzung. Jede Zeile kompiliert, optimiert und ausgeliefert — sieh einem echten Build von Anfang bis Ende zu.',file:'blackstone — deploy.sh',building:'Baut',deployed:'Live',replay:'Erneut',shipped:'✓ In 38s in die Produktion deployed',scoreLabel:'Lighthouse — Produktion',scoreSub:'100 / 100. Jede Kategorie. Jedes Mal.',metrics:['Performance','Barrierefreiheit','Best Practices','SEO'],foot:'Das ist der Standard, nicht die Ausnahme. Alles darunter geht nie live.',log:[
+      {p:'$',txt:'npm run build && deploy --prod',w:2},
+      {p:'›',txt:'▲ Next.js 15.1 — Production-Bundle wird kompiliert',w:2},
+      {p:'✓',txt:'142 Module in 3.2s kompiliert',w:2},
+      {p:'›',txt:'Fonts, Bilder & Critical CSS werden optimiert',w:2},
+      {p:'✓',txt:'Tree-Shaking fertig — 41% kleinere Payload',w:2},
+      {p:'›',txt:'Statische Seiten werden generiert (12/12)',w:2},
+      {p:'✓',txt:'Above-the-fold-CSS inline · Assets preloaded',w:2},
+      {p:'!',txt:'Lighthouse-CI-Gate läuft (min. 100)…',w:2},
+      {p:'✓',txt:'Performance 100 · A11y 100 · SEO 100 · BP 100',w:3},
+      {p:'›',txt:'Upload ins Edge-Netzwerk — 38 Regionen',w:2},
+      {p:'✓',txt:'Live → blackstone-agency.de',w:2}
+    ]},
+    tut:{
+      badge:'Code Lab · Lerne live',
+      h:'Wie schwer ist es wirklich, eine Website zu bauen?',
+      sub:'Sechs Lektionen, vom ersten HTML-Tag bis zu animiertem Canvas und einem echten Algorithmus. Bearbeite den Code und führ ihn direkt im Browser aus.',
+      note:'Jede Lektion läuft sandboxed in deinem Browser — HTML/JS in einem isolierten iframe, Python über Pyodide (WebAssembly). Nichts wird gespeichert.',
+      run:'Ausführen', reset:'Zurücksetzen', code:'Code', output:'Ausgabe',
+      d_easy:'Einsteiger', d_mid:'Mittel', d_hard:'Schwer', d_expert:'Experte',
+      lessons:[
+        {t:'Deine erste HTML-Seite', d:'Jede Website beginnt mit HTML — der Struktur. Eine Überschrift, ein Absatz, ein Button. Ändere den Text und sieh sofort das Ergebnis.'},
+        {t:'CSS & Responsive Layout', d:'HTML ist das Skelett, CSS die Haut. Mit CSS-Grid wird ein Layout automatisch responsiv. Spiel mit den Werten und beobachte, wie sich die Karten anordnen.'},
+        {t:'JavaScript: DOM & Events', d:'Jetzt wird es interaktiv. JavaScript reagiert auf Aktionen, verändert Werte und schreibt in die Konsole. Hier zählt eine Funktion deine Klicks.'},
+        {t:'Async & fetch — echte Daten', d:'Echte Apps holen Daten von Servern. Mit async/await und fetch fragen wir live die GitHub-API ab. Asynchroner Code ist einer der häufigsten Stolpersteine.'},
+        {t:'Ein echter Algorithmus (Python)', d:'Quicksort — rekursiv, elegant, real. Hier läuft echtes Python im Browser via WebAssembly. Genau hier merkt man, dass Entwicklung Denken in Logik ist.'},
+        {t:'Animiertes Canvas', d:'Die Königsklasse: 60 Partikel, in jedem Frame neu berechnet und gezeichnet. Mathematik, Timing und Rendering greifen ineinander. Das ist echte Frontend-Tiefe.'},
+      ],
+      cta_h:'Sieht einfach aus? Auf diesem Niveau wird es kompliziert.',
+      cta_sub:'Genau diese Komplexität — sauber, schnell und skalierbar — übernehmen wir für dich. Du fokussierst dich auf dein Geschäft.',
+      cta:'Projekt starten',
+    },
     flow:{badge:'Die Blackstone-Philosophie',h:'Aus Daten wird Bewegung.',sub:'Jeder Punkt ein Datensignal. Jede Linie eine Entscheidung. So verwandeln wir Komplexität in Wachstum — beweg deinen Cursor und sieh, wie das Feld reagiert.',hint:'Interaktiv · beweg deinen Cursor'},
     calc:{badge:'Wachstums-Simulator',h:'Berechne dein Potenzial.',sub:'Verschiebe die Regler und sieh, was strategisches Marketing aus deinem Budget machen kann. Unverbindliche Orientierung — keine garantierten Werte.',budgetLabel:'Monatliches Marketing-Budget',perMonth:' /Monat',industryLabel:'Branche',out_reach:'Geschätzte Reichweite / Monat',out_leads:'Qualifizierte Leads / Monat',out_roas:'Möglicher ROAS',disclaimer:'Simulationswerte basieren auf Branchen-Durchschnitten und Erfahrungswerten. Tatsächliche Ergebnisse hängen von Markt, Angebot und Umsetzung ab.',cta:'Echte Strategie besprechen',industries:['E-Commerce','Gastronomie','Gesundheit','Dienstleistung','B2B / SaaS','Lokales Geschäft']},
     guarantee:{badge:'Unser Versprechen',h:'Null Risiko. Volle Verbindlichkeit.',sub:'Wir binden Kunden durch Ergebnisse — nicht durch Verträge.',items:[{t:'KPI-Garantie',d:'Wir definieren messbare Ziele vorab. Erreichen wir sie nicht, arbeiten wir kostenlos weiter — bis sie stehen.'},{t:'Monatlich kündbar',d:'Keine Knebelverträge, keine Mindestlaufzeit. Du bleibst, weil es funktioniert.'},{t:'Alles in-house',d:'Keine Subunternehmer. Dieselben Menschen, die planen, setzen auch um.'},{t:'Transparente Reportings',d:'Jeden Monat klare Zahlen. Du siehst genau, wohin jeder Euro fließt.'}]},
@@ -732,8 +1201,8 @@ window.T = {
     footer:{
       tagline:'Wir erschaffen digitale Dominanz für Marken, die führen wollen.',
       company:'Unternehmen',legal:'Rechtliches',
-      comp_links:['Über uns','Leistungen','Branchen','Portfolio','Blog','Karriere','Kontakt'],
-      comp_routes:['about','leistungen','branchen','portfolio','blog','karriere','kontakt'],
+      comp_links:['Über uns','Leistungen','Branchen','Tutorials','Portfolio','Blog','Karriere','Kontakt'],
+      comp_routes:['about','leistungen','branchen','tutorials','portfolio','blog','karriere','kontakt'],
       legal_links:['Impressum','Datenschutz','AGB','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
       copy:'© 2026 Blackstone Agency · Hamburg',
@@ -745,7 +1214,7 @@ window.T = {
     },
   },
   EN: {
-    nav:{services:'Services',process:'Process',cases:'Portfolio',pricing:'Pricing',about:'About',leistungen:'Solutions',branchen:'Industries',contact:'Contact'},
+    nav:{services:'Services',process:'Process',cases:'Portfolio',pricing:'Pricing',about:'About',leistungen:'Solutions',branchen:'Industries',tut:'Tutorials',contact:'Contact'},
     hero:{
       badge:'Premium Digital Agency · Hamburg',
       h1:'We build', h2:'digital presence.',
@@ -754,10 +1223,44 @@ window.T = {
       s1v:'+100%',s1l:'Revenue generated',s2v:'100%',s2l:'Client satisfaction',s3v:'Many',s3l:'Projects delivered',s4v:'Uncountable',s4l:'Happy clients',
     },
     trust:{label:'Industries served'},
-    orbit:{badge:'Our craft',h:'Eight disciplines. One system.',sub:'Every skill feeds the next. Move your mouse and rotate the system.',hint:'Hover pauses the rotation',items:['SEO','Performance Ads','Web Design','Branding','Content','Social Media','Analytics','Conversion']},
+orbit:{badge:'Our craft',h:'Eight disciplines. One system.',sub:'Every skill feeds the next. Drag to rotate the system.',hint:'Drag to rotate',items:['SEO','Performance Ads','Web Design','Branding','Content','Social Media','Analytics','Conversion']},
+
     leistungen:{badge:'Solutions',h:'Everything that moves your brand forward.',sub:'Six disciplines, one goal: measurable growth. Each service is its own lever — combined, they become dominance.',services:[{t:'Web Design & Development',d:'Fast, conversion-optimized websites that not only look great but sell. From first sketch to a 100/100 performance score.',tags:['React / Next.js','Core Web Vitals','CMS & Backend']},{t:'Performance Marketing',d:'Paid ads with surgical precision. We test, scale and optimize until every euro returns several times over.',tags:['Google Ads','Meta Ads','ROAS tracking']},{t:'SEO & Content',d:'Visibility that lasts. We build authority, dominate rankings and deliver content that ranks and sells.',tags:['Technical SEO','Keyword strategy','Content clusters']},{t:'Branding & Identity',d:'Brands that stick. Identity, voice and design that build trust and justify higher prices.',tags:['Logo & system','Brand voice','Guidelines']},{t:'Social Media',d:'Organic growth meets viral potential. Strategy, creativity and community building across every relevant channel.',tags:['Instagram','TikTok','LinkedIn']},{t:'Analytics & CRO',d:'Data over gut feeling. Clean tracking, clear dashboards and continuous conversion optimization.',tags:['GA4','A/B testing','Dashboards']}],cta_h:'Which service moves you forward?',cta_sub:'In a free initial call we find the strongest lever for your growth.',cta:'Get free advice'},
     branchen:{badge:'Industries',h:'Specialized in growth — in every industry.',sub:'We know the mechanics of the most diverse markets. These are the industries we support with tailored strategies.',items:[{t:'Healthcare & Care',d:'More patients, more visibility. Local SEO, Google Business and trust that books appointments.'},{t:'Hospitality',d:'Full tables instead of empty chairs. Atmospheric websites, ordering systems and social that makes people hungry.'},{t:'Services & Trades',d:'Enquiries on tap. Clear offers, local reach and campaigns that generate jobs.'},{t:'E-Commerce',d:'Scalable revenue. Conversion-optimized stores, performance ads and a profitable ROAS.'},{t:'Gaming & Esports',d:'Community that stays. Reach, content and branding for a scene that demands authenticity.'},{t:'B2B & SaaS',d:'Qualified leads instead of waste. Funnels, content and paid strategies for longer sales cycles.'}],cta_h:'Your industry not listed?',cta_sub:'We dive into any market. Tell us about yours — we deliver the strategy.',cta:'Discuss your industry'},
     kontaktpage:{badge:'Contact',h:'Let us start your growth.',sub:'Tell us your situation — we reply within 4 hours with a concrete plan. Free and non-binding.',channels:[{t:'Email',v:'info@blackstone-agency.de'},{t:'Location',v:'Hamburg, Germany'},{t:'Response time',v:'< 4 hours'}]},
+codelab:{badge:'Live Code',h:'Run it. Right here.',sub:'A real editor and a real runtime — write HTML or Python and execute it live in your browser. No setup, nothing to install.',run:'Run',running:'Running…',loadingPy:'Loading…',loadingRuntime:'Loading Python runtime…',output:'Output',langLabel:'Language',editorLabel:'Code editor',idleHtml:'Press Run to render your HTML.',idlePy:'Press Run to execute your Python.',htmlHint:'Runs in a sandboxed iframe (scripts allowed).',pyHint:'Powered by Pyodide — loaded on first run.',empty:'(no output)',loadError:'Could not load the Python runtime.'},
+craft:{badge:'How it ships',h:'Great websites are hard to build.',sub:'No template, no shortcut. Every line compiled, optimized and shipped — watch a real build run end to end.',file:'blackstone — deploy.sh',building:'Building',deployed:'Deployed',replay:'Replay',shipped:'✓ Deployed to production in 38s',scoreLabel:'Lighthouse — Production',scoreSub:'100 / 100. Every category. Every time.',metrics:['Performance','Accessibility','Best Practices','SEO'],foot:'This is the standard, not the exception. Anything less never goes live.',log:[
+      {p:'$',txt:'npm run build && deploy --prod',w:2},
+      {p:'›',txt:'▲ Next.js 15.1 — compiling production bundle',w:2},
+      {p:'✓',txt:'Compiled 142 modules in 3.2s',w:2},
+      {p:'›',txt:'Optimizing fonts, images & critical CSS',w:2},
+      {p:'✓',txt:'Tree-shaking complete — 41% smaller payload',w:2},
+      {p:'›',txt:'Generating static pages (12/12)',w:2},
+      {p:'✓',txt:'Inlining above-the-fold CSS · preloading assets',w:2},
+      {p:'!',txt:'Running Lighthouse CI gate (min 100)…',w:2},
+      {p:'✓',txt:'Performance 100 · A11y 100 · SEO 100 · BP 100',w:3},
+      {p:'›',txt:'Uploading to edge network — 38 regions',w:2},
+      {p:'✓',txt:'Live → blackstone-agency.de',w:2}
+    ]},
+    tut:{
+      badge:'Code Lab · Learn live',
+      h:'How hard is it really to build a website?',
+      sub:'Six lessons, from your first HTML tag to an animated canvas and a real algorithm. Edit the code and run it right in your browser.',
+      note:'Every lesson runs sandboxed in your browser — HTML/JS in an isolated iframe, Python via Pyodide (WebAssembly). Nothing is stored.',
+      run:'Run', reset:'Reset', code:'Code', output:'Output',
+      d_easy:'Beginner', d_mid:'Intermediate', d_hard:'Hard', d_expert:'Expert',
+      lessons:[
+        {t:'Your first HTML page', d:'Every website starts with HTML — the structure. A heading, a paragraph, a button. Change the text and see the result instantly.'},
+        {t:'CSS & responsive layout', d:'HTML is the skeleton, CSS the skin. With CSS Grid a layout becomes responsive automatically. Tweak the values and watch the cards rearrange.'},
+        {t:'JavaScript: DOM & events', d:'Now it gets interactive. JavaScript reacts to actions, changes values and logs to the console. Here a function counts your clicks.'},
+        {t:'Async & fetch — real data', d:'Real apps pull data from servers. With async/await and fetch we hit the live GitHub API. Asynchronous code is one of the most common stumbling blocks.'},
+        {t:'A real algorithm (Python)', d:'Quicksort — recursive, elegant, real. This runs actual Python in your browser via WebAssembly. This is where you feel development is thinking in logic.'},
+        {t:'Animated canvas', d:'The hard part: 60 particles, recalculated and redrawn every frame. Math, timing and rendering interlock. This is real frontend depth.'},
+      ],
+      cta_h:'Looks easy? At this level it gets complicated.',
+      cta_sub:'Exactly this complexity — clean, fast and scalable — is what we handle for you. You focus on your business.',
+      cta:'Start a project',
+    },
     flow:{badge:'The Blackstone philosophy',h:'Data becomes momentum.',sub:'Every point a data signal. Every line a decision. This is how we turn complexity into growth — move your cursor and watch the field respond.',hint:'Interactive · move your cursor'},
     calc:{badge:'Growth Simulator',h:'Calculate your potential.',sub:'Move the sliders and see what strategic marketing can do with your budget. Non-binding orientation — not guaranteed figures.',budgetLabel:'Monthly marketing budget',perMonth:' /mo',industryLabel:'Industry',out_reach:'Est. reach / month',out_leads:'Qualified leads / month',out_roas:'Potential ROAS',disclaimer:'Simulated values are based on industry averages and experience. Actual results depend on market, offer and execution.',cta:'Discuss a real strategy',industries:['E-Commerce','Hospitality','Healthcare','Services','B2B / SaaS','Local business']},
     guarantee:{badge:'Our promise',h:'Zero risk. Full commitment.',sub:'We keep clients through results — not contracts.',items:[{t:'KPI guarantee',d:'We define measurable goals upfront. If we miss them, we keep working for free until they are met.'},{t:'Cancel monthly',d:'No lock-in contracts, no minimum term. You stay because it works.'},{t:'All in-house',d:'No subcontractors. The same people who plan also execute.'},{t:'Transparent reporting',d:'Clear numbers every month. You see exactly where every euro goes.'}]},
@@ -847,8 +1350,8 @@ window.T = {
     footer:{
       tagline:'We create digital dominance for brands that want to lead.',
       company:'Company',legal:'Legal',
-      comp_links:['About us','Solutions','Industries','Portfolio','Blog','Careers','Contact'],
-      comp_routes:['about','leistungen','branchen','portfolio','blog','karriere','kontakt'],
+      comp_links:['About us','Solutions','Industries','Tutorials','Portfolio','Blog','Careers','Contact'],
+      comp_routes:['about','leistungen','branchen','tutorials','portfolio','blog','karriere','kontakt'],
       legal_links:['Imprint','Privacy Policy','T&Cs','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
       copy:'© 2026 Blackstone Agency · Hamburg',
@@ -857,7 +1360,7 @@ window.T = {
     cookie:{text:'We use cookies to provide you with the best possible experience and to improve our website.',accept:'Accept all',decline:'Necessary only',settings:'Settings'},
   },
   ES: {
-    nav:{services:'Servicios',process:'Proceso',cases:'Portafolio',pricing:'Precios',about:'Nosotros',leistungen:'Soluciones',branchen:'Sectores',contact:'Contacto'},
+    nav:{services:'Servicios',process:'Proceso',cases:'Portafolio',pricing:'Precios',about:'Nosotros',leistungen:'Soluciones',branchen:'Sectores',tut:'Tutoriales',contact:'Contacto'},
     hero:{
       badge:'Agencia Digital Premium · Hamburgo',
       h1:'Construimos', h2:'dominancia digital.',
@@ -866,10 +1369,44 @@ window.T = {
       s1v:'€48M+',s1l:'Ingresos generados',s2v:'97%',s2l:'Satisfacción del cliente',s3v:'340+',s3l:'Proyectos entregados',s4v:'4',s4l:'Clientes satisfechos',
     },
     trust:{label:'Sectores atendidos'},
-    orbit:{badge:'Nuestro oficio',h:'Ocho disciplinas. Un sistema.',sub:'Cada habilidad alimenta la siguiente. Mueve el ratón y gira el sistema.',hint:'El hover pausa la rotación',items:['SEO','Performance Ads','Diseño Web','Branding','Contenido','Redes Sociales','Analítica','Conversión']},
+orbit:{badge:'Nuestro oficio',h:'Ocho disciplinas. Un sistema.',sub:'Cada habilidad alimenta la siguiente. Arrastra para girar el sistema.',hint:'Arrastra para girar',items:['SEO','Performance Ads','Diseño Web','Branding','Contenido','Redes Sociales','Analítica','Conversión']},
+
     leistungen:{badge:'Soluciones',h:'Todo lo que impulsa tu marca.',sub:'Seis disciplinas, un objetivo: crecimiento medible. Cada servicio es una palanca — combinados, se convierten en dominio.',services:[{t:'Diseño y Desarrollo Web',d:'Webs rápidas y optimizadas para conversión que no solo lucen bien, sino que venden. Desde el primer boceto hasta un rendimiento de 100/100.',tags:['React / Next.js','Core Web Vitals','CMS & Backend']},{t:'Performance Marketing',d:'Publicidad pagada con precisión quirúrgica. Probamos, escalamos y optimizamos hasta que cada euro vuelve multiplicado.',tags:['Google Ads','Meta Ads','ROAS']},{t:'SEO y Contenido',d:'Visibilidad que perdura. Construimos autoridad, dominamos rankings y creamos contenido que posiciona y vende.',tags:['SEO técnico','Estrategia keyword','Clusters']},{t:'Branding e Identidad',d:'Marcas que se recuerdan. Identidad, voz y diseño que generan confianza y justifican precios más altos.',tags:['Logo & sistema','Brand voice','Guidelines']},{t:'Redes Sociales',d:'Crecimiento orgánico con potencial viral. Estrategia, creatividad y comunidad en cada canal relevante.',tags:['Instagram','TikTok','LinkedIn']},{t:'Analítica y CRO',d:'Datos en vez de intuición. Tracking limpio, dashboards claros y optimización continua de la conversión.',tags:['GA4','Tests A/B','Dashboards']}],cta_h:'¿Qué servicio te impulsa?',cta_sub:'En una primera llamada gratuita encontramos la palanca más fuerte para tu crecimiento.',cta:'Asesoría gratuita'},
     branchen:{badge:'Sectores',h:'Especializados en crecimiento — en cada sector.',sub:'Conocemos las mecánicas de los mercados más diversos. Estos son los sectores que acompañamos con estrategias a medida.',items:[{t:'Salud y Cuidados',d:'Más pacientes, más visibilidad. SEO local, Google Business y confianza que llena la agenda.'},{t:'Hostelería',d:'Mesas llenas en vez de sillas vacías. Webs con atmósfera, sistemas de pedido y social que abre el apetito.'},{t:'Servicios y Oficios',d:'Solicitudes en cadena. Ofertas claras, alcance local y campañas que generan encargos.'},{t:'E-Commerce',d:'Ingresos escalables. Tiendas optimizadas para conversión, performance ads y un ROAS rentable.'},{t:'Gaming y Esports',d:'Comunidad que permanece. Alcance, contenido y branding para una escena que exige autenticidad.'},{t:'B2B y SaaS',d:'Leads cualificados sin desperdicio. Funnels, contenido y estrategias de pago para ciclos de venta largos.'}],cta_h:'¿Tu sector no aparece?',cta_sub:'Nos metemos en cualquier mercado. Cuéntanos el tuyo — entregamos la estrategia.',cta:'Hablar de tu sector'},
     kontaktpage:{badge:'Contacto',h:'Empecemos tu crecimiento.',sub:'Cuéntanos tu situación — respondemos en menos de 4 horas con un plan concreto. Gratis y sin compromiso.',channels:[{t:'Email',v:'info@blackstone-agency.de'},{t:'Ubicación',v:'Hamburgo, Alemania'},{t:'Tiempo de respuesta',v:'< 4 horas'}]},
+codelab:{badge:'Código en vivo',h:'Ejecútalo. Aquí mismo.',sub:'Un editor real y un runtime real — escribe HTML o Python y ejecútalo en vivo en tu navegador. Sin configuración, nada que instalar.',run:'Ejecutar',running:'Ejecutando…',loadingPy:'Cargando…',loadingRuntime:'Cargando el runtime de Python…',output:'Salida',langLabel:'Lenguaje',editorLabel:'Editor de código',idleHtml:'Pulsa Ejecutar para renderizar tu HTML.',idlePy:'Pulsa Ejecutar para ejecutar tu Python.',htmlHint:'Se ejecuta en un iframe aislado (scripts permitidos).',pyHint:'Con tecnología de Pyodide — se carga en la primera ejecución.',empty:'(sin salida)',loadError:'No se pudo cargar el runtime de Python.'},
+craft:{badge:'Así sale a producción',h:'Las grandes webs son difíciles de construir.',sub:'Sin plantilla, sin atajos. Cada línea compilada, optimizada y publicada — observa un build real de principio a fin.',file:'blackstone — deploy.sh',building:'Compilando',deployed:'En vivo',replay:'Repetir',shipped:'✓ Desplegado en producción en 38s',scoreLabel:'Lighthouse — Producción',scoreSub:'100 / 100. Cada categoría. Siempre.',metrics:['Rendimiento','Accesibilidad','Buenas prácticas','SEO'],foot:'Es el estándar, no la excepción. Nada por debajo sale en vivo.',log:[
+      {p:'$',txt:'npm run build && deploy --prod',w:2},
+      {p:'›',txt:'▲ Next.js 15.1 — compilando bundle de producción',w:2},
+      {p:'✓',txt:'142 módulos compilados en 3.2s',w:2},
+      {p:'›',txt:'Optimizando fuentes, imágenes y CSS crítico',w:2},
+      {p:'✓',txt:'Tree-shaking listo — payload 41% más pequeño',w:2},
+      {p:'›',txt:'Generando páginas estáticas (12/12)',w:2},
+      {p:'✓',txt:'CSS above-the-fold inline · assets precargados',w:2},
+      {p:'!',txt:'Ejecutando gate Lighthouse CI (mín. 100)…',w:2},
+      {p:'✓',txt:'Performance 100 · A11y 100 · SEO 100 · BP 100',w:3},
+      {p:'›',txt:'Subiendo a la red edge — 38 regiones',w:2},
+      {p:'✓',txt:'En vivo → blackstone-agency.de',w:2}
+    ]},
+    tut:{
+      badge:'Code Lab · Aprende en vivo',
+      h:'¿Qué tan difícil es realmente crear una web?',
+      sub:'Seis lecciones, desde tu primera etiqueta HTML hasta un canvas animado y un algoritmo real. Edita el código y ejecútalo directamente en tu navegador.',
+      note:'Cada lección se ejecuta en un entorno aislado de tu navegador — HTML/JS en un iframe sandbox, Python con Pyodide (WebAssembly). No se guarda nada.',
+      run:'Ejecutar', reset:'Reiniciar', code:'Código', output:'Salida',
+      d_easy:'Principiante', d_mid:'Intermedio', d_hard:'Difícil', d_expert:'Experto',
+      lessons:[
+        {t:'Tu primera página HTML', d:'Toda web empieza con HTML — la estructura. Un título, un párrafo, un botón. Cambia el texto y mira el resultado al instante.'},
+        {t:'CSS y diseño responsive', d:'HTML es el esqueleto, CSS la piel. Con CSS Grid el diseño se vuelve responsive automáticamente. Juega con los valores y observa cómo se reordenan las tarjetas.'},
+        {t:'JavaScript: DOM y eventos', d:'Ahora se vuelve interactivo. JavaScript reacciona a acciones, cambia valores y escribe en la consola. Aquí una función cuenta tus clics.'},
+        {t:'Async y fetch — datos reales', d:'Las apps reales obtienen datos de servidores. Con async/await y fetch consultamos en vivo la API de GitHub. El código asíncrono es uno de los tropiezos más comunes.'},
+        {t:'Un algoritmo real (Python)', d:'Quicksort — recursivo, elegante, real. Aquí corre Python de verdad en tu navegador vía WebAssembly. Aquí se siente que programar es pensar en lógica.'},
+        {t:'Canvas animado', d:'La parte difícil: 60 partículas, recalculadas y redibujadas en cada frame. Matemáticas, timing y renderizado encajan entre sí. Esto es profundidad frontend real.'},
+      ],
+      cta_h:'¿Parece fácil? A este nivel se complica.',
+      cta_sub:'Justo esta complejidad — limpia, rápida y escalable — la asumimos por ti. Tú te enfocas en tu negocio.',
+      cta:'Iniciar proyecto',
+    },
     flow:{badge:'La filosofía Blackstone',h:'Los datos se vuelven impulso.',sub:'Cada punto una señal de datos. Cada línea una decisión. Así convertimos la complejidad en crecimiento — mueve el cursor y observa cómo reacciona el campo.',hint:'Interactivo · mueve tu cursor'},
     calc:{badge:'Simulador de crecimiento',h:'Calcula tu potencial.',sub:'Mueve los controles y descubre qué puede lograr el marketing estratégico con tu presupuesto. Orientación no vinculante — no son cifras garantizadas.',budgetLabel:'Presupuesto mensual de marketing',perMonth:' /mes',industryLabel:'Sector',out_reach:'Alcance est. / mes',out_leads:'Leads cualificados / mes',out_roas:'ROAS potencial',disclaimer:'Los valores simulados se basan en promedios del sector y experiencia. Los resultados reales dependen del mercado, la oferta y la ejecución.',cta:'Hablar de una estrategia real',industries:['E-Commerce','Hostelería','Salud','Servicios','B2B / SaaS','Negocio local']},
     guarantee:{badge:'Nuestra promesa',h:'Cero riesgo. Compromiso total.',sub:'Retenemos clientes por resultados — no por contratos.',items:[{t:'Garantía de KPI',d:'Definimos objetivos medibles desde el inicio. Si no los alcanzamos, seguimos trabajando gratis hasta lograrlo.'},{t:'Cancela cada mes',d:'Sin contratos de permanencia, sin plazo mínimo. Te quedas porque funciona.'},{t:'Todo interno',d:'Sin subcontratistas. Las mismas personas que planifican también ejecutan.'},{t:'Informes transparentes',d:'Cifras claras cada mes. Ves exactamente a dónde va cada euro.'}]},
@@ -924,8 +1461,8 @@ window.T = {
     footer:{
       tagline:'Creamos dominancia digital para marcas que quieren liderar.',
       company:'Empresa',legal:'Legal',
-      comp_links:['Sobre nosotros','Soluciones','Sectores','Portafolio','Blog','Empleo','Contacto'],
-      comp_routes:['about','leistungen','branchen','portfolio','blog','karriere','kontakt'],
+      comp_links:['Sobre nosotros','Soluciones','Sectores','Tutoriales','Portafolio','Blog','Empleo','Contacto'],
+      comp_routes:['about','leistungen','branchen','tutorials','portfolio','blog','karriere','kontakt'],
       legal_links:['Aviso legal','Privacidad','T&C','Cookies'],
       legal_routes:['impressum','datenschutz','agb','cookies'],
       copy:'© 2026 Blackstone Agency · Hamburgo',
@@ -937,6 +1474,6 @@ window.T = {
 </script>
 
 <!-- React App (JSX) — inline für direktes Öffnen ohne Server -->
-<script src="./app.js?v=3" defer></script>
+<script src="./app.js?v=5" defer></script>
 </body>
 </html>
