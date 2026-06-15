@@ -193,9 +193,11 @@ const CookieBanner = ({ dark: bd, t, onAccept, onDecline }) => (
   </div>
 );
 
-const Navigation = ({ t, lang, setLang, dark: bd, setDark, page, navigate, scrolled }) => {
+const Navigation = ({ t, lang, setLang, dark: bd, setDark, page, navigate, scrolled, openCmd }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const navClass = scrolled ? (bd?'nav-scrolled-dark':'nav-scrolled-light') : 'bg-transparent';
+  const navLink=(p)=>`text-sm font-medium h-line transition-colors ${page===p?(bd?'text-white':'text-zinc-900'):(bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900')}`;
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${navClass}`}>
       <div className="max-w-7xl mx-auto px-5 lg:px-8">
@@ -204,14 +206,26 @@ const Navigation = ({ t, lang, setLang, dark: bd, setDark, page, navigate, scrol
             <Logo size={34}/>
             <span className={`text-base font-bold tracking-tight ${bd?'text-white':'text-zinc-900'}`}>Blackstone<span className={bd?'text-zinc-500':'text-zinc-400'}> Agency</span></span>
           </button>
-          <div className="hidden md:flex items-center gap-7">
-            {['services','process','cases','pricing'].map(k=>(
-              <button key={k} onClick={()=>navigate('#'+k)} className={`text-sm font-medium h-line transition-colors ${bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900'}`}>{t.nav[k]}</button>
-            ))}
-            <button onClick={()=>navigate('leistungen')} className={`text-sm font-medium h-line transition-colors ${page==='leistungen'?(bd?'text-white':'text-zinc-900'):(bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900')}`}>{t.nav.leistungen}</button>
-            <button onClick={()=>navigate('branchen')} className={`text-sm font-medium h-line transition-colors ${page==='branchen'?(bd?'text-white':'text-zinc-900'):(bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900')}`}>{t.nav.branchen}</button>
-            <button onClick={()=>navigate('tutorials')} className={`text-sm font-medium h-line transition-colors ${page==='tutorials'?(bd?'text-white':'text-zinc-900'):(bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900')}`}>{t.nav.tut}</button>
-            <button onClick={()=>navigate('about')} className={`text-sm font-medium h-line transition-colors ${page==='about'?(bd?'text-white':'text-zinc-900'):(bd?'text-zinc-400 hover:text-white':'text-zinc-500 hover:text-zinc-900')}`}>{t.nav.about}</button>
+          <div className="hidden md:flex items-center gap-6">
+            <button onClick={()=>navigate('leistungen')} className={navLink('leistungen')}>{t.nav.leistungen}</button>
+            <button onClick={()=>navigate('branchen')} className={navLink('branchen')}>{t.nav.branchen}</button>
+            <button onClick={()=>navigate('portfolio')} className={navLink('portfolio')}>{t.nav.cases}</button>
+            <button onClick={()=>navigate('tutorials')} className={navLink('tutorials')}>{t.nav.tut}</button>
+            <div className="relative" onMouseEnter={()=>setMoreOpen(true)} onMouseLeave={()=>setMoreOpen(false)}>
+              <button onClick={()=>setMoreOpen(v=>!v)} aria-expanded={moreOpen} aria-haspopup="true" className={`flex items-center gap-1 ${navLink('')}`}>
+                {t.nav.more}
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{transform:moreOpen?'rotate(180deg)':'none',transition:'transform .2s'}}><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              {moreOpen&&(
+                <div role="menu" className="absolute right-0 top-full pt-3 w-56 anim-fade">
+                  <div className={`rounded-2xl p-2 ${bd?'glass-dark':'glass-light'}`} style={{border:bd?'1px solid rgba(255,255,255,0.1)':'1px solid rgba(0,0,0,0.08)',boxShadow:'0 24px 60px -20px rgba(0,0,0,.55)'}}>
+                    {[['services','#services'],['process','#process'],['pricing','#pricing'],['about','about'],['blog','blog'],['karriere','karriere']].map(([k,target])=>(
+                      <button key={k} role="menuitem" onClick={()=>{navigate(target);setMoreOpen(false);}} className={`block w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${bd?'text-zinc-300 hover:text-white hover:bg-white/5':'text-zinc-600 hover:text-zinc-900 hover:bg-black/5'}`}>{t.nav[k]}</button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex items-center gap-2.5">
             <div className={`hidden sm:flex items-center gap-0.5 rounded-full p-1 border ${bd?'border-zinc-800 bg-zinc-900/40':'border-zinc-200 bg-zinc-100/60'}`}>
@@ -219,6 +233,10 @@ const Navigation = ({ t, lang, setLang, dark: bd, setDark, page, navigate, scrol
                 <button key={l} onClick={()=>setLang(l)} className={`text-xs font-bold px-2.5 py-1 rounded-full transition-all duration-200 ${lang===l?(bd?'bg-white text-zinc-900':'bg-zinc-900 text-white'):(bd?'text-zinc-500 hover:text-white':'text-zinc-400 hover:text-zinc-900')}`}>{l}</button>
               ))}
             </div>
+            <button onClick={openCmd} aria-label="Suche öffnen (Cmd+K)" className={`hidden lg:flex items-center gap-1.5 h-9 px-3 rounded-full border text-xs font-semibold transition-all ${bd?'border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-white hover:border-zinc-600':'border-zinc-200 bg-white text-zinc-500 hover:text-zinc-900 hover:border-zinc-300'}`}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <span className="opacity-70">⌘K</span>
+            </button>
             <button onClick={()=>setDark(!bd)} aria-label={bd?'Helles Design aktivieren':'Dunkles Design aktivieren'} className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all ${bd?'border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:text-white hover:border-zinc-600':'border-zinc-200 bg-white text-zinc-500 hover:text-zinc-900 hover:border-zinc-300'}`}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">{bd?<><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></>:<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>}</svg>
             </button>
@@ -230,7 +248,7 @@ const Navigation = ({ t, lang, setLang, dark: bd, setDark, page, navigate, scrol
         </div>
         {menuOpen&&(
           <div className={`md:hidden pb-4 border-t ${bd?'border-zinc-800':'border-zinc-200'} mt-1 anim-slide-down`}>
-            {[['services','#services'],['process','#process'],['cases','#cases'],['pricing','#pricing'],['leistungen','leistungen'],['branchen','branchen'],['tut','tutorials'],['about','about'],['contact','#contact']].map(([k,target])=>(
+            {[['services','#services'],['process','#process'],['cases','#cases'],['pricing','#pricing'],['leistungen','leistungen'],['branchen','branchen'],['tut','tutorials'],['about','about'],['blog','blog'],['karriere','karriere'],['contact','#contact']].map(([k,target])=>(
               <button key={k} onClick={()=>{navigate(target);setMenuOpen(false);}} className={`block w-full text-left py-3 px-1 text-sm font-medium ${bd?'text-zinc-300 hover:text-white':'text-zinc-600 hover:text-zinc-900'}`}>{t.nav[k]}</button>
             ))}
             <div className="flex gap-1 mt-3 px-1">
@@ -2847,6 +2865,215 @@ const applySEO=(page,lang)=>{
   _upLink('alternate','x-default',url);
 };
 
+/* ═══════════ NEU: 5 Premium-Elemente ═══════════ */
+
+// 1) Command Palette (⌘K / Ctrl+K) — Sprung zu jeder Seite/Sektion
+const CommandPalette = ({ open, setOpen, t, dark:bd, navigate }) => {
+  const [q,setQ]=useState('');
+  const [idx,setIdx]=useState(0);
+  const inputRef=useRef(null);
+  const items=[
+    {label:t.nav.leistungen,target:'leistungen'},
+    {label:t.nav.branchen,target:'branchen'},
+    {label:t.nav.cases,target:'portfolio'},
+    {label:t.nav.tut,target:'tutorials'},
+    {label:t.nav.about,target:'about'},
+    {label:t.nav.blog,target:'blog'},
+    {label:t.nav.karriere,target:'karriere'},
+    {label:t.nav.services,target:'#services'},
+    {label:t.nav.process,target:'#process'},
+    {label:t.nav.pricing,target:'#pricing'},
+    {label:t.nav.contact,target:'#contact'},
+  ];
+  const filtered=items.filter(i=>i.label.toLowerCase().includes(q.trim().toLowerCase()));
+  useEffect(()=>{ if(open){setQ('');setIdx(0);const id=setTimeout(()=>inputRef.current&&inputRef.current.focus(),30);return ()=>clearTimeout(id);} },[open]);
+  useEffect(()=>{ setIdx(0); },[q]);
+  if(!open) return null;
+  const go=(it)=>{ if(it){navigate(it.target);} setOpen(false); };
+  const onKey=(e)=>{
+    if(e.key==='ArrowDown'){e.preventDefault();setIdx(i=>Math.min(i+1,filtered.length-1));}
+    else if(e.key==='ArrowUp'){e.preventDefault();setIdx(i=>Math.max(i-1,0));}
+    else if(e.key==='Enter'){e.preventDefault();go(filtered[idx]);}
+    else if(e.key==='Escape'){e.preventDefault();setOpen(false);}
+  };
+  return (
+    <div className="cmdk-bg" onClick={()=>setOpen(false)}>
+      <div className={`cmdk-panel ${bd?'glass-dark':'glass-light'}`} onClick={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Command Menu">
+        <div className="flex items-center gap-3 px-4 py-3 border-b" style={{borderColor:bd?'rgba(255,255,255,.08)':'rgba(0,0,0,.08)'}}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={bd?'#a1a1aa':'#71717a'} strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input ref={inputRef} value={q} onChange={e=>setQ(e.target.value)} onKeyDown={onKey} placeholder={t.x.cmdPlaceholder} className={`flex-1 bg-transparent outline-none text-sm ${bd?'text-white placeholder-zinc-500':'text-zinc-900 placeholder-zinc-400'}`}/>
+          <kbd className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${bd?'bg-zinc-800 text-zinc-400':'bg-zinc-200 text-zinc-500'}`}>ESC</kbd>
+        </div>
+        <div className="max-h-72 overflow-y-auto p-2">
+          {filtered.length===0&&<div className={`px-3 py-6 text-center text-sm ${bd?'text-zinc-500':'text-zinc-400'}`}>{t.x.cmdEmpty}</div>}
+          {filtered.map((it,i)=>(
+            <button key={it.target} onMouseEnter={()=>setIdx(i)} onClick={()=>go(it)} className={`w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-left transition-colors ${i===idx?(bd?'bg-white/10 text-white':'bg-black/5 text-zinc-900'):(bd?'text-zinc-300':'text-zinc-600')}`}>
+              <span>{it.label}</span>
+              {i===idx&&<span className={`text-xs ${bd?'text-zinc-500':'text-zinc-400'}`}>↵</span>}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 2) Vorher/Nachher-Slider
+const BeforeAfterSlider = ({ t, dark:bd }) => {
+  const tx=t.x;
+  const [pos,setPos]=useState(50);
+  const ref=useRef(null);
+  const drag=useRef(false);
+  const setFromX=(clientX)=>{ const el=ref.current; if(!el)return; const r=el.getBoundingClientRect(); let p=((clientX-r.left)/r.width)*100; setPos(Math.max(0,Math.min(100,p))); };
+  useEffect(()=>{
+    const move=(e)=>{ if(!drag.current)return; setFromX(e.touches?e.touches[0].clientX:e.clientX); };
+    const up=()=>{drag.current=false;};
+    window.addEventListener('mousemove',move); window.addEventListener('mouseup',up);
+    window.addEventListener('touchmove',move,{passive:true}); window.addEventListener('touchend',up);
+    return ()=>{window.removeEventListener('mousemove',move);window.removeEventListener('mouseup',up);window.removeEventListener('touchmove',move);window.removeEventListener('touchend',up);};
+  },[]);
+  return (
+    <section className={`py-28 px-5 border-t ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3,position:'relative'}}>
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12 reveal">
+          <div className={`${bd?'badge-dark':'badge-light'} mb-5 inline-block`}>{tx.baBadge}</div>
+          <h2 className={`text-[clamp(30px,4.5vw,52px)] font-black tracking-tight mb-4 ${bd?'text-white':'text-zinc-900'}`}>{tx.baH}</h2>
+          <p className={`text-base max-w-xl mx-auto ${bd?'text-zinc-400':'text-zinc-500'}`}>{tx.baSub}</p>
+        </div>
+        <div ref={ref} className="ba-wrap reveal" onMouseDown={e=>{drag.current=true;setFromX(e.clientX);}} onTouchStart={e=>{drag.current=true;setFromX(e.touches[0].clientX);}}>
+          <div className="ba-layer ba-after"><span className="ba-cap" style={{color:'#fff'}}>Premium · schnell · konversionsstark</span><span className="ba-tag" style={{right:14}}>{tx.baAfter}</span></div>
+          <div className="ba-layer ba-before" style={{clipPath:`inset(0 ${100-pos}% 0 0)`}}><span className="ba-cap" style={{color:'rgba(255,255,255,.7)'}}>Langsam · unübersichtlich · veraltet</span><span className="ba-tag" style={{left:14}}>{tx.baBefore}</span></div>
+          <div className="ba-handle" style={{left:pos+'%'}} role="slider" aria-valuenow={Math.round(pos)} aria-valuemin={0} aria-valuemax={100} aria-label={tx.baBadge} tabIndex={0} onKeyDown={e=>{if(e.key==='ArrowLeft'){e.preventDefault();setPos(p=>Math.max(0,p-4));}if(e.key==='ArrowRight'){e.preventDefault();setPos(p=>Math.min(100,p+4));}}}>
+            <div className="ba-knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#09090b" strokeWidth="2.5"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// 3) Sofort-Website-Audit (Lead-Magnet, Demo-Heuristik)
+const AuditRing = ({ value, label, dark:bd, delay=0 }) => {
+  const [v,setV]=useState(0);
+  useEffect(()=>{ const id=setTimeout(()=>setV(value),delay); return ()=>clearTimeout(id); },[value,delay]);
+  const r=34, c=2*Math.PI*r, off=c-(v/100)*c;
+  const col=value>=80?'#10b981':value>=50?'#eab308':'#ef4444';
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative" style={{width:84,height:84}}>
+        <svg width="84" height="84" viewBox="0 0 84 84" style={{transform:'rotate(-90deg)'}}>
+          <circle cx="42" cy="42" r={r} fill="none" stroke={bd?'rgba(255,255,255,.1)':'rgba(0,0,0,.08)'} strokeWidth="7"/>
+          <circle cx="42" cy="42" r={r} fill="none" stroke={col} strokeWidth="7" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={off} style={{transition:'stroke-dashoffset 1.1s cubic-bezier(.4,0,.2,1)'}}/>
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center text-lg font-black" style={{color:col}}>{Math.round(v)}</div>
+      </div>
+      <span className={`text-xs font-semibold ${bd?'text-zinc-400':'text-zinc-500'}`}>{label}</span>
+    </div>
+  );
+};
+const SiteAuditSection = ({ t, dark:bd, navigate }) => {
+  const tx=t.x;
+  const [url,setUrl]=useState('');
+  const [state,setState]=useState('idle');
+  const [scores,setScores]=useState(null);
+  const run=(e)=>{
+    e.preventDefault();
+    if(!/\.[a-z]{2,}/i.test(url.trim())){setState('error');return;}
+    setState('loading');
+    setTimeout(()=>{
+      let h=0; const s=url.trim().toLowerCase(); for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;
+      const mk=(seed,min)=>min+(seed%(101-min));
+      setScores([mk(h,55),mk(h>>3,48),mk(h>>6,62),mk(h>>9,53)]);
+      setState('done');
+    },1400);
+  };
+  const overall=scores?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0;
+  return (
+    <section id="audit" className={`py-28 px-5 border-t ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3,position:'relative'}}>
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-10 reveal">
+          <div className={`${bd?'badge-dark':'badge-light'} mb-5 inline-block`}>{tx.auditBadge}</div>
+          <h2 className={`text-[clamp(30px,4.5vw,52px)] font-black tracking-tight mb-4 ${bd?'text-white':'text-zinc-900'}`}>{tx.auditH}</h2>
+          <p className={`text-base max-w-xl mx-auto ${bd?'text-zinc-400':'text-zinc-500'}`}>{tx.auditSub}</p>
+        </div>
+        <form onSubmit={run} className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto mb-6 reveal">
+          <input value={url} onChange={e=>{setUrl(e.target.value);if(state==='error')setState('idle');}} placeholder={tx.auditPh} aria-label={tx.auditPh} className={`${bd?'inp-dark':'inp-light'} flex-1 px-4 py-3.5 rounded-xl text-sm`}/>
+          <button type="submit" disabled={state==='loading'} className="btn-p px-6 py-3.5 rounded-xl font-bold text-sm cursor-pointer disabled:opacity-60">{state==='loading'?tx.auditAnalyzing:tx.auditBtn}</button>
+        </form>
+        {state==='error'&&<p role="alert" className="text-center text-sm text-red-400 mb-6">{tx.auditErr}</p>}
+        {state==='done'&&scores&&(
+          <div className={`rounded-2xl p-8 anim-fade ${bd?'card-dark':'card-light'}`}>
+            <div className="flex flex-col items-center mb-8">
+              <div className="text-5xl font-black g-text mb-1">{overall}</div>
+              <div className={`text-xs font-semibold uppercase tracking-wider ${bd?'text-zinc-500':'text-zinc-400'}`}>{tx.auditScoreLabel}</div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8">
+              {scores.map((s,i)=><AuditRing key={i} value={s} label={tx.auditM[i]} dark={bd} delay={i*140}/>)}
+            </div>
+            <ul className="space-y-2.5 mb-8 max-w-xl mx-auto">
+              {tx.auditTips.map((tip,i)=>(
+                <li key={i} className={`flex items-start gap-2.5 text-sm ${bd?'text-zinc-300':'text-zinc-600'}`}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.5" style={{flexShrink:0,marginTop:2}}><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="text-center">
+              <button onClick={()=>navigate('#contact')} className="btn-p px-7 py-3.5 rounded-full font-bold text-sm cursor-pointer">{tx.auditCta}</button>
+              <p className={`text-xs mt-4 ${bd?'text-zinc-600':'text-zinc-400'}`}>{tx.auditDisc}</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+// 4) Tech-Stack-Marquee
+const TechStackMarquee = ({ t, dark:bd }) => {
+  const items=['React','Next.js','TypeScript','Tailwind','Node.js','GA4','Meta Ads','Google Ads','Figma','WordPress','Shopify','Webflow','Vercel','SEO'];
+  const row=[...items,...items];
+  return (
+    <section className={`py-14 border-y overflow-hidden ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3,position:'relative'}}>
+      <p className={`text-center text-xs font-semibold uppercase tracking-widest mb-7 ${bd?'text-zinc-600':'text-zinc-400'}`}>{t.x.stackH}</p>
+      <div className="marquee-mask">
+        <div className="marquee-track">
+          {row.map((it,i)=><span key={i} className={`mq-item ${bd?'text-zinc-500':'text-zinc-400'}`}>{it}</span>)}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// 5) Erstgespräch-Buchung (Cal.com, lazy; Fallback = Kontakt)
+const CAL_LINK=''; // TODO Owner: Cal.com-Link eintragen, z.B. 'blackstone/erstgespraech' — sonst Fallback auf Kontaktformular
+const BookingSection = ({ t, dark:bd, navigate }) => {
+  const tx=t.x;
+  const book=()=>{
+    if(!CAL_LINK){ navigate('#contact'); return; }
+    try{
+      if(!window.Cal){
+        const s=document.createElement('script'); s.src='https://app.cal.com/embed/embed.js'; s.async=true;
+        s.onload=()=>{ try{ window.Cal('init'); window.Cal('modal',{calLink:CAL_LINK}); }catch(e){ navigate('#contact'); } };
+        document.body.appendChild(s);
+      } else { window.Cal('modal',{calLink:CAL_LINK}); }
+    }catch(e){ navigate('#contact'); }
+  };
+  return (
+    <section className={`py-24 px-5 border-t ${bd?'border-zinc-900':'border-zinc-100'}`} style={{zIndex:3,position:'relative'}}>
+      <div className={`max-w-3xl mx-auto rounded-3xl p-10 sm:p-14 text-center reveal ${bd?'glass-dark':'glass-light'}`} style={{border:bd?'1px solid rgba(255,255,255,.1)':'1px solid rgba(0,0,0,.08)'}}>
+        <div className={`${bd?'badge-dark':'badge-light'} mb-5 inline-block`}>{tx.bookBadge}</div>
+        <h2 className={`text-[clamp(28px,4vw,46px)] font-black tracking-tight mb-4 ${bd?'text-white':'text-zinc-900'}`}>{tx.bookH}</h2>
+        <p className={`text-base max-w-lg mx-auto mb-8 ${bd?'text-zinc-400':'text-zinc-500'}`}>{tx.bookSub}</p>
+        <button onClick={book} className="btn-p px-8 py-4 rounded-full font-bold text-base cursor-pointer inline-flex items-center gap-2.5">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          {tx.bookBtn}
+        </button>
+      </div>
+    </section>
+  );
+};
+
 function App() {
   const [page,setPage]=useState(()=>pageFromPath());
   const [lang,setLang]=useState(()=>initLang());
@@ -2855,7 +3082,9 @@ function App() {
   const [scrolled,setScrolled]=useState(false);
   const [cookie,setCookie]=useState(()=>!sessionStorage.getItem('cookieOk'));
   const [modal,setModal]=useState(null);
+  const [cmdOpen,setCmdOpen]=useState(false);
   const [activeSection,setActiveSection]=useState(0);
+  useEffect(()=>{const h=(e)=>{if((e.metaKey||e.ctrlKey)&&(e.key==='k'||e.key==='K')){e.preventDefault();setCmdOpen(o=>!o);}};window.addEventListener('keydown',h);return()=>window.removeEventListener('keydown',h);},[]);
   const t=T[lang];
 
   const sectionIds=['services','process','cases','pricing','contact'];
@@ -2904,7 +3133,7 @@ function App() {
 
   const goContact=()=>navigate('#contact');
   const pages={
-    home:<><HeroSection t={t} dark={dark} navigate={navigate}/><TrustSection t={t} dark={dark}/><ServicesSection t={t} dark={dark} onService={svc=>setModal(svc)}/><ChipSection dark={dark}/><ProcessSection t={t} dark={dark}/><MasteryOrbit t={t} dark={dark}/><PortfolioSection t={t} dark={dark} navigate={navigate}/><GrowthCalculator t={t} dark={dark} navigate={navigate}/><GuaranteeSection t={t} dark={dark}/><FlowFieldSection t={t} dark={dark}/><CodeLab t={t} dark={dark}/><CraftSection t={t} dark={dark}/><PricingSection t={t} dark={dark} billing={billing} setBilling={setBilling} navigate={navigate}/><FAQSection t={t} dark={dark}/><ContactSection t={t} dark={dark}/></>,
+    home:<><HeroSection t={t} dark={dark} navigate={navigate}/><TrustSection t={t} dark={dark}/><TechStackMarquee t={t} dark={dark}/><ServicesSection t={t} dark={dark} onService={svc=>setModal(svc)}/><ChipSection dark={dark}/><ProcessSection t={t} dark={dark}/><MasteryOrbit t={t} dark={dark}/><PortfolioSection t={t} dark={dark} navigate={navigate}/><BeforeAfterSlider t={t} dark={dark}/><GrowthCalculator t={t} dark={dark} navigate={navigate}/><GuaranteeSection t={t} dark={dark}/><SiteAuditSection t={t} dark={dark} navigate={navigate}/><FlowFieldSection t={t} dark={dark}/><CodeLab t={t} dark={dark}/><CraftSection t={t} dark={dark}/><BookingSection t={t} dark={dark} navigate={navigate}/><PricingSection t={t} dark={dark} billing={billing} setBilling={setBilling} navigate={navigate}/><FAQSection t={t} dark={dark}/><ContactSection t={t} dark={dark}/></>,
     about:<AboutPage dark={dark} t={t} navigate={navigate}/>,
     portfolio:<PortfolioPage t={t} dark={dark}/>,
     impressum:<ImpressumPage dark={dark}/>,
@@ -2923,7 +3152,8 @@ function App() {
     <>
       <ParticleCanvas dark={dark}/>
       {page==='home'&&<Spine active={activeSection} dark={dark}/>}
-      <Navigation t={t} lang={lang} setLang={setLang} dark={dark} setDark={setDark} page={page} navigate={navigate} scrolled={scrolled}/>
+      <Navigation t={t} lang={lang} setLang={setLang} dark={dark} setDark={setDark} page={page} navigate={navigate} scrolled={scrolled} openCmd={()=>setCmdOpen(true)}/>
+      <CommandPalette open={cmdOpen} setOpen={setCmdOpen} t={t} dark={dark} navigate={navigate}/>
       <main style={{position:'relative',zIndex:3,minHeight:'100vh'}}>{pages[page]||pages.home}</main>
       <Footer t={t} dark={dark} navigate={navigate}/>
       {modal&&<ServiceModal svc={modal} dark={dark} onClose={()=>setModal(null)} onContact={goContact}/>}
