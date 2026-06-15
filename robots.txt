@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://finaler-code-ende.vercel.app/sitemap.xml
+Sitemap: https://blackstone-agency.vercel.app/sitemap.xml

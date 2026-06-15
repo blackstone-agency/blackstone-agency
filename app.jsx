@@ -2741,7 +2741,7 @@ const CraftSection = ({ t, dark: bd }) => {
 };
 
 /* ── Routing + dynamic SEO (clean paths via History API, dynamic <head>) ── */
-const ORIGIN=(typeof window!=='undefined'&&window.location&&/^https?:/.test(window.location.origin||''))?window.location.origin:'https://finaler-code-ende.vercel.app';
+const ORIGIN=(typeof window!=='undefined'&&window.location&&/^https?:/.test(window.location.origin||''))?window.location.origin:'https://blackstone-agency.vercel.app';
 const SITE='Blackstone Agency';
 const OG_IMG=ORIGIN+'/og-image.png';
 const PATHS={home:'/',leistungen:'/leistungen',branchen:'/branchen',tutorials:'/tutorials',about:'/ueber-uns',portfolio:'/portfolio',kontakt:'/kontakt',blog:'/blog',karriere:'/karriere',impressum:'/impressum',datenschutz:'/datenschutz',agb:'/agb',cookies:'/cookies'};
