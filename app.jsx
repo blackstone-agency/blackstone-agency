@@ -632,146 +632,129 @@ const HeroSection = ({ t, dark: bd, navigate }) => {
   const th = t.hero;
   const [s1,ref1]=useCountUp('48'); const [s2,ref2]=useCountUp('97'); const [s3,ref3]=useCountUp('340'); const [s4,ref4]=useCountUp('4');
   const sectionRef=useRef(null);
-  const headRef=useRef(null);
-  const rotWords=['Dominance.','Brands.','Growth.','Markets.','Websites.'];
-
-  // Per-line manifesto. One emphasized (gradient, heavy) word per line — Kinetic's
-  // emphasized slot. The 2nd line's emphasis is the rotating WordRotate keyword.
-  const line1=th.h1||'We build';                 // emphasized word = last token
-  const sub=th.sub;
-
-  // Split a string into letter spans carrying a --w custom property the cursor handler writes.
-  const Glyphs=({text,bold=false})=>(
-    <>{Array.from(text).map((ch,i)=>(
-      <span key={i} className={`kx-g${bold?' kx-g-bold':''}`} data-kx="1"
-        style={{['--w']: bold?850:400}}>{ch===' '?' ':ch}</span>
-    ))}</>
-  );
+  const cardRef=useRef(null);
+  const rotWords=['Websites.','Brands.','Dominance.','Growth.','Markets.'];
 
   useEffect(()=>{
-    const head=headRef.current; const sec=sectionRef.current;
-    if(!head||!sec) return;
-    const mq=window.matchMedia('(prefers-reduced-motion: reduce)');
-    const coarse=window.matchMedia('(pointer: coarse)');
-    // Reduced-motion OR touch → static two-weight contrast, no cursor reactivity, no seam sweep.
-    if(mq.matches||coarse.matches){
-      head.classList.add('kx-static');
-      return;
-    }
-    // One-shot light-seam reveal on load (Aurora's "materialize once", no RAF loop).
-    const seamT=setTimeout(()=>head.classList.add('kx-seam-run'),120);
-
-    const glyphs=Array.prototype.slice.call(head.querySelectorAll('[data-kx]'));
-    // Cache glyph centers; recompute on resize only (never per-frame → no layout thrash).
-    let centers=[];
-    const measure=()=>{
-      centers=glyphs.map(g=>{const r=g.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2,el:g,bold:g.classList.contains('kx-g-bold')};});
+    const el=sectionRef.current; if(!el)return;
+    const card=cardRef.current;
+    const move=(e)=>{
+      const r=el.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-0.5;
+      const y=(e.clientY-r.top)/r.height-0.5;
+      el.style.setProperty('--hdx',(e.clientX-r.left)+'px');
+      el.style.setProperty('--hdy',(e.clientY-r.top)+'px');
+      if(card) card.style.transform=`perspective(900px) rotateY(${x*14}deg) rotateX(${-y*9}deg) translateZ(12px)`;
     };
-    measure();
+    const leave=()=>{if(card)card.style.transform='perspective(900px) rotateY(-6deg) rotateX(4deg)';};
+    el.addEventListener('mousemove',move,{passive:true});
+    el.addEventListener('mouseleave',leave);
+    return()=>{el.removeEventListener('mousemove',move);el.removeEventListener('mouseleave',leave);};
+  },[]);
 
-    let px=0,py=0,raf=0,active=false;
-    const R=150;          // gravity-well radius (px)
-    const apply=()=>{
-      raf=0;
-      for(let i=0;i<centers.length;i++){
-        const c=centers[i];
-        const dx=px-c.x, dy=py-c.y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        const f=Math.max(0,1-d/R);        // 0..1 proximity falloff (ripples 2–3 letters out)
-        const base=c.bold?850:400;
-        const peak=c.bold?900:760;
-        const w=Math.round(base+(peak-base)*f);
-        // JS writes ONLY the custom property + letter-spacing — transitions handle spring decay.
-        c.el.style.setProperty('--w',w);
-        c.el.style.letterSpacing=(f*0.5).toFixed(2)+'px';
-      }
-    };
-    const move=(e)=>{ px=e.clientX; py=e.clientY; if(!raf&&active) raf=requestAnimationFrame(apply); };
-    const enter=()=>{active=true;};
-    const leave=()=>{active=false; if(raf){cancelAnimationFrame(raf);raf=0;} glyphs.forEach(g=>{g.style.setProperty('--w',g.classList.contains('kx-g-bold')?850:400);g.style.letterSpacing='';});};
-    // Lifecycle hygiene (Aurora rule): pause work on tab-blur.
-    const vis=()=>{ if(document.hidden){active=false; if(raf){cancelAnimationFrame(raf);raf=0;}} };
-
-    sec.addEventListener('pointermove',move,{passive:true});
-    sec.addEventListener('pointerenter',enter,{passive:true});
-    sec.addEventListener('pointerleave',leave,{passive:true});
-    document.addEventListener('visibilitychange',vis);
-    window.addEventListener('resize',measure,{passive:true});
-
-    return()=>{
-      clearTimeout(seamT);
-      sec.removeEventListener('pointermove',move);
-      sec.removeEventListener('pointerenter',enter);
-      sec.removeEventListener('pointerleave',leave);
-      document.removeEventListener('visibilitychange',vis);
-      window.removeEventListener('resize',measure);
-      if(raf)cancelAnimationFrame(raf);
-    };
-  },[bd]);
+  const DashCard=({mini=false})=>(
+    <div className={`rounded-2xl overflow-hidden hero-card-glow ${bd?'glass-dark':'glass-light'}`}>
+      <div className="browser-chrome" style={{background:bd?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)',borderBottom:`1px solid ${bd?'rgba(255,255,255,.06)':'rgba(0,0,0,.06)'}`}}>
+        <div className="dot-r"/><div className="dot-y"/><div className="dot-g"/>
+        <div className={`ml-3 flex-1 h-6 rounded-full px-3 flex items-center text-xs ${bd?'bg-zinc-900 text-zinc-600':'bg-zinc-100 text-zinc-400'}`} style={{fontSize:10}}>www.blackstone-agency.de</div>
+      </div>
+      <div className={mini?'p-4':'p-5 lg:p-6'}>
+        <div className={`grid grid-cols-3 mb-3 ${mini?'gap-2':'gap-3 mb-4'}`}>
+          {[{l:'Revenue',v:mini?'€284K':'€ 284,920',d:'+18%'},{l:mini?'Conv.':'Conversions',v:'12,847',d:'+34%'},{l:'ROAS',v:'8.4×',d:'+22%'}].map((m,i)=>(
+            <div key={i} className={`rounded-xl ${bd?'bg-zinc-900/80':'bg-zinc-50'} ${mini?'p-3':'p-4'}`}>
+              <div className={`mb-1 ${bd?'text-zinc-600':'text-zinc-400'}`} style={{fontSize:10}}>{m.l}</div>
+              <div className={`font-bold ${bd?'text-white':'text-zinc-900'}`} style={{fontSize:mini?11:13}}>{m.v}</div>
+              <div className="font-semibold text-emerald-400 mt-0.5" style={{fontSize:10}}>↑ {m.d}</div>
+            </div>
+          ))}
+        </div>
+        <div className={`rounded-xl ${bd?'bg-zinc-900/60':'bg-zinc-50'} ${mini?'p-3':'p-4'}`}>
+          <div className={`flex items-center justify-between mb-2 ${bd?'text-zinc-600':'text-zinc-400'}`} style={{fontSize:10}}>
+            <span>Performance der letzten 30 Tage</span>
+            <span className="text-emerald-400 font-semibold">+24%</span>
+          </div>
+          <div className={`flex items-end gap-1.5 ${mini?'h-10':'h-16'}`}>
+            {[30,52,38,68,82,60,95].map((h,i)=>(
+              <div key={i} className="flex-1 rounded-t" style={{height:`${h}%`,background:i===6?(bd?'rgba(124,58,237,.88)':'#09090b'):(bd?'rgba(255,255,255,.1)':'rgba(0,0,0,.07)')}}/>
+            ))}
+          </div>
+        </div>
+        {!mini&&<div className={`mt-3 rounded-xl p-3 flex items-center gap-2.5 ${bd?'bg-zinc-900/40':'bg-zinc-50/80'}`}>
+          <span className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" style={{boxShadow:'0 0 6px #22c55e'}}/>
+          <span style={{fontSize:10}} className={bd?'text-zinc-500':'text-zinc-400'}>3 aktive Kampagnen · Update vor 2 Min.</span>
+        </div>}
+      </div>
+    </div>
+  );
 
   return (
-    <section ref={sectionRef} className="hero-section kx-hero">
-      {/* Static near-black mesh: two soft orbs + faint vanishing-point lines (Depth Field, no animation) */}
-      <div className="kx-mesh" aria-hidden="true"/>
-      <div className="kx-vanish" aria-hidden="true"/>
-      <div className="grain-overlay kx-grain" aria-hidden="true"/>
+    <section ref={sectionRef} className="hero-section">
+      <div className="hero-dots" aria-hidden="true"/>
+      <div className="hero-dots-glow" aria-hidden="true"/>
+      <div aria-hidden="true" style={{position:'absolute',top:'-20%',right:'5%',width:700,height:700,borderRadius:'60% 40% 30% 70%/60% 30% 70% 40%',background:'rgba(124,58,237,0.1)',filter:'blur(110px)',animation:'blob 13s ease-in-out infinite',pointerEvents:'none'}}/>
+      <div aria-hidden="true" style={{position:'absolute',bottom:'-15%',left:'-5%',width:600,height:600,borderRadius:'50%',background:'rgba(16,185,129,0.07)',filter:'blur(110px)',animation:'blob 15s ease-in-out infinite',animationDelay:'-6s',pointerEvents:'none'}}/>
+      <div aria-hidden="true" style={{position:'absolute',top:'30%',right:'-8%',width:400,height:400,borderRadius:'50%',background:'rgba(59,130,246,0.06)',filter:'blur(90px)',animation:'blob 11s ease-in-out infinite',animationDelay:'-3s',pointerEvents:'none'}}/>
+      <div className="hero-beam" aria-hidden="true"/>
+      <div className="hero-aurora" aria-hidden="true"/>
+      <div className="hero-spotlight" aria-hidden="true"/>
 
       <div className="max-w-7xl mx-auto w-full px-5 lg:px-8 py-8" style={{zIndex:4,position:'relative'}}>
-        <div className="kx-wrap">
-          {/* left baseline tick + blinking caret — the single "motion idea" signature */}
-          <span className="kx-caret" aria-hidden="true"/>
+        <div className="hero-two-col" style={{display:'block'}}>
 
-          {/* Eyebrow micro-pill */}
-          <div className="anim-slide-up" style={{animationDelay:'.07s',animationFillMode:'both'}}>
-            <div className="gradient-badge kx-eyebrow">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" style={{boxShadow:'0 0 7px #22c55e'}}/>
-              {th.badge}
+          {/* LEFT — text */}
+          <div>
+            <div className="mb-9 anim-slide-up" style={{animationFillMode:'both'}}>
+              <div className="gradient-badge">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" style={{boxShadow:'0 0 7px #22c55e'}}/>
+                {th.badge}
+              </div>
+            </div>
+            <h1 className="font-black tracking-tighter mb-7" style={{fontSize:'clamp(52px,8.5vw,116px)',lineHeight:.87}}>
+              <span className={`block anim-slide-up ${bd?'text-white':'text-zinc-900'}`} style={{animationDelay:'.07s',animationFillMode:'both'}}>{th.h1}</span>
+              <span className="block anim-slide-up" style={{animationDelay:'.15s',animationFillMode:'both'}}>
+                <WordRotate words={rotWords}/>
+              </span>
+            </h1>
+            <p className={`text-lg leading-relaxed mb-10 anim-slide-up ${bd?'text-zinc-400':'text-zinc-500'}`} style={{maxWidth:480,animationDelay:'.28s',animationFillMode:'both'}}>{th.sub}</p>
+            <div className="flex flex-wrap gap-3 mb-14 anim-slide-up" style={{animationDelay:'.40s',animationFillMode:'both'}}>
+              <button onClick={()=>navigate('#contact')} className="btn-p mag px-8 py-4 rounded-full font-bold text-sm flex items-center gap-2.5">
+                {th.cta1}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+              <button onClick={()=>navigate('portfolio')} className={`${bd?'btn-s-dark':'btn-s-light'} mag px-8 py-4 rounded-full font-semibold text-sm`}>{th.cta2}</button>
+            </div>
+            <div className="flex flex-wrap gap-x-10 gap-y-5 pt-8 stats-row anim-slide-up" style={{animationDelay:'.52s',animationFillMode:'both'}}>
+              {[{v:s1,sfx:'M+',pfx:'€',l:th.s1l,r:ref1},{v:s2,sfx:'%',pfx:'',l:th.s2l,r:ref2},{v:s3,sfx:'+',pfx:'',l:th.s3l,r:ref3},{v:s4,sfx:'',pfx:'',l:th.s4l,r:ref4}].map((s,i)=>(
+                <div key={i} ref={s.r} className="stat-block">
+                  <div className={`font-black tracking-tight tabular-nums leading-none ${bd?'text-white':'text-zinc-900'}`} style={{fontSize:'clamp(26px,3.5vw,42px)'}}>{s.pfx}{s.v}{s.sfx}</div>
+                  <div className={`text-xs font-medium mt-1.5 ${bd?'text-zinc-600':'text-zinc-400'}`}>{s.l}</div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Oversized manifesto headline — the only object on screen */}
-          <h1 ref={headRef} className={`kx-head ${bd?'kx-dark':'kx-light'}`}>
-            <span className="kx-line anim-slide-up" style={{animationDelay:'.16s',animationFillMode:'both'}}>
-              <Glyphs text={line1.replace(/\s+\S+$/,'')+' '}/>
-              <span className="kx-emph"><Glyphs text={line1.split(/\s+/).slice(-1)[0]} bold/></span>
-            </span>
-            <span className="kx-line kx-line-rot anim-slide-up" style={{animationDelay:'.28s',animationFillMode:'both'}}>
-              <span className="kx-emph kx-rot"><WordRotate words={rotWords}/></span>
-            </span>
-            {/* light-seam clone: gradient-filled copy revealed by a translating mask, transform-only */}
-            <span className="kx-seam" aria-hidden="true">
-              <span className="kx-line"><Glyphs text={line1.replace(/\s+\S+$/,'')+' '}/><span className="kx-emph"><Glyphs text={line1.split(/\s+/).slice(-1)[0]} bold/></span></span>
-            </span>
-          </h1>
-
-          <p className={`kx-sub anim-slide-up ${bd?'text-zinc-400':'text-zinc-500'}`} style={{animationDelay:'.40s',animationFillMode:'both'}}>{sub}</p>
-
-          {/* CTAs — primary pill with button-in-button trailing arrow circle, secondary ghost */}
-          <div className="flex flex-wrap items-center gap-3 anim-slide-up" style={{animationDelay:'.50s',animationFillMode:'both'}}>
-            <button onClick={()=>navigate('#contact')} className="btn-p mag kx-cta-p">
-              <span>{th.cta1}</span>
-              <span className="kx-cta-circ">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6"><path d="M7 17L17 7M9 7h8v8"/></svg>
-              </span>
-            </button>
-            <button onClick={()=>navigate('portfolio')} className={`${bd?'btn-s-dark':'btn-s-light'} mag kx-cta-s`}>{th.cta2}</button>
+          {/* RIGHT — 3D tilt dashboard (desktop only) */}
+          <div className="hidden lg:block">
+            <div ref={cardRef} className="tilt-card anim-slide-up" style={{animationDelay:'.3s',animationFillMode:'both'}}>
+              <DashCard/>
+            </div>
           </div>
+        </div>
 
-          {/* Honest stat-strip beneath CTAs (Aurora's proof, reused useCountUp + s1l..s4l) */}
-          <div className="flex flex-wrap gap-x-10 gap-y-5 kx-stats anim-slide-up" style={{animationDelay:'.60s',animationFillMode:'both'}}>
-            {[{v:s1,sfx:'M+',pfx:'€',l:th.s1l,r:ref1},{v:s2,sfx:'%',pfx:'',l:th.s2l,r:ref2},{v:s3,sfx:'+',pfx:'',l:th.s3l,r:ref3},{v:s4,sfx:'',pfx:'',l:th.s4l,r:ref4}].map((s,i)=>(
-              <div key={i} ref={s.r} className="stat-block">
-                <div className={`font-black tracking-tight tabular-nums leading-none ${bd?'text-white':'text-zinc-900'}`} style={{fontSize:'clamp(24px,3.2vw,38px)'}}>{s.pfx}{s.v}{s.sfx}</div>
-                <div className={`text-xs font-medium mt-1.5 ${bd?'text-zinc-600':'text-zinc-400'}`}>{s.l}</div>
-              </div>
-            ))}
-          </div>
+        {/* Mobile dashboard */}
+        <div className="lg:hidden mt-10 pb-4 anim-slide-up" style={{animationDelay:'.60s',animationFillMode:'both'}}>
+          <div className="anim-float"><DashCard mini/></div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center" style={{zIndex:4}}>
+        <div className="bounce">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={bd?'rgba(255,255,255,.22)':'rgba(0,0,0,.2)'} strokeWidth="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
       </div>
     </section>
   );
 };
-
 const TrustSection = ({ t, dark: bd }) => {
   const industries = ['Healthcare','Gastronomie','Gebäudereinigung','Gaming & Esports','E-Commerce','Immobilien','B2B SaaS','Handwerk'];
   return (
