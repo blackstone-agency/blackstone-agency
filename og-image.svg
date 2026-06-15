@@ -1,0 +1,31 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.55" stop-color="#c9c2ff"/>
+      <stop offset="1" stop-color="#8b7cff"/>
+    </linearGradient>
+    <radialGradient id="violet" cx="0.18" cy="0.12" r="0.6">
+      <stop offset="0" stop-color="#8b7cff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#8b7cff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="emerald" cx="0.88" cy="0.92" r="0.6">
+      <stop offset="0" stop-color="#10b981" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#10b981" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#030303"/>
+  <rect width="1200" height="630" fill="url(#violet)"/>
+  <rect width="1200" height="630" fill="url(#emerald)"/>
+  <rect x="0.5" y="0.5" width="1199" height="629" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
+  <g transform="translate(96,96)">
+    <rect width="92" height="92" rx="20" fill="none" stroke="#8b7cff" stroke-opacity="0.6" stroke-width="2"/>
+    <text x="46" y="62" font-family="Inter,Arial,sans-serif" font-size="46" font-weight="800" fill="url(#g)" text-anchor="middle">B</text>
+  </g>
+  <text x="208" y="158" font-family="Inter,Arial,sans-serif" font-size="26" font-weight="600" letter-spacing="6" fill="#a1a1aa">BLACKSTONE AGENCY</text>
+  <text x="96" y="360" font-family="Inter,Arial,sans-serif" font-size="92" font-weight="800" fill="url(#g)">Wir bauen digitale</text>
+  <text x="96" y="462" font-family="Inter,Arial,sans-serif" font-size="92" font-weight="800" fill="#ffffff">Marktführer.</text>
+  <text x="98" y="540" font-family="Inter,Arial,sans-serif" font-size="30" font-weight="500" fill="#d4d4d8">Web Design · Performance Marketing · Brand Architecture</text>
+  <circle cx="1104" cy="540" r="7" fill="#10b981"/>
+  <text x="1086" y="547" font-family="Inter,Arial,sans-serif" font-size="22" font-weight="600" fill="#a1a1aa" text-anchor="end">Hamburg</text>
+</svg>

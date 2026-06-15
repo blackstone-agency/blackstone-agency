@@ -11,10 +11,20 @@
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://finaler-code-ende.vercel.app/"/>
 <meta property="og:locale" content="de_DE"/>
+<meta property="og:site_name" content="Blackstone Agency"/>
+<meta property="og:image" content="https://finaler-code-ende.vercel.app/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Blackstone Agency — Premium Digitalagentur"/>
 <link rel="canonical" href="https://finaler-code-ende.vercel.app/"/>
-<meta name="twitter:card" content="summary"/>
+<link rel="alternate" hreflang="de" href="https://finaler-code-ende.vercel.app/"/>
+<link rel="alternate" hreflang="en" href="https://finaler-code-ende.vercel.app/?lang=en"/>
+<link rel="alternate" hreflang="es" href="https://finaler-code-ende.vercel.app/?lang=es"/>
+<link rel="alternate" hreflang="x-default" href="https://finaler-code-ende.vercel.app/"/>
+<meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Blackstone Agency — Digitalagentur Hamburg"/>
 <meta name="twitter:description" content="Premium Digitalagentur aus Hamburg — Web Design, Performance Marketing & Brand Architecture."/>
+<meta name="twitter:image" content="https://finaler-code-ende.vercel.app/og-image.png"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -24,12 +34,33 @@
   "url": "https://finaler-code-ende.vercel.app/",
   "address": { "@type": "PostalAddress", "addressLocality": "Hamburg", "addressCountry": "DE" },
   "areaServed": "DE",
-  "foundingDate": "2023"
+  "foundingDate": "2023",
+  "logo": "https://finaler-code-ende.vercel.app/favicon.svg",
+  "image": "https://finaler-code-ende.vercel.app/og-image.png"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Blackstone Agency",
+  "url": "https://finaler-code-ende.vercel.app/",
+  "logo": "https://finaler-code-ende.vercel.app/favicon.svg",
+  "description": "Premium-Digitalagentur für Web Design, Performance Marketing & Brand Architecture."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Blackstone Agency",
+  "url": "https://finaler-code-ende.vercel.app/",
+  "inLanguage": ["de","en","es"]
 }
 </script>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg"/>
 <link rel="preload" href="./inter-var.woff2" as="font" type="font/woff2" crossorigin/>
-<link rel="stylesheet" href="./tailwind.css?v=6"/>
+<link rel="stylesheet" href="./tailwind.css?v=7"/>
 <style>
 /* ── Self-hosted Inter (variable, 400-900) ── */
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:swap;src:url('./inter-var.woff2') format('woff2')}
@@ -982,6 +1013,11 @@ body.page-light::after {
 <div id="back-top"></div>
 <div class="grain-overlay" aria-hidden="true"></div>
 
+<script>
+/* anti-FOUC: apply saved theme + language before React mounts */
+(function(){try{var d=localStorage.getItem('theme');var dark=d?d==='dark':true;document.body.className=dark?'page-dark':'page-light';var q=new URLSearchParams(location.search).get('lang');var l=(q||localStorage.getItem('lang')||'de').toLowerCase();document.documentElement.lang=({de:'de',en:'en',es:'es'})[l]||'de';}catch(e){}})();
+</script>
+
 <!-- React (self-hosted, pinned 18.3.1) + compiled App -->
 <script src="./react.production.min.js" defer></script>
 <script src="./react-dom.production.min.js" defer></script>
@@ -1491,6 +1527,6 @@ craft:{badge:'Así sale a producción',h:'Las grandes webs son difíciles de con
 </script>
 
 <!-- React App (JSX) — inline für direktes Öffnen ohne Server -->
-<script src="./app.js?v=6" defer></script>
+<script src="./app.js?v=7" defer></script>
 </body>
 </html>

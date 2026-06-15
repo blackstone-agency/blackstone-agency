@@ -2740,10 +2740,90 @@ const CraftSection = ({ t, dark: bd }) => {
   );
 };
 
+/* ── Routing + dynamic SEO (clean paths via History API, dynamic <head>) ── */
+const ORIGIN=(typeof window!=='undefined'&&window.location&&/^https?:/.test(window.location.origin||''))?window.location.origin:'https://finaler-code-ende.vercel.app';
+const SITE='Blackstone Agency';
+const OG_IMG=ORIGIN+'/og-image.png';
+const PATHS={home:'/',leistungen:'/leistungen',branchen:'/branchen',tutorials:'/tutorials',about:'/ueber-uns',portfolio:'/portfolio',kontakt:'/kontakt',blog:'/blog',karriere:'/karriere',impressum:'/impressum',datenschutz:'/datenschutz',agb:'/agb',cookies:'/cookies'};
+const PAGE_BY_PATH=Object.fromEntries(Object.entries(PATHS).map(([k,v])=>[v,k]));
+const LANGMETA={DE:{code:'de',locale:'de_DE'},EN:{code:'en',locale:'en_US'},ES:{code:'es',locale:'es_ES'}};
+const SEO={
+  DE:{
+    home:{t:'Blackstone Agency — Digitalagentur für Web Design & Performance Marketing',d:'Premium-Digitalagentur für Web Design, Performance Marketing & Brand Architecture. Wir bauen digitale Marktführer.'},
+    leistungen:{t:'Leistungen — Web Design, SEO & Performance Marketing | '+SITE,d:'Web Design, Performance Marketing, SEO und Brand Architecture — für messbar mehr Anfragen und Umsatz.'},
+    branchen:{t:'Branchen — Spezialisierte Digitallösungen | '+SITE,d:'Maßgeschneiderte Web- & Marketing-Strategien für Ihre Branche, mit Erfahrung über viele Sektoren hinweg.'},
+    tutorials:{t:'Tutorials — Code & Marketing lernen | '+SITE,d:'Kostenlose Tutorials zu Web-Entwicklung, SEO und Performance Marketing — direkt im Browser ausführbar.'},
+    about:{t:'Über uns — Premium-Digitalagentur | '+SITE,d:'Wer wir sind und wie wir digitale Marktführer bauen. Strategie, Design und Technologie aus einer Hand.'},
+    portfolio:{t:'Portfolio — Echte Projekte, echte Ergebnisse | '+SITE,d:'Ausgewählte Projekte und messbare Resultate aus Web Design und Performance Marketing.'},
+    kontakt:{t:'Kontakt — Erstgespräch anfragen | '+SITE,d:'Kontaktieren Sie Blackstone Agency für ein unverbindliches Erstgespräch zu Ihrem Projekt.'},
+    blog:{t:'Insights — Blog für Web, SEO & Marketing | '+SITE,d:'Fachartikel zu SEO, Performance Marketing, Conversion und Web Design.'},
+    karriere:{t:'Karriere — Werde Teil von Blackstone | '+SITE,d:'Offene Positionen und Kultur bei Blackstone Agency.'},
+    impressum:{t:'Impressum | '+SITE,d:'Impressum und Anbieterkennzeichnung der Blackstone Agency.'},
+    datenschutz:{t:'Datenschutz | '+SITE,d:'Datenschutzerklärung der Blackstone Agency.'},
+    agb:{t:'AGB | '+SITE,d:'Allgemeine Geschäftsbedingungen der Blackstone Agency.'},
+    cookies:{t:'Cookie-Richtlinie | '+SITE,d:'Informationen zur Verwendung von Cookies bei Blackstone Agency.'},
+  },
+  EN:{
+    home:{t:'Blackstone Agency — Digital Agency for Web Design & Performance Marketing',d:'Premium digital agency for web design, performance marketing & brand architecture. We build digital market leaders.'},
+    leistungen:{t:'Services — Web Design, SEO & Performance Marketing | '+SITE,d:'Web design, performance marketing, SEO and brand architecture — for measurably more leads and revenue.'},
+    branchen:{t:'Industries — Specialised Digital Solutions | '+SITE,d:'Tailored web & marketing strategies for your industry, with experience across many sectors.'},
+    tutorials:{t:'Tutorials — Learn Code & Marketing | '+SITE,d:'Free tutorials on web development, SEO and performance marketing — runnable right in your browser.'},
+    about:{t:'About — Premium Digital Agency | '+SITE,d:'Who we are and how we build digital market leaders. Strategy, design and technology from one team.'},
+    portfolio:{t:'Portfolio — Real Projects, Real Results | '+SITE,d:'Selected projects and measurable results in web design and performance marketing.'},
+    kontakt:{t:'Contact — Request a Free Consultation | '+SITE,d:'Contact Blackstone Agency for a free, no-obligation consultation about your project.'},
+    blog:{t:'Insights — Blog on Web, SEO & Marketing | '+SITE,d:'In-depth articles on SEO, performance marketing, conversion and web design.'},
+    karriere:{t:'Careers — Join Blackstone | '+SITE,d:'Open positions and culture at Blackstone Agency.'},
+    impressum:{t:'Imprint | '+SITE,d:'Imprint and provider identification of Blackstone Agency.'},
+    datenschutz:{t:'Privacy Policy | '+SITE,d:'Privacy policy of Blackstone Agency.'},
+    agb:{t:'Terms & Conditions | '+SITE,d:'General terms and conditions of Blackstone Agency.'},
+    cookies:{t:'Cookie Policy | '+SITE,d:'Information about the use of cookies at Blackstone Agency.'},
+  },
+  ES:{
+    home:{t:'Blackstone Agency — Agencia Digital de Diseño Web y Marketing',d:'Agencia digital premium de diseño web, performance marketing y arquitectura de marca. Construimos líderes digitales.'},
+    leistungen:{t:'Servicios — Diseño Web, SEO y Performance Marketing | '+SITE,d:'Diseño web, performance marketing, SEO y arquitectura de marca — para más clientes e ingresos medibles.'},
+    branchen:{t:'Sectores — Soluciones Digitales Especializadas | '+SITE,d:'Estrategias web y de marketing a medida para tu sector, con experiencia en múltiples industrias.'},
+    tutorials:{t:'Tutoriales — Aprende Código y Marketing | '+SITE,d:'Tutoriales gratuitos de desarrollo web, SEO y performance marketing — ejecutables en el navegador.'},
+    about:{t:'Nosotros — Agencia Digital Premium | '+SITE,d:'Quiénes somos y cómo construimos líderes digitales. Estrategia, diseño y tecnología en un solo equipo.'},
+    portfolio:{t:'Portafolio — Proyectos Reales, Resultados Reales | '+SITE,d:'Proyectos seleccionados y resultados medibles en diseño web y performance marketing.'},
+    kontakt:{t:'Contacto — Solicita una Consulta Gratuita | '+SITE,d:'Contacta con Blackstone Agency para una consulta gratuita y sin compromiso sobre tu proyecto.'},
+    blog:{t:'Insights — Blog de Web, SEO y Marketing | '+SITE,d:'Artículos en profundidad sobre SEO, performance marketing, conversión y diseño web.'},
+    karriere:{t:'Empleo — Únete a Blackstone | '+SITE,d:'Posiciones abiertas y cultura en Blackstone Agency.'},
+    impressum:{t:'Aviso Legal | '+SITE,d:'Aviso legal e identificación del prestador de Blackstone Agency.'},
+    datenschutz:{t:'Privacidad | '+SITE,d:'Política de privacidad de Blackstone Agency.'},
+    agb:{t:'Términos y Condiciones | '+SITE,d:'Términos y condiciones generales de Blackstone Agency.'},
+    cookies:{t:'Política de Cookies | '+SITE,d:'Información sobre el uso de cookies en Blackstone Agency.'},
+  },
+};
+const stripSlash=(p)=>{p=(p||'/').split('?')[0].split('#')[0];return (p.length>1&&p.endsWith('/'))?p.slice(0,-1):p;};
+const pageFromPath=()=>PAGE_BY_PATH[stripSlash(typeof window!=='undefined'?window.location.pathname:'/')]||'home';
+const initLang=()=>{try{const q=new URLSearchParams(window.location.search).get('lang');const v=(q||localStorage.getItem('lang')||'DE').toUpperCase();return LANGMETA[v]?v:'DE';}catch(e){return 'DE';}};
+const _setMeta=(sel,val)=>{const el=document.querySelector(sel);if(el)el.setAttribute('content',val);};
+const _upLink=(rel,hreflang,href)=>{const sel='link[rel="'+rel+'"]'+(hreflang?'[hreflang="'+hreflang+'"]':':not([hreflang])');let el=document.querySelector(sel);if(!el){el=document.createElement('link');el.setAttribute('rel',rel);if(hreflang)el.setAttribute('hreflang',hreflang);document.head.appendChild(el);}el.setAttribute('href',href);};
+const applySEO=(page,lang)=>{
+  const pack=SEO[lang]||SEO.DE;const m=pack[page]||pack.home;const lm=LANGMETA[lang]||LANGMETA.DE;
+  const url=ORIGIN+(PATHS[page]||'/');
+  document.title=m.t;
+  document.documentElement.lang=lm.code;
+  _setMeta('meta[name="description"]',m.d);
+  _setMeta('meta[property="og:title"]',m.t);
+  _setMeta('meta[property="og:description"]',m.d);
+  _setMeta('meta[property="og:url"]',url);
+  _setMeta('meta[property="og:locale"]',lm.locale);
+  _setMeta('meta[name="twitter:title"]',m.t);
+  _setMeta('meta[name="twitter:description"]',m.d);
+  _setMeta('meta[property="og:image"]',OG_IMG);
+  _setMeta('meta[name="twitter:image"]',OG_IMG);
+  _upLink('canonical',null,url);
+  _upLink('alternate','de',url);
+  _upLink('alternate','en',url+'?lang=en');
+  _upLink('alternate','es',url+'?lang=es');
+  _upLink('alternate','x-default',url);
+};
+
 function App() {
-  const [page,setPage]=useState('home');
-  const [lang,setLang]=useState('DE');
-  const [dark,setDark]=useState(true);
+  const [page,setPage]=useState(()=>pageFromPath());
+  const [lang,setLang]=useState(()=>initLang());
+  const [dark,setDark]=useState(()=>{try{const s=localStorage.getItem('theme');return s?s==='dark':true;}catch(e){return true;}});
   const [billing,setBilling]=useState('mo');
   const [scrolled,setScrolled]=useState(false);
   const [cookie,setCookie]=useState(()=>!sessionStorage.getItem('cookieOk'));
@@ -2753,11 +2833,22 @@ function App() {
 
   const sectionIds=['services','process','cases','pricing','contact'];
 
+  const pushPath=useCallback((target)=>{
+    const p=PATHS[target]||'/';
+    if(stripSlash(window.location.pathname)!==stripSlash(p)){
+      try{history.pushState({page:target},'',p+window.location.search);}catch(e){}
+    }
+  },[]);
   const navigate=useCallback((target)=>{
-    if(target==='home'){setPage('home');setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),50);}
-    else if(target.startsWith('#')){const id=target.slice(1);if(page!=='home'){setPage('home');setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'}),350);}else{document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}}
-    else{setPage(target);}
-  },[page]);
+    if(target.startsWith('#')){
+      const id=target.slice(1);
+      if(page!=='home'){setPage('home');pushPath('home');setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'}),350);}
+      else{document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+      return;
+    }
+    setPage(target);pushPath(target);
+    if(target==='home')setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),50);
+  },[page,pushPath]);
 
   useEffect(()=>{
     const f=()=>{
@@ -2776,7 +2867,13 @@ function App() {
   useEffect(()=>{initScrollProgress();initBackToTop(dark);const c=initCursorGlow(dark);initGlowCards();initMagneticBtns();return c;},[]);
   useEffect(()=>{const el=document.getElementById('cursor-glow');if(el)el.style.background=dark?'radial-gradient(circle,rgba(255,255,255,0.04) 0%,transparent 70%)':'radial-gradient(circle,rgba(0,0,0,0.03) 0%,transparent 70%)';initBackToTop(dark);},[dark]);
   useEffect(()=>{window.scrollTo({top:0,behavior:'smooth'});const c=initReveal();return c;},[page]);
-  useEffect(()=>{document.body.className=dark?'page-dark':'page-light';},[dark]);
+  useEffect(()=>{document.body.className=dark?'page-dark':'page-light';try{localStorage.setItem('theme',dark?'dark':'light');}catch(e){}},[dark]);
+  // Back/forward → sync page from URL
+  useEffect(()=>{const onPop=()=>setPage(pageFromPath());window.addEventListener('popstate',onPop);return()=>window.removeEventListener('popstate',onPop);},[]);
+  // Dynamic <head> (title, meta, canonical, hreflang, <html lang>) on page/lang change
+  useEffect(()=>{applySEO(page,lang);},[page,lang]);
+  // Persist language + reflect it in the URL (?lang=, no extra history entry)
+  useEffect(()=>{try{localStorage.setItem('lang',lang);}catch(e){}const base=stripSlash(window.location.pathname)||'/';const q=lang!=='DE'?('?lang='+LANGMETA[lang].code):'';try{history.replaceState(history.state,'',base+q);}catch(e){}},[lang]);
 
   const goContact=()=>navigate('#contact');
   const pages={
