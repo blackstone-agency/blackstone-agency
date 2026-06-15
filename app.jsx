@@ -675,7 +675,7 @@ const HeroSection = ({ t, dark: bd, navigate }) => {
           </div>
           <div className={`flex items-end gap-1.5 ${mini?'h-10':'h-16'}`}>
             {[30,52,38,68,82,60,95].map((h,i)=>(
-              <div key={i} className="flex-1 rounded-t" style={{height:`${h}%`,background:i===6?(bd?'rgba(124,58,237,.88)':'#09090b'):(bd?'rgba(255,255,255,.1)':'rgba(0,0,0,.07)')}}/>
+              <div key={i} className="flex-1 rounded-t dash-bar" style={{height:`${h}%`,transformOrigin:'bottom',animation:`bar-grow .9s cubic-bezier(.2,.8,.2,1) ${0.15+i*0.07}s both`,background:i===6?'linear-gradient(180deg,#a78bfa,#7c3aed)':(bd?'rgba(255,255,255,.1)':'rgba(0,0,0,.07)'),boxShadow:i===6?'0 0 14px rgba(124,58,237,.6)':'none'}}/>
             ))}
           </div>
         </div>
@@ -699,7 +699,7 @@ const HeroSection = ({ t, dark: bd, navigate }) => {
       <div className="hero-spotlight" aria-hidden="true"/>
 
       <div className="max-w-7xl mx-auto w-full px-5 lg:px-8 py-8" style={{zIndex:4,position:'relative'}}>
-        <div className="hero-two-col" style={{display:'block'}}>
+        <div className="hero-grid">
 
           {/* LEFT — text */}
           <div>
@@ -735,8 +735,11 @@ const HeroSection = ({ t, dark: bd, navigate }) => {
 
           {/* RIGHT — 3D tilt dashboard (desktop only) */}
           <div className="hidden lg:block">
-            <div ref={cardRef} className="tilt-card anim-slide-up" style={{animationDelay:'.3s',animationFillMode:'both'}}>
+            <div ref={cardRef} className="tilt-card anim-slide-up dash-shell" style={{animationDelay:'.3s',animationFillMode:'both'}}>
               <DashCard/>
+              <div className="dash-toast dash-toast-1" aria-hidden="true"><span className="dt-dot"/>+1 Lead</div>
+              <div className="dash-toast dash-toast-2" aria-hidden="true">Conversion ✓</div>
+              <div className="dash-toast dash-toast-3" aria-hidden="true">+€2.480</div>
             </div>
           </div>
         </div>

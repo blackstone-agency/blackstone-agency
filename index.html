@@ -29,7 +29,7 @@
 </script>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg"/>
 <link rel="preload" href="./inter-var.woff2" as="font" type="font/woff2" crossorigin/>
-<link rel="stylesheet" href="./tailwind.css?v=5"/>
+<link rel="stylesheet" href="./tailwind.css?v=6"/>
 <style>
 /* ── Self-hosted Inter (variable, 400-900) ── */
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:swap;src:url('./inter-var.woff2') format('woff2')}
@@ -956,6 +956,23 @@ body.page-light::after {
   background: rgba(20,20,30,0.34);
   background-clip: padding-box;
 }
+
+/* ── Hero liveliness ── */
+@media(min-width:1024px){.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:3rem;align-items:center}}
+@keyframes bar-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.dash-bar{will-change:transform}
+.dash-shell{position:relative}
+.dash-shell::before{content:'';position:absolute;inset:-1.5px;border-radius:18px;padding:1.5px;background:conic-gradient(from 0deg,transparent 0deg,rgba(139,124,255,.7) 60deg,rgba(16,185,129,.5) 140deg,transparent 210deg,transparent 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:dash-rot 6s linear infinite;pointer-events:none;opacity:.85}
+@keyframes dash-rot{to{transform:rotate(360deg)}}
+.dash-toast{position:absolute;display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:12px;font-size:12px;font-weight:700;color:#fff;background:rgba(20,20,26,.86);border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 34px rgba(0,0,0,.5);backdrop-filter:blur(10px);white-space:nowrap;pointer-events:none;z-index:5}
+.page-light .dash-toast{background:rgba(255,255,255,.92);color:#18181b;border-color:rgba(0,0,0,.08)}
+.dt-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;flex-shrink:0}
+.dash-toast-1{top:-16px;left:-28px;animation:toast-a 5s ease-in-out infinite}
+.dash-toast-2{top:40%;right:-30px;animation:toast-b 6.4s ease-in-out infinite .8s}
+.dash-toast-3{bottom:-18px;left:10%;animation:toast-a 5.8s ease-in-out infinite 1.6s}
+@keyframes toast-a{0%,100%{transform:translateY(0);opacity:.9}50%{transform:translateY(-12px);opacity:1}}
+@keyframes toast-b{0%,100%{transform:translateY(0);opacity:.9}50%{transform:translateY(10px);opacity:1}}
+@media (prefers-reduced-motion:reduce){.dash-bar,.dash-shell::before,.dash-toast{animation:none!important}.dash-bar{transform:none!important}}
 </style>
 </head>
 <body>
@@ -1474,6 +1491,6 @@ craft:{badge:'Así sale a producción',h:'Las grandes webs son difíciles de con
 </script>
 
 <!-- React App (JSX) — inline für direktes Öffnen ohne Server -->
-<script src="./app.js?v=5" defer></script>
+<script src="./app.js?v=6" defer></script>
 </body>
 </html>
