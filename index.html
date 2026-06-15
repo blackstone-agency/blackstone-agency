@@ -60,7 +60,7 @@
 </script>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg"/>
 <link rel="preload" href="./inter-var.woff2" as="font" type="font/woff2" crossorigin/>
-<link rel="stylesheet" href="./tailwind.css?v=10"/>
+<link rel="stylesheet" href="./tailwind.css?v=11"/>
 <style>
 /* ── Self-hosted Inter (variable, 400-900) ── */
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:swap;src:url('./inter-var.woff2') format('woff2')}
@@ -1009,6 +1009,9 @@ body.page-light::after {
 .mq-item{flex:0 0 auto;padding:0 28px;font-size:clamp(16px,2.2vw,22px);font-weight:800;letter-spacing:-.01em;white-space:nowrap}
 @keyframes bsmarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.marquee-track{animation:none;flex-wrap:wrap;justify-content:center;width:auto}.cmdk-bg{animation:none}}
+/* ── a11y: sichtbarer Fokus (WCAG 2.4.7) ── */
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid rgba(139,124,255,.85);outline-offset:2px;border-radius:6px}
+.inp-dark:focus-visible,.inp-light:focus-visible,.growth-slider:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid rgba(139,124,255,.85);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -1559,6 +1562,6 @@ craft:{badge:'Así sale a producción',h:'Las grandes webs son difíciles de con
 </script>
 
 <!-- React App (JSX) — inline für direktes Öffnen ohne Server -->
-<script src="./app.js?v=10" defer></script>
+<script src="./app.js?v=11" defer></script>
 </body>
 </html>

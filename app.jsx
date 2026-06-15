@@ -1324,7 +1324,7 @@ const ContactSection = ({ t, dark: bd }) => {
 
 const AboutPage = ({ dark: bd, t, navigate }) => {
   const ta = t.about;
-  const initials=['IS','HD','HV','HG'];
+  const teamGlyphs=['⬡','◇','○','△'];
   const gradients=['linear-gradient(135deg,#3f3f46,#18181b)','linear-gradient(135deg,#1e3a5f,#0a1a2e)','linear-gradient(135deg,#1a3a2a,#0a1a10)','linear-gradient(135deg,#2a1a4a,#120820)'];
   return (
     <div className="page-enter pt-24 pb-20 px-5" style={{zIndex:3,position:'relative'}}>
@@ -1352,7 +1352,7 @@ const AboutPage = ({ dark: bd, t, navigate }) => {
           </div>
           <div className="reveal-r">
             <div className="grid grid-cols-2 gap-4">
-              {[{n:'2023',l:'Gründungsjahr'},{n:'8+',l:'Spezialisten im Team'},{n:'4',l:'Zufriedene Kunden'},{n:'100%',l:'In-House Produktion'}].map((s,i)=>(
+              {(ta.stats||[{n:'2023',l:'Gegründet in Hamburg'},{n:'3',l:'Sprachen · DE·EN·ES'},{n:'100%',l:'In-House, keine Subunternehmer'},{n:'4h',l:'Antwortzeit'}]).map((s,i)=>(
                 <div key={i} className={`rounded-xl p-5 ${bd?'card-dark':'card-light'}`}><div className={`text-3xl font-black mb-1 ${bd?'text-white':'text-zinc-900'}`}>{s.n}</div><div className={`text-xs ${bd?'text-zinc-600':'text-zinc-400'}`}>{s.l}</div></div>
               ))}
             </div>
@@ -1367,7 +1367,7 @@ const AboutPage = ({ dark: bd, t, navigate }) => {
         <div className="mb-20">
           <h2 className={`text-2xl font-black mb-8 text-center reveal ${bd?'text-white':'text-zinc-900'}`}>{ta.team_h}</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {ta.team.map((member,i)=>(<div key={i} className={`rounded-2xl p-5 text-center reveal d${i+1} ${bd?'card-dark':'card-light'}`}><div className="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center text-sm font-black text-white" style={{background:gradients[i]}}>{initials[i]}</div><div className={`font-bold text-sm mb-1 ${bd?'text-white':'text-zinc-900'}`}>{member.name}</div><div className={`text-xs font-medium mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{member.role}</div><div className={`text-xs ${bd?'text-zinc-700':'text-zinc-300'}`}>{member.bg}</div></div>))}
+            {ta.team.map((member,i)=>(<div key={i} className={`rounded-2xl p-5 text-center reveal d${i+1} ${bd?'card-dark':'card-light'}`}><div className="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center text-sm font-black text-white" style={{background:gradients[i]}}>{teamGlyphs[i]}</div><div className={`font-bold text-sm mb-1 ${bd?'text-white':'text-zinc-900'}`}>{member.name}</div><div className={`text-xs font-medium mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{member.role}</div><div className={`text-xs ${bd?'text-zinc-700':'text-zinc-300'}`}>{member.bg}</div></div>))}
           </div>
         </div>
         <div className="mb-16">
@@ -1457,7 +1457,7 @@ const DatenschutzPage = ({ dark: bd }) => (
     <LH dark={bd}>4. Cookies</LH><LP>Wir verwenden Session-Cookies (werden nach Browserschluss gelöscht) und persistente Cookies. Sie können Cookies im Browser deaktivieren.</LP>
     <LH dark={bd}>5. Ihre Rechte</LH><LP>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Kontakt: info@blackstone-agency.de</LP>
     <LH dark={bd}>6. Datensicherheit</LH><LP>Wir verwenden SSL-Verschlüsselung mit der höchsten vom Browser unterstützten Stufe.</LP>
-    <LH dark={bd}>7. Aktualität</LH><LP>Diese Erklärung wird bei Bedarf angepasst. Stand: Juni 2025</LP>
+    <LH dark={bd}>7. Aktualität</LH><LP>Diese Erklärung wird bei Bedarf angepasst. Stand: Juni 2026</LP>
   </LegalSection>
 );
 
@@ -1470,7 +1470,7 @@ const AGBPage = ({ dark: bd }) => (
     <LH dark={bd}>§ 5 Mitwirkung</LH><LP>Der Kunde stellt notwendige Informationen rechtzeitig bereit. Verzögerungen durch fehlende Mitwirkung begründen keine Haftung der Agentur.</LP>
     <LH dark={bd}>§ 6 Haftung</LH><LP>Haftung beschränkt auf Vorsatz und grobe Fahrlässigkeit. Haftung für entgangenen Gewinn und Folgeschäden ausgeschlossen.</LP>
     <LH dark={bd}>§ 7 Kündigung</LH><LP>Retainer monatlich kündbar mit 30 Tagen Frist. Projektverträge grundsätzlich nicht ordentlich kündbar.</LP>
-    <LH dark={bd}>§ 8 Gerichtsstand</LH><LP>Deutsches Recht. Gerichtsstand Hamburg für Kaufleute. Stand: Juni 2025</LP>
+    <LH dark={bd}>§ 8 Gerichtsstand</LH><LP>Deutsches Recht. Gerichtsstand Hamburg für Kaufleute. Stand: Juni 2026</LP>
   </LegalSection>
 );
 
