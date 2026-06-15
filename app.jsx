@@ -1163,8 +1163,28 @@ const PricingSection = ({ t, dark: bd, billing, setBilling, navigate }) => {
 const ContactSection = ({ t, dark: bd }) => {
   const tc = t.contact;
   const [form,setForm]=useState({name:'',email:'',company:'',budget:'',msg:''});
-  const [done,setDone]=useState(false);
+  const [status,setStatus]=useState('idle'); // idle | sending | done | error
+  const [consent,setConsent]=useState(false);
+  const [errMsg,setErrMsg]=useState('');
   const inp=bd?'inp-dark':'inp-light';
+  // TODO Owner: kostenlosen Web3Forms Access-Key auf https://web3forms.com holen und hier eintragen
+  const WEB3FORMS_KEY='YOUR_WEB3FORMS_ACCESS_KEY';
+  const submit=async(e)=>{
+    e.preventDefault();
+    const fd=new FormData(e.target);
+    if(fd.get('botcheck')){return;} // Honeypot ausgeloest -> still ignorieren
+    if(!consent){setStatus('error');setErrMsg(tc.consentErr);return;}
+    setStatus('sending');setErrMsg('');
+    fd.append('access_key',WEB3FORMS_KEY);
+    fd.append('subject','Neue Projektanfrage — Blackstone Agency');
+    fd.append('from_name','Blackstone Website');
+    try{
+      const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:fd});
+      const data=await res.json();
+      if(data.success){setStatus('done');}
+      else{setStatus('error');setErrMsg(data.message||tc.error);}
+    }catch(err){setStatus('error');setErrMsg(tc.error);}
+  };
   const socials=[
     {n:'LinkedIn',p:<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></>},
     {n:'Instagram',p:<><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></>},
@@ -1226,7 +1246,7 @@ const ContactSection = ({ t, dark: bd }) => {
 
           {/* RIGHT — form */}
           <div className="reveal">
-            {done?(
+            {status==='done'?(
               <div className={`rounded-2xl p-16 text-center h-full flex flex-col items-center justify-center ${bd?'card-dark':'card-light'}`}>
                 <div className="w-16 h-16 rounded-full bg-emerald-500/15 flex items-center justify-center mb-6">
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1235,38 +1255,45 @@ const ContactSection = ({ t, dark: bd }) => {
               </div>
             ):(
               <div className={`rounded-2xl p-8 ${bd?'card-dark':'card-light'}`}>
-                <form onSubmit={e=>{e.preventDefault();setDone(true);}} className="space-y-5">
+                <form onSubmit={submit} className="space-y-5" noValidate>
+                  <input type="text" name="botcheck" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{position:'absolute',left:'-9999px',width:1,height:1,opacity:0}}/>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.name} *</label>
-                      <input required type="text" placeholder="Max Mustermann" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm`}/>
+                      <label htmlFor="cf-name" className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.name} *</label>
+                      <input id="cf-name" name="name" required type="text" placeholder="Max Mustermann" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm`}/>
                     </div>
                     <div>
-                      <label className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.email} *</label>
-                      <input required type="email" placeholder="name@firma.de" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm`}/>
+                      <label htmlFor="cf-email" className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.email} *</label>
+                      <input id="cf-email" name="email" required type="email" placeholder="name@firma.de" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm`}/>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.company}</label>
-                      <input type="text" placeholder="Muster GmbH" value={form.company} onChange={e=>setForm({...form,company:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm`}/>
+                      <label htmlFor="cf-company" className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.company}</label>
+                      <input id="cf-company" name="company" type="text" placeholder="Muster GmbH" value={form.company} onChange={e=>setForm({...form,company:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm`}/>
                     </div>
                     <div>
-                      <label className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.budget}</label>
-                      <select value={form.budget} onChange={e=>setForm({...form,budget:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm cursor-pointer`}>
+                      <label htmlFor="cf-budget" className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.budget}</label>
+                      <select id="cf-budget" name="budget" value={form.budget} onChange={e=>setForm({...form,budget:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm cursor-pointer`}>
                         <option value="">— Auswahl —</option>
                         {tc.budgets.map(b=><option key={b} value={b}>{b}</option>)}
                       </select>
                     </div>
                   </div>
                   <div>
-                    <label className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.msg} *</label>
-                    <textarea required rows={5} placeholder={tc.msg} value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm resize-none`}/>
+                    <label htmlFor="cf-msg" className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.msg} *</label>
+                    <textarea id="cf-msg" name="message" required rows={5} placeholder={tc.msg} value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm resize-none`}/>
                   </div>
-                  <button type="submit" className="btn-p w-full py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2.5 cursor-pointer">
-                    {tc.cta}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <label className={`flex items-start gap-3 text-xs leading-relaxed cursor-pointer ${bd?'text-zinc-400':'text-zinc-500'}`}>
+                    <input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)} className="mt-0.5 w-4 h-4 flex-shrink-0 cursor-pointer accent-violet-500"/>
+                    <span>{tc.consent} <a href="/datenschutz" className={`underline ${bd?'text-zinc-300 hover:text-white':'text-zinc-700 hover:text-zinc-900'}`}>{tc.privacy}</a></span>
+                  </label>
+                  {status==='error'&&<p role="alert" className="text-sm font-medium text-red-400">{errMsg}</p>}
+                  <button type="submit" disabled={status==='sending'} className="btn-p w-full py-4 rounded-xl font-bold text-base flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+                    {status==='sending'?tc.sending:tc.cta}
+                    {status!=='sending'&&<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>}
                   </button>
+                  <p aria-live="polite" className="sr-only">{status==='sending'?tc.sending:status==='error'?errMsg:''}</p>
                 </form>
               </div>
             )}
