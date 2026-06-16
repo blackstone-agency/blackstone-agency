@@ -133,7 +133,7 @@ const ParticleCanvas = ({ dark }) => {
   return <canvas ref={canvasRef} style={{ position:'fixed', inset:0, pointerEvents:'none', zIndex:1 }} />;
 };
 
-const ServiceModal = ({ svc, dark, onClose, onContact }) => {
+const ServiceModal = ({ svc, dark, onClose, onContact, t }) => {
   const bd = dark;
   const icons = {
     'monitor':<><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></>,
@@ -172,7 +172,7 @@ const ServiceModal = ({ svc, dark, onClose, onContact }) => {
             <div className="flex-1"><div className={`text-xs font-semibold mb-1 ${bd?'text-zinc-600':'text-zinc-400'}`}>INVESTITION</div><div className={`text-sm font-medium ${bd?'text-white':'text-zinc-900'}`}>{svc.price_de}</div></div>
           </div>
           <button onClick={()=>{onClose();onContact();}} className="btn-p w-full py-3.5 rounded-xl text-sm flex items-center justify-center gap-2">
-            Kostenloses Erstgespräch vereinbaren
+            {t.x.svcCta}
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -1172,7 +1172,7 @@ const PricingSection = ({ t, dark: bd, billing, setBilling, navigate }) => {
             </div>
           ))}
         </div>
-        <p className={`text-center text-xs mt-8 reveal ${bd?'text-zinc-700':'text-zinc-300'}`}>Alle Preise zzgl. MwSt. · Monatlich kündbar · Enterprise auf Anfrage</p>
+        <p className={`text-center text-xs mt-8 reveal ${bd?'text-zinc-700':'text-zinc-300'}`}>{t.x.priceNote}</p>
       </div>
     </section>
   );
@@ -1223,8 +1223,8 @@ const ContactSection = ({ t, dark: bd }) => {
             <div className="space-y-5 mb-10 reveal">
               {[
                 {icon:<><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></>,label:'E-Mail',val:tc.info,href:`mailto:${tc.info}`},
-                {icon:<><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></>,label:'Standort',val:'Hamburg, Deutschland',href:null},
-                {icon:<><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>,label:'Antwortzeit',val:'Innerhalb von 4 Stunden',href:null},
+                {icon:<><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></>,label:t.x.cLocLabel,val:t.x.cLocVal,href:null},
+                {icon:<><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>,label:t.x.cAnsLabel,val:t.x.cAnsVal,href:null},
               ].map((item,i)=>(
                 <div key={i} className="flex items-center gap-4">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${bd?'bg-zinc-900 border border-zinc-800':'bg-zinc-50 border border-zinc-200'}`}>
@@ -1256,9 +1256,9 @@ const ContactSection = ({ t, dark: bd }) => {
                 <div className="w-8 h-8 rounded-full bg-emerald-500/15 flex items-center justify-center">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
-                <span className={`text-sm font-bold ${bd?'text-white':'text-zinc-900'}`}>Ergebnis-Garantie</span>
+                <span className={`text-sm font-bold ${bd?'text-white':'text-zinc-900'}`}>{t.x.cGuarH}</span>
               </div>
-              <p className={`text-xs leading-relaxed ${bd?'text-zinc-500':'text-zinc-500'}`}>Wir definieren vorab klare KPIs. Wenn wir sie nicht erreichen, arbeiten wir kostenlos weiter — versprochen.</p>
+              <p className={`text-xs leading-relaxed ${bd?'text-zinc-500':'text-zinc-500'}`}>{t.x.cGuarP}</p>
             </div>
           </div>
 
@@ -1293,7 +1293,7 @@ const ContactSection = ({ t, dark: bd }) => {
                     <div>
                       <label htmlFor="cf-budget" className={`block text-xs font-semibold mb-2 ${bd?'text-zinc-500':'text-zinc-400'}`}>{tc.budget}</label>
                       <select id="cf-budget" name="budget" value={form.budget} onChange={e=>setForm({...form,budget:e.target.value})} className={`${inp} w-full px-4 py-3.5 rounded-xl text-sm cursor-pointer`}>
-                        <option value="">— Auswahl —</option>
+                        <option value="">{t.x.cSelect}</option>
                         {tc.budgets.map(b=><option key={b} value={b}>{b}</option>)}
                       </select>
                     </div>
@@ -1352,7 +1352,7 @@ const AboutPage = ({ dark: bd, t, navigate }) => {
           </div>
           <div className="reveal-r">
             <div className="grid grid-cols-2 gap-4">
-              {(ta.stats||[{n:'2023',l:'Gegründet in Hamburg'},{n:'3',l:'Sprachen · DE·EN·ES'},{n:'100%',l:'In-House, keine Subunternehmer'},{n:'4h',l:'Antwortzeit'}]).map((s,i)=>(
+              {t.x.aboutStats.map((s,i)=>(
                 <div key={i} className={`rounded-xl p-5 ${bd?'card-dark':'card-light'}`}><div className={`text-3xl font-black mb-1 ${bd?'text-white':'text-zinc-900'}`}>{s.n}</div><div className={`text-xs ${bd?'text-zinc-600':'text-zinc-400'}`}>{s.l}</div></div>
               ))}
             </div>
@@ -1377,9 +1377,9 @@ const AboutPage = ({ dark: bd, t, navigate }) => {
           </div>
         </div>
         <div className={`rounded-2xl p-10 text-center reveal ${bd?'glass-dark':'glass-light'}`} style={{border:bd?'1px solid rgba(255,255,255,0.1)':'1px solid rgba(0,0,0,0.08)'}}>
-          <h3 className={`text-2xl font-black mb-3 ${bd?'text-white':'text-zinc-900'}`}>Bereit für Ihr nächstes Kapitel?</h3>
-          <p className={`text-sm mb-6 ${bd?'text-zinc-400':'text-zinc-500'}`}>Lernen Sie uns persönlich kennen — kostenloses Erstgespräch, unverbindlich.</p>
-          <button onClick={()=>navigate('#contact')} className="btn-p px-8 py-3.5 rounded-full font-bold text-sm">Gespräch vereinbaren</button>
+          <h3 className={`text-2xl font-black mb-3 ${bd?'text-white':'text-zinc-900'}`}>{t.x.aboutCtaH}</h3>
+          <p className={`text-sm mb-6 ${bd?'text-zinc-400':'text-zinc-500'}`}>{t.x.aboutCtaSub}</p>
+          <button onClick={()=>navigate('#contact')} className="btn-p px-8 py-3.5 rounded-full font-bold text-sm">{t.x.aboutCta}</button>
         </div>
       </div>
     </div>
@@ -2941,8 +2941,8 @@ const BeforeAfterSlider = ({ t, dark:bd }) => {
           <p className={`text-base max-w-xl mx-auto ${bd?'text-zinc-400':'text-zinc-500'}`}>{tx.baSub}</p>
         </div>
         <div ref={ref} className="ba-wrap reveal" onMouseDown={e=>{drag.current=true;setFromX(e.clientX);}} onTouchStart={e=>{drag.current=true;setFromX(e.touches[0].clientX);}}>
-          <div className="ba-layer ba-after"><span className="ba-cap" style={{color:'#fff'}}>Premium · schnell · konversionsstark</span><span className="ba-tag" style={{right:14}}>{tx.baAfter}</span></div>
-          <div className="ba-layer ba-before" style={{clipPath:`inset(0 ${100-pos}% 0 0)`}}><span className="ba-cap" style={{color:'rgba(255,255,255,.7)'}}>Langsam · unübersichtlich · veraltet</span><span className="ba-tag" style={{left:14}}>{tx.baBefore}</span></div>
+          <div className="ba-layer ba-after"><span className="ba-cap" style={{color:'#fff'}}>{tx.baAfterCap}</span><span className="ba-tag" style={{right:14}}>{tx.baAfter}</span></div>
+          <div className="ba-layer ba-before" style={{clipPath:`inset(0 ${100-pos}% 0 0)`}}><span className="ba-cap" style={{color:'rgba(255,255,255,.7)'}}>{tx.baBeforeCap}</span><span className="ba-tag" style={{left:14}}>{tx.baBefore}</span></div>
           <div className="ba-handle" style={{left:pos+'%'}} role="slider" aria-valuenow={Math.round(pos)} aria-valuemin={0} aria-valuemax={100} aria-label={tx.baBadge} tabIndex={0} onKeyDown={e=>{if(e.key==='ArrowLeft'){e.preventDefault();setPos(p=>Math.max(0,p-4));}if(e.key==='ArrowRight'){e.preventDefault();setPos(p=>Math.min(100,p+4));}}}>
             <div className="ba-knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#09090b" strokeWidth="2.5"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></div>
           </div>
@@ -3156,7 +3156,7 @@ function App() {
       <CommandPalette open={cmdOpen} setOpen={setCmdOpen} t={t} dark={dark} navigate={navigate}/>
       <main style={{position:'relative',zIndex:3,minHeight:'100vh'}}>{pages[page]||pages.home}</main>
       <Footer t={t} dark={dark} navigate={navigate}/>
-      {modal&&<ServiceModal svc={modal} dark={dark} onClose={()=>setModal(null)} onContact={goContact}/>}
+      {modal&&<ServiceModal svc={modal} dark={dark} onClose={()=>setModal(null)} onContact={goContact} t={t}/>}
     </>
   );
 }
