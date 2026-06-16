@@ -2926,7 +2926,7 @@ const BeforeAfterSlider = ({ t, dark:bd }) => {
   const drag=useRef(false);
   const setFromX=(clientX)=>{ const el=ref.current; if(!el)return; const r=el.getBoundingClientRect(); let p=((clientX-r.left)/r.width)*100; setPos(Math.max(0,Math.min(100,p))); };
   useEffect(()=>{
-    const move=(e)=>{ if(!drag.current)return; setFromX(e.touches?e.touches[0].clientX:e.clientX); };
+    const move=(e)=>{ if(!drag.current)return; if(e.type==='mousemove'&&e.buttons===0){drag.current=false;return;} setFromX(e.touches?e.touches[0].clientX:e.clientX); };
     const up=()=>{drag.current=false;};
     window.addEventListener('mousemove',move); window.addEventListener('mouseup',up);
     window.addEventListener('touchmove',move,{passive:true}); window.addEventListener('touchend',up);
@@ -2940,9 +2940,31 @@ const BeforeAfterSlider = ({ t, dark:bd }) => {
           <h2 className={`text-[clamp(30px,4.5vw,52px)] font-black tracking-tight mb-4 ${bd?'text-white':'text-zinc-900'}`}>{tx.baH}</h2>
           <p className={`text-base max-w-xl mx-auto ${bd?'text-zinc-400':'text-zinc-500'}`}>{tx.baSub}</p>
         </div>
-        <div ref={ref} className="ba-wrap reveal" onMouseDown={e=>{drag.current=true;setFromX(e.clientX);}} onTouchStart={e=>{drag.current=true;setFromX(e.touches[0].clientX);}}>
-          <div className="ba-layer ba-after"><span className="ba-cap" style={{color:'#fff'}}>{tx.baAfterCap}</span><span className="ba-tag" style={{right:14}}>{tx.baAfter}</span></div>
-          <div className="ba-layer ba-before" style={{clipPath:`inset(0 ${100-pos}% 0 0)`}}><span className="ba-cap" style={{color:'rgba(255,255,255,.7)'}}>{tx.baBeforeCap}</span><span className="ba-tag" style={{left:14}}>{tx.baBefore}</span></div>
+        <div ref={ref} className="ba-wrap reveal" onMouseDown={e=>{e.preventDefault();drag.current=true;setFromX(e.clientX);}} onTouchStart={e=>{drag.current=true;setFromX(e.touches[0].clientX);}}>
+          {/* AFTER — premium */}
+          <div className="ba-layer ba-after">
+            <div className="bam">
+              <div className="bam-bar"><span className="bam-dot" style={{background:'#ff5f57'}}/><span className="bam-dot" style={{background:'#febc2e'}}/><span className="bam-dot" style={{background:'#28c840'}}/><span className="bam-url">blackstone-agency.vercel.app</span></div>
+              <div className="bam-body bam-after-body">
+                <div className="bam-h g-text">We build Brands.</div>
+                <div className="bam-sub">{tx.baAfterCap}</div>
+                <div className="bam-row"><span className="bam-pill">Web</span><span className="bam-pill">SEO</span><span className="bam-pill">Ads</span></div>
+              </div>
+            </div>
+            <span className="ba-tag" style={{right:14}}>{tx.baAfter}</span>
+          </div>
+          {/* BEFORE — dated */}
+          <div className="ba-layer ba-before" style={{clipPath:`inset(0 ${100-pos}% 0 0)`}}>
+            <div className="bam">
+              <div className="bam-bar bam-bar-old"><span className="bam-dot" style={{background:'#b8ad97'}}/><span className="bam-dot" style={{background:'#b8ad97'}}/><span className="bam-url-old">www.alte-seite.de</span></div>
+              <div className="bam-body bam-before-body">
+                <div className="bam-h-old">WILLKOMMEN!</div>
+                <div className="bam-cta-old">★ JETZT ANRUFEN ★</div>
+                <div className="bam-link-old">Startseite · Über · Kontakt · Impressum</div>
+              </div>
+            </div>
+            <span className="ba-tag" style={{left:14}}>{tx.baBefore}</span>
+          </div>
           <div className="ba-handle" style={{left:pos+'%'}} role="slider" aria-valuenow={Math.round(pos)} aria-valuemin={0} aria-valuemax={100} aria-label={tx.baBadge} tabIndex={0} onKeyDown={e=>{if(e.key==='ArrowLeft'){e.preventDefault();setPos(p=>Math.max(0,p-4));}if(e.key==='ArrowRight'){e.preventDefault();setPos(p=>Math.min(100,p+4));}}}>
             <div className="ba-knob"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#09090b" strokeWidth="2.5"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></div>
           </div>

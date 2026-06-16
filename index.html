@@ -60,7 +60,7 @@
 </script>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg"/>
 <link rel="preload" href="./inter-var.woff2" as="font" type="font/woff2" crossorigin/>
-<link rel="stylesheet" href="./tailwind.css?v=13"/>
+<link rel="stylesheet" href="./tailwind.css?v=15"/>
 <style>
 /* ── Self-hosted Inter (variable, 400-900) ── */
 @font-face{font-family:'Inter';font-style:normal;font-weight:400 900;font-display:swap;src:url('./inter-var.woff2') format('woff2')}
@@ -69,13 +69,18 @@
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-/* ── Dark base ── */
-.page-dark{background:#030303;color:#ffffff}
-.page-light{background:#f8f8f8;color:#09090b}
+/* ── Design tokens · Redesign "Aurora Noir" ── */
+:root{--v:#8b7cff;--i:#6366f1;--c:#22d3ee;--e:#10b981;--aurora:linear-gradient(115deg,#fff 0%,#c9c2ff 36%,#8b7cff 60%,#22d3ee 100%)}
+::selection{background:rgba(139,124,255,.32);color:#fff}
+.page-light ::selection{background:rgba(99,102,241,.20);color:#0a0a0c}
 
-/* ── Gradient text ── */
-.g-text{background:linear-gradient(135deg,#fff 0%,#a1a1aa 55%,#71717a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.g-text-light{background:linear-gradient(135deg,#09090b 0%,#3f3f46 55%,#71717a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+/* ── Dark / Light base + fixed Aurora-Ambient ── */
+.page-dark{background:radial-gradient(58% 48% at 10% -6%,rgba(139,124,255,.16),transparent 60%),radial-gradient(52% 44% at 102% 104%,rgba(34,211,238,.13),transparent 60%),#060608;background-attachment:fixed;color:#fff}
+.page-light{background:radial-gradient(58% 48% at 10% -6%,rgba(99,102,241,.10),transparent 60%),radial-gradient(52% 44% at 102% 104%,rgba(34,211,238,.07),transparent 60%),#fafaf9;background-attachment:fixed;color:#0a0a0c}
+
+/* ── Gradient text (Aurora) ── */
+.g-text{background:var(--aurora);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.g-text-light{background:linear-gradient(115deg,#0a0a0c 0%,#4338ca 46%,#7c3aed 68%,#0891b2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* ── Glass ── */
 .glass-dark{background:rgba(255,255,255,0.03);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08)}
@@ -91,7 +96,7 @@ body{font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:ant
 .btn-p{background:linear-gradient(135deg,#fff,#d4d4d8);color:#09090b;font-weight:700;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
 .btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.25),transparent);opacity:0;transition:opacity .3s}
 .btn-p:hover::after{opacity:1}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 20px 40px rgba(255,255,255,.12)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 18px 44px -10px rgba(139,124,255,.5),0 6px 18px rgba(0,0,0,.35)}
 .btn-s-dark{border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);transition:all .3s;background:transparent}
 .btn-s-dark:hover{border-color:rgba(255,255,255,.35);color:#fff;background:rgba(255,255,255,.06)}
 .btn-s-light{border:1px solid rgba(0,0,0,.15);color:rgba(0,0,0,.7);transition:all .3s;background:transparent}
@@ -151,7 +156,7 @@ select option{background:#1a1a1a;color:#fff}
 .shimmer-line{background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);background-size:200% 100%;animation:shimmer 2s linear infinite}
 
 /* ── Scroll progress ── */
-#scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#fff,#a1a1aa);z-index:9999;transition:width .12s linear;pointer-events:none}
+#scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--v),var(--i),var(--c));z-index:9999;transition:width .12s linear;pointer-events:none}
 
 /* ── Cursor glow ── */
 #cursor-glow{position:fixed;width:500px;height:500px;border-radius:50%;pointer-events:none;z-index:2;transition:left .08s,top .08s;transform:translate(-50%,-50%)}
@@ -552,99 +557,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .orbit-card{position:absolute;top:-42px;left:-82px;width:164px;height:84px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-weight:700;font-size:13px;letter-spacing:-.01em;backface-visibility:hidden;box-shadow:0 18px 40px rgba(0,0,0,.4)}
 @media(max-width:640px){.orbit-viewport{perspective:900px;height:380px}.orbit-card{width:140px;left:-70px}}
 @media (prefers-reduced-motion:reduce){.hero-aurora,.hero-beam,.proc-ring,.faq-orb,.faq-caret,.faq-think span,.orbit-stage,.orbit-core{animation:none}.orbit-tilt{transform:rotateX(-10deg)}}
-/* ── Kinetic Manifest hero (HeroSection 4.0) ── */
-.kx-hero{position:relative;overflow:hidden;min-height:100vh;min-height:100dvh;display:flex;align-items:center;background:#030303}
-.page-light .kx-hero{background:#fafafb}
-/* Static near-black mesh: two soft off-axis orbs (violet TL, emerald BR), under ~8% */
-.kx-mesh{position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:
-    radial-gradient(48% 42% at 18% 14%, rgba(139,124,255,.075), transparent 70%),
-    radial-gradient(46% 44% at 82% 86%, rgba(16,185,129,.07), transparent 72%)}
-.page-light .kx-mesh{background:
-    radial-gradient(48% 42% at 18% 14%, rgba(124,58,237,.07), transparent 70%),
-    radial-gradient(46% 44% at 82% 86%, rgba(5,150,105,.06), transparent 72%)}
-/* Faint perspective guide-lines receding to a vanishing point (no animation) */
-.kx-vanish{position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.5;
-  background:
-    linear-gradient(115deg, transparent 49.85%, rgba(255,255,255,.035) 50%, transparent 50.15%),
-    linear-gradient(65deg, transparent 49.85%, rgba(255,255,255,.025) 50%, transparent 50.15%);
-  -webkit-mask:radial-gradient(70% 70% at 60% 55%, #000 0%, transparent 75%);
-          mask:radial-gradient(70% 70% at 60% 55%, #000 0%, transparent 75%)}
-.page-light .kx-vanish{background:
-    linear-gradient(115deg, transparent 49.85%, rgba(0,0,0,.04) 50%, transparent 50.15%),
-    linear-gradient(65deg, transparent 49.85%, rgba(0,0,0,.03) 50%, transparent 50.15%)}
-.kx-grain{position:absolute;z-index:2;opacity:.5}
-
-.kx-wrap{position:relative;max-width:1040px}
-/* Left-edge baseline tick + blinking caret signature */
-.kx-caret{position:absolute;left:-22px;top:6px;width:2px;height:54px;border-radius:2px;
-  background:linear-gradient(180deg,#a78bfa,#34d399);animation:kxBlink 1.15s steps(1,end) infinite;opacity:.85}
-@media(max-width:1024px){.kx-caret{display:none}}
-@keyframes kxBlink{0%,55%{opacity:.85}56%,100%{opacity:.12}}
-
-.kx-eyebrow{font-size:10px;letter-spacing:.2em}
-
-/* Oversized variable-weight manifesto headline */
-.kx-head{position:relative;margin:26px 0 30px;font-weight:400;line-height:.92;
-  letter-spacing:-.02em;text-wrap:balance;
-  font-size:clamp(2.8rem,8vw,8rem);font-feature-settings:"ss01" 1}
-.kx-line{display:block}
-.kx-dark{color:#fff}.kx-light{color:#0a0a0c}
-/* Per-glyph weight gravity well: JS writes only --w; transition gives spring decay */
-.kx-g{display:inline-block;font-variation-settings:'wght' var(--w,400);
-  transition:font-variation-settings .42s cubic-bezier(0.32,0.72,0,1), letter-spacing .42s cubic-bezier(0.32,0.72,0,1);
-  will-change:font-variation-settings}
-.kx-g-bold{font-variation-settings:'wght' var(--w,850)}
-/* Emphasized word: violet→emerald gradient clip (brand) */
-.kx-emph .kx-g,.kx-emph.kx-rot{
-  background:linear-gradient(135deg,#a78bfa 0%,#60a5fa 45%,#34d399 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.page-light .kx-emph .kx-g,.page-light .kx-emph.kx-rot{
-  background:linear-gradient(135deg,#7c3aed 0%,#2563eb 45%,#059669 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.kx-emph{display:inline-block}
-.kx-line-rot{margin-top:.04em}
-.kx-rot{font-variation-settings:'wght' 850;font-weight:850}
-
-/* One-shot light-seam: gradient clone masked by a translating gradient, transform-only */
-.kx-seam{position:absolute;inset:0;pointer-events:none;opacity:0}
-.kx-seam .kx-g,.kx-seam .kx-emph .kx-g{
-  background:linear-gradient(90deg,#34d399,#a78bfa);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  font-variation-settings:'wght' 850}
-.kx-seam-run .kx-seam{opacity:1;
-  -webkit-mask:linear-gradient(90deg,transparent 0%,#000 8%,#000 14%,transparent 22%);
-          mask:linear-gradient(90deg,transparent 0%,#000 8%,#000 14%,transparent 22%);
-  -webkit-mask-size:260% 100%;mask-size:260% 100%;
-  animation:kxSeam .8s cubic-bezier(0.32,0.72,0,1) forwards}
-@keyframes kxSeam{from{-webkit-mask-position:120% 0;mask-position:120% 0}to{-webkit-mask-position:-160% 0;mask-position:-160% 0}}
-
-.kx-sub{font-size:1.075rem;line-height:1.65;max-width:520px;margin:0 0 36px}
-
-/* CTAs */
-.kx-cta-p{display:inline-flex;align-items:center;gap:14px;padding:6px 6px 6px 26px;border-radius:9999px;font-weight:700;font-size:.9rem}
-.kx-cta-circ{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#09090b;color:#fff;transition:transform .35s cubic-bezier(0.32,0.72,0,1)}
-.kx-cta-p:hover .kx-cta-circ{transform:rotate(45deg)}
-.kx-cta-s{padding:14px 30px;border-radius:9999px;font-weight:600;font-size:.9rem}
-.kx-stats{padding-top:46px;margin-top:8px}
-
-/* Static fallback (reduced-motion OR touch): tasteful two-weight contrast, no reactivity */
-.kx-static .kx-g{transition:none!important}
-.kx-static .kx-g{font-variation-settings:'wght' 380}
-.kx-static .kx-g-bold,.kx-static .kx-rot{font-variation-settings:'wght' 850}
-
-/* Mobile: no hover reactivity, scale via clamp, stack CTAs full-width */
-@media(max-width:640px){
-  .kx-head{font-size:clamp(2.6rem,11vw,3.4rem);margin:20px 0 24px}
-  .kx-sub{font-size:1rem;margin-bottom:28px}
-  .kx-cta-p,.kx-cta-s{width:100%;justify-content:center}
-  .kx-stats{padding-top:34px}
-}
-@media (prefers-reduced-motion: reduce){
-  .kx-caret{animation:none;opacity:.6}
-  .kx-g{transition:none!important}
-  .kx-seam{display:none}        /* seam appears via static weights, no sweep */
-}
 
 /* ── CodeLab — live code runner ── */
 .codelab-editor{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
@@ -732,7 +644,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .orbit-viewport{position:relative;height:440px;perspective:1200px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .orbit-viewport.orbit-grabbing{cursor:grabbing}
 .orbit-core{position:absolute;z-index:2;width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(139,124,255,.28),transparent 70%);filter:drop-shadow(0 0 34px rgba(139,124,255,.45));animation:core-pulse 4s ease-in-out infinite;pointer-events:none}
-@keyframes core-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 .orbit-tilt{position:absolute;transform-style:preserve-3d;transform:rotateX(var(--tilt,-10deg));transition:transform .3s ease-out;pointer-events:none}
 .orbit-stage{position:relative;transform-style:preserve-3d;will-change:transform}
 .orbit-card{position:absolute;top:-42px;left:-82px;width:164px;height:84px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-weight:700;font-size:13px;letter-spacing:-.01em;backface-visibility:hidden;box-shadow:0 18px 40px rgba(0,0,0,.4);pointer-events:none}
@@ -789,16 +700,18 @@ h3, .text-2xl, .text-3xl {
     0 18px 44px -22px rgba(20,20,30,0.22);
 }
 .card-dark:hover {
+  border-color: rgba(139,124,255,0.38);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.09),
     0 2px 4px rgba(0,0,0,0.4),
-    0 26px 60px -22px rgba(0,0,0,0.78);
+    0 28px 64px -22px rgba(99,102,241,0.42);
 }
 .card-light:hover {
+  border-color: rgba(99,102,241,0.32);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.85),
     0 2px 6px rgba(20,20,30,0.08),
-    0 32px 66px -26px rgba(20,20,30,0.30);
+    0 30px 64px -26px rgba(99,102,241,0.26);
 }
 
 /* --- 3. Glass surfaces: edge refraction -------------------- */
@@ -995,7 +908,26 @@ body.page-light::after {
 /* ── NEW: command palette / before-after / tech marquee ── */
 .cmdk-bg{position:fixed;inset:0;z-index:1100;display:flex;align-items:flex-start;justify-content:center;padding-top:14vh;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fade-in .15s ease-out}
 .cmdk-panel{width:min(560px,92vw);border-radius:18px;overflow:hidden;box-shadow:0 40px 100px -20px rgba(0,0,0,.7)}
-.ba-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;cursor:ew-resize;border:1px solid rgba(255,255,255,.1);touch-action:none}
+.ba-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;cursor:ew-resize;border:1px solid rgba(255,255,255,.1);touch-action:none;user-select:none;-webkit-user-select:none}
+/* before/after mock UIs */
+.bam{position:absolute;inset:0;display:flex;flex-direction:column}
+.bam-bar{display:flex;align-items:center;gap:7px;padding:11px 15px;background:rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.08)}
+.bam-bar-old{background:#d9d2c4;border-bottom:1px solid #b8ad97}
+.bam-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.bam-url{margin-left:10px;font-size:12px;color:rgba(255,255,255,.5);font-weight:600;white-space:nowrap;overflow:hidden}
+.bam-url-old{margin-left:10px;font-size:12px;color:#5b5036;font-weight:700;font-family:'Times New Roman',serif;text-decoration:underline;white-space:nowrap}
+.bam-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:20px}
+.bam-after-body{background:radial-gradient(120% 120% at 20% 8%,rgba(139,124,255,.22),transparent 55%),radial-gradient(120% 120% at 90% 95%,rgba(34,211,238,.16),transparent 55%),#0a0a0f}
+.bam-h{font-size:clamp(26px,5vw,54px);font-weight:900;letter-spacing:-.02em;line-height:1}
+.bam-sub{font-size:clamp(11px,1.7vw,16px);color:rgba(255,255,255,.6);font-weight:500}
+.bam-row{display:flex;gap:8px}
+.bam-pill{font-size:11px;font-weight:700;padding:5px 13px;border-radius:9999px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.14)}
+.bam-before-body{background:#e8e2d4;color:#3a3320;gap:12px}
+.bam-h-old{font-family:'Times New Roman',serif;font-size:clamp(24px,5vw,48px);font-weight:700;color:#7a1f1f;text-shadow:1px 1px 0 #c9b27a}
+.bam-cta-old{font-family:'Comic Sans MS','Times New Roman',serif;font-size:clamp(13px,2.3vw,22px);font-weight:700;color:#157a15;animation:bamBlink 1s steps(1) infinite}
+.bam-link-old{font-family:'Times New Roman',serif;font-size:clamp(10px,1.5vw,14px);color:#1414cc;text-decoration:underline}
+@keyframes bamBlink{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.bam-cta-old{animation:none}}
 .ba-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .ba-after{background:radial-gradient(120% 120% at 18% 8%,rgba(139,124,255,.38),transparent 50%),radial-gradient(120% 120% at 90% 92%,rgba(16,185,129,.30),transparent 55%),#0a0a0f}
 .ba-before{background:repeating-linear-gradient(45deg,#3a3a3a,#3a3a3a 14px,#454545 14px,#454545 28px)}
@@ -1580,6 +1512,6 @@ craft:{badge:'Así sale a producción',h:'Las grandes webs son difíciles de con
 </script>
 
 <!-- React App (JSX) — inline für direktes Öffnen ohne Server -->
-<script src="./app.js?v=13" defer></script>
+<script src="./app.js?v=15" defer></script>
 </body>
 </html>
