@@ -1493,17 +1493,17 @@ const BlogPage = ({ dark: bd }) => (
   </div>
 );
 
-const KarrierePage = ({ dark: bd, navigate }) => (
+const KarrierePage = ({ dark: bd, navigate, t }) => (
   <div className="page-enter pt-24 pb-20 px-5" style={{zIndex:3,position:'relative'}}>
     <div className="max-w-3xl mx-auto">
-      <div className={`${bd?'badge-dark':'badge-light'} mb-6`}>Karriere</div>
-      <h1 className={`text-5xl font-black tracking-tight mb-6 ${bd?'text-white':'text-zinc-900'}`}>Werde Teil des Teams.</h1>
-      <p className={`text-xl mb-10 ${bd?'text-zinc-400':'text-zinc-500'}`}>Wir suchen außergewöhnliche Menschen, die gemeinsam mit uns digitale Präsenz aufbauen wollen.</p>
-      {[{role:'Senior Frontend Developer',tags:['React','Next.js','TypeScript'],type:'Vollzeit · Hamburg / Remote'},{role:'Performance Marketing Manager',tags:['Meta Ads','Google Ads','Analytics'],type:'Vollzeit · Hamburg'},{role:'UX/UI Designer',tags:['Figma','Design Systems','Motion'],type:'Vollzeit / Freelance'}].map((job,i)=>(
+      <div className={`${bd?'badge-dark':'badge-light'} mb-6`}>{t.nav.karriere}</div>
+      <h1 className={`text-5xl font-black tracking-tight mb-6 ${bd?'text-white':'text-zinc-900'}`}>{t.x.karH}</h1>
+      <p className={`text-xl mb-10 ${bd?'text-zinc-400':'text-zinc-500'}`}>{t.x.karSub}</p>
+      {[{role:'Senior Frontend Developer',tags:['React','Next.js','TypeScript']},{role:'Performance Marketing Manager',tags:['Meta Ads','Google Ads','Analytics']},{role:'UX/UI Designer',tags:['Figma','Design Systems','Motion']}].map((job,i)=>(
         <div key={i} className={`rounded-2xl p-6 mb-4 ${bd?'card-dark':'card-light'}`}>
           <div className="flex items-start justify-between gap-4">
-            <div><h3 className={`font-bold text-lg mb-2 ${bd?'text-white':'text-zinc-900'}`}>{job.role}</h3><p className={`text-xs mb-3 ${bd?'text-zinc-600':'text-zinc-400'}`}>{job.type}</p><div className="flex flex-wrap gap-2">{job.tags.map(t=><span key={t} className={`text-xs px-2.5 py-1 rounded-full ${bd?'bg-zinc-800 text-zinc-400':'bg-zinc-100 text-zinc-500'}`}>{t}</span>)}</div></div>
-            <button onClick={()=>navigate('#contact')} className="btn-p px-4 py-2 rounded-full text-xs font-bold flex-shrink-0">Bewerben</button>
+            <div><h3 className={`font-bold text-lg mb-2 ${bd?'text-white':'text-zinc-900'}`}>{job.role}</h3><p className={`text-xs mb-3 ${bd?'text-zinc-600':'text-zinc-400'}`}>{t.x.karTypes[i]}</p><div className="flex flex-wrap gap-2">{job.tags.map(t=><span key={t} className={`text-xs px-2.5 py-1 rounded-full ${bd?'bg-zinc-800 text-zinc-400':'bg-zinc-100 text-zinc-500'}`}>{t}</span>)}</div></div>
+            <button onClick={()=>navigate('#contact')} className="btn-p px-4 py-2 rounded-full text-xs font-bold flex-shrink-0">{t.x.karApply}</button>
           </div>
         </div>
       ))}
@@ -3141,7 +3141,7 @@ function App() {
     agb:<AGBPage dark={dark}/>,
     cookies:<CookiesPage dark={dark}/>,
     blog:<BlogPage dark={dark}/>,
-    karriere:<KarrierePage dark={dark} navigate={navigate}/>,
+    karriere:<KarrierePage dark={dark} navigate={navigate} t={t}/>,
     leistungen:<LeistungenPage dark={dark} t={t} navigate={navigate}/>,
     branchen:<BranchenPage dark={dark} t={t} navigate={navigate}/>,
     kontakt:<KontaktPage dark={dark} t={t}/>,
