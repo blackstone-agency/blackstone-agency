@@ -315,202 +315,103 @@ const ProcessLogoSVG = ({ step = 0, size = 180 }) => {
    ══════════════════════════════════════════════════ */
 const ChipSVG = ({ dark: bd, progress }) => {
   const W=380, H=380, CX=70, CY=70, CS=240;
-  const PINS=8, PIN_LEN=28;
-  const pinPos = Array.from({length:PINS},(_,i)=>CX+(i+1)*(CS/(PINS+1)));
-  const scanY  = CY + ((progress*3)%1)*CS;
-  const coreS=58, coreGap=20;
-  const coreOff=(CS-2*coreS-coreGap)/2;
-  const cores=[
-    {x:CX+coreOff,       y:CY+coreOff},
-    {x:CX+coreOff+coreS+coreGap, y:CY+coreOff},
-    {x:CX+coreOff,       y:CY+coreOff+coreS+coreGap},
-    {x:CX+coreOff+coreS+coreGap, y:CY+coreOff+coreS+coreGap},
-  ];
-  const juncX=CX+coreOff+coreS+coreGap/2;
-  const juncY=CY+coreOff+coreS+coreGap/2;
-  const pc=bd?'#3a3a45':'#b0b0bc';
-  const ic=bd?'#caa44e':'#c79a3e';
-  const gc_on=bd?'#22c55e':'#16a34a';
-  const pp=(progress*2)%1;
-  const lerp=(a,b,t)=>a+(b-a)*t;
-  const ringGlow=0.10+Math.abs(Math.sin(progress*6))*0.24;
-  const holoX=CX+pp*CS-CS*0.5;
+  const N=13, LEAD=16, LW=3.6, GAP=CS/N;
+  const leadAt=(i)=>CX+GAP*(i+0.5);
+  const pp=(progress*0.45)%1;                 // slow specular sweep
+  const a=Math.max(0,pp-0.14), b=pp, c=Math.min(1,pp+0.14);
+  const cx=CX+CS/2;
   return (
     <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}
       style={{filter:bd
-        ?'drop-shadow(0 0 80px rgba(255,255,255,.05)) drop-shadow(0 30px 100px rgba(0,0,0,.85))'
-        :'drop-shadow(0 30px 80px rgba(0,0,0,.18))'}}>
+        ?'drop-shadow(0 24px 60px rgba(0,0,0,.7))'
+        :'drop-shadow(0 22px 48px rgba(20,20,45,.22))'}}>
       <defs>
-        <radialGradient id="cpuBody" cx="38%" cy="26%" r="74%">
-          <stop offset="0%"   stopColor={bd?'#2e2e3a':'#eaeaf2'}/>
-          <stop offset="100%" stopColor={bd?'#0d0d14':'#ced0d8'}/>
+        <radialGradient id="cpuBody" cx="34%" cy="22%" r="92%">
+          <stop offset="0%"   stopColor={bd?'#20202a':'#edeef3'}/>
+          <stop offset="58%"  stopColor={bd?'#14141b':'#dddee6'}/>
+          <stop offset="100%" stopColor={bd?'#090910':'#c9cad4'}/>
         </radialGradient>
         <linearGradient id="cpuEdge" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%"   stopColor={bd?'rgba(255,255,255,.22)':'rgba(0,0,0,.16)'}/>
-          <stop offset="50%"  stopColor={bd?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)'}/>
-          <stop offset="100%" stopColor={bd?'rgba(255,255,255,.18)':'rgba(0,0,0,.13)'}/>
+          <stop offset="0%"   stopColor={bd?'rgba(255,255,255,.30)':'rgba(255,255,255,.95)'}/>
+          <stop offset="46%"  stopColor={bd?'rgba(255,255,255,.05)':'rgba(0,0,0,.05)'}/>
+          <stop offset="100%" stopColor={bd?'rgba(0,0,0,.55)':'rgba(0,0,0,.20)'}/>
         </linearGradient>
-        <clipPath id="chipClip">
-          <rect x={CX} y={CY} width={CS} height={CS} rx="18"/>
-        </clipPath>
+        <linearGradient id="leadV" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor={bd?'#dadae3':'#d2d2da'}/>
+          <stop offset="42%"  stopColor={bd?'#9a9aa6':'#a6a6b1'}/>
+          <stop offset="100%" stopColor={bd?'#5a5a66':'#73737e'}/>
+        </linearGradient>
+        <linearGradient id="leadH" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stopColor={bd?'#dadae3':'#d2d2da'}/>
+          <stop offset="42%"  stopColor={bd?'#9a9aa6':'#a6a6b1'}/>
+          <stop offset="100%" stopColor={bd?'#5a5a66':'#73737e'}/>
+        </linearGradient>
+        <clipPath id="chipClip"><rect x={CX} y={CY} width={CS} height={CS} rx="14"/></clipPath>
         <linearGradient id="dieGlare" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="rgba(255,255,255,.18)"/>
-          <stop offset="34%" stopColor="rgba(255,255,255,0)"/>
-          <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
+          <stop offset="0%"  stopColor={bd?'rgba(255,255,255,.13)':'rgba(255,255,255,.6)'}/>
+          <stop offset="42%" stopColor="rgba(255,255,255,0)"/>
         </linearGradient>
-        <linearGradient id="iridescent" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={bd?'rgba(139,124,255,.12)':'rgba(90,70,210,.07)'}/>
-          <stop offset="50%" stopColor={bd?'rgba(16,185,129,.06)':'rgba(5,150,105,.04)'}/>
-          <stop offset="100%" stopColor={bd?'rgba(59,130,246,.11)':'rgba(40,90,200,.06)'}/>
-        </linearGradient>
-        <linearGradient id="holoSweep" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="rgba(255,255,255,0)"/>
-          <stop offset="50%" stopColor={bd?'rgba(190,180,255,.16)':'rgba(255,255,255,.5)'}/>
-          <stop offset="100%" stopColor="rgba(255,255,255,0)"/>
+        <linearGradient id="chipSpec" x1="0" y1="0" x2="1" y2="1">
+          <stop offset={a} stopColor="rgba(255,255,255,0)"/>
+          <stop offset={b} stopColor={bd?'rgba(200,205,255,.06)':'rgba(255,255,255,.42)'}/>
+          <stop offset={c} stopColor="rgba(255,255,255,0)"/>
         </linearGradient>
       </defs>
 
-      {/* ── PINS ── */}
-      {pinPos.map((pos,i)=>{
-        const aT=Math.sin(progress*13+i*.95)>.28;
-        const aB=Math.sin(progress*13+i*.95+2.1)>.28;
-        const aL=Math.sin(progress*13+i*.95+4.2)>.28;
-        const aR=Math.sin(progress*13+i*.95+6.3)>.28;
+      {/* soft substrate shadow under package */}
+      <rect x={CX-LEAD-8} y={CY-LEAD-8} width={CS+2*LEAD+16} height={CS+2*LEAD+16} rx="24"
+        fill={bd?'rgba(0,0,0,.32)':'rgba(20,20,45,.05)'}/>
+
+      {/* ── METALLIC LEADS (4 sides) ── */}
+      {Array.from({length:N},(_,i)=>{
+        const p=leadAt(i);
         return (
           <g key={i}>
-            <rect x={pos-1.5} y={CY-PIN_LEN} width={3} height={PIN_LEN} rx={1.5} fill={pc}/>
-            <circle cx={pos} cy={CY-PIN_LEN+1} r={4.5} fill={aT?gc_on:ic} style={{transition:'fill .22s'}}/>
-            <rect x={pos-1.5} y={CY+CS} width={3} height={PIN_LEN} rx={1.5} fill={pc}/>
-            <circle cx={pos} cy={CY+CS+PIN_LEN-1} r={4.5} fill={aB?gc_on:ic} style={{transition:'fill .22s'}}/>
-            <rect x={CX-PIN_LEN} y={pos-1.5} width={PIN_LEN} height={3} rx={1.5} fill={pc}/>
-            <circle cx={CX-PIN_LEN+1} cy={pos} r={4.5} fill={aL?gc_on:ic} style={{transition:'fill .22s'}}/>
-            <rect x={CX+CS} y={pos-1.5} width={PIN_LEN} height={3} rx={1.5} fill={pc}/>
-            <circle cx={CX+CS+PIN_LEN-1} cy={pos} r={4.5} fill={aR?gc_on:ic} style={{transition:'fill .22s'}}/>
+            <rect x={p-LW/2} y={CY-LEAD} width={LW} height={LEAD+4} rx={1.2} fill="url(#leadV)"/>
+            <rect x={p-LW/2} y={CY-LEAD} width={1} height={LEAD} fill="rgba(255,255,255,.55)"/>
+            <rect x={p-LW/2} y={CY+CS-4} width={LW} height={LEAD+4} rx={1.2} fill="url(#leadV)"/>
+            <rect x={p-LW/2} y={CY+CS} width={1} height={LEAD} fill="rgba(255,255,255,.45)"/>
+            <rect x={CX-LEAD} y={p-LW/2} width={LEAD+4} height={LW} rx={1.2} fill="url(#leadH)"/>
+            <rect x={CX-LEAD} y={p-LW/2} width={LEAD} height={1} fill="rgba(255,255,255,.55)"/>
+            <rect x={CX+CS-4} y={p-LW/2} width={LEAD+4} height={LW} rx={1.2} fill="url(#leadH)"/>
+            <rect x={CX+CS} y={p-LW/2} width={LEAD} height={1} fill="rgba(255,255,255,.45)"/>
           </g>
         );
       })}
 
-      {/* ── CHIP BODY ── */}
-      <rect x={CX} y={CY} width={CS} height={CS} rx="18"
-        fill="url(#cpuBody)" stroke="url(#cpuEdge)" strokeWidth="1.5"/>
-      <rect x={CX+7} y={CY+7} width={CS-14} height={CS-14} rx="13"
-        fill="none" stroke={bd?'rgba(255,255,255,.04)':'rgba(0,0,0,.04)'} strokeWidth={.5}/>
-      {/* Silicon die iridescence + top glare */}
-      <rect x={CX} y={CY} width={CS} height={CS} rx="18" fill="url(#iridescent)" pointerEvents="none"/>
-      <rect x={CX} y={CY} width={CS} height={CS} rx="18" fill="url(#dieGlare)" pointerEvents="none"/>
+      {/* ── PACKAGE BODY (matte epoxy) ── */}
+      <rect x={CX} y={CY} width={CS} height={CS} rx="14" fill="url(#cpuBody)" stroke="url(#cpuEdge)" strokeWidth="1.5"/>
+      {/* chamfer */}
+      <rect x={CX+5} y={CY+5} width={CS-10} height={CS-10} rx="10" fill="none"
+        stroke={bd?'rgba(0,0,0,.5)':'rgba(0,0,0,.07)'} strokeWidth="1"/>
+      <rect x={CX+6} y={CY+6} width={CS-12} height={CS-12} rx="9" fill="none"
+        stroke={bd?'rgba(255,255,255,.05)':'rgba(255,255,255,.65)'} strokeWidth=".8"/>
+      {/* top glare */}
+      <rect x={CX} y={CY} width={CS} height={CS} rx="14" fill="url(#dieGlare)" pointerEvents="none"/>
 
-      {/* ── KEY NOTCH ── */}
-      <rect x={CX+CS/2-14} y={CY-2} width={28} height={6} rx={3}
-        fill={bd?'#1a1a22':'#d6d6e0'}
-        stroke={bd?'rgba(255,255,255,.1)':'rgba(0,0,0,.08)'} strokeWidth={.5}/>
+      {/* ── PIN-1 DOT ── */}
+      <circle cx={CX+20} cy={CY+20} r={6.5}
+        fill={bd?'#0b0b11':'#c6c6d0'} stroke={bd?'rgba(255,255,255,.12)':'rgba(0,0,0,.12)'} strokeWidth=".8"/>
+      <circle cx={CX+20} cy={CY+20} r={2.4} fill={bd?'rgba(255,255,255,.2)':'rgba(0,0,0,.28)'}/>
 
-      {/* ── CORNER REGISTRATION MARKS ── */}
-      {[[CX+19,CY+19],[CX+CS-19,CY+19],[CX+19,CY+CS-19],[CX+CS-19,CY+CS-19]].map(([cx,cy],i)=>(
-        <g key={`r${i}`}>
-          <circle cx={cx} cy={cy} r={6}
-            fill={bd?'#1c1c26':'#d4d4de'}
-            stroke={bd?'rgba(255,255,255,.18)':'rgba(0,0,0,.14)'} strokeWidth={1}/>
-          <circle cx={cx} cy={cy} r={2.5} fill={bd?'#52525b':'#a1a1aa'}/>
-        </g>
-      ))}
+      {/* ── LASER-ETCHED SILKSCREEN ── */}
+      <text x={cx} y={CY+CS/2-13} textAnchor="middle" fontFamily="Inter,Arial,sans-serif"
+        fontWeight={800} fontSize={21} letterSpacing="0.1em"
+        fill={bd?'rgba(255,255,255,.06)':'rgba(255,255,255,.7)'}>BLACKSTONE</text>
+      <text x={cx} y={CY+CS/2-14} textAnchor="middle" fontFamily="Inter,Arial,sans-serif"
+        fontWeight={800} fontSize={21} letterSpacing="0.1em"
+        fill={bd?'rgba(255,255,255,.24)':'rgba(0,0,0,.34)'}>BLACKSTONE</text>
+      <text x={cx} y={CY+CS/2+11} textAnchor="middle" fontFamily="ui-monospace,monospace"
+        fontWeight={600} fontSize={11} letterSpacing="0.2em"
+        fill={bd?'rgba(255,255,255,.17)':'rgba(0,0,0,.26)'}>BSA · OPUS-48</text>
+      <text x={cx} y={CY+CS/2+31} textAnchor="middle" fontFamily="ui-monospace,monospace"
+        fontWeight={500} fontSize={9} letterSpacing="0.22em"
+        fill={bd?'rgba(255,255,255,.1)':'rgba(0,0,0,.17)'}>HAMBURG · DE · 2026</text>
 
-      {/* ── CPU CORES 2×2 ── */}
-      {cores.map((c,i)=>{
-        const hot=Math.sin(progress*5.5+i*1.8)>.05;
-        return (
-          <g key={`core${i}`}>
-            <rect x={c.x} y={c.y} width={coreS} height={coreS} rx={8}
-              fill={hot?(bd?'rgba(255,255,255,.07)':'rgba(0,0,0,.05)'):(bd?'rgba(255,255,255,.03)':'rgba(0,0,0,.03)')}
-              stroke={hot?(bd?'rgba(255,255,255,.18)':'rgba(0,0,0,.12)'):(bd?'rgba(255,255,255,.07)':'rgba(0,0,0,.05)')}
-              strokeWidth={.8}/>
-            {/* 3×3 sub-cell grid */}
-            {Array.from({length:9},(_,j)=>{
-              const jr=Math.floor(j/3),jc=j%3;
-              const on=Math.sin(progress*17+i*3.2+j*1.15)>.14;
-              return (
-                <rect key={j}
-                  x={c.x+6+jc*17} y={c.y+6+jr*17} width={13} height={13} rx={3}
-                  fill={on?(bd?'rgba(255,255,255,.46)':'rgba(0,0,0,.36)'):(bd?'rgba(255,255,255,.05)':'rgba(0,0,0,.04)')}
-                  style={{transition:'fill .11s'}}/>
-              );
-            })}
-            <text x={c.x+coreS/2} y={c.y+coreS-5} textAnchor="middle"
-              fill={bd?'rgba(255,255,255,.19)':'rgba(0,0,0,.19)'}
-              fontSize={7} fontWeight={700} fontFamily="monospace">C{i}</text>
-          </g>
-        );
-      })}
-
-      {/* ── BUS TRACES ── */}
-      <line x1={CX+coreOff+coreS} y1={juncY} x2={juncX-4} y2={juncY}
-        stroke={bd?'rgba(255,255,255,.09)':'rgba(0,0,0,.07)'} strokeWidth={1.5} strokeDasharray="3 2"/>
-      <line x1={juncX+4} y1={juncY} x2={CX+coreOff+coreS+coreGap} y2={juncY}
-        stroke={bd?'rgba(255,255,255,.09)':'rgba(0,0,0,.07)'} strokeWidth={1.5} strokeDasharray="3 2"/>
-      <line x1={juncX} y1={CY+coreOff+coreS} x2={juncX} y2={juncY-4}
-        stroke={bd?'rgba(255,255,255,.09)':'rgba(0,0,0,.07)'} strokeWidth={1.5} strokeDasharray="3 2"/>
-      <line x1={juncX} y1={juncY+4} x2={juncX} y2={CY+coreOff+coreS+coreGap}
-        stroke={bd?'rgba(255,255,255,.09)':'rgba(0,0,0,.07)'} strokeWidth={1.5} strokeDasharray="3 2"/>
-
-      {/* ── CENTER JUNCTION ── */}
-      <circle cx={juncX} cy={juncY} r={7}
-        fill={bd?'#1e1e28':'#d2d2dc'}
-        stroke={bd?'rgba(255,255,255,.15)':'rgba(0,0,0,.12)'} strokeWidth={1}/>
-      <circle cx={juncX} cy={juncY} r={3}
-        fill={Math.sin(progress*8)>0?(bd?'#22c55e':'#16a34a'):(bd?'#3f3f46':'#a1a1aa')}
-        style={{transition:'fill .28s'}}/>
-
-      {/* ── BRAND LABEL ── */}
-      <rect x={CX+CS/2-36} y={CY+CS-36} width={72} height={19} rx={5}
-        fill={bd?'rgba(255,255,255,.03)':'rgba(0,0,0,.04)'}
-        stroke={bd?'rgba(255,255,255,.07)':'rgba(0,0,0,.08)'} strokeWidth={.5}/>
-      <text x={CX+CS/2} y={CY+CS-22} textAnchor="middle"
-        fill={bd?'rgba(255,255,255,.3)':'rgba(0,0,0,.26)'}
-        fontSize={8} fontWeight={800} fontFamily="Inter,monospace" letterSpacing="0.14em">BLACKSTONE</text>
-
-      {/* ── SCAN LINE (clipped) ── */}
+      {/* ── calm diagonal specular sweep ── */}
       <g clipPath="url(#chipClip)">
-        <rect x={CX} y={scanY} width={CS} height={2} rx={.5}
-          fill={bd?'rgba(255,255,255,.06)':'rgba(0,0,0,.05)'}/>
-        <rect x={CX} y={scanY} width={CS} height={2} rx={.5}
-          fill={bd?'rgba(255,255,255,.09)':'rgba(0,0,0,.07)'}
-          style={{filter:'blur(2px)'}}/>
+        <rect x={CX} y={CY} width={CS} height={CS} fill="url(#chipSpec)" pointerEvents="none"/>
       </g>
-
-      {/* ── DECORATIVE TRACES ── */}
-      <path d={`M ${CX+34} ${CY} L ${CX+34} ${CY-16} L ${CX+60} ${CY-16}`}
-        fill="none" stroke={bd?'rgba(255,255,255,.05)':'rgba(0,0,0,.04)'} strokeWidth={.8}/>
-      <path d={`M ${CX+CS-34} ${CY} L ${CX+CS-34} ${CY-16} L ${CX+CS-60} ${CY-16}`}
-        fill="none" stroke={bd?'rgba(255,255,255,.05)':'rgba(0,0,0,.04)'} strokeWidth={.8}/>
-      <path d={`M ${CX} ${CY+34} L ${CX-16} ${CY+34} L ${CX-16} ${CY+60}`}
-        fill="none" stroke={bd?'rgba(255,255,255,.05)':'rgba(0,0,0,.04)'} strokeWidth={.8}/>
-      <path d={`M ${CX} ${CY+CS-34} L ${CX-16} ${CY+CS-34} L ${CX-16} ${CY+CS-60}`}
-        fill="none" stroke={bd?'rgba(255,255,255,.05)':'rgba(0,0,0,.04)'} strokeWidth={.8}/>
-
-      {/* ── Pulsing outer glow ring ── */}
-      <rect x={CX-7} y={CY-7} width={CS+14} height={CS+14} rx="23" fill="none"
-        stroke={bd?`rgba(139,124,255,${ringGlow})`:`rgba(90,70,210,${ringGlow})`} strokeWidth={1.5}/>
-
-      {/* ── Holographic sweep ── */}
-      <g clipPath="url(#chipClip)">
-        <rect x={holoX} y={CY} width={CS*0.5} height={CS} fill="url(#holoSweep)" pointerEvents="none"/>
-      </g>
-
-      {/* ── Traveling data pulses along the bus ── */}
-      {[
-        {x:lerp(CX+coreOff+coreS,juncX,pp), y:juncY},
-        {x:lerp(CX+coreOff+coreS+coreGap,juncX,pp), y:juncY},
-        {x:juncX, y:lerp(CY+coreOff+coreS,juncY,pp)},
-        {x:juncX, y:lerp(CY+coreOff+coreS+coreGap,juncY,pp)},
-      ].map((p,i)=>(
-        <g key={`pulse${i}`}>
-          <circle cx={p.x} cy={p.y} r={3.4} fill={bd?'#5eead4':'#16a34a'} style={{filter:`drop-shadow(0 0 5px ${bd?'#22c55e':'#16a34a'})`}}/>
-          <circle cx={p.x} cy={p.y} r={1.4} fill="#fff" opacity={.92}/>
-        </g>
-      ))}
-
-      {/* ── Junction supercharge ── */}
-      <circle cx={juncX} cy={juncY} r={5+Math.abs(Math.sin(progress*8))*4} fill="none"
-        stroke={bd?'rgba(94,234,212,.55)':'rgba(22,163,74,.5)'} strokeWidth={1}/>
     </svg>
   );
 };
@@ -546,13 +447,13 @@ const ChipSection = ({ dark: bd }) => {
     <div ref={containerRef} style={{height:'280vh',position:'relative'}}>
       <div
         className={`chip-sticky border-t ${bd?'border-zinc-900':'border-zinc-100'}`}
-        style={{background:bd?'#030303':'#f8f8f8'}}>
+        style={{background:bd?'#060608':'#fafaf9'}}>
 
         {/* Ambient radial glow */}
         <div style={{
           position:'absolute',inset:0,pointerEvents:'none',
-          background:`radial-gradient(ellipse 48% 48% at 50% 50%,${
-            bd?`rgba(45,25,150,${glow*.11})`:`rgba(45,25,150,${glow*.04})`
+          background:`radial-gradient(ellipse 46% 46% at 50% 50%,${
+            bd?`rgba(139,124,255,${glow*.09})`:`rgba(99,102,241,${glow*.05})`
           },transparent)`,
         }}/>
 
