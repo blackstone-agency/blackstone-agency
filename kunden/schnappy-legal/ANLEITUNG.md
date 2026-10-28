@@ -62,7 +62,7 @@ Schnappy hat schon Ware im System, also nur prüfen:
 ## 5. Zahlung & Versand
 
 - **Einstellungen → Zahlungen**: Shopify Payments aktivieren (Karte, Apple Pay, Google Pay), PayPal verbinden, Klarna aktivieren.
-- **Einstellungen → Versand**: Deutschland 4,90 €, ab 50 € kostenlos, Express 9,90 €.
+- **Einstellungen → Versand**: Deutschland 4,90 €, ab 44 € kostenlos, Express 9,90 €.
 - **Einstellungen → Steuern**: „Alle Preise enthalten Steuern“ aktivieren (19 % DE).
 
 ## 6. Vor dem Livegang: Pflicht-Checkliste

@@ -372,3 +372,38 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
   document.addEventListener('shopify:section:load', (e) => observeReveal(e.target));
 })();
+
+/* Endloses Scrollen in Kollektionen: lädt automatisch die nächste Seite nach */
+if (!customElements.get('sn-infinite')) {
+  customElements.define('sn-infinite', class extends HTMLElement {
+    connectedCallback() {
+      this.loading = false;
+      this.io = new IntersectionObserver((e) => { if (e[0].isIntersecting) this.load(); }, { rootMargin: '900px 0px' });
+      this.io.observe(this);
+      const btn = this.querySelector('a');
+      if (btn) btn.addEventListener('click', (ev) => { ev.preventDefault(); this.load(); });
+    }
+    disconnectedCallback() { this.io && this.io.disconnect(); }
+    async load() {
+      const url = this.dataset.next;
+      if (this.loading || !url) return;
+      this.loading = true; this.classList.add('is-loading');
+      try {
+        const html = await (await fetch(url)).text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const grid = document.getElementById('product-grid');
+        const newGrid = doc.getElementById('product-grid');
+        if (grid && newGrid) {
+          newGrid.querySelectorAll(':scope > li').forEach((li) => {
+            li.classList.remove('scroll-trigger', 'animate--slide-in');
+            grid.appendChild(document.importNode(li, true));
+          });
+        }
+        const next = doc.querySelector('sn-infinite');
+        if (next && next.dataset.next) { this.dataset.next = next.dataset.next; this.querySelector('a').href = next.dataset.next; }
+        else { this.io.disconnect(); this.remove(); return; }
+      } catch (e) { /* bei Fehler bleibt der Button zum manuellen Nachladen */ }
+      this.loading = false; this.classList.remove('is-loading');
+    }
+  });
+}
