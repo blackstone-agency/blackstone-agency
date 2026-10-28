@@ -1,0 +1,186 @@
+{%- comment -%} Schnappy: Startbereich mit 3D-Mystery-Box {%- endcomment -%}
+{%- liquid
+  assign bg_word = section.settings.bg_word | default: settings.sn_brand_word
+  assign words = section.settings.heading | strip | split: ' '
+-%}
+<div class="sn-hero color-{{ section.settings.color_scheme }} gradient">
+  {%- if bg_word != blank -%}
+    <div class="sn-hero__bgword" aria-hidden="true">{{ bg_word | escape }}</div>
+  {%- endif -%}
+  <div class="page-width">
+    <div class="sn-hero__grid" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+      <div class="sn-hero__copy">
+        {%- if section.settings.eyebrow != blank -%}
+          {%- if section.settings.eyebrow_link != blank -%}
+            <a href="{{ section.settings.eyebrow_link }}" class="sn-livepill">
+          {%- else -%}
+            <span class="sn-livepill">
+          {%- endif -%}
+          <span class="sn-pulse"></span><span>{{ section.settings.eyebrow }}</span>
+          {%- if section.settings.eyebrow_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
+        {%- endif -%}
+
+        <h2 class="sn-display sn-hero__title sn-reveal">
+          {%- for w in words -%}
+            <span class="sn-w" style="--i:{{ forloop.index0 }}"><span>{{ w | escape }}</span></span>{% unless forloop.last and section.settings.heading_highlight == blank %} {% endunless %}
+          {%- endfor -%}
+          {%- if section.settings.heading_highlight != blank -%}
+            <span class="sn-w sn-w--v" style="--i:{{ words.size }}"><span class="sn-bite">{{ section.settings.heading_highlight | escape }}<svg viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 20 Q 40 4 75 18 T 150 16 T 225 18 T 297 12" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/></svg></span></span>
+          {%- endif -%}
+        </h2>
+
+        {%- if section.settings.text != blank -%}
+          <div class="sn-hero__sub">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        <div class="sn-btns">
+          {%- if section.settings.button_label_1 != blank -%}
+            <a href="{{ section.settings.button_link_1 | default: routes.all_products_collection_url }}" class="button button--primary sn-btn-lg">
+              {{- section.settings.button_label_1 | escape -}}
+              {%- render 'schnappy-icon', icon: 'arrow-right' -%}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_label_2 != blank -%}
+            <a href="{{ section.settings.button_link_2 | default: routes.all_products_collection_url }}" class="button button--secondary sn-btn-lg">
+              {{- section.settings.button_label_2 | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="sn-hero__stage{% if section.settings.image != blank %} sn-hero__stage--image{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'sticker' -%}
+            <div class="sn-float sn-float--{{ block.settings.position }}" {{ block.shopify_attributes }}>
+              <span class="sn-float__icon" aria-hidden="true">
+                {%- if block.settings.symbol != 'emoji' -%}
+                  {%- render 'schnappy-icon', icon: block.settings.symbol -%}
+                {%- else -%}
+                  {{- block.settings.icon | escape -}}
+                {%- endif -%}
+              </span>
+              <span>{{ block.settings.title | escape }}<small>{{ block.settings.subtitle | escape }}</small></span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              class: 'sn-hero__img',
+              sizes: '(min-width: 990px) 560px, 90vw',
+              widths: '400, 560, 800, 1000, 1200',
+              alt: section.settings.image.alt
+          }}
+        {%- else -%}
+          {%- capture scene_attrs -%}data-start="-28" data-autocycle tabindex="0" role="button" aria-label="{{ section.settings.box_aria | escape }}"{%- endcapture -%}
+          {%- render 'schnappy-3d-box', size: 'xxl', label: section.settings.box_label, pops: true, class: 'sn-drag', attrs: scene_attrs -%}
+          {%- if section.settings.hint != blank -%}
+            <div class="sn-hint" aria-hidden="true"><i>↻</i>{{ section.settings.hint | escape }}</div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- assign stats = section.blocks | where: 'type', 'stat' -%}
+    {%- if stats.size > 0 -%}
+      <div class="sn-hero__stats" style="--n: {{ stats.size | at_most: 4 }};">
+        {%- for block in stats -%}
+          <div {{ block.shopify_attributes }}><b data-sn-count>{{ block.settings.value | escape }}</b>{{ block.settings.label | escape }}</div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Startbereich",
+  "tag": "section",
+  "class": "section sn-section-hero",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "inline_richtext", "id": "eyebrow", "label": "Live-Hinweis oben", "default": "<strong>Live heute</strong> · 19:00 Uhr auf Whatnot", "info": "Leer lassen, um den Hinweis auszublenden." },
+    { "type": "url", "id": "eyebrow_link", "label": "Link des Live-Hinweises" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Deals mit" },
+    { "type": "text", "id": "heading_highlight", "label": "Hervorgehobenes Wort (gelb, unterstrichen)", "default": "Biss." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Mystery Boxen, Trend-Produkte und Spielzeug aus Restposten großer Händler. Geprüft, verpackt und bis zu 70 % unter UVP.</p>" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_label_1", "label": "Button 1 Text", "default": "Box auswählen" },
+    { "type": "url", "id": "button_link_1", "label": "Button 1 Link" },
+    { "type": "text", "id": "button_label_2", "label": "Button 2 Text", "default": "Alle Deals" },
+    { "type": "url", "id": "button_link_2", "label": "Button 2 Link" },
+    { "type": "header", "content": "3D-Mystery-Box" },
+    { "type": "paragraph", "content": "Die Box dreht sich, lässt sich mit dem Finger drehen und öffnet sich beim Antippen. Wird unten ein Bild gewählt, ersetzt es die 3D-Box." },
+    { "type": "text", "id": "box_label", "label": "Aufschrift auf der Box", "default": "XXL" },
+    { "type": "text", "id": "hint", "label": "Hinweis unter der Box", "default": "Drehen & antippen zum Öffnen" },
+    { "type": "text", "id": "box_aria", "label": "Beschreibung für Screenreader", "default": "Mystery Box öffnen" },
+    { "type": "image_picker", "id": "image", "label": "Bild statt 3D-Box (optional)", "info": "Am besten PNG mit transparentem Hintergrund." },
+    { "type": "header", "content": "Design" },
+    { "type": "text", "id": "bg_word", "label": "Großes Hintergrundwort", "info": "Leer = Markenname aus den Theme-Einstellungen (Schnappy)." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-3" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand oben", "default": 32 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand unten", "default": 24 }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Kennzahl",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "value", "label": "Wert", "default": "1.000+", "info": "Zahlen am Anfang zählen beim Laden hoch." },
+        { "type": "text", "id": "label", "label": "Beschriftung", "default": "Community auf Insta" }
+      ]
+    },
+    {
+      "type": "sticker",
+      "name": "Schwebende Karte",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "select", "id": "symbol", "label": "Symbol", "default": "zap",
+          "options": [
+            { "value": "zap", "label": "Blitz" },
+            { "value": "gift", "label": "Geschenk" },
+            { "value": "package", "label": "Paket" },
+            { "value": "flame", "label": "Flamme" },
+            { "value": "sparkles", "label": "Funkeln" },
+            { "value": "star", "label": "Stern" },
+            { "value": "truck", "label": "Lieferwagen" },
+            { "value": "shield-check", "label": "Schild" },
+            { "value": "emoji", "label": "Emoji (Feld unten)" }
+          ]
+        },
+        { "type": "text", "id": "icon", "label": "Emoji", "default": "🔥" },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Warenwert garantiert" },
+        { "type": "text", "id": "subtitle", "label": "Untertitel", "default": "immer mehr als der Preis" },
+        {
+          "type": "select", "id": "position", "label": "Position", "default": "bottom-right",
+          "options": [
+            { "value": "top-left", "label": "Oben links" },
+            { "value": "top-right", "label": "Oben rechts" },
+            { "value": "bottom-left", "label": "Unten links" },
+            { "value": "bottom-right", "label": "Unten rechts" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Schnappy Startbereich",
+      "blocks": [
+        { "type": "stat", "settings": { "value": "1.000+", "label": "Community auf Insta" } },
+        { "type": "stat", "settings": { "value": "−70 %", "label": "bis unter UVP" } },
+        { "type": "stat", "settings": { "value": "24 h", "label": "Versand ab Lager" } },
+        { "type": "stat", "settings": { "value": "Täglich", "label": "Live auf Whatnot" } },
+        { "type": "sticker", "settings": { "symbol": "zap", "title": "Warenwert garantiert", "subtitle": "immer mehr als der Preis", "position": "bottom-right" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,57 @@
+{%- comment -%} Schnappy: Kundenstimmen. Bitte nur echte Bewertungen eintragen (UWG). {%- endcomment -%}
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+    <div class="sn-head">
+      <div>
+        {%- if section.settings.kicker != blank -%}<p class="sn-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h2>{{ section.settings.heading | escape }}</h2>
+      </div>
+    </div>
+    <div class="sn-reviews">
+      {%- for block in section.blocks -%}
+        <div class="sn-review" {{ block.shopify_attributes }}>
+          <div class="sn-stars" aria-label="{{ block.settings.stars }} von 5 Sternen">
+            {%- for i in (1..block.settings.stars) -%}★{%- endfor -%}
+          </div>
+          <p>„{{ block.settings.text | escape }}“</p>
+          <div class="sn-review__who">
+            <i aria-hidden="true">{{ block.settings.name | slice: 0 }}</i>
+            <span>{{ block.settings.name | escape }}<small>{{ block.settings.meta | escape }}</small></span>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Kundenstimmen",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "paragraph", "content": "Wichtig: Nur echte Kundenbewertungen verwenden (z. B. aus Whatnot oder Instagram, mit Erlaubnis)." },
+    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "Echte Stimmen" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Das sagt die Community" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand oben", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand unten", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Bewertung",
+      "settings": [
+        { "type": "range", "id": "stars", "min": 1, "max": 5, "step": 1, "label": "Sterne", "default": 5 },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Hier den Text einer echten Kundenbewertung einfügen." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Vorname N." },
+        { "type": "text", "id": "meta", "label": "Zusatz", "default": "Kauf über Whatnot" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Schnappy Kundenstimmen", "blocks": [{ "type": "review" }, { "type": "review" }, { "type": "review" }] }
+  ]
+}
+{% endschema %}

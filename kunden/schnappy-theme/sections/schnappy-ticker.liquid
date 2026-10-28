@@ -1,0 +1,76 @@
+{%- comment -%} Schnappy: Infoleiste oben (klein) oder großes Laufband {%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  {%- if section.settings.style == 'topbar' -%}
+    <div class="sn-topbar color-{{ section.settings.color_scheme }} gradient" role="region" aria-label="{{ 'sections.announcements.announcement_bar' | t }}">
+      <div class="page-width sn-topbar__inner">
+        {%- for block in section.blocks -%}
+          {%- unless forloop.first -%}<span class="sn-topbar__sep" aria-hidden="true">·</span>{%- endunless -%}
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="sn-topbar__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</a>
+          {%- else -%}
+            <span class="sn-topbar__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- else -%}
+    <div class="sn-marquee color-{{ section.settings.color_scheme }} gradient" style="--sn-speed: {{ section.settings.speed }}s;" role="region" aria-label="{{ 'sections.announcements.announcement_bar' | t }}">
+      <div class="sn-marquee__track">
+        {%- for i in (1..2) -%}
+          {%- for block in section.blocks -%}
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}" {% if i == 1 %}{{ block.shopify_attributes }}{% else %}aria-hidden="true" tabindex="-1"{% endif %}>{{ block.settings.text }}</a>
+            {%- else -%}
+              <span {% if i == 1 %}{{ block.shopify_attributes }}{% else %}aria-hidden="true"{% endif %}>{{ block.settings.text }}</span>
+            {%- endif -%}
+            <span class="sn-marquee__star" aria-hidden="true">{{ section.settings.separator | escape }}</span>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Schnappy Laufband",
+  "class": "sn-ticker-section",
+  "max_blocks": 10,
+  "settings": [
+    {
+      "type": "select", "id": "style", "label": "Stil", "default": "marquee",
+      "options": [
+        { "value": "topbar", "label": "Kleine Infoleiste (über dem Header)" },
+        { "value": "marquee", "label": "Großes Laufband" }
+      ],
+      "info": "Infoleiste: auf dem Handy wird nur der erste Text angezeigt."
+    },
+    { "type": "text", "id": "separator", "label": "Trennzeichen (Laufband)", "default": "✦" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-5" },
+    { "type": "range", "id": "speed", "min": 10, "max": 80, "step": 2, "unit": "s", "label": "Geschwindigkeit (höher = langsamer)", "default": 34 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Text",
+      "settings": [
+        { "type": "inline_richtext", "id": "text", "label": "Text", "default": "Mystery Boxen" },
+        { "type": "url", "id": "link", "label": "Link (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Schnappy Laufband",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Mystery Boxen" } },
+        { "type": "item", "settings": { "text": "bis −70 %" } },
+        { "type": "item", "settings": { "text": "Live jeden Abend" } },
+        { "type": "item", "settings": { "text": "Trend-Deals" } },
+        { "type": "item", "settings": { "text": "Versand in 24 h" } },
+        { "type": "item", "settings": { "text": "Deals mit Biss" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

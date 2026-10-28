@@ -1,0 +1,60 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "ticker": {
+      "type": "schnappy-ticker",
+      "settings": {
+        "style": "topbar",
+        "separator": "✦",
+        "color_scheme": "scheme-3",
+        "speed": 34
+      },
+      "blocks": {
+        "t0": {
+          "type": "item",
+          "settings": {
+            "text": "<strong>Gratis Versand</strong> ab 50 €",
+            "link": ""
+          }
+        },
+        "t1": {
+          "type": "item",
+          "settings": {
+            "text": "Live jeden Abend um 19:00 auf Whatnot",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "t0",
+        "t1"
+      ]
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "color_scheme": "scheme-3",
+        "menu_color_scheme": "scheme-3",
+        "logo_position": "middle-left",
+        "menu": "main-menu",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "always",
+        "show_line_separator": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "mobile_logo_position": "left",
+        "margin_bottom": 0,
+        "padding_top": 12,
+        "padding_bottom": 12,
+        "sn_show_mark": true,
+        "sn_live_label": "LIVE 19:00",
+        "sn_live_link": "/#live"
+      }
+    }
+  },
+  "order": [
+    "ticker",
+    "header"
+  ]
+}

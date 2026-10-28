@@ -1,0 +1,109 @@
+{%- comment -%} Schnappy: Live-Shopping mit Countdown zur nächsten Show und Handy-Vorschau {%- endcomment -%}
+{%- capture days -%}{% if section.settings.day_0 %}0,{% endif %}{% if section.settings.day_1 %}1,{% endif %}{% if section.settings.day_2 %}2,{% endif %}{% if section.settings.day_3 %}3,{% endif %}{% if section.settings.day_4 %}4,{% endif %}{% if section.settings.day_5 %}5,{% endif %}{% if section.settings.day_6 %}6,{% endif %}{%- endcapture -%}
+<div {% if section.settings.anchor != blank %}id="{{ section.settings.anchor | handleize }}" {% endif %}class="sn-live color-{{ section.settings.color_scheme }} gradient" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width sn-live__grid">
+    <div class="sn-live__copy">
+      {%- if section.settings.kicker != blank -%}<p class="sn-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+      <h2 class="sn-display sn-live__title">
+        {{- section.settings.heading | escape | newline_to_br -}}
+        {%- if section.settings.heading_highlight != blank %}<br><em>{{ section.settings.heading_highlight | escape }}</em>{% endif -%}
+      </h2>
+      {%- if section.settings.text != blank -%}<div class="sn-live__text">{{ section.settings.text }}</div>{%- endif -%}
+
+      <sn-countdown data-days="{{ days }}" data-time="{{ section.settings.time | escape }}" data-duration="{{ section.settings.duration }}" data-platform="{{ section.settings.platform | escape }}">
+        <div class="sn-clock" aria-live="off">
+          <div><b data-h>--</b><small>Std</small></div>
+          <div><b data-m>--</b><small>Min</small></div>
+          <div><b data-s>--</b><small>Sek</small></div>
+        </div>
+        <div class="sn-clock sn-clock--live" hidden><div><b>LIVE</b><small>jetzt einschalten</small></div></div>
+        <p class="sn-clock-note"><span class="sn-pulse"></span><span data-next>{{ section.settings.time | escape }} Uhr</span></p>
+      </sn-countdown>
+
+      <div class="sn-btns">
+        {%- if section.settings.button_label_1 != blank -%}
+          <a class="button button--primary sn-btn-lg" href="{{ section.settings.button_link_1 }}"{% if section.settings.button_link_1 contains 'http' %} target="_blank" rel="noopener"{% endif %}>
+            {{- section.settings.button_label_1 | escape -}}
+            {%- render 'schnappy-icon', icon: 'arrow-up-right' -%}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.button_label_2 != blank -%}
+          <a class="button button--secondary sn-btn-lg" href="{{ section.settings.button_link_2 }}"{% if section.settings.button_link_2 contains 'http' %} target="_blank" rel="noopener"{% endif %}>
+            {%- render 'schnappy-icon', icon: 'instagram' -%}
+            {{- section.settings.button_label_2 | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="sn-phone-wrap" aria-hidden="true">
+      <div class="sn-phone">
+        <div class="sn-phone__notch"></div>
+        <div class="sn-phone__screen">
+          {%- if section.settings.phone_image != blank -%}
+            {{ section.settings.phone_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'sn-phone__img', sizes: '290px', widths: '300, 450, 600', alt: '' }}
+          {%- endif -%}
+          <div class="sn-phone__top">
+            <span class="sn-phone__host"><i>{% render 'schnappy-mascot', width: 20 %}</i>{{ section.settings.host | escape }}</span>
+            <span class="sn-phone__badges"><span class="sn-phone__live">LIVE</span>{% if section.settings.viewers != blank %}<span class="sn-phone__view">● {{ section.settings.viewers | escape }}</span>{% endif %}</span>
+          </div>
+          <div class="sn-phone__center">
+            {%- if section.settings.phone_image == blank -%}
+              {%- render 'schnappy-3d-box', size: 'xxl', label: 'XXL', pops: false, attrs: 'data-auto="0.35" data-tilt="-14" data-no-open' -%}
+            {%- endif -%}
+          </div>
+          <sn-live-chat class="sn-chat" data-msgs="{{ section.settings.chat | escape }}" data-bid="{{ section.settings.bid_start }}"></sn-live-chat>
+          <div class="sn-auction">
+            <span class="sn-auction__icon">{% render 'schnappy-icon', icon: 'gift' %}</span>
+            <span><small>{{ section.settings.auction_label | escape }}</small><b data-bid-value>{{ section.settings.bid_start }} €</b></span>
+            <span class="sn-auction__btn">{{ section.settings.bid_label | escape }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Live-Shows",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "Live-Shopping" },
+    { "type": "textarea", "id": "heading", "label": "Überschrift", "default": "Live dabei.\nMitbieten.", "info": "Zeilenumbruch mit Enter." },
+    { "type": "text", "id": "heading_highlight", "label": "Hervorgehobene Zeile (gelb)", "default": "Abräumen." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Jeden Abend auf Whatnot: Boxen live öffnen, Auktionen ab 1 € und exklusive Drops nur für Zuschauer.</p>" },
+    { "type": "header", "content": "Show-Zeiten (für den Countdown)" },
+    { "type": "checkbox", "id": "day_1", "label": "Montag", "default": true },
+    { "type": "checkbox", "id": "day_2", "label": "Dienstag", "default": true },
+    { "type": "checkbox", "id": "day_3", "label": "Mittwoch", "default": true },
+    { "type": "checkbox", "id": "day_4", "label": "Donnerstag", "default": true },
+    { "type": "checkbox", "id": "day_5", "label": "Freitag", "default": true },
+    { "type": "checkbox", "id": "day_6", "label": "Samstag", "default": true },
+    { "type": "checkbox", "id": "day_0", "label": "Sonntag", "default": true },
+    { "type": "text", "id": "time", "label": "Uhrzeit (HH:MM)", "default": "19:00", "info": "Deutsche Zeit des Besuchers (Gerätezeit)." },
+    { "type": "range", "id": "duration", "min": 30, "max": 300, "step": 15, "unit": "min", "label": "Dauer der Show", "default": 120 },
+    { "type": "text", "id": "platform", "label": "Plattform", "default": "Whatnot" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_label_1", "label": "Button 1 Text", "default": "25 € Startguthaben holen" },
+    { "type": "url", "id": "button_link_1", "label": "Button 1 Link", "default": "https://www.whatnot.com/invite/schnappyshop" },
+    { "type": "text", "id": "button_label_2", "label": "Button 2 Text", "default": "Instagram" },
+    { "type": "url", "id": "button_link_2", "label": "Button 2 Link", "default": "https://www.instagram.com/schnappy.shop" },
+    { "type": "header", "content": "Handy-Vorschau" },
+    { "type": "image_picker", "id": "phone_image", "label": "Bild im Handy (optional)", "info": "z. B. Screenshot aus einer Live-Show, Hochformat. Ohne Bild dreht sich eine 3D-Box." },
+    { "type": "text", "id": "host", "label": "Name des Kanals", "default": "schnappy.shop" },
+    { "type": "text", "id": "viewers", "label": "Zuschauer-Anzeige", "default": "312" },
+    { "type": "textarea", "id": "chat", "label": "Chat-Nachrichten (mit | trennen)", "default": "jonas_hh: XXL Box 🔥🔥 | mia.k: wie viel noch? | lukas: 15!! | sarah_b: ich will den Plüsch 😍 | tim99: 18 € | anna: Schnappy 🐊💚 | deniz: 22!" },
+    { "type": "text", "id": "auction_label", "label": "Auktions-Karte: Titel", "default": "XXL Box · Gebot" },
+    { "type": "range", "id": "bid_start", "min": 1, "max": 50, "step": 1, "unit": "€", "label": "Auktions-Karte: Startgebot", "default": 12 },
+    { "type": "text", "id": "bid_label", "label": "Auktions-Karte: Button", "default": "Bieten" },
+    { "type": "text", "id": "anchor", "label": "Sprungmarke", "default": "live", "info": "Damit Links wie /#live direkt hierher springen (z. B. in der App-Leiste)." },
+    { "type": "header", "content": "Design" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-4" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Abstand oben", "default": 112 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Abstand unten", "default": 112 }
+  ],
+  "presets": [{ "name": "Schnappy Live-Shows" }]
+}
+{% endschema %}

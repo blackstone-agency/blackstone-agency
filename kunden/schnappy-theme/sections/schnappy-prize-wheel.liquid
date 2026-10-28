@@ -1,0 +1,123 @@
+{%- comment -%} Schnappy: Glücksrad mit Rabattcode (öffnet als Fenster) {%- endcomment -%}
+<sn-wheel
+  class="sn-wheel"
+  data-section-id="{{ section.id }}"
+  data-root="{{ routes.root_url }}"
+  data-redirect="{{ section.settings.redeem_link | default: routes.all_products_collection_url }}"
+  data-once="{{ section.settings.once }}"
+>
+  {%- if section.settings.show_trigger and section.settings.trigger_label != blank -%}
+    <div class="sn-wheel__trigger-wrap color-{{ section.settings.trigger_scheme }} gradient">
+      <button type="button" class="sn-wheel__trigger" data-sn-wheel-open>
+        {%- render 'schnappy-icon', icon: 'sparkles' -%}
+        {{- section.settings.trigger_label | escape -}}
+      </button>
+    </div>
+  {%- endif -%}
+
+  <div class="sn-wheel__overlay" data-sn-wheel-close hidden></div>
+  <div
+    class="sn-sheet color-{{ section.settings.color_scheme }}"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ section.settings.heading | strip_newlines | escape }}"
+    tabindex="-1"
+    hidden
+  >
+    <button type="button" class="sn-sheet__close" data-sn-wheel-close aria-label="{{ 'accessibility.close' | t }}">
+      {%- render 'schnappy-icon', icon: 'x' -%}
+    </button>
+    {%- if section.settings.kicker != blank -%}<p class="sn-sheet__kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+    <h3 class="sn-sheet__title">{{ section.settings.heading | escape | newline_to_br }}</h3>
+    {%- if section.settings.text != blank -%}<p class="sn-sheet__text">{{ section.settings.text | escape }}</p>{%- endif -%}
+
+    <div class="sn-wheel__wrap">
+      <svg class="sn-wheel__pointer" viewBox="0 0 34 42" aria-hidden="true" focusable="false"><path d="M17 42 2 14A15 15 0 1 1 32 14Z" fill="#FFD21F" stroke="#0B2414" stroke-width="3"/><circle cx="17" cy="15" r="5" fill="#0B2414"/></svg>
+      <div class="sn-wheel__lights" aria-hidden="true">
+        {%- for i in (1..16) -%}<i style="--a: {{ forloop.index0 | times: 22.5 }}deg"></i>{%- endfor -%}
+      </div>
+      <svg class="sn-wheel__disc" viewBox="-100 -100 200 200" data-disc aria-hidden="true" focusable="false"></svg>
+      <span class="sn-wheel__hub" aria-hidden="true">{% render 'schnappy-mascot', width: 44 %}</span>
+    </div>
+
+    <div data-spin-area>
+      <button type="button" class="button button--primary sn-btn-lg sn-wheel__spin" data-spin>{{ section.settings.spin_label | escape }}</button>
+    </div>
+    <div class="sn-wheel__win" data-win hidden aria-live="polite">
+      <p class="sn-wheel__win-intro">{{ section.settings.win_intro | escape }}</p>
+      <div class="sn-wheel__prize" data-prize></div>
+      <div class="sn-wheel__code"><span data-code></span><button type="button" data-copy data-done="{{ section.settings.copied_label | escape }}">{{ section.settings.copy_label | escape }}</button></div>
+      {%- if section.settings.win_note != blank -%}<p class="sn-wheel__note">{{ section.settings.win_note | escape }}</p>{%- endif -%}
+      <a class="button button--primary sn-btn-lg" data-redeem href="{{ routes.all_products_collection_url }}">{{ section.settings.redeem_label | escape }}</a>
+    </div>
+
+    <script type="application/json" data-segments>
+      [
+        {%- for block in section.blocks -%}
+          {%- assign fg = '#FFFFFF' -%}
+          {%- assign b = block.settings.color | color_brightness -%}
+          {%- if b > 170 -%}{%- assign fg = '#0C100D' -%}{%- endif -%}
+          {"label": {{ block.settings.label | json }}, "prize": {{ block.settings.prize | default: block.settings.label | json }}, "code": {{ block.settings.code | strip | json }}, "color": {{ block.settings.color | json }}, "fg": {{ fg | json }}, "weight": {{ block.settings.weight | json }}}{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    </script>
+  </div>
+</sn-wheel>
+
+{% schema %}
+{
+  "name": "Schnappy Glücksrad",
+  "tag": "section",
+  "class": "sn-wheel-section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "paragraph", "content": "Wichtig: Jeder Rabattcode muss in Shopify unter Rabatte genau so angelegt sein (z. B. SCHNAPP10), sonst funktioniert er an der Kasse nicht. Geöffnet wird das Glücksrad über den Rabatt-Button der App-Leiste, den Button unten oder jeden Link mit der Adresse #gluecksrad." },
+    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "Nur für Neukunden" },
+    { "type": "textarea", "id": "heading", "label": "Überschrift", "default": "Dreh am Rad.\nSchnapp dir was." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Ein Dreh pro Person. Dein Gewinn gilt für die erste Bestellung." },
+    { "type": "text", "id": "spin_label", "label": "Dreh-Button", "default": "Jetzt drehen" },
+    { "type": "checkbox", "id": "once", "label": "Nur ein Dreh pro Gerät", "default": true },
+    { "type": "header", "content": "Gewinn-Anzeige" },
+    { "type": "text", "id": "win_intro", "label": "Text über dem Gewinn", "default": "Glückwunsch! Du hast gewonnen:" },
+    { "type": "text", "id": "copy_label", "label": "Kopieren-Button", "default": "Kopieren" },
+    { "type": "text", "id": "copied_label", "label": "Text nach dem Kopieren", "default": "Kopiert ✓" },
+    { "type": "text", "id": "win_note", "label": "Hinweis unter dem Code", "default": "Code an der Kasse eingeben oder direkt einlösen." },
+    { "type": "text", "id": "redeem_label", "label": "Einlösen-Button", "default": "Jetzt einlösen" },
+    { "type": "url", "id": "redeem_link", "label": "Nach dem Einlösen weiter zu", "info": "Der Code wird automatisch im Warenkorb hinterlegt." },
+    { "type": "header", "content": "Button auf der Seite (optional)" },
+    { "type": "checkbox", "id": "show_trigger", "label": "Button an dieser Stelle anzeigen", "default": false },
+    { "type": "text", "id": "trigger_label", "label": "Button-Text", "default": "Oder: Glücksrad drehen und Rabatt schnappen" },
+    { "type": "color_scheme", "id": "trigger_scheme", "label": "Farbschema hinter dem Button", "default": "scheme-1" },
+    { "type": "header", "content": "Design" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema des Fensters", "default": "scheme-3" }
+  ],
+  "blocks": [
+    {
+      "type": "segment",
+      "name": "Feld",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Text auf dem Rad (kurz)", "default": "10 %" },
+        { "type": "text", "id": "prize", "label": "Gewinn-Text", "default": "10 % Rabatt" },
+        { "type": "text", "id": "code", "label": "Rabattcode", "default": "SCHNAPP10", "info": "Muss in Shopify unter Rabatte existieren." },
+        { "type": "color", "id": "color", "label": "Farbe", "default": "#FFD21F" },
+        { "type": "range", "id": "weight", "min": 0, "max": 10, "step": 1, "label": "Gewinnchance (0 = nie)", "default": 3 }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["footer"], "templates": ["*"] },
+  "presets": [
+    {
+      "name": "Schnappy Glücksrad",
+      "blocks": [
+        { "type": "segment", "settings": { "label": "10 %", "prize": "10 % Rabatt", "code": "SCHNAPP10", "color": "#FFD21F", "weight": 3 } },
+        { "type": "segment", "settings": { "label": "5 %", "prize": "5 % Rabatt", "code": "SCHNAPP5", "color": "#3DB54A", "weight": 3 } },
+        { "type": "segment", "settings": { "label": "Gratis Versand", "prize": "Gratis Versand", "code": "GRATISVERSAND", "color": "#FF7A4D", "weight": 1 } },
+        { "type": "segment", "settings": { "label": "15 %", "prize": "15 % Rabatt", "code": "SCHNAPP15", "color": "#8E6CFF", "weight": 1 } },
+        { "type": "segment", "settings": { "label": "5 %", "prize": "5 % Rabatt", "code": "SCHNAPP5", "color": "#2A3038", "weight": 3 } },
+        { "type": "segment", "settings": { "label": "10 %", "prize": "10 % Rabatt", "code": "SCHNAPP10", "color": "#FF4B3E", "weight": 3 } },
+        { "type": "segment", "settings": { "label": "20 %", "prize": "20 % Rabatt", "code": "SCHNAPP20", "color": "#123A21", "weight": 0 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,10 @@
+{%- comment -%}
+  Schnappy: Text im Rabatt-Badge (z. B. "−40 %"). Nutzung: {% render 'schnappy-sale-badge', product: card_product %}
+{%- endcomment -%}
+{%- liquid
+  assign save = 0
+  if product.compare_at_price > product.price
+    assign save = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+  endif
+-%}
+{%- if save > 0 -%}−{{ save }} %{%- else -%}{{- 'products.product.on_sale' | t -}}{%- endif -%}

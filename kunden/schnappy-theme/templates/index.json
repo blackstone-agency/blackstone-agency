@@ -1,0 +1,448 @@
+{
+  "sections": {
+    "hero": {
+      "type": "schnappy-hero",
+      "blocks": {
+        "b0": {
+          "type": "stat",
+          "settings": {
+            "value": "1.000+",
+            "label": "Community auf Insta"
+          }
+        },
+        "b1": {
+          "type": "stat",
+          "settings": {
+            "value": "−70 %",
+            "label": "bis unter UVP"
+          }
+        },
+        "b2": {
+          "type": "stat",
+          "settings": {
+            "value": "24 h",
+            "label": "Versand ab Lager"
+          }
+        },
+        "b3": {
+          "type": "stat",
+          "settings": {
+            "value": "Täglich",
+            "label": "Live auf Whatnot"
+          }
+        },
+        "b5": {
+          "type": "sticker",
+          "settings": {
+            "symbol": "zap",
+            "icon": "⚡",
+            "title": "Warenwert garantiert",
+            "subtitle": "immer mehr als der Preis",
+            "position": "bottom-right"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b5"
+      ],
+      "settings": {
+        "eyebrow": "<strong>Live heute</strong> · 19:00 Uhr auf Whatnot",
+        "eyebrow_link": "/#live",
+        "heading": "Deals mit",
+        "heading_highlight": "Biss.",
+        "text": "<p>Mystery Boxen, Trend-Produkte und Spielzeug aus Restposten großer Händler. Geprüft, verpackt und bis zu 70 % unter UVP.</p>",
+        "button_label_1": "Box auswählen",
+        "button_link_1": "/#boxen",
+        "button_label_2": "Alle Deals",
+        "button_link_2": "shopify://collections/all",
+        "box_label": "XXL",
+        "hint": "Drehen & antippen zum Öffnen",
+        "box_aria": "Mystery Box öffnen",
+        "bg_word": "",
+        "color_scheme": "scheme-3",
+        "padding_top": 32,
+        "padding_bottom": 24
+      }
+    },
+    "marquee": {
+      "type": "schnappy-ticker",
+      "blocks": {
+        "m0": {
+          "type": "item",
+          "settings": {
+            "text": "Mystery Boxen"
+          }
+        },
+        "m1": {
+          "type": "item",
+          "settings": {
+            "text": "bis −70 %"
+          }
+        },
+        "m2": {
+          "type": "item",
+          "settings": {
+            "text": "Live jeden Abend"
+          }
+        },
+        "m3": {
+          "type": "item",
+          "settings": {
+            "text": "Trend-Deals"
+          }
+        },
+        "m4": {
+          "type": "item",
+          "settings": {
+            "text": "Versand in 24 h"
+          }
+        },
+        "m5": {
+          "type": "item",
+          "settings": {
+            "text": "Deals mit Biss"
+          }
+        }
+      },
+      "block_order": [
+        "m0",
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5"
+      ],
+      "settings": {
+        "style": "marquee",
+        "separator": "✦",
+        "color_scheme": "scheme-5",
+        "speed": 34
+      }
+    },
+    "formel": {
+      "type": "schnappy-formel",
+      "blocks": {
+        "s0": {
+          "type": "step",
+          "settings": {
+            "icon": "package",
+            "title": "Wir kaufen\nim großen Stil",
+            "text": "Paletten-Ware aus Restposten und Überproduktion, direkt aus Lagern in Europa."
+          }
+        },
+        "s1": {
+          "type": "step",
+          "settings": {
+            "icon": "shield-check",
+            "title": "Jedes Teil\nwird geprüft",
+            "text": "Sortiert, kontrolliert und sauber verpackt, damit nur gute Ware bei dir landet."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "icon": "sparkles",
+            "title": "Du sparst\nbis zu 70 %",
+            "text": "Festpreis im Shop oder Schnapper per Auktion in der Live-Show."
+          }
+        }
+      },
+      "block_order": [
+        "s0",
+        "s1",
+        "s2"
+      ],
+      "settings": {
+        "kicker": "Die Schnappy-Formel",
+        "heading": "Warum so\ngünstig?",
+        "text": "Kein Trick, sondern Einkauf: Wir sichern uns Restposten, Überhänge und Retouren großer Händler und geben den Preisvorteil direkt an dich weiter.",
+        "color_scheme": "scheme-1",
+        "card_scheme": "scheme-2",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "boxes": {
+      "type": "schnappy-mystery-boxes",
+      "blocks": {
+        "b0": {
+          "type": "box",
+          "settings": {
+            "label": "S",
+            "size": "s",
+            "tag": "EINSTEIGER",
+            "title": "Mystery Box S",
+            "value": 40,
+            "glow": "#4FD25E",
+            "description": "Der perfekte Einstieg in die Schnappy-Welt. Klein, aber mit ordentlich Biss.",
+            "points": "5–8 Überraschungs-Artikel\nSpielzeug, Gadgets und Lifestyle\nIdeal als Geschenk"
+          }
+        },
+        "b1": {
+          "type": "box",
+          "settings": {
+            "label": "M",
+            "size": "m",
+            "tag": "BESTSELLER",
+            "title": "Mystery Box M",
+            "value": 90,
+            "glow": "#8E6CFF",
+            "description": "Unser Bestseller. Die goldene Mitte aus Menge, Marken und Überraschung.",
+            "points": "10–15 Überraschungs-Artikel\nMindestens 1 Markenprodukt\nTrend-Produkte inklusive"
+          }
+        },
+        "b2": {
+          "type": "box",
+          "settings": {
+            "label": "XXL",
+            "size": "xxl",
+            "tag": "AUS DER LIVE-SHOW",
+            "title": "XXL Super Mystery Box",
+            "value": 200,
+            "glow": "#FFD21F",
+            "description": "Die Legende aus der Live-Show. Randvoll gepackt, mit garantiertem Highlight.",
+            "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf ein Jackpot-Item"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2"
+      ],
+      "settings": {
+        "kicker": "Der Klassiker",
+        "heading": "Wähl deine Box.",
+        "text": "Drei Größen, ein Versprechen: Der Warenwert liegt immer deutlich über dem Preis. Was genau drin ist, bleibt eine Überraschung.",
+        "start": "2",
+        "anchor": "boxen",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 96
+      }
+    },
+    "deals": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Schnapper der Woche.",
+        "heading_size": "h1",
+        "description": "<p>Neuware zu Restpostenpreisen. Wenn's weg ist, ist's weg.</p>",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "show_view_all": true,
+        "view_all_style": "outline",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "swipe_on_mobile": false,
+        "padding_top": 0,
+        "padding_bottom": 96
+      }
+    },
+    "live": {
+      "type": "schnappy-live",
+      "settings": {
+        "kicker": "Live-Shopping",
+        "heading": "Live dabei.\nMitbieten.",
+        "heading_highlight": "Abräumen.",
+        "anchor": "live",
+        "color_scheme": "scheme-4",
+        "padding_top": 112,
+        "padding_bottom": 112
+      }
+    },
+    "community": {
+      "type": "schnappy-community",
+      "blocks": {
+        "r0": {
+          "type": "reel",
+          "settings": {
+            "title": "Unboxing XXL",
+            "bg": "#0B2414",
+            "icon": "package"
+          }
+        },
+        "r1": {
+          "type": "reel",
+          "settings": {
+            "title": "−70 % Drop",
+            "bg": "#FF4B3E",
+            "icon": "flame"
+          }
+        },
+        "r2": {
+          "type": "reel",
+          "settings": {
+            "title": "Live um 19 Uhr",
+            "bg": "#8E6CFF",
+            "icon": "radio"
+          }
+        },
+        "r3": {
+          "type": "reel",
+          "settings": {
+            "title": "Box S vs. XXL",
+            "bg": "#E9B530",
+            "icon": "gift"
+          }
+        },
+        "r4": {
+          "type": "reel",
+          "settings": {
+            "title": "Jackpot-Item!",
+            "bg": "#2A3038",
+            "icon": "star"
+          }
+        },
+        "r5": {
+          "type": "reel",
+          "settings": {
+            "title": "Lager-Tour",
+            "bg": "#FF7A4D",
+            "icon": "truck"
+          }
+        }
+      },
+      "block_order": [
+        "r0",
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5"
+      ],
+      "settings": {
+        "kicker": "@schnappy.shop",
+        "heading": "Folg dem\nKrokodil.",
+        "handle": "@schnappy.shop",
+        "button_label": "Auf Instagram folgen",
+        "button_link": "https://www.instagram.com/schnappy.shop",
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "b0": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was ist in einer Mystery Box?",
+            "icon": "none",
+            "row_content": "<p>Eine bunte Mischung aus Spielzeug, Trend-Produkten, Haushalts- und Lifestyle-Artikeln. Der Warenwert liegt immer über dem Kaufpreis.</p>"
+          }
+        },
+        "b1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wie schnell wird versendet?",
+            "icon": "none",
+            "row_content": "<p>Bestellungen bis 14 Uhr verlassen in der Regel noch am selben Werktag unser Lager. Lieferzeit in Deutschland: 1–3 Werktage.</p>"
+          }
+        },
+        "b2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ab wann ist der Versand kostenlos?",
+            "icon": "none",
+            "row_content": "<p>Ab 50 € Bestellwert versenden wir innerhalb Deutschlands kostenlos.</p>"
+          }
+        },
+        "b3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Kann ich zurückgeben?",
+            "icon": "none",
+            "row_content": "<p>Ja, du hast ein 14-tägiges Widerrufsrecht. Details findest du in unserer Widerrufsbelehrung.</p>"
+          }
+        },
+        "b4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was ist der Unterschied zur Live-Show?",
+            "icon": "none",
+            "row_content": "<p>In der Live-Show auf Whatnot bietest du live mit. Im Shop kaufst du zum Festpreis – jederzeit, ohne auf die nächste Show zu warten.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "caption": "Hilfe",
+        "heading": "Gute Fragen.",
+        "heading_size": "h1",
+        "heading_alignment": "left",
+        "layout": "row",
+        "color_scheme": "scheme-1",
+        "container_color_scheme": "scheme-2",
+        "open_first_collapsible_row": true,
+        "padding_top": 0,
+        "padding_bottom": 96
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "b0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Verpass keinen Drop.",
+            "heading_size": "h1"
+          }
+        },
+        "b1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Neue Boxen, Live-Termine und exklusive Codes, nur für die Liste. Kein Spam, Abmeldung jederzeit.</p>"
+          }
+        },
+        "b2": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2"
+      ],
+      "settings": {
+        "color_scheme": "scheme-5",
+        "full_width": false,
+        "padding_top": 0,
+        "padding_bottom": 24
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "formel",
+    "boxes",
+    "deals",
+    "live",
+    "community",
+    "faq",
+    "newsletter"
+  ]
+}

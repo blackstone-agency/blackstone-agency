@@ -1,0 +1,127 @@
+{%- comment -%} Schnappy: Community-Kacheln (Reels) mit Link zu Instagram {%- endcomment -%}
+<div class="sn-sec color-{{ section.settings.color_scheme }} gradient" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="sn-head{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div>
+        {%- if section.settings.kicker != blank -%}<p class="sn-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        {%- if section.settings.heading != blank -%}<h2 class="sn-display sn-head__title">{{ section.settings.heading | escape | newline_to_br }}</h2>{%- endif -%}
+      </div>
+      {%- if section.settings.button_label != blank -%}
+        <a class="button button--secondary" href="{{ section.settings.button_link }}"{% if section.settings.button_link contains 'http' %} target="_blank" rel="noopener"{% endif %}>
+          {%- render 'schnappy-icon', icon: 'instagram' -%}
+          {{- section.settings.button_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="sn-reels">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign link = block.settings.link | default: section.settings.button_link
+            assign bg = block.settings.bg
+            assign dark_text = false
+            if bg != blank
+              assign brightness = bg | color_brightness
+              if brightness > 170
+                assign dark_text = true
+              endif
+            endif
+            assign has_media = false
+            if block.settings.video != blank or block.settings.image != blank
+              assign has_media = true
+            endif
+          -%}
+          <a
+            class="sn-reel{% if dark_text and has_media == false %} sn-reel--dark{% endif %}{% if has_media %} sn-reel--media{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            style="--bg: {{ bg | default: '#0B2414' }};{% if settings.animations_reveal_on_scroll %} --animation-order: {{ forloop.index }};{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+            href="{{ link | default: '#' }}"
+            {% if link contains 'http' %}target="_blank" rel="noopener"{% endif %}
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, class: 'sn-reel__media', image_size: '600x' }}
+            {%- elsif block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'sn-reel__media', sizes: '(min-width: 990px) 16vw, (min-width: 750px) 30vw, 46vw', widths: '300, 450, 600', alt: block.settings.title }}
+            {%- else -%}
+              <span class="sn-reel__icon" aria-hidden="true">{% render 'schnappy-icon', icon: block.settings.icon %}</span>
+            {%- endif -%}
+            <span class="sn-reel__top">
+              <span>{{ section.settings.handle | escape }}</span>
+              <span class="sn-reel__play" aria-hidden="true">{% render 'schnappy-icon', icon: 'play' %}</span>
+            </span>
+            <span class="sn-reel__bottom">
+              <span class="sn-reel__word">{{ block.settings.title | escape }}</span>
+              {%- if block.settings.meta != blank -%}
+                <span class="sn-reel__meta">{% render 'schnappy-icon', icon: 'play' %}{{ block.settings.meta | escape }}</span>
+              {%- endif -%}
+            </span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Community",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "@schnappy.shop" },
+    { "type": "textarea", "id": "heading", "label": "Überschrift", "default": "Folg dem\nKrokodil." },
+    { "type": "text", "id": "handle", "label": "Name oben auf den Kacheln", "default": "@schnappy.shop" },
+    { "type": "text", "id": "button_label", "label": "Button Text", "default": "Auf Instagram folgen" },
+    { "type": "url", "id": "button_link", "label": "Button Link (auch Standard-Link der Kacheln)", "default": "https://www.instagram.com/schnappy.shop" },
+    { "type": "header", "content": "Design" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Abstand oben", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Abstand unten", "default": 96 }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "Kachel",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel", "default": "Unboxing XXL" },
+        { "type": "text", "id": "meta", "label": "Zusatz (z. B. Aufrufe)", "info": "Nur echte Zahlen angeben." },
+        { "type": "url", "id": "link", "label": "Link zum Beitrag", "info": "Leer = Link aus den Sektions-Einstellungen." },
+        { "type": "image_picker", "id": "image", "label": "Vorschaubild (optional)", "info": "Hochformat 9:16 empfohlen." },
+        { "type": "video", "id": "video", "label": "Video (optional)", "info": "Läuft stumm in Schleife. Hat Vorrang vor dem Bild." },
+        { "type": "color", "id": "bg", "label": "Hintergrundfarbe (ohne Bild/Video)", "default": "#0B2414" },
+        {
+          "type": "select", "id": "icon", "label": "Symbol (ohne Bild/Video)", "default": "package",
+          "options": [
+            { "value": "package", "label": "Paket" },
+            { "value": "flame", "label": "Flamme" },
+            { "value": "radio", "label": "Live" },
+            { "value": "gift", "label": "Geschenk" },
+            { "value": "star", "label": "Stern" },
+            { "value": "truck", "label": "Lieferwagen" },
+            { "value": "sparkles", "label": "Funkeln" },
+            { "value": "heart", "label": "Herz" },
+            { "value": "toy-brick", "label": "Spielzeug" },
+            { "value": "gamepad-2", "label": "Gaming" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Schnappy Community",
+      "blocks": [
+        { "type": "reel", "settings": { "title": "Unboxing XXL", "bg": "#0B2414", "icon": "package" } },
+        { "type": "reel", "settings": { "title": "−70 % Drop", "bg": "#FF4B3E", "icon": "flame" } },
+        { "type": "reel", "settings": { "title": "Live um 19 Uhr", "bg": "#8E6CFF", "icon": "radio" } },
+        { "type": "reel", "settings": { "title": "Box S vs. XXL", "bg": "#E9B530", "icon": "gift" } },
+        { "type": "reel", "settings": { "title": "Jackpot-Item!", "bg": "#2A3038", "icon": "star" } },
+        { "type": "reel", "settings": { "title": "Lager-Tour", "bg": "#FF7A4D", "icon": "truck" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,18 @@
+{%- comment -%}
+  Schnappy: Bühnenfarbe der Produktkarte nach Produktart (gibt ein style-Attribut aus).
+  Nutzung: <div{% render 'schnappy-card-tone', product: card_product %}>
+{%- endcomment -%}
+{%- liquid
+  assign t = product.type | downcase
+  assign tone = ''
+  if t contains 'spiel' or t contains 'toy' or t contains 'plüsch'
+    assign tone = 'var(--sn-toy)'
+  elsif t contains 'trend' or t contains 'lifestyle'
+    assign tone = 'var(--sn-trend)'
+  elsif t contains 'elektr' or t contains 'tech' or t contains 'gaming'
+    assign tone = 'var(--sn-tech)'
+  elsif t contains 'haus' or t contains 'küche' or t contains 'home'
+    assign tone = 'var(--sn-home)'
+  endif
+-%}
+{%- if tone != '' %} style="--sn-tone: {{ tone }};"{% endif -%}
