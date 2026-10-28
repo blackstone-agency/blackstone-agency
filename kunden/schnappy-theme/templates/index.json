@@ -270,7 +270,8 @@
         "padding_bottom": 112,
         "button_link_1": "https://www.whatnot.com/invite/schnappyshop",
         "button_link_2": "https://www.instagram.com/schnappy.shop"
-      }
+      },
+      "disabled": true
     },
     "community": {
       "type": "schnappy-community",
@@ -435,7 +436,7 @@
         "b2"
       ],
       "settings": {
-        "color_scheme": "scheme-5",
+        "color_scheme": "scheme-8",
         "full_width": false,
         "padding_top": 0,
         "padding_bottom": 24

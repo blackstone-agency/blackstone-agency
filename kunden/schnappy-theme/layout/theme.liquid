@@ -308,17 +308,14 @@
       }
       {%- if true %}
         :root {
-          --font-heading-family: 'Bricolage Grotesque', {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
+          --font-heading-family: 'Inter', {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
           --font-heading-weight: 800;
           --font-heading-style: normal;
         }
       {%- endif %}
       .sn-statusfill { background: #0B2414; }
     </style>
-    {{ 'lilita-one.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
-    {%- if true -%}
-      {{ 'bricolage-grotesque.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
-    {%- endif -%}
+    {{ 'inter-var.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
     {{ 'schnappy.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'schnappy.js' | asset_url }}" defer="defer"></script>
     <script>
