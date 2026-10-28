@@ -407,3 +407,20 @@ if (!customElements.get('sn-infinite')) {
     }
   });
 }
+
+/* Preise wie im Discounter: große Euro, kleine hochgestellte Cent (z. B. 1,⁹⁹ €) */
+(function () {
+  const RX = /^(\D*?)(\d{1,3}(?:\.\d{3})*|\d+),(\d{2})(\s*€?)$/;
+  function fmt(el) {
+    if (el.dataset.snP) return;
+    const t = el.textContent.trim().replace(/ /g, ' ');
+    const m = t.match(RX);
+    if (!m) return;
+    el.dataset.snP = '1';
+    el.setAttribute('aria-label', t);
+    el.innerHTML = '<span aria-hidden="true" class="sn-p"><span class="sn-p__e">' + m[2] + '</span><span class="sn-p__c">,' + m[3] + '</span><span class="sn-p__cur">' + (m[4].trim() || m[1].trim() || '€') + '</span></span>';
+  }
+  function run(root) { (root || document).querySelectorAll('.price-item--sale, .price__regular .price-item--regular, .sn-pick__price b, [data-sn-price]').forEach((el) => { if (el.tagName !== 'S' && !el.closest('s')) fmt(el); }); }
+  document.addEventListener('DOMContentLoaded', () => run());
+  new MutationObserver((ms) => ms.forEach((m) => m.addedNodes.forEach((n) => n.nodeType === 1 && run(n)))).observe(document.documentElement, { childList: true, subtree: true });
+})();

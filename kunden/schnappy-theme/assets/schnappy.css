@@ -771,3 +771,32 @@ h1, h2, h3, .h0, .h1, .h2, .h3 { letter-spacing: -0.02em; }
   .card-wrapper .quick-add__submit { height: 4.4rem; min-height: 4.4rem; }
   .card-information .price .price-item { font-size: 1.9rem; }
 }
+
+/* ================= v10: Logo, Preise, Feinschliff ================= */
+.sn-brand--img { display: inline-flex; align-items: center; }
+.sn-brand__logo { height: 4.4rem; width: auto; display: block; }
+@media screen and (max-width: 749px) { .sn-brand__logo { height: 3.4rem; } }
+.sn-p { display: inline-flex; align-items: flex-start; line-height: 1; white-space: nowrap; }
+.sn-p__e { font-weight: 800; }
+.sn-p__c { font-size: .58em; font-weight: 800; margin-top: .08em; }
+.sn-p__cur { font-size: .5em; font-weight: 700; margin: .14em 0 0 .18em; }
+.price-item--sale .sn-p, .price--on-sale .price-item--sale { color: #d92b1f; }
+.sn-trust { gap: 1rem; }
+.sn-trust__item { background: #fff; box-shadow: none; border: 1px solid var(--sn-line); }
+.sn-trust__icon { background: #eaf5eb; color: var(--sn-cta); }
+.sn-trust__icon svg { width: 2.2rem; height: 2.2rem; }
+.footer .copyright__content:empty { display: none; }
+.sn-topbar { color: #0e3b1a; font-weight: 600; }
+.sn-topbar__item strong, .sn-topbar__item b { color: #1e7f2c; font-weight: 800; }
+/* Preis = Hauptinformation: groß & eindeutig */
+.card-information .price .price-item, .card-information .price .sn-p { font-size: 2.8rem; }
+.card-information .price s.price-item--regular { font-size: 1.3rem; }
+@media screen and (max-width: 749px) { .card-information .price .price-item, .card-information .price .sn-p { font-size: 2.4rem; } }
+@media screen and (max-width: 749px) {
+  .sn-trust { display: flex; overflow-x: auto; scrollbar-width: none; gap: .8rem; }
+  .sn-trust::-webkit-scrollbar { display: none; }
+  .sn-trust__item { flex: none; flex-direction: row; align-items: center; padding: .8rem 1.2rem .8rem .8rem; border-radius: 99px; font-size: 1.3rem; white-space: nowrap; }
+  .sn-trust__item small { display: none; }
+  .sn-trust__icon { width: 3rem; height: 3rem; border-radius: 50%; }
+  .sn-trust__icon svg { width: 1.7rem; height: 1.7rem; }
+}

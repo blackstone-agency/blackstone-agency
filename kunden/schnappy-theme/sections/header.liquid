@@ -205,10 +205,8 @@
             }}
           </div>
         {%- else -%}
-          <span class="sn-brand">
-            {%- if section.settings.sn_show_mark -%}<span class="sn-brand__mark" aria-hidden="true">{% render 'schnappy-mascot', width: 26 %}</span>{%- endif -%}
-            <span class="sn-brand__word">{{ settings.sn_brand_word | default: shop.name | escape }}</span>
-            {%- if settings.sn_brand_word != blank and settings.sn_brand_word != shop.name -%}<span class="visually-hidden">{{ shop.name }}</span>{%- endif -%}
+          <span class="sn-brand sn-brand--img">
+            <img src="{{ 'schnappy-logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="695" height="161" class="sn-brand__logo" fetchpriority="high">
           </span>
         {%- endif -%}
       </a>
@@ -252,10 +250,8 @@
             }}
           </div>
         {%- else -%}
-          <span class="sn-brand">
-            {%- if section.settings.sn_show_mark -%}<span class="sn-brand__mark" aria-hidden="true">{% render 'schnappy-mascot', width: 26 %}</span>{%- endif -%}
-            <span class="sn-brand__word">{{ settings.sn_brand_word | default: shop.name | escape }}</span>
-            {%- if settings.sn_brand_word != blank and settings.sn_brand_word != shop.name -%}<span class="visually-hidden">{{ shop.name }}</span>{%- endif -%}
+          <span class="sn-brand sn-brand--img">
+            <img src="{{ 'schnappy-logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="695" height="161" class="sn-brand__logo" fetchpriority="high">
           </span>
         {%- endif -%}
       </a>
@@ -289,7 +285,7 @@
         {%- endif -%}
       </div>
       {%- if section.settings.sn_live_label != blank -%}
-        <a href="{{ section.settings.sn_live_link | default: '/#live' }}" class="sn-livechip"><span class="sn-pulse"></span>{{ section.settings.sn_live_label | escape }}</a>
+        <a href="{{ section.settings.sn_live_link | default: 'https://www.instagram.com/schnappy.shop' }}" class="sn-livechip" target="_blank" rel="noopener"><span class="sn-pulse"></span>{{ section.settings.sn_live_label | escape }}</a>
       {%- endif -%}
       {% render 'header-search', input_id: 'Search-In-Modal' %}
 

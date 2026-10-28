@@ -28,7 +28,7 @@
           "type": "stat",
           "settings": {
             "value": "Täglich",
-            "label": "Live auf Whatnot"
+            "label": "Live auf Instagram"
           }
         },
         "b5": {
@@ -50,7 +50,7 @@
         "b5"
       ],
       "settings": {
-        "eyebrow": "<strong>Live heute</strong> · 19:00 Uhr auf Whatnot",
+        "eyebrow": "<strong>Live heute</strong> · 19:00 Uhr auf Instagram",
         "eyebrow_link": "",
         "heading": "Deals mit",
         "heading_highlight": "Biss.",
@@ -385,7 +385,7 @@
           "settings": {
             "heading": "Was ist der Unterschied zur Live-Show?",
             "icon": "none",
-            "row_content": "<p>In der Live-Show auf Whatnot bietest du live mit. Im Shop kaufst du zum Festpreis – jederzeit, ohne auf die nächste Show zu warten.</p>"
+            "row_content": "<p>In der Live-Show auf Instagram bietest du live mit. Im Shop kaufst du zum Festpreis – jederzeit, ohne auf die nächste Show zu warten.</p>"
           }
         }
       },
@@ -473,11 +473,11 @@
         "b2": {
           "type": "promo",
           "settings": {
-            "badge": "Heute 19:00",
-            "title": "Live auf Whatnot",
-            "text": "Mitbieten ab 1 € – 25 € Startguthaben.",
-            "cta": "Zur Live-Show",
-            "link": "https://www.whatnot.com/invite/schnappyshop",
+            "badge": "Live",
+            "title": "Live auf Instagram",
+            "text": "Unboxings & Drops – folg @schnappy.shop",
+            "cta": "Zu Instagram",
+            "link": "https://www.instagram.com/schnappy.shop",
             "style": "ink",
             "show_box": false,
             "icon": "radio"
@@ -581,10 +581,60 @@
         "padding_top": 28,
         "padding_bottom": 12
       }
+    },
+    "trust": {
+      "type": "schnappy-trust-bar",
+      "blocks": {
+        "t0": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Versand in 24 h",
+            "subtitle": "Bestellt bis 14 Uhr"
+          }
+        },
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "rotate-ccw",
+            "title": "14 Tage Rückgabe",
+            "subtitle": "Einfach widerrufen"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "lock",
+            "title": "Sicher bezahlen",
+            "subtitle": "PayPal · Klarna · Apple Pay"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "message-circle",
+            "title": "Echter Kundenservice",
+            "subtitle": "per Instagram & E-Mail"
+          }
+        }
+      },
+      "block_order": [
+        "t0",
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "overlap": false,
+        "padding_top": 12,
+        "padding_bottom": 4
+      }
     }
   },
   "order": [
     "promos",
+    "trust",
     "cats",
     "deals",
     "boxes",

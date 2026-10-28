@@ -21,7 +21,7 @@
         "t1": {
           "type": "item",
           "settings": {
-            "text": "Live jeden Abend um 19:00 auf Whatnot",
+            "text": "Live-Shows auf Instagram @schnappy.shop",
             "link": ""
           }
         }
@@ -48,8 +48,8 @@
         "padding_top": 12,
         "padding_bottom": 12,
         "sn_show_mark": true,
-        "sn_live_label": "LIVE 19:00",
-        "sn_live_link": ""
+        "sn_live_label": "LIVE auf Insta",
+        "sn_live_link": "https://www.instagram.com/schnappy.shop"
       }
     },
     "search": {
