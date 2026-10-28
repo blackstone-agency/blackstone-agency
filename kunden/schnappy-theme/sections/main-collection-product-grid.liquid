@@ -147,6 +147,12 @@
               class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
             >
               <div class="loading-overlay gradient"></div>
+              <div class="sn-viewbar" role="group" aria-label="Ansicht wählen">
+                <span class="sn-viewbar__label">Ansicht:</span>
+                <button type="button" data-sn-view="grid" aria-pressed="true" aria-label="Große Kacheln"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" fill="currentColor"/></svg><span>Groß</span></button>
+                <button type="button" data-sn-view="dense" aria-pressed="false" aria-label="Kompakte Kacheln"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 3h5v5H3zM9.5 3h5v5h-5zM16 3h5v5h-5zM3 9.5h5v5H3zM9.5 9.5h5v5h-5zM16 9.5h5v5h-5zM3 16h5v5H3zM9.5 16h5v5h-5zM16 16h5v5h-5z" fill="currentColor"/></svg><span>Kompakt</span></button>
+                <button type="button" data-sn-view="list" aria-pressed="false" aria-label="Liste"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 4h5v5H3zM10 5h11v3H10zM3 15h5v5H3zM10 16h11v3H10z" fill="currentColor"/></svg><span>Liste</span></button>
+              </div>
               <ul
                 id="product-grid"
                 data-id="{{ section.id }}"

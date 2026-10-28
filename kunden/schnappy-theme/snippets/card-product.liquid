@@ -207,6 +207,12 @@
               {%- endif -%}
 
               {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+              {%- liquid
+                assign sn_v = card_product.selected_or_first_available_variant
+              -%}
+              {%- if sn_v.inventory_management == 'shopify' and sn_v.inventory_quantity > 0 and sn_v.inventory_quantity <= 5 -%}
+                <p class="sn-stock">Nur noch {{ sn_v.inventory_quantity }} Stück</p>
+              {%- endif -%}
               {%- if card_product.quantity_price_breaks_configured? -%}
                 {% if card_product.variants_count == 1 and quick_add == 'bulk' %}
                   {% liquid

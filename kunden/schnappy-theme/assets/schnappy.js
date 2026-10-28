@@ -424,3 +424,39 @@ if (!customElements.get('sn-infinite')) {
   document.addEventListener('DOMContentLoaded', () => run());
   new MutationObserver((ms) => ms.forEach((m) => m.addedNodes.forEach((n) => n.nodeType === 1 && run(n)))).observe(document.documentElement, { childList: true, subtree: true });
 })();
+
+/* Katalog-Ansicht (Groß / Kompakt / Liste) – merkt sich die Wahl */
+(function () {
+  const KEY = 'sn-view';
+  function apply(v) {
+    document.documentElement.dataset.snView = v;
+    document.querySelectorAll('[data-sn-view]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.snView === v));
+  }
+  let v = 'grid'; try { v = localStorage.getItem(KEY) || 'grid'; } catch (e) {}
+  apply(v);
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-sn-view]'); if (!b) return;
+    apply(b.dataset.snView); try { localStorage.setItem(KEY, b.dataset.snView); } catch (err) {}
+  });
+  new MutationObserver(() => apply(document.documentElement.dataset.snView || 'grid')).observe(document.body || document.documentElement, { childList: true, subtree: true });
+})();
+
+/* Lieferdatum auf der Produktseite (bis 14 Uhr bestellt = Versand heute, 1–2 Werktage Zustellung) */
+(function () {
+  function addBiz(d, n) { const r = new Date(d); while (n > 0) { r.setDate(r.getDate() + 1); if (r.getDay() !== 0 && r.getDay() !== 6) n--; } return r; }
+  function run() {
+    const els = document.querySelectorAll('[data-sn-eta]'); if (!els.length) return;
+    const now = new Date(); let ship = new Date(now);
+    const weekend = now.getDay() === 0 || now.getDay() === 6;
+    if (weekend || now.getHours() >= 14) ship = addBiz(now, 1);
+    const a = addBiz(ship, 1), b = addBiz(ship, 2);
+    const f = (d) => d.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' });
+    els.forEach((el) => { el.textContent = f(a) + ' – ' + f(b); });
+    const left = new Date(now); left.setHours(14, 0, 0, 0);
+    const mins = Math.round((left - now) / 60000);
+    document.querySelectorAll('[data-sn-eta-hint]').forEach((h) => {
+      h.textContent = (!weekend && mins > 0) ? 'Bestell in ' + Math.floor(mins / 60) + ' Std. ' + (mins % 60) + ' Min. – Versand noch heute' : 'Versand am nächsten Werktag';
+    });
+  }
+  document.addEventListener('DOMContentLoaded', run);
+})();

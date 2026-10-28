@@ -800,3 +800,107 @@ h1, h2, h3, .h0, .h1, .h2, .h3 { letter-spacing: -0.02em; }
   .sn-trust__icon { width: 3rem; height: 3rem; border-radius: 50%; }
   .sn-trust__icon svg { width: 1.7rem; height: 1.7rem; }
 }
+
+/* ================= v11 ================= */
+/* Logo gestapelt */
+.sn-brand__logo { height: 6rem; }
+@media screen and (max-width: 749px) { .sn-brand__logo { height: 4.6rem; } }
+.footer-badge, .sn-footer-badge { width: 11rem; height: auto; margin-bottom: 1.6rem; display: block; }
+.sn-footer-mega { display: none !important; }
+
+/* Gleich große Produktkarten */
+.product-grid .grid__item, .collection .grid__item { display: flex; }
+.card-wrapper { width: 100%; height: 100%; }
+.card-wrapper .card { height: 100%; }
+.card--card .card__content, .card--standard .card__content { display: flex; flex-direction: column; flex: 1; }
+.card__information { display: flex; flex-direction: column; flex: 1; }
+.card__heading { -webkit-line-clamp: 2 !important; min-height: calc(1.35em * 2); }
+.card-wrapper .quick-add { margin-top: auto !important; padding-top: 1.2rem; }
+.sn-stock { margin: .4rem 0 0; font-size: 1.3rem; font-weight: 700; color: #b42318; }
+
+/* Katalog-Ansicht */
+.sn-viewbar { display: flex; align-items: center; gap: .6rem; margin: 0 0 1.4rem; flex-wrap: wrap; }
+.sn-viewbar__label { font-size: 1.4rem; font-weight: 600; margin-right: .4rem; }
+.sn-viewbar button { display: inline-flex; align-items: center; gap: .6rem; min-height: 4.2rem; padding: 0 1.4rem; border-radius: 99px; border: 1.5px solid #d9dcd8; background: #fff; color: #111511; font-size: 1.4rem; font-weight: 600; cursor: pointer; }
+.sn-viewbar button[aria-pressed="true"] { background: #111511; border-color: #111511; color: #fff; }
+html[data-sn-view="dense"] #product-grid { display: grid !important; grid-template-columns: repeat(3, minmax(0,1fr)); gap: .8rem; }
+html[data-sn-view="dense"] #product-grid > .grid__item { width: auto !important; max-width: none !important; }
+html[data-sn-view="dense"] #product-grid .card__heading { font-size: 1.3rem; }
+html[data-sn-view="dense"] #product-grid .price .sn-p, html[data-sn-view="dense"] #product-grid .price .price-item { font-size: 2rem; }
+html[data-sn-view="dense"] #product-grid .quick-add__submit { height: 3.8rem; min-height: 3.8rem; font-size: 1.3rem; }
+@media screen and (min-width: 750px) { html[data-sn-view="dense"] #product-grid { grid-template-columns: repeat(6, minmax(0,1fr)); } }
+html[data-sn-view="list"] #product-grid { display: grid !important; grid-template-columns: minmax(0,1fr); gap: .8rem; }
+html[data-sn-view="list"] #product-grid > .grid__item { width: auto !important; max-width: none !important; }
+html[data-sn-view="list"] #product-grid .card { display: grid !important; grid-template-columns: 12rem minmax(0,1fr); align-items: center; }
+html[data-sn-view="list"] #product-grid .card__inner { width: 12rem; }
+html[data-sn-view="list"] #product-grid .card__content { padding: 1.2rem 1.4rem; }
+html[data-sn-view="list"] #product-grid .card__heading { min-height: 0; }
+@media screen and (min-width: 750px) {
+  html[data-sn-view="list"] #product-grid .card { grid-template-columns: 16rem minmax(0,1fr); }
+  html[data-sn-view="list"] #product-grid .card__inner { width: 16rem; }
+  html[data-sn-view="list"] #product-grid .card__information { display: grid; grid-template-columns: minmax(0,1fr) auto 22rem; align-items: center; gap: 2rem; }
+  html[data-sn-view="list"] #product-grid .quick-add { margin: 0 !important; padding: 0; }
+}
+
+/* Mystery-Box-Auswahl kompakt */
+.sn-picker { gap: 1.6rem !important; }
+.sn-pick-stage { min-height: 30rem !important; --k: .62 !important; }
+.sn-pick-stage__word { font-size: 14rem !important; }
+.sn-pick-panel { padding: 2.4rem !important; }
+.sn-pick-name { font-size: clamp(2.6rem, 2.6vw, 3.4rem) !important; }
+.sn-pick-desc { margin: .6rem 0 1rem !important; font-size: 1.5rem !important; }
+.sn-pick-price b, .sn-pick-price .sn-p { font-size: 3.6rem !important; }
+.sn-pick-panel .sn-meter, .sn-pick-panel [class*="meter"] { margin: 1.2rem 0 !important; padding: 1.2rem !important; }
+.sn-pick-panel ul { margin-bottom: 1.4rem !important; gap: .6rem !important; font-size: 1.45rem !important; }
+@media screen and (min-width: 990px) { .sn-pick-stage { min-height: 38rem !important; --k: .78 !important; } }
+
+/* Newsletter: Krokodil schaut über den Rand, nichts abgeschnitten */
+.newsletter { position: relative; }
+.sn-peek { display: block; width: 18rem; height: auto; margin: 0 auto -1.6rem; position: relative; z-index: 2; }
+.newsletter__wrapper { padding-top: 4.4rem !important; padding-bottom: 4rem !important; overflow: visible !important; }
+.newsletter__wrapper h2 { clip-path: none !important; transform: none !important; }
+
+/* Promo-Kachel mit Krokodil */
+.sn-promo__croc { max-height: 15rem; width: auto; justify-self: center; }
+@media screen and (max-width: 749px) { .sn-promo__croc { display: none; } }
+
+/* Warenkorb: Upsell, Vertrauen, leerer Zustand */
+.sn-empty-croc { width: 12rem; height: auto; margin: 0 auto 1rem; display: block; }
+.sn-empty-sub { color: #4a514b; margin: 0 0 1.6rem; }
+.sn-upsell__form { display: flex; align-items: center; gap: 1rem; padding: 1rem; margin-bottom: 1.2rem; border-radius: 1.6rem; background: #eaf5eb; border: 1px solid #cfe7d2; }
+.sn-upsell__form img { width: 5.6rem; height: 5.6rem; border-radius: 1rem; object-fit: cover; flex: none; background: #fff; }
+.sn-upsell__txt { flex: 1; font-size: 1.35rem; line-height: 1.35; color: #111511; }
+.sn-upsell__btn { flex: none; min-height: 4rem; padding: 0 1.4rem; border-radius: 99px; border: 0; background: var(--sn-cta); color: #fff; font-weight: 800; font-size: 1.4rem; cursor: pointer; position: relative; }
+.sn-upsell__btn .loading__spinner { position: absolute; inset: 0; margin: auto; }
+.cart__checkout-button { background: var(--sn-cta) !important; color: #fff !important; font-size: 1.7rem !important; font-weight: 800 !important; min-height: 5.6rem !important; border-radius: 99px !important; display: inline-flex; align-items: center; justify-content: center; gap: .8rem; }
+.cart__checkout-button svg { width: 1.8rem; height: 1.8rem; }
+.sn-cart-trust { text-align: center; margin-top: 1rem; font-size: 1.3rem; color: #4a514b; }
+.sn-cart-trust p { margin: 0 0 .8rem; }
+.sn-cart-pay, .sn-pdp-pay { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
+.sn-cart-pay svg, .sn-pdp-pay svg { width: 3.8rem; height: 2.4rem; }
+
+/* Produktseite: Lieferdatum & Vertrauen direkt am Kaufen-Button */
+.sn-pdp-trust { margin-top: 1.6rem; padding: 1.6rem; border-radius: 1.6rem; background: #fff; border: 1px solid var(--sn-line); display: grid; gap: 1.2rem; }
+.sn-eta { display: flex; gap: 1rem; align-items: flex-start; margin: 0; font-size: 1.5rem; color: #111511; }
+.sn-eta > svg { width: 2.4rem; height: 2.4rem; color: var(--sn-cta); flex: none; margin-top: .2rem; }
+.sn-eta small { color: #1e7f2c; font-weight: 700; font-size: 1.3rem; }
+.sn-pdp-trust ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .6rem; font-size: 1.4rem; color: #2c322d; }
+.sn-pdp-trust li { display: flex; gap: .8rem; align-items: center; }
+.sn-pdp-trust li svg { width: 1.8rem; height: 1.8rem; color: var(--sn-cta); flex: none; }
+.sn-pdp-pay { justify-content: flex-start; }
+.product-form__submit { background: var(--sn-cta) !important; color: #fff !important; font-weight: 800 !important; font-size: 1.7rem !important; min-height: 5.6rem !important; border-radius: 99px !important; }
+@media screen and (max-width: 749px) {
+  .product-form__buttons { position: sticky; bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 6; }
+  .product-form__submit { box-shadow: 0 10px 24px -10px rgba(0,0,0,.45); }
+}
+.template-product .sn-tabbar, .template-product .sn-tabbar-spacer { display: none !important; }
+.sn-picker { align-items: start !important; }
+.sn-pick-stage { height: 30rem; min-height: 0 !important; }
+@media screen and (min-width: 990px) { .sn-picker { grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr) !important; } .sn-pick-stage { height: 44rem; min-height: 0 !important; } }
+.sn-meter { padding: 1.2rem 1.4rem !important; margin: 1rem 0 1.2rem !important; }
+.sn-meter__bar { margin: .8rem 0 !important; }
+.sn-meter__legend { margin: 0 !important; }
+.sn-pick-panel .sn-incl { margin: 0 0 1.4rem !important; gap: .4rem !important; }
+.sn-pick-tag { margin-bottom: .6rem !important; }
+.sn-pick-cta .button, .sn-pick-panel button[type="submit"] { background: var(--sn-cta) !important; color: #fff !important; }
+.newsletter-form { margin-left: auto !important; margin-right: auto !important; }

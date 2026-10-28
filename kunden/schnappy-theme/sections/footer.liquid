@@ -102,7 +102,7 @@
                       </ul>
                     {%- endif -%}
                   {%- when 'brand_information' -%}
-                    <div class="footer-block__brand-info">
+                    <div class="footer-block__brand-info"><img src="{{ 'schnappy-badge.png' | asset_url }}" alt="" width="383" height="390" loading="lazy" class="sn-footer-badge">
                       {%- if settings.brand_image != blank -%}
                         {%- assign brand_image_height = settings.brand_image_width
                           | divided_by: settings.brand_image.aspect_ratio
@@ -287,10 +287,8 @@
           <div class="footer__payment">
             <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
             <ul class="list list-payment" role="list">
-              {%- for type in shop.enabled_payment_types -%}
-                <li class="list-payment__item">
-                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-                </li>
+              {%- assign sn_pay = 'paypal,klarna,apple_pay,google_pay,visa,master' | split: ',' -%}{%- for type in sn_pay -%}
+                <li class="list-payment__item">{{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}</li>
               {%- endfor -%}
             </ul>
           </div>
@@ -320,7 +318,7 @@
     </div>
   </div>
   {%- if section.settings.sn_wordmark != blank -%}
-    <div class="sn-footer-mega" aria-hidden="true">{{ section.settings.sn_wordmark | escape }}</div>
+    
   {%- endif -%}
 </footer>
 

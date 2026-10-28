@@ -31,7 +31,9 @@
         <div class="drawer__inner-empty">
           <div class="cart-drawer__warnings center{% if settings.cart_drawer_collection != blank %} cart-drawer__warnings--has-collection{% endif %}">
             <div class="cart-drawer__empty-content">
-              <h2 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h2>
+              <img src="{{ 'schnappy-sticker.png' | asset_url }}" alt="" width="348" height="389" class="sn-empty-croc" loading="lazy">
+              <h2 class="cart__empty-text">Noch nichts geschnappt.</h2>
+              <p class="sn-empty-sub">Tausende Schnäppchen warten – stöber los!</p>
               <button
                 class="drawer__close"
                 type="button"
@@ -588,6 +590,20 @@
         <!-- CTAs -->
 
         <div class="cart__ctas" {{ block.shopify_attributes }}>
+          {%- assign sn_up = all_products['mystery-box-s'] -%}
+          {%- assign sn_in = false -%}
+          {%- for it in cart.items -%}{%- if it.product.type == 'Mystery Box' -%}{%- assign sn_in = true -%}{%- endif -%}{%- endfor -%}
+          {%- if sn_up != blank and sn_up.available and sn_in == false and cart != empty -%}
+            <product-form class="sn-upsell" data-section-id="cart-drawer">
+              {%- form 'product', sn_up, class: 'sn-upsell__form', novalidate: 'novalidate' -%}
+                <input type="hidden" name="id" value="{{ sn_up.selected_or_first_available_variant.id }}">
+                <img src="{{ sn_up.featured_image | image_url: width: 120 }}" alt="" width="56" height="56" loading="lazy">
+                <span class="sn-upsell__txt"><b>Noch was dazu?</b> {{ sn_up.title | escape }} für {{ sn_up.price | money }}</span>
+                <div class="product-form__error-message-wrapper" hidden><span class="product-form__error-message"></span></div>
+                <button type="submit" name="add" class="sn-upsell__btn"><span>+ Dazu</span>{%- render 'loading-spinner' -%}</button>
+              {%- endform -%}
+            </product-form>
+          {%- endif -%}
           <button
             type="submit"
             id="CartDrawer-Checkout"
@@ -598,8 +614,12 @@
               disabled
             {% endif %}
           >
-            {{ 'sections.cart.checkout' | t }}
+            {% render 'schnappy-icon', icon: 'lock' %} Sicher zur Kasse
           </button>
+          <div class="sn-cart-trust">
+            <p>✓ Versand in 24 h &nbsp;·&nbsp; ✓ 14 Tage Rückgabe</p>
+            <div class="sn-cart-pay">{%- assign sn_pay = 'paypal,klarna,apple_pay,google_pay,visa,master' | split: ',' -%}{%- for t in sn_pay -%}{{ t | payment_type_svg_tag: class: 'icon icon--full-color' }}{%- endfor -%}</div>
+          </div>
         </div>
       </div>
     </div>
