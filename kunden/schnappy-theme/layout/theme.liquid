@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="{{ settings.sn_statusbar_color }}">
+    <meta name="theme-color" content="#0B2414">
     <link rel="canonical" href="{{ canonical_url }}">
 
     {%- if settings.favicon != blank -%}
@@ -306,17 +306,17 @@
       :root {
         --font-body-family: 'Inter', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
       }
-      {%- if settings.sn_display_font %}
+      {%- if true %}
         :root {
           --font-heading-family: 'Bricolage Grotesque', {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};
           --font-heading-weight: 800;
           --font-heading-style: normal;
         }
       {%- endif %}
-      .sn-statusfill { background: {{ settings.sn_statusbar_color }}; }
+      .sn-statusfill { background: #0B2414; }
     </style>
     {{ 'lilita-one.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
-    {%- if settings.sn_display_font -%}
+    {%- if true -%}
       {{ 'bricolage-grotesque.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
     {%- endif -%}
     {{ 'schnappy.css' | asset_url | stylesheet_tag }}
@@ -366,7 +366,7 @@
     </script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if settings.sn_grain %} sn-grain{% endif %}{% if settings.sn_card_stage %} sn-card-stage{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %} sn-grain sn-card-stage">
     <div class="sn-statusfill" aria-hidden="true"></div>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}

@@ -1,79 +1,11 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Schnappy",
+    "theme_name": "Dawn",
     "theme_version": "16.0.0",
-    "theme_author": "Blackstone Agency (Basis: Shopify Dawn)",
+    "theme_author": "Shopify",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
-  },
-  {
-    "name": "Schnappy",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Marke"
-      },
-      {
-        "type": "text",
-        "id": "sn_brand_word",
-        "label": "Markenname / Schriftzug",
-        "default": "SCHNAPPY",
-        "info": "Für Logo-Schriftzug (ohne Logo-Bild), 3D-Boxen, Hintergrundwort und großen Footer-Schriftzug."
-      },
-      {
-        "type": "checkbox",
-        "id": "sn_display_font",
-        "label": "Überschriften in Bricolage Grotesque",
-        "default": true,
-        "info": "Schrift ist im Theme gespeichert (keine Google-Fonts-Anfrage). Aus = Überschrift-Schrift aus „Typografie“."
-      },
-      {
-        "type": "color",
-        "id": "sn_statusbar_color",
-        "label": "Farbe der Statusleiste (iPhone/Android)",
-        "default": "#0B2414",
-        "info": "Sollte der Header-Farbe entsprechen."
-      },
-      {
-        "type": "header",
-        "content": "Look"
-      },
-      {
-        "type": "checkbox",
-        "id": "sn_grain",
-        "label": "Feines Filmkorn über der Seite",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "sn_card_stage",
-        "label": "Produktbilder freigestellt auf farbiger Bühne",
-        "default": true,
-        "info": "Ideal für Produktfotos mit weißem Hintergrund. Die Farbe richtet sich nach der Produktart (Spielzeug, Trend, Elektronik, Haushalt)."
-      },
-      {
-        "type": "header",
-        "content": "Gratis-Versand-Balken im Warenkorb"
-      },
-      {
-        "type": "checkbox",
-        "id": "sn_free_shipping_enable",
-        "label": "Balken anzeigen",
-        "default": true
-      },
-      {
-        "type": "range",
-        "id": "sn_free_shipping_threshold",
-        "min": 10,
-        "max": 200,
-        "step": 5,
-        "unit": "€",
-        "label": "Gratis-Versand ab",
-        "default": 50,
-        "info": "Muss zu den Versandeinstellungen unter Einstellungen > Versand passen."
-      }
-    ]
   },
   {
     "name": "t:settings_schema.logo.name",

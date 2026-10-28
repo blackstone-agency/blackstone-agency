@@ -210,14 +210,7 @@
           "color_scheme": "scheme-3"
         }
       }
-    },
-    "sn_free_shipping_enable": true,
-    "sn_free_shipping_threshold": 50,
-    "sn_brand_word": "SCHNAPPY",
-    "sn_display_font": true,
-    "sn_statusbar_color": "#0B2414",
-    "sn_grain": true,
-    "sn_card_stage": true
+    }
   },
   "presets": {
     "Schnappy": {
@@ -431,14 +424,7 @@
             "color_scheme": "scheme-3"
           }
         }
-      },
-      "sn_free_shipping_enable": true,
-      "sn_free_shipping_threshold": 50,
-      "sn_brand_word": "SCHNAPPY",
-      "sn_display_font": true,
-      "sn_statusbar_color": "#0B2414",
-      "sn_grain": true,
-      "sn_card_stage": true
+      }
     }
   }
 }
