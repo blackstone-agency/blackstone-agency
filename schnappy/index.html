@@ -586,7 +586,7 @@ footer a:hover{color:#fff}
 <div class="statusfill" aria-hidden="true"></div>
 <div class="topbar">
   <div class="wrap">
-    <span><b>Gratis Versand</b> ab 50 €</span><span class="sep opt-m">·</span><span class="opt-m">Live jeden Abend um 19:00 auf Whatnot</span>
+    <span><b>Gratis Versand</b> ab 44 €</span><span class="sep opt-m">·</span><span class="opt-m">Live jeden Abend um 19:00 auf Whatnot</span>
     <span class="demo">Design-Vorschau · keine echten Bestellungen</span>
   </div>
 </div>
@@ -894,7 +894,7 @@ const P=[
 ];
 const ITEMS=[...BOXES.map(b=>({...b,n:b.name,p:b.price,w:b.was,box:true})),...P];
 const byId=id=>ITEMS.find(x=>x.id===id);
-const FREE=50,SHIP=4.90;
+const FREE=44,SHIP=4.90;
 
 const POPS=[
  {ic:'rabbit',t:'#FF7A4D',s:1.12,x:-.4,y:-.62,r:-12,ry:-28,dl:.12},
@@ -1129,7 +1129,7 @@ chatStep();chatStep();if(!RM)setInterval(chatStep,1900);
 const REELS=[['Unboxing XXL','#0B2414','package','2,1k'],['−70 % Drop','#FF4B3E','flame','1,4k'],['Live um 19 Uhr','#8E6CFF','radio','980'],['Box S vs. XXL','#E9B530','gift','1,9k'],['Jackpot-Item!','#2A3038','star','3,2k'],['Lager-Tour','#FF7A4D','truck','760']];
 $('#reels').innerHTML=REELS.map(([w,bg,i,v],j)=>`<a class="reel rv${j%3?' d'+(j%3):''}" style="--bg:${bg}${bg==='#E9B530'?';color:#0C100D':''}" href="https://www.instagram.com/schnappy.shop" target="_blank" rel="noopener"><span class="reel-ic">${ic(i)}</span><span class="reel-top"><span>@schnappy.shop</span><span class="play">${ic('play')}</span></span><span style="position:relative;z-index:1"><span class="reel-word">${w}</span><span class="reel-meta" style="margin-top:10px">${ic('play')} ${v} · Beispiel</span></span></a>`).join('');
 
-const FAQ=[['Was ist in einer Mystery Box?','Eine Mischung aus Spielzeug, Trend-Produkten, Haushalts- und Lifestyle-Artikeln aus Restposten und Überhängen. Der Warenwert liegt garantiert über dem Kaufpreis.'],['Wie schnell wird versendet?','Bestellungen bis 14 Uhr verlassen in der Regel noch am selben Werktag unser Lager. Innerhalb Deutschlands dauert die Lieferung 1–3 Werktage.'],['Ab wann ist der Versand kostenlos?','Ab 50 € Bestellwert versenden wir innerhalb Deutschlands kostenlos. Darunter kostet der Versand 4,90 €.'],['Kann ich zurückgeben?','Ja, du hast ein 14-tägiges Widerrufsrecht. Alle Details findest du in der Widerrufsbelehrung.'],['Was ist der Unterschied zur Live-Show?','In der Live-Show auf Whatnot bietest du live mit und kannst echte Schnapper machen. Im Shop kaufst du zum Festpreis, jederzeit.']];
+const FAQ=[['Was ist in einer Mystery Box?','Eine Mischung aus Spielzeug, Trend-Produkten, Haushalts- und Lifestyle-Artikeln aus Restposten und Überhängen. Der Warenwert liegt garantiert über dem Kaufpreis.'],['Wie schnell wird versendet?','Bestellungen bis 14 Uhr verlassen in der Regel noch am selben Werktag unser Lager. Innerhalb Deutschlands dauert die Lieferung 1–3 Werktage.'],['Ab wann ist der Versand kostenlos?','Ab 44 € Bestellwert versenden wir innerhalb Deutschlands kostenlos. Darunter kostet der Versand 4,90 €.'],['Kann ich zurückgeben?','Ja, du hast ein 14-tägiges Widerrufsrecht. Alle Details findest du in der Widerrufsbelehrung.'],['Was ist der Unterschied zur Live-Show?','In der Live-Show auf Whatnot bietest du live mit und kannst echte Schnapper machen. Im Shop kaufst du zum Festpreis, jederzeit.']];
 $('#faqList').innerHTML=FAQ.map(([q,a],i)=>`<div class="qa${i===0?' open':''}"><button aria-expanded="${i===0}">${q}<span class="pm">${ic('plus')}</span></button><div class="qa-a"><div><p>${a}</p></div></div></div>`).join('');
 $('#faqList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const qa=b.parentElement;qa.classList.toggle('open');b.setAttribute('aria-expanded',qa.classList.contains('open'))});
 
