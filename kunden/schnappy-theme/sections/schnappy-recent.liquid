@@ -1,6 +1,10 @@
-{%- comment -%} Schnappy: Zuletzt angesehen (wird im Browser gespeichert, erscheint nur wenn vorhanden) {%- endcomment -%}
-<sn-recent class="sn-recent page-width" data-current="{{ product.handle }}" data-currency="{{ cart.currency.iso_code }}" hidden>
-  <div class="sn-shophead"><h2 class="h2">{{ section.settings.heading | escape }}</h2></div>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- comment -%} Schnappy: Zuletzt angesehen – erscheint nur, wenn der Besucher schon Produkte angesehen hat {%- endcomment -%}
+<sn-recent class="sn-recent page-width" data-current="{{ product.handle }}" hidden>
+  <div class="sn-recent__head">
+    <h2 class="sn-recent__title">{% render 'schnappy-icon', icon: 'rotate-ccw' %} {{ section.settings.heading | escape }}</h2>
+    <button type="button" class="sn-recent__clear" data-clear>Verlauf löschen</button>
+  </div>
   <ul class="sn-recent__list" role="list" data-list></ul>
 </sn-recent>
 

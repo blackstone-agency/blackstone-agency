@@ -1,0 +1,39 @@
+{%- comment -%} Schnappy: feste Footer-Spalten (Shop, Hilfe, Rechtliches, Kontakt) {%- endcomment -%}
+<div class="footer-block grid__item sn-fcol">
+  <h2 class="footer-block__heading">Shop</h2>
+  <ul class="list-unstyled">
+    <li><a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">Neu eingetroffen</a></li>
+    <li><a href="{{ routes.root_url }}#boxen">Mystery Boxen</a></li>
+    <li><a href="{{ routes.root_url }}#schnapper">Schnapper des Tages</a></li>
+    <li><a href="{{ routes.all_products_collection_url }}?filter.v.price.lte=10">Alles unter 10 €</a></li>
+    <li><a href="{{ routes.all_products_collection_url }}">Alle Produkte</a></li>
+  </ul>
+</div>
+<div class="footer-block grid__item sn-fcol">
+  <h2 class="footer-block__heading">Hilfe</h2>
+  <ul class="list-unstyled">
+    <li><a href="{{ routes.root_url }}#faq">Häufige Fragen</a></li>
+    <li><a href="/policies/shipping-policy">Versand &amp; Lieferung</a></li>
+    <li><a href="/policies/refund-policy">Rückgabe &amp; Widerruf</a></li>
+    <li><a href="/policies/contact-information">Kontakt</a></li>
+    <li><a href="{{ routes.account_url | default: '/account' }}">Mein Konto</a></li>
+  </ul>
+</div>
+<div class="footer-block grid__item sn-fcol">
+  <h2 class="footer-block__heading">Rechtliches</h2>
+  <ul class="list-unstyled">
+    <li><a href="/policies/legal-notice">Impressum</a></li>
+    <li><a href="/policies/privacy-policy">Datenschutz</a></li>
+    <li><a href="/policies/terms-of-service">AGB</a></li>
+    <li><a href="/policies/refund-policy">Widerrufsbelehrung</a></li>
+  </ul>
+</div>
+<div class="footer-block grid__item sn-fcol sn-fcol--contact">
+  <h2 class="footer-block__heading">Kontakt</h2>
+  <ul class="list-unstyled">
+    <li><a href="mailto:support@schnappy.shop">{% render 'schnappy-icon', icon: 'mail' %}support@schnappy.shop</a></li>
+    <li><a href="tel:+4915254919878">{% render 'schnappy-icon', icon: 'phone' %}0152 54919878</a></li>
+    <li><a href="https://www.instagram.com/schnappy.shop" target="_blank" rel="noopener">{% render 'schnappy-icon', icon: 'instagram' %}@schnappy.shop</a></li>
+  </ul>
+  <p class="sn-fcol__note">Schnappy GbR · Karl-Strutz-Weg 52b · 22119 Hamburg</p>
+</div>

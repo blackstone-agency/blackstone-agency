@@ -494,24 +494,35 @@ if (!customElements.get('sn-infinite')) {
   if (location.hash === '#suche') document.addEventListener('DOMContentLoaded', () => { const i = document.querySelector('#SnBandSearch'); if (i) i.focus(); });
 })();
 
-/* v12: Zuletzt angesehen */
+/* v17: Zuletzt angesehen – echte Produktkarten mit Einkaufswagen-Button */
 (function () {
   const KEY = 'sn-recent';
   const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } };
   const m = location.pathname.match(/\/products\/([^/?#]+)/);
   if (m) { try { const l = read().filter((h) => h !== m[1]); l.unshift(m[1]); localStorage.setItem(KEY, JSON.stringify(l.slice(0, 12))); } catch (e) {} }
   const eur = (c) => (c / 100).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const root = () => (window.Shopify && Shopify.routes ? Shopify.routes.root : '/');
   customElements.get('sn-recent') || customElements.define('sn-recent', class extends HTMLElement {
     async connectedCallback() {
       const cur = this.dataset.current; const handles = read().filter((h) => h && h !== cur).slice(0, 6);
+      const clear = this.querySelector('[data-clear]');
+      if (clear) clear.addEventListener('click', () => { try { localStorage.removeItem(KEY); } catch (e) {} this.hidden = true; });
       if (!handles.length) return;
       const list = this.querySelector('[data-list]');
-      const items = await Promise.all(handles.map((h) => fetch((window.Shopify && Shopify.routes ? Shopify.routes.root : '/') + 'products/' + h + '.js').then((r) => (r.ok ? r.json() : null)).catch(() => null)));
+      const items = await Promise.all(handles.map((h) => fetch(root() + 'products/' + h + '.js').then((r) => (r.ok ? r.json() : null)).catch(() => null)));
       items.filter(Boolean).forEach((p) => {
-        const img = p.featured_image ? p.featured_image.replace(/(\.[a-z]+)(\?|$)/i, '_300x300$1$2') : '';
+        const v = (p.variants || []).find((x) => x.available) || (p.variants || [])[0] || {};
+        const img = p.featured_image ? p.featured_image.replace(/(\.[a-z]+)(\?|$)/i, '_400x400$1$2') : '';
+        const cmp = v.compare_at_price && v.compare_at_price > v.price ? v.compare_at_price : 0;
+        const pct = cmp ? Math.round((1 - v.price / cmp) * 100) : 0;
         const li = document.createElement('li');
-        li.innerHTML = '<a class="sn-recent__card" href="' + p.url + '">' + (img ? '<img src="' + img + '" alt="" width="150" height="150" loading="lazy">' : '') + '<span class="sn-recent__t"></span><b>' + eur(p.price) + '</b></a>';
-        li.querySelector('.sn-recent__t').textContent = p.title;
+        li.className = 'sn-rc';
+        li.innerHTML =
+          '<a class="sn-rc__media" href="' + p.url + '">' + (img ? '<img src="' + img + '" alt="" width="200" height="200" loading="lazy">' : '') + (pct ? '<span class="sn-rc__pct">−' + pct + ' %</span>' : '') + '</a>' +
+          '<a class="sn-rc__title" href="' + p.url + '">' + esc(p.title) + '</a>' +
+          '<div class="sn-rc__price">' + (cmp ? '<s>' + eur(cmp) + '</s>' : '') + '<b' + (cmp ? ' class="is-sale"' : '') + '>' + eur(v.price || p.price) + '</b></div>' +
+          (p.available && v.id ? '<product-form class="sn-rc__form" data-section-id="sn-recent"><form method="post" action="' + root() + 'cart/add" novalidate><input type="hidden" name="id" value="' + v.id + '"><div class="product-form__error-message-wrapper" hidden><span class="product-form__error-message"></span></div><button type="submit" name="add" class="sn-cartbtn sn-rc__btn"><span>In den Einkaufswagen</span><div class="loading__spinner hidden"></div></button></form></product-form>' : '<span class="sn-rc__soldout">Ausverkauft</span>');
         list.appendChild(li);
       });
       if (list.children.length) this.hidden = false;

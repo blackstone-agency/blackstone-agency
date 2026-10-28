@@ -1,0 +1,101 @@
+{%- comment -%} Schnappy: Mystery Boxen als drei klare Produktkarten (S / M / XXL) {%- endcomment -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<div id="{{ section.settings.anchor | default: 'boxen' | handleize }}" class="sn-bx-wrap color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width sn-bx">
+    <div class="sn-bx__head">
+      <div>
+        {%- if section.settings.kicker != blank -%}<p class="sn-bx__kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h2 class="sn-bx__title">{{ section.settings.heading | escape }}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<p class="sn-bx__text">{{ section.settings.text | escape }}</p>{%- endif -%}
+    </div>
+
+    <ul class="sn-bx__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign p = block.settings.product
+          assign is_hot = false
+          if block.settings.highlight
+            assign is_hot = true
+          endif
+          assign img_asset = 'schnappy-box-' | append: block.settings.size | append: '.jpg'
+          assign img_open = 'schnappy-box-' | append: block.settings.size | append: '-offen.jpg'
+        -%}
+        <li class="sn-bx__card{% if is_hot %} is-hot{% endif %}" {{ block.shopify_attributes }}>
+          {%- if is_hot -%}<span class="sn-bx__ribbon">⭐ Unsere Empfehlung</span>{%- endif -%}
+          <a class="sn-bx__media" href="{% if p %}{{ p.url }}{% else %}#{% endif %}" tabindex="-1" aria-hidden="true">
+            {%- if p and p.featured_image -%}
+              {{ p.featured_image | image_url: width: 640 | image_tag: loading: 'lazy', widths: '320, 480, 640', sizes: '(min-width: 990px) 380px, 80vw', alt: '', class: 'sn-bx__img' }}
+            {%- else -%}
+              <img class="sn-bx__img" src="{{ img_asset | asset_url }}" alt="" width="640" height="640" loading="lazy">
+            {%- endif -%}
+            <img class="sn-bx__img sn-bx__img--open" src="{{ img_open | asset_url }}" alt="" width="640" height="640" loading="lazy">
+            {%- if block.settings.tag != blank -%}<span class="sn-bx__tag">{{ block.settings.tag | escape }}</span>{%- endif -%}
+          </a>
+          <div class="sn-bx__body">
+            <h3 class="sn-bx__name">{%- if p -%}<a href="{{ p.url }}">{{ block.settings.title | default: p.title | escape }}</a>{%- else -%}{{ block.settings.title | escape }}{%- endif -%}</h3>
+            {%- if block.settings.description != blank -%}<p class="sn-bx__desc">{{ block.settings.description | escape }}</p>{%- endif -%}
+            <div class="sn-bx__price">
+              {%- if p -%}<span class="sn-bx__now">{{ p.price | money }}</span>{%- endif -%}
+              {%- if block.settings.value > 0 -%}<span class="sn-bx__value">Warenwert mind. <b>{{ block.settings.value }} €</b></span>{%- endif -%}
+            </div>
+            {%- if block.settings.points != blank -%}
+              <ul class="sn-bx__points" role="list">
+                {%- assign pts = block.settings.points | newline_to_br | split: '<br />' -%}
+                {%- for pt in pts -%}{%- assign t = pt | strip -%}{%- if t != blank -%}<li>{% render 'schnappy-icon', icon: 'shield-check' %}<span>{{ t | escape }}</span></li>{%- endif -%}{%- endfor -%}
+              </ul>
+            {%- endif -%}
+            {%- if p and p.available -%}
+              <product-form class="sn-bx__form" data-section-id="{{ section.id }}">
+                {%- form 'product', p, novalidate: 'novalidate' -%}
+                  <input type="hidden" name="id" value="{{ p.selected_or_first_available_variant.id }}">
+                  <div class="product-form__error-message-wrapper" hidden><span class="product-form__error-message"></span></div>
+                  <button type="submit" name="add" class="sn-cartbtn"><span>{% render 'schnappy-icon', icon: 'cart' %} In den Einkaufswagen</span>{%- render 'loading-spinner' -%}</button>
+                {%- endform -%}
+              </product-form>
+            {%- elsif p -%}
+              <button type="button" class="sn-cartbtn" disabled>Gerade ausverkauft</button>
+            {%- else -%}
+              <p class="sn-bx__setup">Im Editor ein Produkt zuweisen.</p>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <ol class="sn-bx__how">
+      <li><b>1</b><span><strong>Box wählen</strong>S, M oder XXL</span></li>
+      <li><b>2</b><span><strong>Bestellen</strong>Versand in 1–2 Werktagen</span></li>
+      <li><b>3</b><span><strong>Auspacken</strong>Immer mehr Wert als Preis</span></li>
+    </ol>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Mystery Boxen (Karten)",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "Mystery Boxen" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Wähl deine Box" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Der Warenwert liegt immer über dem Preis. Was drin ist, bleibt eine Überraschung." },
+    { "type": "text", "id": "anchor", "label": "Sprungziel", "default": "boxen" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" }
+  ],
+  "blocks": [
+    { "type": "box", "name": "Box", "settings": [
+      { "type": "product", "id": "product", "label": "Produkt" },
+      { "type": "text", "id": "title", "label": "Titel (optional)" },
+      { "type": "select", "id": "size", "label": "Bild-Größe (wenn Produkt kein Bild hat)", "default": "m", "options": [ { "value": "s", "label": "S" }, { "value": "m", "label": "M" }, { "value": "xxl", "label": "XXL" } ] },
+      { "type": "text", "id": "tag", "label": "Etikett", "default": "BESTSELLER" },
+      { "type": "checkbox", "id": "highlight", "label": "Als Empfehlung hervorheben", "default": false },
+      { "type": "number", "id": "value", "label": "Garantierter Warenwert (€)", "default": 40 },
+      { "type": "text", "id": "description", "label": "Kurzbeschreibung" },
+      { "type": "textarea", "id": "points", "label": "Vorteile (eine Zeile pro Punkt)" }
+    ] }
+  ],
+  "presets": [{ "name": "Mystery Boxen (Karten)" }]
+}
+{% endschema %}

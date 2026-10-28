@@ -170,48 +170,45 @@
       "disabled": true
     },
     "boxes": {
-      "type": "schnappy-mystery-boxes",
+      "type": "schnappy-boxes",
       "blocks": {
         "b0": {
           "type": "box",
           "settings": {
-            "label": "S",
+            "product": "mystery-box-s",
+            "title": "Mystery Box S",
             "size": "s",
             "tag": "EINSTEIGER",
-            "title": "Mystery Box S",
+            "highlight": false,
             "value": 40,
-            "glow": "#4FD25E",
             "description": "Der perfekte Einstieg in die Schnappy-Welt. Klein, aber mit ordentlich Biss.",
-            "points": "5–8 Überraschungs-Artikel\nSpielzeug, Gadgets und Lifestyle\nIdeal als Geschenk",
-            "product": "mystery-box-s"
+            "points": "5–8 Überraschungs-Artikel\nSpielzeug, Gadgets und Lifestyle\nIdeal als Geschenk"
           }
         },
         "b1": {
           "type": "box",
           "settings": {
-            "label": "M",
+            "product": "mystery-box-m",
+            "title": "Mystery Box M",
             "size": "m",
             "tag": "BESTSELLER",
-            "title": "Mystery Box M",
+            "highlight": true,
             "value": 90,
-            "glow": "#8E6CFF",
             "description": "Unser Bestseller. Die goldene Mitte aus Menge, Marken und Überraschung.",
-            "points": "10–15 Überraschungs-Artikel\nMindestens 1 Markenprodukt\nTrend-Produkte inklusive",
-            "product": "mystery-box-m"
+            "points": "10–15 Überraschungs-Artikel\nMindestens 1 Markenprodukt\nTrend-Produkte inklusive"
           }
         },
         "b2": {
           "type": "box",
           "settings": {
-            "label": "XXL",
+            "product": "xxl-super-mystery-box",
+            "title": "XXL Super Mystery Box",
             "size": "xxl",
             "tag": "AUS DER LIVE-SHOW",
-            "title": "XXL Super Mystery Box",
+            "highlight": false,
             "value": 200,
-            "glow": "#FFD21F",
             "description": "Die Legende aus der Live-Show. Randvoll gepackt, mit garantiertem Highlight.",
-            "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf ein Jackpot-Item",
-            "product": "xxl-super-mystery-box"
+            "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf ein Jackpot-Item"
           }
         }
       },
@@ -221,14 +218,11 @@
         "b2"
       ],
       "settings": {
-        "kicker": "Der Klassiker",
-        "heading": "Wähl deine Box.",
-        "text": "Drei Größen, ein Versprechen: Der Warenwert liegt immer deutlich über dem Preis. Was genau drin ist, bleibt eine Überraschung.",
-        "start": "2",
+        "kicker": "Mystery Boxen",
+        "heading": "Wähl deine Box",
+        "text": "Der Warenwert liegt immer über dem Preis. Was drin ist, bleibt eine Überraschung.",
         "anchor": "boxen",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 40
+        "color_scheme": "scheme-1"
       }
     },
     "deals": {

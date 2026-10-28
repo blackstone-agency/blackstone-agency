@@ -1,3 +1,6 @@
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -66,11 +69,11 @@
 {% paginate search.results by 24 %}
   <div class="template-search{% unless search.performed and search.results_count > 0 %} template-search--empty{% endunless %} section-{{ section.id }}-padding">
     <div class="template-search__header page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-      <h1 class="h2 center">
+      <h1 class="sn-sr-title">
         {%- if search.performed -%}
-          {{- 'templates.search.title' | t -}}
+          <span>„{{ search.terms | escape }}“</span> <small>{{ search.results_count }} {% if search.results_count == 1 %}Ergebnis{% else %}Ergebnisse{% endif %}</small>
         {%- else -%}
-          {{- 'general.search.search' | t -}}
+          Suche
         {%- endif -%}
       </h1>
       <div class="template-search__search">
@@ -283,7 +286,9 @@
                           show_rating: section.settings.show_rating,
                           lazy_load: lazy_load,
                           skip_styles: skip_card_product_styles,
-                          product_view_context: 'search'
+                          product_view_context: 'search',
+                          quick_add: 'standard',
+                          section_id: section.id
                         %}
                         {%- assign skip_card_product_styles = true -%}
                       {%- when 'article' -%}
