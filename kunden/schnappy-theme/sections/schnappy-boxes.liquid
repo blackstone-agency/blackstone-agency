@@ -19,7 +19,6 @@
             assign is_hot = true
           endif
           assign img_asset = 'schnappy-box-' | append: block.settings.size | append: '.jpg'
-          assign img_open = 'schnappy-box-' | append: block.settings.size | append: '-offen.jpg'
         -%}
         <li class="sn-bx__card{% if is_hot %} is-hot{% endif %}" {{ block.shopify_attributes }}>
           {%- if is_hot -%}<span class="sn-bx__ribbon">⭐ Unsere Empfehlung</span>{%- endif -%}
@@ -29,7 +28,6 @@
             {%- else -%}
               <img class="sn-bx__img" src="{{ img_asset | asset_url }}" alt="" width="640" height="640" loading="lazy">
             {%- endif -%}
-            <img class="sn-bx__img sn-bx__img--open" src="{{ img_open | asset_url }}" alt="" width="640" height="640" loading="lazy">
             {%- if block.settings.tag != blank -%}<span class="sn-bx__tag">{{ block.settings.tag | escape }}</span>{%- endif -%}
           </a>
           <div class="sn-bx__body">

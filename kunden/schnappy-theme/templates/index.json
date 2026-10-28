@@ -478,7 +478,8 @@
         "color_scheme": "scheme-1",
         "padding_top": 20,
         "padding_bottom": 8
-      }
+      },
+      "disabled": true
     },
     "cats": {
       "type": "schnappy-categories",
@@ -614,7 +615,8 @@
         "overlap": false,
         "padding_top": 12,
         "padding_bottom": 4
-      }
+      },
+      "disabled": true
     },
     "prices": {
       "type": "schnappy-pricepoints",
@@ -668,9 +670,20 @@
         "limit": 30,
         "color_scheme": "scheme-1"
       }
+    },
+    "hero2": {
+      "type": "schnappy-hero2",
+      "settings": {
+        "kicker": "Neuware zu Restpostenpreisen",
+        "heading": "Schnapp dir die besten Deals.",
+        "subheading": "auf Spielzeug, Haushalt & Elektronik – jeden Tag neue Ware.",
+        "button_label": "Alle Deals ansehen",
+        "color_scheme": "scheme-1"
+      }
     }
   },
   "order": [
+    "hero2",
     "promos",
     "daily",
     "trust",

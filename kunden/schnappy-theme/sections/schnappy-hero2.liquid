@@ -1,0 +1,96 @@
+{%- comment -%}
+  Schnappy Hero: links Angebots-Fläche mit echten Produkten (höchster echter Rabatt wird berechnet),
+  rechts zwei Kacheln (Mystery Box, Live).
+{%- endcomment -%}
+{%- liquid
+  assign coll = section.settings.collection | default: collections.all
+  assign max_pct = 0
+  assign shown = 0
+  for p in coll.products limit: 50
+    if p.compare_at_price > p.price
+      assign pct = p.compare_at_price | minus: p.price | times: 100 | divided_by: p.compare_at_price
+      if pct > max_pct
+        assign max_pct = pct
+      endif
+    endif
+  endfor
+-%}
+<div class="sn-h2-wrap color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width sn-h2">
+    <div class="sn-h2__main">
+      <div class="sn-h2__copy">
+        {%- if section.settings.kicker != blank -%}<p class="sn-h2__kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h1 class="sn-h2__title">{{ section.settings.heading | escape }}</h1>
+        <p class="sn-h2__sub">
+          {%- if max_pct >= 20 -%}<b>Bis zu −{{ max_pct }} %</b> {% endif -%}{{ section.settings.subheading | escape }}
+        </p>
+        <div class="sn-h2__btns">
+          <a class="sn-h2__btn sn-h2__btn--main" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label | escape }} →</a>
+          <a class="sn-h2__btn sn-h2__btn--ghost" href="{{ routes.root_url }}#boxen">Mystery Box ab 9,99 €</a>
+        </div>
+        <ul class="sn-h2__trust" role="list">
+          <li>✓ Gratis Versand ab 44 €</li>
+          <li>✓ Versand in 1–2 Werktagen</li>
+          <li>✓ PayPal &amp; Klarna</li>
+        </ul>
+      </div>
+      <ul class="sn-h2__prods" role="list">
+        {%- for p in coll.products limit: 50 -%}
+          {%- if shown >= 4 -%}{%- break -%}{%- endif -%}
+          {%- unless p.available and p.featured_image -%}{%- continue -%}{%- endunless -%}
+          {%- if p.compare_at_price > p.price or shown >= 2 -%}
+            {%- assign shown = shown | plus: 1 -%}
+            <li>
+              <a href="{{ p.url }}" class="sn-h2__p">
+                {{ p.featured_image | image_url: width: 400 | image_tag: loading: 'eager', widths: '200, 300, 400', sizes: '(min-width: 990px) 160px, 22vw', alt: p.title }}
+                <span class="sn-h2__tag">
+                  {%- if p.compare_at_price > p.price -%}<s>{{ p.compare_at_price | money }}</s>{%- endif -%}
+                  <b>{{ p.price | money }}</b>
+                </span>
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div class="sn-h2__side">
+      <a class="sn-h2__tile sn-h2__tile--box" href="{{ routes.root_url }}#boxen">
+        <span class="sn-h2__ttext">
+          <span class="sn-h2__badge">Mystery Box</span>
+          <span class="sn-h2__ttitle">Ab 9,99 €</span>
+          <span class="sn-h2__tsub">Immer mehr Warenwert als Preis</span>
+          <span class="sn-h2__tcta">Box wählen →</span>
+        </span>
+        <img src="{{ 'schnappy-box-m.jpg' | asset_url }}" alt="" width="640" height="640" loading="eager" class="sn-h2__timg">
+      </a>
+      <a class="sn-h2__tile sn-h2__tile--live" href="https://www.instagram.com/schnappy.shop" target="_blank" rel="noopener">
+        <span class="sn-h2__ttext">
+          <span class="sn-h2__badge sn-h2__badge--red"><i aria-hidden="true"></i>Live</span>
+          <span class="sn-h2__ttitle">Live-Deals</span>
+          <span class="sn-h2__tsub">Instagram · TikTok · Whatnot</span>
+          <span class="sn-h2__tcta">Jetzt folgen →</span>
+        </span>
+        <img src="{{ 'schnappy-sticker.png' | asset_url }}" alt="" width="348" height="389" loading="eager" class="sn-h2__timg sn-h2__timg--croc">
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "Neuware zu Restpostenpreisen" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Schnapp dir die besten Deals." },
+    { "type": "text", "id": "subheading", "label": "Unterzeile", "default": "auf Spielzeug, Haushalt & Elektronik – jeden Tag neue Ware." },
+    { "type": "text", "id": "button_label", "label": "Button-Text", "default": "Alle Deals ansehen" },
+    { "type": "url", "id": "button_link", "label": "Button-Link" },
+    { "type": "collection", "id": "collection", "label": "Produkte aus Kollektion", "info": "Zeigt 4 Produkte (bevorzugt mit Rabatt). Leer = alle Produkte." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" }
+  ],
+  "presets": [{ "name": "Schnappy Hero" }]
+}
+{% endschema %}

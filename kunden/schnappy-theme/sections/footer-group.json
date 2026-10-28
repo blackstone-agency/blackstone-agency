@@ -8,7 +8,7 @@
         "brand": {
           "type": "brand_information",
           "settings": {
-            "show_social": true
+            "show_social": false
           }
         }
       },
