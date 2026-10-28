@@ -15,7 +15,7 @@
   }
 {%- endstyle -%}
 
-<div class="newsletter center {% if section.settings.full_width == false %}newsletter--narrow page-width{% endif %}">
+<div id="newsletter" class="newsletter center {% if section.settings.full_width == false %}newsletter--narrow page-width{% endif %}">
   <img src="{{ 'schnappy-peek.png' | asset_url }}" alt="" width="362" height="181" loading="lazy" class="sn-peek">
   <div class="newsletter__wrapper color-{{ section.settings.color_scheme }} gradient content-container isolate{% if section.settings.full_width %} content-container--full-width{% endif %} section-{{ section.id }}-padding">
     {%- for block in section.blocks -%}

@@ -193,11 +193,11 @@
         "t3": {
           "type": "link",
           "settings": {
-            "label": "Boxen",
-            "icon": "gift",
+            "label": "Deals",
+            "icon": "zap",
             "link": "",
-            "anchor": "boxen",
-            "live_dot": false
+            "anchor": "deals",
+            "live_dot": true
           }
         },
         "t4": {

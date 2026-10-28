@@ -234,7 +234,7 @@
     "deals": {
       "type": "featured-collection",
       "settings": {
-        "title": "Neu im Shop",
+        "title": "Neu eingetroffen",
         "heading_size": "h2",
         "show_description": false,
         "description_style": "body",
@@ -406,14 +406,14 @@
         "b0": {
           "type": "heading",
           "settings": {
-            "heading": "Verpass keinen Drop.",
+            "heading": "Neue Artikel zuerst per Mail.",
             "heading_size": "h1"
           }
         },
         "b1": {
           "type": "paragraph",
           "settings": {
-            "text": "<p>Neue Boxen, Live-Termine und exklusive Codes, nur für die Liste. Kein Spam, Abmeldung jederzeit.</p>"
+            "text": "<p>Neue Drops, Schnapper des Tages und exklusive Codes – direkt in dein Postfach. Kein Spam, Abmeldung jederzeit.</p>"
           }
         },
         "b2": {
@@ -666,10 +666,19 @@
       "settings": {
         "heading": "Zuletzt angesehen"
       }
+    },
+    "daily": {
+      "type": "schnappy-daily",
+      "settings": {
+        "kicker": "Schnapper des Tages",
+        "limit": 30,
+        "color_scheme": "scheme-1"
+      }
     }
   },
   "order": [
     "promos",
+    "daily",
     "trust",
     "cats",
     "prices",

@@ -1,0 +1,54 @@
+{%- comment -%}
+  Schnappy: Schnapper des Tages – wechselt automatisch jeden Tag um 0 Uhr
+  (rotiert durch die gewählte Kollektion). Preis = echter Shop-Preis.
+{%- endcomment -%}
+{%- assign coll = section.settings.collection | default: collections.all -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<sn-daily id="schnapper" class="sn-daily-wrap color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="sn-daily">
+      <div class="sn-daily__head">
+        <span class="sn-daily__kicker">{% render 'schnappy-icon', icon: 'zap' %} {{ section.settings.kicker | escape }}</span>
+        <p class="sn-daily__timer">Neuer Schnapper in <b data-sn-countdown>--:--:--</b></p>
+      </div>
+      {%- for p in coll.products limit: section.settings.limit -%}
+        {%- unless p.available -%}{%- continue -%}{%- endunless -%}
+        {%- assign v = p.selected_or_first_available_variant -%}
+        <div class="sn-daily__item" data-sn-daily-item {% unless forloop.first %}hidden{% endunless %}>
+          <a href="{{ p.url }}" class="sn-daily__media">
+            {%- if p.featured_media -%}{{ p.featured_media | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 750px) 280px, 45vw', alt: p.title }}{%- endif -%}
+            {%- if v.compare_at_price > v.price -%}<span class="sn-daily__pct">−{{ v.compare_at_price | minus: v.price | times: 100 | divided_by: v.compare_at_price }} %</span>{%- endif -%}
+          </a>
+          <div class="sn-daily__info">
+            <a href="{{ p.url }}" class="sn-daily__title">{{ p.title | escape }}</a>
+            <div class="sn-daily__price"><span data-sn-price>{{ v.price | money }}</span>{%- if v.compare_at_price > v.price -%}<s>{{ v.compare_at_price | money }}</s>{%- endif -%}</div>
+            {%- if v.compare_at_price > v.price -%}<p class="sn-cardsave">Du sparst {{ v.compare_at_price | minus: v.price | money }}</p>{%- endif -%}
+            <product-form class="sn-daily__form" data-section-id="{{ section.id }}">
+              {%- form 'product', p, novalidate: 'novalidate' -%}
+                <input type="hidden" name="id" value="{{ v.id }}">
+                <div class="product-form__error-message-wrapper" hidden><span class="product-form__error-message"></span></div>
+                <button type="submit" name="add" class="sn-cartbtn"><span>{% render 'schnappy-icon', icon: 'shopping-bag' %} In den Einkaufswagen</span>{%- render 'loading-spinner' -%}</button>
+              {%- endform -%}
+            </product-form>
+            <p class="sn-daily__note">Jeden Tag um 0 Uhr ein neuer Schnapper – schau morgen wieder rein.</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</sn-daily>
+
+{% schema %}
+{
+  "name": "Schnapper des Tages",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Titel", "default": "Schnapper des Tages" },
+    { "type": "collection", "id": "collection", "label": "Kollektion", "info": "Aus dieser Kollektion wird jeden Tag automatisch ein anderes Produkt gezeigt. Leer = alle Produkte." },
+    { "type": "range", "id": "limit", "label": "Anzahl Produkte im Wechsel", "min": 3, "max": 30, "step": 1, "default": 30 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" }
+  ],
+  "presets": [{ "name": "Schnapper des Tages" }]
+}
+{% endschema %}

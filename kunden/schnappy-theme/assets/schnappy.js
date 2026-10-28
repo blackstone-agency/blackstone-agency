@@ -200,7 +200,7 @@
   }
   define('sn-live-chat', SnLiveChat);
 
-  /* ---------- Warenkorb öffnen / Zähler ---------- */
+  /* ---------- Einkaufswagen öffnen / Zähler ---------- */
   const openCart = (trigger) => {
     const drawer = document.querySelector('cart-drawer');
     if (drawer && typeof drawer.open === 'function') { drawer.open(trigger); return true; }
@@ -519,7 +519,7 @@ if (!customElements.get('sn-infinite')) {
   });
 })();
 
-/* v12: Lieferdatum auch im Warenkorb (nach jedem Neuladen des Korbs) */
+/* v12: Lieferdatum auch im Einkaufswagen (nach jedem Neuladen des Korbs) */
 (function () {
   function addBiz(d, n) { const r = new Date(d); while (n > 0) { r.setDate(r.getDate() + 1); if (r.getDay() !== 0 && r.getDay() !== 6) n--; } return r; }
   function fill() {
@@ -534,3 +534,57 @@ if (!customElements.get('sn-infinite')) {
     const d = document.querySelector('cart-drawer'); if (d) new MutationObserver(fill).observe(d, { childList: true, subtree: true });
   });
 })();
+
+/* v13: Schnapper des Tages – wechselt täglich um 0 Uhr, Countdown bis Mitternacht */
+customElements.get('sn-daily') || customElements.define('sn-daily', class extends HTMLElement {
+  connectedCallback() {
+    const items = [...this.querySelectorAll('[data-sn-daily-item]')];
+    if (items.length) {
+      const now = new Date(); const day = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5) + now.getFullYear() * 366;
+      const pick = day % items.length; items.forEach((el, i) => { el.hidden = i !== pick; });
+    }
+    const out = this.querySelector('[data-sn-countdown]'); if (!out) return;
+    const tick = () => {
+      const n = new Date(); const m = new Date(n); m.setHours(24, 0, 0, 0);
+      let s = Math.max(0, Math.floor((m - n) / 1000)); const h = Math.floor(s / 3600); s -= h * 3600; const mi = Math.floor(s / 60); s -= mi * 60;
+      out.textContent = [h, mi, s].map((x) => String(x).padStart(2, '0')).join(':');
+    };
+    tick(); this._t = setInterval(tick, 1000);
+  }
+  disconnectedCallback() { clearInterval(this._t); }
+});
+
+/* v13: „Neu seit deinem letzten Besuch“ + Live&Deals-Button */
+(function () {
+  const KEY = 'sn-last-visit';
+  document.addEventListener('DOMContentLoaded', async () => {
+    const bar = document.querySelector('[data-sn-newbar]');
+    let last = 0; try { last = +localStorage.getItem(KEY) || 0; } catch (e) {}
+    const now = Date.now();
+    // Besuch erst nach 30 Min. Pause als „neu“ zählen
+    let seen = 0; try { seen = +sessionStorage.getItem(KEY) || 0; } catch (e) {}
+    if (!seen) { try { sessionStorage.setItem(KEY, String(last || now)); localStorage.setItem(KEY, String(now)); } catch (e) {} seen = last; }
+    if (bar && seen && now - seen > 30 * 60000 && !sessionStorage.getItem('sn-newbar-closed')) {
+      try {
+        const r = await fetch((window.Shopify && Shopify.routes ? Shopify.routes.root : '/') + 'products.json?limit=250');
+        const { products } = await r.json();
+        const n = products.filter((p) => new Date(p.published_at || p.created_at).getTime() > seen).length;
+        if (n > 0) { bar.querySelector('[data-n]').textContent = n; bar.hidden = false; }
+      } catch (e) {}
+    }
+    if (bar) bar.querySelector('[data-close]').addEventListener('click', () => { bar.hidden = true; try { sessionStorage.setItem('sn-newbar-closed', '1'); } catch (e) {} });
+    const d = document.querySelector('[data-sn-dealsbtn]');
+    if (d) {
+      document.addEventListener('click', (e) => { if (d.open && !d.contains(e.target) && !e.target.closest('a[href$="#deals"]')) d.open = false; });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') d.open = false; });
+      d.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { d.open = false; }));
+    }
+  });
+})();
+
+/* v13: Tab „Deals“ öffnet die Live-&-Deals-Auswahl */
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href$="#deals"]'); if (!a) return;
+  const d = document.querySelector('[data-sn-dealsbtn]'); if (!d) return;
+  e.preventDefault(); e.stopPropagation(); d.open = !d.open;
+}, true);

@@ -40,9 +40,9 @@
       "reset": "Suchbegriff zurücksetzen"
     },
     "cart": {
-      "view": "Warenkorb ansehen ({{ count }})",
-      "item_added": "Artikel wurde in den Warenkorb gelegt",
-      "view_empty_cart": "Warenkorb ansehen"
+      "view": "Einkaufswagen ansehen ({{ count }})",
+      "item_added": "Artikel wurde in den Einkaufswagen gelegt",
+      "view_empty_cart": "Einkaufswagen ansehen"
     },
     "share": {
       "copy_to_clipboard": "Link kopieren",
@@ -106,7 +106,7 @@
   },
   "products": {
     "product": {
-      "add_to_cart": "In den Warenkorb legen",
+      "add_to_cart": "In den Einkaufswagen",
       "description": "Beschreibung",
       "on_sale": "Sale",
       "quantity": {
@@ -117,11 +117,11 @@
         "minimum_of": "Mindestens {{ quantity }}",
         "maximum_of": "Maximal {{ quantity }}",
         "multiples_of": "In {{ quantity }}er Schritten",
-        "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> im Warenkorb",
+        "in_cart_html": "<span class=\"quantity-cart\">{{ quantity }}</span> im Einkaufswagen",
         "note": "Mengenregeln anzeigen",
         "min_of": "Mindestens {{ quantity }}",
         "max_of": "Höchstens {{ quantity }}",
-        "in_cart_aria_label": "Menge ({{ quantity }} im Warenkorb)"
+        "in_cart_aria_label": "Menge ({{ quantity }} im Einkaufswagen)"
       },
       "price": {
         "from_price_html": "Von {{ price }}",
@@ -247,7 +247,7 @@
       "pages": "Seiten"
     },
     "cart": {
-      "cart": "Warenkorb"
+      "cart": "Einkaufswagen"
     },
     "contact": {
       "form": {
@@ -276,16 +276,16 @@
       }
     },
     "cart": {
-      "title": "Dein Warenkorb",
-      "caption": "Artikel im Warenkorb",
+      "title": "Dein Einkaufswagen",
+      "caption": "Artikel im Einkaufswagen",
       "remove_title": "{{ title }} entfernen",
       "note": "Spezielle Bestellanweisungen",
       "checkout": "Auschecken",
-      "empty": "Dein Warenkorb ist leer",
+      "empty": "Dein Einkaufswagen ist leer",
       "product_disclosure": "Produktoffenlegung",
       "product_disclosures": "Produktoffenlegungen",
-      "cart_error": "Beim Aktualisieren deines Warenkorbs ist ein Fehler aufgetreten. Bitte versuche es erneut.",
-      "cart_quantity_error_html": "Du kannst deinem Warenkorb nur {{ quantity }} Stück dieses Artikels hinzufügen.",
+      "cart_error": "Beim Aktualisieren deines Einkaufswagens ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+      "cart_quantity_error_html": "Du kannst deinem Einkaufswagen nur {{ quantity }} Stück dieses Artikels hinzufügen.",
       "headings": {
         "product": "Produkt",
         "price": "Preis",
@@ -353,7 +353,7 @@
     },
     "quick_order_list": {
       "product_total": "Produktzwischensumme",
-      "view_cart": "Warenkorb ansehen",
+      "view_cart": "Einkaufswagen ansehen",
       "each": "{{ money }}/Stück",
       "product": "Produkt",
       "variant": "Variante",
@@ -368,10 +368,10 @@
       },
       "product_variants": "Produktvarianten",
       "total_items": "Artikel gesamt",
-      "remove_all_items_confirmation": "Alle {{ quantity }} Artikel aus deinem Warenkorb entfernen?",
+      "remove_all_items_confirmation": "Alle {{ quantity }} Artikel aus deinem Einkaufswagen entfernen?",
       "remove_all": "Alle entfernen",
       "cancel": "Abbrechen",
-      "remove_all_single_item_confirmation": "1 Artikel aus dem Warenkorb entfernen?",
+      "remove_all_single_item_confirmation": "1 Artikel aus dem Einkaufswagen entfernen?",
       "min_error": "Dieser Artikel hat ein Minimum von {{ min }}",
       "max_error": "Dieser Artikel hat ein Maximum von {{ max }}",
       "step_error": "Du kannst diesen Artikel nur in Abstufungen von {{ step }} hinzufügen."
