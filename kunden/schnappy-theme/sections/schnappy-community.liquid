@@ -71,40 +71,153 @@
   "class": "section",
   "max_blocks": 12,
   "settings": [
-    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "@schnappy.shop" },
-    { "type": "textarea", "id": "heading", "label": "Überschrift", "default": "Folg dem\nKrokodil." },
-    { "type": "text", "id": "handle", "label": "Name oben auf den Kacheln", "default": "@schnappy.shop" },
-    { "type": "text", "id": "button_label", "label": "Button Text", "default": "Auf Instagram folgen" },
-    { "type": "url", "id": "button_link", "label": "Button Link (auch Standard-Link der Kacheln)", "default": "https://www.instagram.com/schnappy.shop" },
-    { "type": "header", "content": "Design" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Abstand oben", "default": 96 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Abstand unten", "default": 96 }
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kleine Überschrift",
+      "default": "@schnappy.shop"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Überschrift",
+      "default": "Folg dem\nKrokodil."
+    },
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Name oben auf den Kacheln",
+      "default": "@schnappy.shop"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Text",
+      "default": "Auf Instagram folgen"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link (auch Standard-Link der Kacheln)"
+    },
+    {
+      "type": "header",
+      "content": "Design"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Farbschema",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Abstand oben",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Abstand unten",
+      "default": 96
+    }
   ],
   "blocks": [
     {
       "type": "reel",
       "name": "Kachel",
       "settings": [
-        { "type": "text", "id": "title", "label": "Titel", "default": "Unboxing XXL" },
-        { "type": "text", "id": "meta", "label": "Zusatz (z. B. Aufrufe)", "info": "Nur echte Zahlen angeben." },
-        { "type": "url", "id": "link", "label": "Link zum Beitrag", "info": "Leer = Link aus den Sektions-Einstellungen." },
-        { "type": "image_picker", "id": "image", "label": "Vorschaubild (optional)", "info": "Hochformat 9:16 empfohlen." },
-        { "type": "video", "id": "video", "label": "Video (optional)", "info": "Läuft stumm in Schleife. Hat Vorrang vor dem Bild." },
-        { "type": "color", "id": "bg", "label": "Hintergrundfarbe (ohne Bild/Video)", "default": "#0B2414" },
         {
-          "type": "select", "id": "icon", "label": "Symbol (ohne Bild/Video)", "default": "package",
+          "type": "text",
+          "id": "title",
+          "label": "Titel",
+          "default": "Unboxing XXL"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Zusatz (z. B. Aufrufe)",
+          "info": "Nur echte Zahlen angeben."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link zum Beitrag",
+          "info": "Leer = Link aus den Sektions-Einstellungen."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Vorschaubild (optional)",
+          "info": "Hochformat 9:16 empfohlen."
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (optional)",
+          "info": "Läuft stumm in Schleife. Hat Vorrang vor dem Bild."
+        },
+        {
+          "type": "color",
+          "id": "bg",
+          "label": "Hintergrundfarbe (ohne Bild/Video)",
+          "default": "#0B2414"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Symbol (ohne Bild/Video)",
+          "default": "package",
           "options": [
-            { "value": "package", "label": "Paket" },
-            { "value": "flame", "label": "Flamme" },
-            { "value": "radio", "label": "Live" },
-            { "value": "gift", "label": "Geschenk" },
-            { "value": "star", "label": "Stern" },
-            { "value": "truck", "label": "Lieferwagen" },
-            { "value": "sparkles", "label": "Funkeln" },
-            { "value": "heart", "label": "Herz" },
-            { "value": "toy-brick", "label": "Spielzeug" },
-            { "value": "gamepad-2", "label": "Gaming" }
+            {
+              "value": "package",
+              "label": "Paket"
+            },
+            {
+              "value": "flame",
+              "label": "Flamme"
+            },
+            {
+              "value": "radio",
+              "label": "Live"
+            },
+            {
+              "value": "gift",
+              "label": "Geschenk"
+            },
+            {
+              "value": "star",
+              "label": "Stern"
+            },
+            {
+              "value": "truck",
+              "label": "Lieferwagen"
+            },
+            {
+              "value": "sparkles",
+              "label": "Funkeln"
+            },
+            {
+              "value": "heart",
+              "label": "Herz"
+            },
+            {
+              "value": "toy-brick",
+              "label": "Spielzeug"
+            },
+            {
+              "value": "gamepad-2",
+              "label": "Gaming"
+            }
           ]
         }
       ]
@@ -114,12 +227,54 @@
     {
       "name": "Schnappy Community",
       "blocks": [
-        { "type": "reel", "settings": { "title": "Unboxing XXL", "bg": "#0B2414", "icon": "package" } },
-        { "type": "reel", "settings": { "title": "−70 % Drop", "bg": "#FF4B3E", "icon": "flame" } },
-        { "type": "reel", "settings": { "title": "Live um 19 Uhr", "bg": "#8E6CFF", "icon": "radio" } },
-        { "type": "reel", "settings": { "title": "Box S vs. XXL", "bg": "#E9B530", "icon": "gift" } },
-        { "type": "reel", "settings": { "title": "Jackpot-Item!", "bg": "#2A3038", "icon": "star" } },
-        { "type": "reel", "settings": { "title": "Lager-Tour", "bg": "#FF7A4D", "icon": "truck" } }
+        {
+          "type": "reel",
+          "settings": {
+            "title": "Unboxing XXL",
+            "bg": "#0B2414",
+            "icon": "package"
+          }
+        },
+        {
+          "type": "reel",
+          "settings": {
+            "title": "−70 % Drop",
+            "bg": "#FF4B3E",
+            "icon": "flame"
+          }
+        },
+        {
+          "type": "reel",
+          "settings": {
+            "title": "Live um 19 Uhr",
+            "bg": "#8E6CFF",
+            "icon": "radio"
+          }
+        },
+        {
+          "type": "reel",
+          "settings": {
+            "title": "Box S vs. XXL",
+            "bg": "#E9B530",
+            "icon": "gift"
+          }
+        },
+        {
+          "type": "reel",
+          "settings": {
+            "title": "Jackpot-Item!",
+            "bg": "#2A3038",
+            "icon": "star"
+          }
+        },
+        {
+          "type": "reel",
+          "settings": {
+            "title": "Lager-Tour",
+            "bg": "#FF7A4D",
+            "icon": "truck"
+          }
+        }
       ]
     }
   ]

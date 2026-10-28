@@ -262,7 +262,9 @@
         "anchor": "live",
         "color_scheme": "scheme-4",
         "padding_top": 112,
-        "padding_bottom": 112
+        "padding_bottom": 112,
+        "button_link_1": "https://www.whatnot.com/invite/schnappyshop",
+        "button_link_2": "https://www.instagram.com/schnappy.shop"
       }
     },
     "community": {

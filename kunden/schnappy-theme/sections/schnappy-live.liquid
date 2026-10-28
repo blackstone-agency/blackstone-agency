@@ -70,40 +70,218 @@
   "tag": "section",
   "class": "section",
   "settings": [
-    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "Live-Shopping" },
-    { "type": "textarea", "id": "heading", "label": "Überschrift", "default": "Live dabei.\nMitbieten.", "info": "Zeilenumbruch mit Enter." },
-    { "type": "text", "id": "heading_highlight", "label": "Hervorgehobene Zeile (gelb)", "default": "Abräumen." },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Jeden Abend auf Whatnot: Boxen live öffnen, Auktionen ab 1 € und exklusive Drops nur für Zuschauer.</p>" },
-    { "type": "header", "content": "Show-Zeiten (für den Countdown)" },
-    { "type": "checkbox", "id": "day_1", "label": "Montag", "default": true },
-    { "type": "checkbox", "id": "day_2", "label": "Dienstag", "default": true },
-    { "type": "checkbox", "id": "day_3", "label": "Mittwoch", "default": true },
-    { "type": "checkbox", "id": "day_4", "label": "Donnerstag", "default": true },
-    { "type": "checkbox", "id": "day_5", "label": "Freitag", "default": true },
-    { "type": "checkbox", "id": "day_6", "label": "Samstag", "default": true },
-    { "type": "checkbox", "id": "day_0", "label": "Sonntag", "default": true },
-    { "type": "text", "id": "time", "label": "Uhrzeit (HH:MM)", "default": "19:00", "info": "Deutsche Zeit des Besuchers (Gerätezeit)." },
-    { "type": "range", "id": "duration", "min": 30, "max": 300, "step": 15, "unit": "min", "label": "Dauer der Show", "default": 120 },
-    { "type": "text", "id": "platform", "label": "Plattform", "default": "Whatnot" },
-    { "type": "header", "content": "Buttons" },
-    { "type": "text", "id": "button_label_1", "label": "Button 1 Text", "default": "25 € Startguthaben holen" },
-    { "type": "url", "id": "button_link_1", "label": "Button 1 Link", "default": "https://www.whatnot.com/invite/schnappyshop" },
-    { "type": "text", "id": "button_label_2", "label": "Button 2 Text", "default": "Instagram" },
-    { "type": "url", "id": "button_link_2", "label": "Button 2 Link", "default": "https://www.instagram.com/schnappy.shop" },
-    { "type": "header", "content": "Handy-Vorschau" },
-    { "type": "image_picker", "id": "phone_image", "label": "Bild im Handy (optional)", "info": "z. B. Screenshot aus einer Live-Show, Hochformat. Ohne Bild dreht sich eine 3D-Box." },
-    { "type": "text", "id": "host", "label": "Name des Kanals", "default": "schnappy.shop" },
-    { "type": "text", "id": "viewers", "label": "Zuschauer-Anzeige", "default": "312" },
-    { "type": "textarea", "id": "chat", "label": "Chat-Nachrichten (mit | trennen)", "default": "jonas_hh: XXL Box 🔥🔥 | mia.k: wie viel noch? | lukas: 15!! | sarah_b: ich will den Plüsch 😍 | tim99: 18 € | anna: Schnappy 🐊💚 | deniz: 22!" },
-    { "type": "text", "id": "auction_label", "label": "Auktions-Karte: Titel", "default": "XXL Box · Gebot" },
-    { "type": "range", "id": "bid_start", "min": 1, "max": 50, "step": 1, "unit": "€", "label": "Auktions-Karte: Startgebot", "default": 12 },
-    { "type": "text", "id": "bid_label", "label": "Auktions-Karte: Button", "default": "Bieten" },
-    { "type": "text", "id": "anchor", "label": "Sprungmarke", "default": "live", "info": "Damit Links wie /#live direkt hierher springen (z. B. in der App-Leiste)." },
-    { "type": "header", "content": "Design" },
-    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-4" },
-    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Abstand oben", "default": 112 },
-    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Abstand unten", "default": 112 }
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kleine Überschrift",
+      "default": "Live-Shopping"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Überschrift",
+      "default": "Live dabei.\nMitbieten.",
+      "info": "Zeilenumbruch mit Enter."
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Hervorgehobene Zeile (gelb)",
+      "default": "Abräumen."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Jeden Abend auf Whatnot: Boxen live öffnen, Auktionen ab 1 € und exklusive Drops nur für Zuschauer.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Show-Zeiten (für den Countdown)"
+    },
+    {
+      "type": "checkbox",
+      "id": "day_1",
+      "label": "Montag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "day_2",
+      "label": "Dienstag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "day_3",
+      "label": "Mittwoch",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "day_4",
+      "label": "Donnerstag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "day_5",
+      "label": "Freitag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "day_6",
+      "label": "Samstag",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "day_0",
+      "label": "Sonntag",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "time",
+      "label": "Uhrzeit (HH:MM)",
+      "default": "19:00",
+      "info": "Deutsche Zeit des Besuchers (Gerätezeit)."
+    },
+    {
+      "type": "range",
+      "id": "duration",
+      "min": 30,
+      "max": 300,
+      "step": 15,
+      "unit": "min",
+      "label": "Dauer der Show",
+      "default": 120
+    },
+    {
+      "type": "text",
+      "id": "platform",
+      "label": "Plattform",
+      "default": "Whatnot"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "button_label_1",
+      "label": "Button 1 Text",
+      "default": "25 € Startguthaben holen"
+    },
+    {
+      "type": "url",
+      "id": "button_link_1",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Button 2 Text",
+      "default": "Instagram"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Handy-Vorschau"
+    },
+    {
+      "type": "image_picker",
+      "id": "phone_image",
+      "label": "Bild im Handy (optional)",
+      "info": "z. B. Screenshot aus einer Live-Show, Hochformat. Ohne Bild dreht sich eine 3D-Box."
+    },
+    {
+      "type": "text",
+      "id": "host",
+      "label": "Name des Kanals",
+      "default": "schnappy.shop"
+    },
+    {
+      "type": "text",
+      "id": "viewers",
+      "label": "Zuschauer-Anzeige",
+      "default": "312"
+    },
+    {
+      "type": "textarea",
+      "id": "chat",
+      "label": "Chat-Nachrichten (mit | trennen)",
+      "default": "jonas_hh: XXL Box 🔥🔥 | mia.k: wie viel noch? | lukas: 15!! | sarah_b: ich will den Plüsch 😍 | tim99: 18 € | anna: Schnappy 🐊💚 | deniz: 22!"
+    },
+    {
+      "type": "text",
+      "id": "auction_label",
+      "label": "Auktions-Karte: Titel",
+      "default": "XXL Box · Gebot"
+    },
+    {
+      "type": "range",
+      "id": "bid_start",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "€",
+      "label": "Auktions-Karte: Startgebot",
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "bid_label",
+      "label": "Auktions-Karte: Button",
+      "default": "Bieten"
+    },
+    {
+      "type": "text",
+      "id": "anchor",
+      "label": "Sprungmarke",
+      "default": "live",
+      "info": "Damit Links wie /#live direkt hierher springen (z. B. in der App-Leiste)."
+    },
+    {
+      "type": "header",
+      "content": "Design"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Farbschema",
+      "default": "scheme-4"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Abstand oben",
+      "default": 112
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Abstand unten",
+      "default": 112
+    }
   ],
-  "presets": [{ "name": "Schnappy Live-Shows" }]
+  "presets": [
+    {
+      "name": "Schnappy Live-Shows"
+    }
+  ]
 }
 {% endschema %}
