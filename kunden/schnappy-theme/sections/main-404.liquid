@@ -10,14 +10,10 @@
   }
 </style>
 
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
+<div class="template-404 page-width page-margin center sn-404">
+  <img src="{{ 'schnappy-sticker.png' | asset_url }}" alt="" width="180" height="180" loading="lazy" class="sn-404__img">
+  <h1 class="h1">Hoppla – hier ist nichts zu schnappen.</h1>
+  <p>Die Seite gibt es nicht (mehr). Such einfach direkt nach deinem Produkt:</p>
+  <div class="sn-404__search">{% render 'schnappy-searchform', id: 'Sn404Search' %}</div>
+  <p class="sn-404__links"><a href="{{ routes.all_products_collection_url }}" class="button">Alle Produkte ansehen</a> <a href="{{ routes.root_url }}" class="button button--secondary">Zur Startseite</a></p>
 </div>

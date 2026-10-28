@@ -228,26 +228,26 @@
         "anchor": "boxen",
         "color_scheme": "scheme-1",
         "padding_top": 36,
-        "padding_bottom": 96
+        "padding_bottom": 40
       }
     },
     "deals": {
       "type": "featured-collection",
       "settings": {
         "title": "Neu im Shop",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "show_description": false,
         "description_style": "body",
         "collection": "all",
-        "products_to_show": 15,
+        "products_to_show": 20,
         "columns_desktop": 5,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "show_view_all": true,
-        "view_all_style": "outline",
+        "view_all_style": "solid",
         "image_ratio": "square",
         "image_shape": "default",
-        "show_secondary_image": false,
+        "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
         "quick_add": "standard",
@@ -379,34 +379,25 @@
             "icon": "none",
             "row_content": "<p>Ja, du hast ein 14-tägiges Widerrufsrecht. Details findest du in unserer Widerrufsbelehrung.</p>"
           }
-        },
-        "b4": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Was ist der Unterschied zur Live-Show?",
-            "icon": "none",
-            "row_content": "<p>In der Live-Show auf Instagram bietest du live mit. Im Shop kaufst du zum Festpreis – jederzeit, ohne auf die nächste Show zu warten.</p>"
-          }
         }
       },
       "block_order": [
         "b0",
         "b1",
         "b2",
-        "b3",
-        "b4"
+        "b3"
       ],
       "settings": {
-        "caption": "Hilfe",
-        "heading": "Gute Fragen.",
-        "heading_size": "h1",
+        "caption": "",
+        "heading": "Häufige Fragen",
+        "heading_size": "h2",
         "heading_alignment": "left",
         "layout": "row",
         "color_scheme": "scheme-1",
         "container_color_scheme": "scheme-2",
-        "open_first_collapsible_row": true,
-        "padding_top": 0,
-        "padding_bottom": 96
+        "open_first_collapsible_row": false,
+        "padding_top": 24,
+        "padding_bottom": 40
       }
     },
     "newsletter": {
@@ -475,7 +466,7 @@
           "settings": {
             "badge": "Live",
             "title": "Live auf Instagram",
-            "text": "Unboxings & Drops – folg @schnappy.shop",
+            "text": "Unboxings & Drops live erleben",
             "cta": "Zu Instagram",
             "link": "https://www.instagram.com/schnappy.shop",
             "style": "ink",
@@ -630,17 +621,64 @@
         "padding_top": 12,
         "padding_bottom": 4
       }
+    },
+    "prices": {
+      "type": "schnappy-pricepoints",
+      "settings": {
+        "heading": "Schnäppchen nach Preis",
+        "color_scheme": "scheme-1"
+      },
+      "blocks": {
+        "p0": {
+          "type": "price",
+          "settings": {
+            "max": 5
+          }
+        },
+        "p1": {
+          "type": "price",
+          "settings": {
+            "max": 10
+          }
+        },
+        "p2": {
+          "type": "price",
+          "settings": {
+            "max": 20
+          }
+        },
+        "p3": {
+          "type": "price",
+          "settings": {
+            "max": 30
+          }
+        }
+      },
+      "block_order": [
+        "p0",
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    "recent": {
+      "type": "schnappy-recent",
+      "settings": {
+        "heading": "Zuletzt angesehen"
+      }
     }
   },
   "order": [
     "promos",
     "trust",
     "cats",
+    "prices",
     "deals",
     "boxes",
-    "live",
+    "recent",
     "faq",
     "newsletter",
+    "live",
     "hero",
     "marquee",
     "formel",

@@ -1,13 +1,7 @@
 {%- comment -%} Schnappy: große Suchleiste + Kategorie-Schnellwahl (Shop-Look wie bei großen Discountern) {%- endcomment -%}
-<div class="sn-searchbar color-{{ section.settings.color_scheme }} gradient">
+<div id="suche" class="sn-searchbar color-{{ section.settings.color_scheme }} gradient">
   <div class="page-width">
-    <form action="{{ routes.search_url }}" method="get" role="search" class="sn-searchbar__form">
-      <label for="SnSearch-{{ section.id }}" class="visually-hidden">{{ section.settings.placeholder | escape }}</label>
-      {% render 'schnappy-icon', icon: 'search' %}
-      <input id="SnSearch-{{ section.id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.placeholder | escape }}" autocomplete="off">
-      <input type="hidden" name="type" value="product">
-      <button type="submit" class="sn-searchbar__btn">{{ section.settings.button | escape }}</button>
-    </form>
+    <div class="sn-searchbar__mobile large-up-hide">{% render 'schnappy-searchform', id: 'SnBandSearch', placeholder: section.settings.placeholder %}</div>
     {%- if section.blocks.size > 0 -%}
       <nav class="sn-searchbar__chips" aria-label="Kategorien">
         {%- for block in section.blocks -%}

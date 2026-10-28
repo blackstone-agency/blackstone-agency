@@ -1,0 +1,40 @@
+{%- comment -%}
+  Schnappy: große Suche mit Live-Vorschlägen (Shopify Predictive Search).
+  Parameter: id (eindeutig), class, placeholder
+{%- endcomment -%}
+{%- assign ph = placeholder | default: 'Wonach suchst du?' -%}
+<predictive-search class="sn-sform {{ class }}" data-loading-text="{{ 'accessibility.loading' | t }}">
+  <form action="{{ routes.search_url }}" method="get" role="search" class="sn-sform__form search">
+    <div class="field">
+      <label class="visually-hidden" for="{{ id }}">Produkte durchsuchen</label>
+      <span class="sn-sform__icon" aria-hidden="true">{% render 'schnappy-icon', icon: 'search' %}</span>
+      <input
+        class="search__input field__input sn-sform__input"
+        id="{{ id }}"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ ph | escape }}"
+        data-sn-rotate="Socken|Spielzeug|Harry Potter|Küche|Geschenke|Lampe|Kopfhörer"
+        role="combobox"
+        aria-expanded="false"
+        aria-owns="predictive-search-results"
+        aria-controls="predictive-search-results"
+        aria-haspopup="listbox"
+        aria-autocomplete="list"
+        autocorrect="off"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+      >
+      <input type="hidden" name="options[prefix]" value="last">
+      <input type="hidden" name="type" value="product">
+      <button type="reset" class="reset__button field__button hidden" aria-label="Eingabe löschen">{% render 'schnappy-icon', icon: 'x' %}</button>
+      <button class="sn-sform__btn" type="submit">Suchen</button>
+    </div>
+    <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+      {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
+    </div>
+    <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+  </form>
+</predictive-search>

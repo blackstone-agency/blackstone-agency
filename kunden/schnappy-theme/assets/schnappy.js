@@ -460,3 +460,77 @@ if (!customElements.get('sn-infinite')) {
   }
   document.addEventListener('DOMContentLoaded', run);
 })();
+
+/* v12: Suche – wechselnder Platzhalter */
+(function () {
+  const inputs = document.querySelectorAll('[data-sn-rotate]'); if (!inputs.length) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  inputs.forEach((inp) => {
+    const words = inp.dataset.snRotate.split('|'); let i = 0;
+    setInterval(() => { if (document.activeElement === inp || inp.value) return; i = (i + 1) % words.length; inp.placeholder = 'Suche z. B. „' + words[i] + '“'; }, 2600);
+  });
+})();
+
+/* v12: Kompakter Header beim Scrollen + Nach-oben-Button */
+(function () {
+  const top = document.createElement('button');
+  top.type = 'button'; top.className = 'sn-totop'; top.setAttribute('aria-label', 'Nach oben');
+  top.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="m5 12 7-7 7 7M12 19V5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.addEventListener('DOMContentLoaded', () => document.body.appendChild(top));
+  let ticking = false;
+  const on = () => { const y = window.scrollY; document.documentElement.classList.toggle('sn-scrolled', y > 140); top.classList.toggle('is-on', y > 900); ticking = false; };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(on); } }, { passive: true });
+})();
+
+/* v12: Tab „Suche“ springt ins Suchfeld */
+(function () {
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href$="#suche"]'); if (!a) return;
+    const inp = document.querySelector('#SnBandSearch') || document.querySelector('#SnHeaderSearch');
+    if (!inp || location.pathname !== new URL(a.href, location.href).pathname) return;
+    e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setTimeout(() => inp.focus(), 250);
+  });
+  if (location.hash === '#suche') document.addEventListener('DOMContentLoaded', () => { const i = document.querySelector('#SnBandSearch'); if (i) i.focus(); });
+})();
+
+/* v12: Zuletzt angesehen */
+(function () {
+  const KEY = 'sn-recent';
+  const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } };
+  const m = location.pathname.match(/\/products\/([^/?#]+)/);
+  if (m) { try { const l = read().filter((h) => h !== m[1]); l.unshift(m[1]); localStorage.setItem(KEY, JSON.stringify(l.slice(0, 12))); } catch (e) {} }
+  const eur = (c) => (c / 100).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+  customElements.get('sn-recent') || customElements.define('sn-recent', class extends HTMLElement {
+    async connectedCallback() {
+      const cur = this.dataset.current; const handles = read().filter((h) => h && h !== cur).slice(0, 6);
+      if (!handles.length) return;
+      const list = this.querySelector('[data-list]');
+      const items = await Promise.all(handles.map((h) => fetch((window.Shopify && Shopify.routes ? Shopify.routes.root : '/') + 'products/' + h + '.js').then((r) => (r.ok ? r.json() : null)).catch(() => null)));
+      items.filter(Boolean).forEach((p) => {
+        const img = p.featured_image ? p.featured_image.replace(/(\.[a-z]+)(\?|$)/i, '_300x300$1$2') : '';
+        const li = document.createElement('li');
+        li.innerHTML = '<a class="sn-recent__card" href="' + p.url + '">' + (img ? '<img src="' + img + '" alt="" width="150" height="150" loading="lazy">' : '') + '<span class="sn-recent__t"></span><b>' + eur(p.price) + '</b></a>';
+        li.querySelector('.sn-recent__t').textContent = p.title;
+        list.appendChild(li);
+      });
+      if (list.children.length) this.hidden = false;
+    }
+  });
+})();
+
+/* v12: Lieferdatum auch im Warenkorb (nach jedem Neuladen des Korbs) */
+(function () {
+  function addBiz(d, n) { const r = new Date(d); while (n > 0) { r.setDate(r.getDate() + 1); if (r.getDay() !== 0 && r.getDay() !== 6) n--; } return r; }
+  function fill() {
+    const now = new Date(); let ship = new Date(now);
+    if (now.getDay() === 0 || now.getDay() === 6 || now.getHours() >= 14) ship = addBiz(now, 1);
+    const f = (d) => d.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' });
+    const txt = f(addBiz(ship, 1)) + ' – ' + f(addBiz(ship, 2));
+    document.querySelectorAll('[data-sn-eta]').forEach((el) => { if (el.textContent !== txt) el.textContent = txt; });
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    fill();
+    const d = document.querySelector('cart-drawer'); if (d) new MutationObserver(fill).observe(d, { childList: true, subtree: true });
+  });
+})();

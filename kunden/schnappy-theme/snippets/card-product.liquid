@@ -42,7 +42,12 @@
   -%}
 
   <product-component view-event-payload="{{ card_product | standard_event_data: 'view', context: product_view_context | escape }}">
-    <div class="card-wrapper product-card-wrapper underline-links-hover"{% render 'schnappy-card-tone', product: card_product %}>
+    {%- liquid
+  assign sn_now = 'now' | date: '%s' | plus: 0
+  assign sn_created = card_product.created_at | date: '%s' | plus: 0
+  assign sn_age = sn_now | minus: sn_created
+-%}
+<div class="card-wrapper product-card-wrapper underline-links-hover"{% render 'schnappy-card-tone', product: card_product %}>
       <div
         class="
           card card--{{ settings.card_style }}
@@ -141,6 +146,8 @@
                 >
                   {%- render 'schnappy-sale-badge', product: card_product -%}
                 </span>
+{%- elsif sn_age < 1209600 and card_product.available -%}
+              <span class="badge badge--bottom-left sn-badge-new">Neu</span>
               {%- endif -%}
             </div>
           </div>
@@ -210,8 +217,13 @@
               {%- liquid
                 assign sn_v = card_product.selected_or_first_available_variant
               -%}
+              {%- if card_product.compare_at_price > card_product.price -%}
+                <p class="sn-cardsave">Du sparst {{ card_product.compare_at_price | minus: card_product.price | money }}</p>
+              {%- endif -%}
               {%- if sn_v.inventory_management == 'shopify' and sn_v.inventory_quantity > 0 and sn_v.inventory_quantity <= 5 -%}
                 <p class="sn-stock">Nur noch {{ sn_v.inventory_quantity }} Stück</p>
+              {%- elsif card_product.available -%}
+                <p class="sn-instock"><i aria-hidden="true"></i>Sofort lieferbar</p>
               {%- endif -%}
               {%- if card_product.quantity_price_breaks_configured? -%}
                 {% if card_product.variants_count == 1 and quick_add == 'bulk' %}
@@ -571,6 +583,8 @@
               >
                 {%- render 'schnappy-sale-badge', product: card_product -%}
               </span>
+{%- elsif sn_age < 1209600 and card_product.available -%}
+            <span class="badge badge--bottom-left sn-badge-new">Neu</span>
             {%- endif -%}
           </div>
         </div>

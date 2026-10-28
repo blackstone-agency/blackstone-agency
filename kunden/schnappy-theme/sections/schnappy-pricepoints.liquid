@@ -1,0 +1,40 @@
+{%- comment -%} Schnappy: Schnäppchen nach Preis (Kacheln mit Preisfilter) {%- endcomment -%}
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width sn-pp">
+    {%- if section.settings.heading != blank -%}<div class="sn-shophead"><h2 class="h2">{{ section.settings.heading | escape }}</h2></div>{%- endif -%}
+    <ul class="sn-pp__grid" role="list">
+      {%- for block in section.blocks -%}
+        <li {{ block.shopify_attributes }}>
+          <a class="sn-pp__tile sn-pp__tile--{{ forloop.index }}" href="{{ routes.all_products_collection_url }}?filter.v.price.lte={{ block.settings.max }}&sort_by=price-descending">
+            <span class="sn-pp__under">unter</span>
+            <span class="sn-pp__price">{{ block.settings.max }}<small>€</small></span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Preis-Kacheln",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Schnäppchen nach Preis" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" }
+  ],
+  "blocks": [
+    { "type": "price", "name": "Preisgrenze", "settings": [
+      { "type": "number", "id": "max", "label": "Unter … €", "default": 10 }
+    ] }
+  ],
+  "presets": [{ "name": "Schnappy Preis-Kacheln", "blocks": [
+    { "type": "price", "settings": { "max": 5 } },
+    { "type": "price", "settings": { "max": 10 } },
+    { "type": "price", "settings": { "max": 20 } },
+    { "type": "price", "settings": { "max": 30 } }
+  ] }]
+}
+{% endschema %}

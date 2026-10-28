@@ -147,6 +147,17 @@
               class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
             >
               <div class="loading-overlay gradient"></div>
+              {%- assign sn_sort = collection.sort_by | default: collection.default_sort_by -%}
+              <nav class="sn-crumbs" aria-label="Brotkrümel"><a href="{{ routes.root_url }}">Start</a><span aria-hidden="true">›</span><span aria-current="page">{{ collection.title | escape }}</span><span class="sn-crumbs__count">· {{ collection.products_count }} Artikel</span></nav>
+              <div class="sn-quick" role="group" aria-label="Schnellauswahl">
+                <a href="{{ collection.url }}?sort_by=best-selling"{% if sn_sort == 'best-selling' %} aria-current="true"{% endif %}>Beliebt</a>
+                <a href="{{ collection.url }}?sort_by=created-descending"{% if sn_sort == 'created-descending' %} aria-current="true"{% endif %}>Neu</a>
+                <a href="{{ collection.url }}?sort_by=price-ascending"{% if sn_sort == 'price-ascending' %} aria-current="true"{% endif %}>Günstigste</a>
+                <span class="sn-quick__sep" aria-hidden="true"></span>
+                <a href="{{ collection.url }}?filter.v.price.lte=5">bis 5 €</a>
+                <a href="{{ collection.url }}?filter.v.price.lte=10">bis 10 €</a>
+                <a href="{{ collection.url }}?filter.v.price.lte=20">bis 20 €</a>
+              </div>
               <div class="sn-viewbar" role="group" aria-label="Ansicht wählen">
                 <span class="sn-viewbar__label">Ansicht:</span>
                 <button type="button" data-sn-view="grid" aria-pressed="true" aria-label="Große Kacheln"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" fill="currentColor"/></svg><span>Groß</span></button>

@@ -1,0 +1,17 @@
+{%- comment -%} Schnappy: Zuletzt angesehen (wird im Browser gespeichert, erscheint nur wenn vorhanden) {%- endcomment -%}
+<sn-recent class="sn-recent page-width" data-current="{{ product.handle }}" data-currency="{{ cart.currency.iso_code }}" hidden>
+  <div class="sn-shophead"><h2 class="h2">{{ section.settings.heading | escape }}</h2></div>
+  <ul class="sn-recent__list" role="list" data-list></ul>
+</sn-recent>
+
+{% schema %}
+{
+  "name": "Zuletzt angesehen",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Zuletzt angesehen" }
+  ],
+  "presets": [{ "name": "Zuletzt angesehen" }]
+}
+{% endschema %}
