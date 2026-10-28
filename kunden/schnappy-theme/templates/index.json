@@ -179,7 +179,8 @@
             "value": 40,
             "glow": "#4FD25E",
             "description": "Der perfekte Einstieg in die Schnappy-Welt. Klein, aber mit ordentlich Biss.",
-            "points": "5–8 Überraschungs-Artikel\nSpielzeug, Gadgets und Lifestyle\nIdeal als Geschenk"
+            "points": "5–8 Überraschungs-Artikel\nSpielzeug, Gadgets und Lifestyle\nIdeal als Geschenk",
+            "product": "mystery-box-s"
           }
         },
         "b1": {
@@ -192,7 +193,8 @@
             "value": 90,
             "glow": "#8E6CFF",
             "description": "Unser Bestseller. Die goldene Mitte aus Menge, Marken und Überraschung.",
-            "points": "10–15 Überraschungs-Artikel\nMindestens 1 Markenprodukt\nTrend-Produkte inklusive"
+            "points": "10–15 Überraschungs-Artikel\nMindestens 1 Markenprodukt\nTrend-Produkte inklusive",
+            "product": "mystery-box-m"
           }
         },
         "b2": {
@@ -205,7 +207,8 @@
             "value": 200,
             "glow": "#FFD21F",
             "description": "Die Legende aus der Live-Show. Randvoll gepackt, mit garantiertem Highlight.",
-            "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf ein Jackpot-Item"
+            "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf ein Jackpot-Item",
+            "product": "xxl-super-mystery-box"
           }
         }
       },
