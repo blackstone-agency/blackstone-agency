@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Schnappy Shop – Mystery Boxen & Trend-Deals</title>
+<meta name="description" content="Schnappy – Mystery Boxen, Trend-Produkte und Spielzeug zu Schnapper-Preisen. Live-Shopping auf Whatnot & Instagram.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B2A16">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#3DB54A; --green-2:#2E9A3B; --green-deep:#0B2A16; --green-ink:#08200F;
+  --lime:#B6F23A; --yellow:#FFD21F; --cream:#FFF9EC; --paper:#FFFFFF;
+  --ink:#111712; --muted:#5D6B60; --line:#E7E3D6; --red:#FF4D4D;
+  --r:20px; --shadow:0 10px 30px -12px rgba(11,42,22,.35);
+  --font-d:'Lilita One', 'Arial Rounded MT Bold', system-ui, sans-serif;
+  --font:'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--cream);color:var(--ink);line-height:1.5;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,select{font:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+.d{font-family:var(--font-d);letter-spacing:.5px;font-weight:400;line-height:1.02}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;border-radius:8px}
+
+/* Demo ribbon */
+.demo-bar{background:var(--ink);color:#fff;font-size:12px;text-align:center;padding:6px 16px}
+.demo-bar b{color:var(--yellow)}
+
+/* Announcement */
+.ann{background:var(--yellow);color:var(--green-ink);font-weight:700;font-size:13px;overflow:hidden;white-space:nowrap}
+.ann-track{display:inline-flex;gap:48px;padding:9px 0;animation:marquee 28s linear infinite}
+.ann-track span{display:inline-flex;align-items:center;gap:8px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;background:rgba(11,42,22,.92);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);color:#fff}
+.hdr{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:42px;height:42px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 0 3px var(--green)}
+.logo-word{font-family:var(--font-d);font-size:24px;color:var(--yellow);-webkit-text-stroke:1px var(--green-ink);text-shadow:2px 2px 0 var(--green)}
+nav.main{display:none;gap:26px;font-weight:600;font-size:15px}
+nav.main a{opacity:.85}
+nav.main a:hover{opacity:1;color:var(--yellow)}
+.hdr-actions{display:flex;align-items:center;gap:6px}
+.icon-btn{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;position:relative;transition:background .2s}
+.icon-btn:hover{background:rgba(255,255,255,.1)}
+.badge{position:absolute;top:4px;right:2px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--yellow);color:var(--green-ink);font-size:11px;font-weight:800;display:grid;place-items:center;transform:scale(0);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.badge.on{transform:scale(1)}
+.badge.bump{animation:bump .4s}
+@keyframes bump{50%{transform:scale(1.4)}}
+.live-pill{display:none;align-items:center;gap:8px;background:var(--red);color:#fff;font-weight:800;font-size:12px;padding:7px 12px;border-radius:999px;letter-spacing:.4px}
+.dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.8)}100%{box-shadow:0 0 0 10px rgba(255,255,255,0)}}
+
+/* Hero */
+.hero{background:radial-gradient(1200px 500px at 80% -10%, #1F6B33 0%, transparent 60%),var(--green-deep);color:#fff;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto 0 -1px 0;height:48px;background:var(--cream);clip-path:ellipse(70% 100% at 50% 100%)}
+.hero-grid{display:grid;gap:28px;padding-top:40px;padding-bottom:80px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:600}
+.eyebrow .dot{background:var(--red);width:9px;height:9px}
+.hero h1{font-size:clamp(46px,11vw,92px);margin:16px 0 14px}
+.hero h1 em{font-style:normal;color:var(--yellow);display:inline-block;transform:rotate(-2deg)}
+.hero p.lead{font-size:18px;color:#D6E8D9;max-width:520px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 24px;border-radius:16px;font-weight:800;font-size:16px;transition:transform .15s, box-shadow .2s, background .2s}
+.btn:active{transform:scale(.97)}
+.btn-y{background:var(--yellow);color:var(--green-ink);box-shadow:0 6px 0 #C9A100}
+.btn-y:hover{transform:translateY(-2px);box-shadow:0 8px 0 #C9A100}
+.btn-g{background:var(--green);color:#fff;box-shadow:0 6px 0 #1F7A2A}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 8px 0 #1F7A2A}
+.btn-o{border:2px solid rgba(255,255,255,.3);color:#fff}
+.hero .cta-row .btn{padding:0 18px;font-size:15px}
+.btn-o:hover{border-color:#fff}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-block{width:100%}
+.hero-stats{display:flex;gap:18px;margin-top:30px;flex-wrap:wrap}
+.hero-stats div{font-size:13px;color:#B9D2BD}
+.hero-stats b{display:block;font-family:var(--font-d);font-size:24px;color:#fff;font-weight:400}
+
+.hero-visual{position:relative;min-height:300px;display:grid;place-items:center}
+.glow{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,var(--green) 0%,transparent 70%);opacity:.55;filter:blur(10px)}
+.mascot{width:min(330px,62vw);position:relative;z-index:2;animation:float 5s ease-in-out infinite;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
+@keyframes float{50%{transform:translateY(-12px) rotate(-1deg)}}
+.sticker{position:absolute;z-index:3;background:#fff;color:var(--green-ink);border-radius:16px;padding:10px 14px;font-weight:800;font-size:13px;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px}
+.sticker small{display:block;font-weight:600;color:var(--muted);font-size:11px}
+.st-1{top:8%;left:0;transform:rotate(-6deg)}
+.st-2{bottom:10%;right:0;transform:rotate(5deg);background:var(--yellow)}
+.st-2 small{color:var(--green-ink);opacity:.7}
+
+/* Sections */
+section{padding:64px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(34px,7vw,52px);color:var(--green-deep)}
+.sec-head p{color:var(--muted);max-width:460px}
+.kicker{font-weight:800;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-2);margin-bottom:8px}
+
+/* Trust strip */
+.trust{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:-34px;position:relative;z-index:5}
+.trust div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;gap:10px;align-items:center;font-size:13px;font-weight:600;box-shadow:0 6px 20px -14px rgba(0,0,0,.4)}
+.trust i{font-style:normal;width:36px;height:36px;flex:none;border-radius:10px;background:#EAF7EC;display:grid;place-items:center;font-size:18px}
+.trust small{display:block;color:var(--muted);font-weight:500;font-size:12px}
+
+/* Mystery boxes */
+.boxes{display:grid;gap:16px}
+.box-card{border-radius:26px;padding:24px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:14px;color:#fff;min-height:420px;isolation:isolate;transition:transform .25s}
+.box-card:hover{transform:translateY(-4px)}
+.box-card.s{background:linear-gradient(160deg,#2E9A3B,#14532A)}
+.box-card.m{background:linear-gradient(160deg,#1E3A8A,#0F1D4A)}
+.box-card.xxl{background:linear-gradient(160deg,#111,#2B2B2B);border:2px solid var(--yellow)}
+.box-card .tag{align-self:flex-start;background:rgba(255,255,255,.15);font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px;letter-spacing:.5px}
+.box-card.xxl .tag{background:var(--yellow);color:var(--ink)}
+.box-card h3{font-size:34px}
+.box-card ul{list-style:none;display:grid;gap:6px;font-size:14px;color:rgba(255,255,255,.85)}
+.box-card li::before{content:"✓";color:var(--lime);font-weight:800;margin-right:8px}
+.box-art{height:150px;display:grid;place-items:center;margin:4px 0}
+.box-art svg{height:150px;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.box-card:hover .box-art svg{transform:rotate(-4deg) scale(1.06)}
+.box-price{display:flex;align-items:baseline;gap:10px;margin-top:auto}
+.box-price b{font-family:var(--font-d);font-size:40px;font-weight:400}
+.box-price s{opacity:.55}
+.box-value{font-size:12px;background:var(--lime);color:var(--green-ink);font-weight:800;border-radius:8px;padding:3px 8px}
+
+/* Filters & grid */
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;margin-bottom:20px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:42px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:14px;transition:all .2s}
+.chip.on{background:var(--green-deep);border-color:var(--green-deep);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:#fff;border-radius:20px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .2s, box-shadow .2s;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.card-img{aspect-ratio:1/1;display:grid;place-items:center;font-size:64px;position:relative;cursor:pointer}
+.card-img .ph{font-size:clamp(54px,14vw,84px);filter:drop-shadow(0 10px 10px rgba(0,0,0,.18));transition:transform .3s}
+.card:hover .ph{transform:scale(1.08) rotate(-3deg)}
+.ribbon{position:absolute;top:10px;left:10px;font-size:11px;font-weight:800;padding:5px 9px;border-radius:8px;background:var(--red);color:#fff}
+.ribbon.new{background:var(--green-deep)}
+.ribbon.hot{background:var(--yellow);color:var(--ink)}
+.card-body{padding:12px 12px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card-cat{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+.card h4{font-size:15px;line-height:1.25;font-weight:700;cursor:pointer}
+.price{display:flex;align-items:baseline;gap:8px;margin-top:auto;flex-wrap:wrap}
+.price b{font-size:18px;font-weight:800}
+.price s{font-size:13px;color:var(--muted)}
+.stock{font-size:12px;color:#C2410C;font-weight:600}
+.add{height:42px;border-radius:12px;background:var(--green);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;transition:background .2s}
+.add:hover{background:var(--green-2)}
+.add.done{background:var(--green-deep)}
+
+/* Live section */
+.live{background:var(--ink);color:#fff;border-radius:30px;padding:28px;display:grid;gap:24px;position:relative;overflow:hidden}
+.live::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#FFD21F55,transparent 70%);top:-160px;right:-120px}
+.live h2{font-size:clamp(34px,7vw,52px)}
+.live h2 span{color:var(--yellow)}
+.live p{color:#C9CFCA}
+.count{display:flex;gap:10px;margin:18px 0}
+.count div{background:#1E2620;border:1px solid #2E3830;border-radius:14px;padding:10px 0;width:72px;text-align:center}
+.count b{font-family:var(--font-d);font-size:32px;font-weight:400;display:block;line-height:1}
+.count small{font-size:11px;color:#9AA59D;text-transform:uppercase;letter-spacing:1px}
+.phone{justify-self:center;width:240px;height:440px;border-radius:38px;background:#000;border:8px solid #222;position:relative;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.phone-screen{position:absolute;inset:0;background:linear-gradient(180deg,#2B5D36 0%,#0B2A16 100%);display:flex;flex-direction:column;justify-content:space-between;padding:14px}
+.ph-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:700}
+.ph-live{background:var(--red);padding:3px 8px;border-radius:6px}
+.ph-center{display:grid;place-items:center;flex:1}
+.ph-center svg{width:150px}
+.ph-chat{display:grid;gap:6px;font-size:11px}
+.ph-chat div{background:rgba(0,0,0,.35);padding:6px 9px;border-radius:10px;width:fit-content;max-width:90%;animation:chatIn .5s both}
+.ph-bid{background:var(--yellow);color:var(--ink);font-weight:800;text-align:center;padding:10px;border-radius:12px;margin-top:8px;font-size:13px}
+@keyframes chatIn{from{opacity:0;transform:translateY(8px)}}
+
+/* Reviews */
+.reviews{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:none}
+.reviews::-webkit-scrollbar{display:none}
+.rev{flex:none;width:280px;scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px}
+.stars{color:#F5A400;letter-spacing:2px;font-size:15px}
+.rev p{margin:10px 0 14px;font-size:14px}
+.rev-who{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}
+.rev-who i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-style:normal;color:#fff;font-weight:800}
+.rev-who small{display:block;color:var(--muted);font-weight:500}
+
+/* FAQ */
+.faq{display:grid;gap:10px;max-width:780px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:0 18px}
+.faq summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:700;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:22px;line-height:1;color:var(--green);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 18px;color:var(--muted);font-size:15px}
+
+/* Newsletter */
+.news{background:var(--green);border-radius:30px;padding:30px 24px;color:#fff;display:grid;gap:18px;position:relative;overflow:hidden}
+.news h2{font-size:clamp(32px,6vw,46px)}
+.news form{display:flex;gap:8px;flex-wrap:wrap}
+.news input{flex:1;min-width:200px;height:54px;border-radius:16px;border:0;padding:0 18px;font-size:16px}
+.news small{opacity:.8;font-size:12px}
+
+/* Footer */
+footer{background:var(--green-deep);color:#C5D8C9;padding:50px 0 120px;margin-top:64px;font-size:14px}
+.f-grid{display:grid;gap:30px;grid-template-columns:1fr 1fr}
+.f-grid h5{color:#fff;font-size:14px;margin-bottom:12px}
+.f-grid a{display:block;padding:4px 0}
+.f-grid a:hover{color:var(--yellow)}
+.f-brand{grid-column:1/-1}
+.socials{display:flex;gap:10px;margin-top:14px}
+.socials a{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.08);display:grid;place-items:center}
+.pay{display:flex;gap:8px;flex-wrap:wrap;margin-top:30px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
+.pay span{background:#fff;color:var(--ink);font-weight:800;font-size:12px;padding:6px 10px;border-radius:8px}
+
+/* Drawer + modal */
+.overlay{position:fixed;inset:0;background:rgba(5,15,8,.55);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+.overlay.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--cream);z-index:70;transform:translateX(100%);transition:transform .35s cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dr-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line);background:#fff}
+.dr-head h3{font-family:var(--font-d);font-weight:400;font-size:26px;color:var(--green-deep)}
+.ship-bar{padding:14px 18px;background:#fff;border-bottom:1px solid var(--line);font-size:13px;font-weight:600}
+.bar{height:8px;border-radius:8px;background:#EEE;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--lime));border-radius:8px;transition:width .4s}
+.dr-body{flex:1;overflow-y:auto;padding:14px 18px;display:grid;gap:12px;align-content:start}
+.line{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;background:#fff;border-radius:16px;padding:10px;border:1px solid var(--line)}
+.line-img{width:72px;height:72px;border-radius:12px;display:grid;place-items:center;font-size:36px}
+.line h6{font-size:14px;font-weight:700;line-height:1.25}
+.line .lp{font-weight:800;font-size:14px;margin-top:4px}
+.qty{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:10px;margin-top:6px;width:fit-content}
+.qty button{width:32px;height:32px;font-weight:800}
+.qty span{min-width:22px;text-align:center;font-weight:700;font-size:14px}
+.rm{font-size:12px;color:var(--muted);text-decoration:underline;align-self:start}
+.empty{text-align:center;padding:50px 10px;color:var(--muted)}
+.empty .d{font-size:28px;color:var(--green-deep);margin:12px 0 6px}
+.dr-foot{padding:16px 18px calc(16px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);display:grid;gap:10px}
+.sum-row{display:flex;justify-content:space-between;font-size:14px}
+.sum-row.total{font-size:18px;font-weight:800}
+.upsell{background:#FFF4C2;border:1.5px dashed #E0B400;border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center;font-size:13px}
+.upsell button{margin-left:auto;background:var(--ink);color:#fff;border-radius:10px;padding:8px 12px;font-weight:800;font-size:12px;flex:none}
+
+.modal{position:fixed;z-index:80;left:0;right:0;bottom:0;max-height:92vh;background:#fff;border-radius:26px 26px 0 0;transform:translateY(105%);transition:transform .35s cubic-bezier(.2,.9,.3,1);overflow-y:auto}
+.modal.on{transform:none}
+.m-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;z-index:2;font-size:20px;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.m-img{aspect-ratio:4/3;display:grid;place-items:center;font-size:120px}
+.m-body{padding:20px 20px calc(24px + env(safe-area-inset-bottom));display:grid;gap:12px}
+.m-body h3{font-size:24px;line-height:1.2}
+.m-body .price b{font-size:28px}
+.m-points{display:grid;gap:8px;font-size:14px;color:var(--muted)}
+.m-points div{display:flex;gap:8px}
+
+/* Checkout */
+.co{position:fixed;inset:0;z-index:90;background:var(--cream);transform:translateY(100%);transition:transform .4s cubic-bezier(.2,.9,.3,1);overflow-y:auto}
+.co.on{transform:none}
+.co-head{background:var(--green-deep);color:#fff;position:sticky;top:0;z-index:2}
+.co-head .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.steps{display:flex;gap:6px;padding:16px 0}
+.steps div{flex:1;height:6px;border-radius:6px;background:var(--line);transition:background .3s}
+.steps div.on{background:var(--green)}
+.co-grid{display:grid;gap:20px;padding-bottom:60px;max-width:960px;margin:0 auto}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px}
+.panel h3{font-family:var(--font-d);font-weight:400;font-size:26px;color:var(--green-deep);margin-bottom:14px}
+.field{display:grid;gap:6px;margin-bottom:12px}
+.field label{font-size:13px;font-weight:700}
+.field input,.field select{height:52px;border:1.5px solid var(--line);border-radius:14px;padding:0 14px;font-size:16px;background:#fff;transition:border .2s}
+.field input:focus,.field select:focus{border-color:var(--green);outline:none}
+.row2{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;border:2px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;cursor:pointer;transition:border .2s, background .2s}
+.opt:has(input:checked){border-color:var(--green);background:#F1FAF2}
+.opt input{accent-color:var(--green);width:20px;height:20px}
+.opt b{display:block;font-size:15px}
+.opt small{color:var(--muted);font-size:13px}
+.opt .pm{margin-left:auto;font-weight:800;font-size:13px;background:#F3F3F3;border-radius:8px;padding:5px 8px}
+.note{font-size:12px;color:var(--muted);background:#FFF9E0;border-radius:12px;padding:10px 12px;margin-top:6px}
+.success{text-align:center;padding:40px 10px}
+.success .check{width:96px;height:96px;margin:0 auto 18px;border-radius:50%;background:var(--green);display:grid;place-items:center;color:#fff;font-size:48px;animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{transform:scale(0)}}
+.success h3{font-size:38px;margin-bottom:8px}
+.mini-line{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:6px 0}
+
+/* Toast + sticky mobile bar */
+.toast{position:fixed;left:50%;top:80px;transform:translate(-50%,-30px);opacity:0;background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-weight:700;font-size:14px;z-index:100;transition:all .3s;pointer-events:none;white-space:nowrap}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.mbar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:50;display:flex;gap:8px;transform:translateY(140%);transition:transform .35s}
+.mbar.on{transform:none}
+.mbar a,.mbar button{flex:1;height:54px;border-radius:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 30px -8px rgba(0,0,0,.4)}
+.mbar .ml{background:var(--red);color:#fff;flex:.9}
+.mbar .mc{background:var(--yellow);color:var(--green-ink)}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s, transform .7s}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+
+@media (min-width:720px){
+  .trust{grid-template-columns:repeat(4,1fr)}
+  .grid{grid-template-columns:repeat(3,1fr);gap:18px}
+  .boxes{grid-template-columns:repeat(3,1fr)}
+  .f-grid{grid-template-columns:2fr 1fr 1fr 1fr}
+  .f-brand{grid-column:auto}
+  .modal{left:50%;right:auto;top:50%;bottom:auto;width:min(880px,92vw);border-radius:26px;transform:translate(-50%,-40%) scale(.96);opacity:0;pointer-events:none;transition:all .3s;display:grid;grid-template-columns:1fr 1fr;max-height:86vh}
+  .modal.on{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+  .m-img{aspect-ratio:auto;min-height:100%}
+  .co-grid{grid-template-columns:1.4fr 1fr;align-items:start}
+  .news{grid-template-columns:1.2fr 1fr;align-items:center;padding:44px}
+  .live{grid-template-columns:1.3fr 1fr;padding:44px;align-items:center}
+  .mbar{display:none}
+}
+@media (min-width:960px){
+  nav.main{display:flex}
+  .live-pill{display:inline-flex}
+  .hero-grid{grid-template-columns:1.15fr .85fr;padding-top:70px;padding-bottom:110px}
+  .grid{grid-template-columns:repeat(4,1fr)}
+  .hero-visual{min-height:440px}
+}
+</style>
+</head>
+<body>
+
+<div class="demo-bar"><b>DESIGN-VORSCHAU</b> · Demo-Shop von Blackstone Agency für Schnappy – Preise & Produkte sind Beispiele, keine echten Bestellungen.</div>
+
+<div class="ann" aria-label="Aktionen">
+  <div class="ann-track" id="annTrack"></div>
+</div>
+
+<header>
+  <div class="wrap hdr">
+    <a href="#top" class="logo" aria-label="Schnappy Startseite">
+      <span class="logo-mark" id="logoMark"></span>
+      <span class="logo-word">SCHNAPPY</span>
+    </a>
+    <nav class="main" aria-label="Hauptnavigation">
+      <a href="#boxen">Mystery Boxen</a>
+      <a href="#shop">Shop</a>
+      <a href="#live">Live-Shows</a>
+      <a href="#faq">Hilfe</a>
+    </nav>
+    <div class="hdr-actions">
+      <a href="#live" class="live-pill"><span class="dot"></span>LIVE HEUTE</a>
+      <button class="icon-btn" aria-label="Suchen" onclick="document.getElementById('shop').scrollIntoView();setTimeout(()=>document.getElementById('q').focus(),500)">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Warenkorb öffnen" onclick="openCart()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Bekannt aus den Whatnot Live-Shows</span>
+      <h1 class="d">Schnapp dir<br>die <em>Deals.</em></h1>
+      <p class="lead">Mystery Boxen, Trend-Produkte und Spielzeug direkt aus unserem Lager – bis zu 70 % unter UVP. Jetzt auch rund um die Uhr bestellbar.</p>
+      <div class="cta-row">
+        <a href="#boxen" class="btn btn-y">Mystery Box sichern
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#shop" class="btn btn-o">Alle Deals</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>1.000+</b>Follower & Fans</div>
+        <div><b>4,9 ★</b>Käufer-Bewertung</div>
+        <div><b>24 h</b>Versand ab Lager</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="glow"></div>
+      <div class="mascot" id="heroMascot"></div>
+      <div class="sticker st-1">📦 <span>Box geöffnet!<small>Lisa aus Hamburg · gerade eben</small></span></div>
+      <div class="sticker st-2">🔥 <span>bis −70 %<small>auf Trend-Produkte</small></span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="trust">
+    <div><i>🚚</i><span>Schneller Versand<small>aus Deutschland</small></span></div>
+    <div><i>🔒</i><span>Sicher bezahlen<small>PayPal · Klarna · Karte</small></span></div>
+    <div><i>↩️</i><span>14 Tage Widerruf<small>gesetzlich garantiert</small></span></div>
+    <div><i>💬</i><span>Echter Support<small>per WhatsApp & Insta</small></span></div>
+  </div>
+</div>
+
+<!-- MYSTERY BOXEN -->
+<section id="boxen">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="kicker">Der Schnappy-Klassiker</div><h2 class="d">Mystery Boxen</h2></div>
+      <p>Jede Box ist garantiert mehr wert als ihr Preis. Was drin ist? Überraschung – genau wie in der Live-Show.</p>
+    </div>
+    <div class="boxes" id="boxes"></div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section id="shop" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="kicker">Täglich neue Ware</div><h2 class="d">Schnapper der Woche</h2></div>
+      <label class="field" style="margin:0;min-width:min(320px,100%)">
+        <span class="sr">Produkte durchsuchen</span>
+        <input id="q" type="search" placeholder="🔍  Suche, z. B. „Plüsch“" oninput="render()">
+      </label>
+    </div>
+    <div class="chips" id="chips" role="tablist" aria-label="Kategorien"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- LIVE -->
+<section id="live">
+  <div class="wrap">
+    <div class="live rv">
+      <div style="position:relative">
+        <div class="kicker" style="color:var(--yellow)">Live-Shopping</div>
+        <h2 class="d">Live dabei sein. <span>Mitbieten.</span> Abräumen.</h2>
+        <p style="margin-top:12px">Jede Woche live auf Whatnot & Instagram: Boxen öffnen, Auktionen ab 1 €, exklusive Drops nur für Zuschauer.</p>
+        <div class="count" id="count" aria-live="polite"></div>
+        <div style="font-size:13px;color:#9AA59D;margin-bottom:18px" id="nextShow"></div>
+        <div class="cta-row" style="margin-top:0">
+          <a class="btn btn-y" href="https://www.whatnot.com/invite/schnappyshop" target="_blank" rel="noopener">25 € Startguthaben holen</a>
+          <a class="btn btn-o" href="https://www.instagram.com/schnappy.shop" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+      <div class="phone" aria-hidden="true">
+        <div class="phone-screen">
+          <div class="ph-top"><span class="ph-live">● LIVE</span><span>👁 312</span></div>
+          <div class="ph-center" id="phoneMascot"></div>
+          <div>
+            <div class="ph-chat" id="chat"></div>
+            <div class="ph-bid" id="bid">Aktuelles Gebot: 12 €</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section style="padding-top:10px">
+  <div class="wrap">
+    <div class="sec-head rv"><div><div class="kicker">4,9 von 5 Sternen</div><h2 class="d">Das sagt die Community</h2></div></div>
+    <div class="reviews" id="reviews"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" style="padding-top:10px">
+  <div class="wrap">
+    <div class="sec-head rv"><div><div class="kicker">Kurz erklärt</div><h2 class="d">Häufige Fragen</h2></div></div>
+    <div class="faq">
+      <details><summary>Was ist in einer Mystery Box?</summary><p>Eine bunte Mischung aus Spielzeug, Trend-Produkten, Haushalts- und Lifestyle-Artikeln aus Restposten und Retouren. Der Warenwert liegt immer über dem Kaufpreis – das garantieren wir.</p></details>
+      <details><summary>Wie schnell wird versendet?</summary><p>Bestellungen bis 14 Uhr verlassen in der Regel noch am selben Werktag unser Lager. Die Lieferung dauert innerhalb Deutschlands 1–3 Werktage.</p></details>
+      <details><summary>Ab wann ist der Versand kostenlos?</summary><p>Ab 49 € Bestellwert versenden wir kostenlos. Darunter kostet der Versand 4,90 €.</p></details>
+      <details><summary>Kann ich zurückgeben?</summary><p>Ja, du hast ein 14-tägiges Widerrufsrecht. Ungeöffnete Mystery Boxen nehmen wir problemlos zurück. Details findest du in der Widerrufsbelehrung.</p></details>
+      <details><summary>Was ist der Unterschied zur Live-Show?</summary><p>In der Live-Show auf Whatnot bietest du live mit und kannst echte Schnapper machen. Im Shop kaufst du zum Festpreis – jederzeit, ohne auf die nächste Show zu warten.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section style="padding-top:10px;padding-bottom:0">
+  <div class="wrap">
+    <div class="news rv">
+      <div>
+        <h2 class="d">10 % auf deine erste Bestellung</h2>
+        <p style="margin-top:8px;opacity:.9">Hol dir Drop-Alarm, Live-Show-Erinnerungen und exklusive Codes.</p>
+      </div>
+      <form onsubmit="event.preventDefault();toast('🎉 Code SCHNAPP10 ist unterwegs (Demo)');this.reset()">
+        <label class="sr" for="nl">E-Mail</label>
+        <input id="nl" type="email" required placeholder="deine@email.de">
+        <button class="btn btn-y" type="submit">Anmelden</button>
+        <small style="width:100%">Abmeldung jederzeit möglich. Infos in der Datenschutzerklärung.</small>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <div class="logo"><span class="logo-mark" id="logoMark2"></span><span class="logo-word">SCHNAPPY</span></div>
+        <p style="margin-top:14px;max-width:320px">Clever sparen & günstig shoppen. Live auf Whatnot, Instagram & TikTok – und jetzt rund um die Uhr im Shop.</p>
+        <div class="socials">
+          <a href="https://www.instagram.com/schnappy.shop" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+          <a href="https://www.whatnot.com/invite/schnappyshop" target="_blank" rel="noopener" aria-label="Whatnot" style="font-weight:900;font-size:13px">WN</a>
+          <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.4 2.3 1.8 3.9 4 4.2v3.2c-1.5 0-2.9-.4-4-1.2v6.3A5.6 5.6 0 1 1 11 9.9v3.3a2.4 2.4 0 1 0 2.3 2.4V3h3.2Z"/></svg></a>
+        </div>
+      </div>
+      <div><h5>Shop</h5><a href="#boxen">Mystery Boxen</a><a href="#shop">Alle Produkte</a><a href="#live">Live-Shows</a></div>
+      <div><h5>Hilfe</h5><a href="#faq">FAQ</a><a href="#">Versand & Lieferung</a><a href="#">Kontakt</a></div>
+      <div><h5>Rechtliches</h5><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a><a href="#">Widerrufsbelehrung</a></div>
+    </div>
+    <div class="pay"><span>PayPal</span><span>Klarna</span><span>VISA</span><span>Mastercard</span><span>Apple Pay</span><span>Google Pay</span></div>
+    <p style="margin-top:18px;font-size:12px;opacity:.6">© 2026 Schnappy · Alle Preise inkl. MwSt. zzgl. Versand · Design-Vorschau by Blackstone Agency</p>
+  </div>
+</footer>
+
+<!-- Mobile sticky bar -->
+<div class="mbar" id="mbar">
+  <a href="#live" class="ml"><span class="dot"></span>Live</a>
+  <button class="mc" onclick="openCart()">🛒 Warenkorb · <span id="mbarTotal">0,00 €</span></button>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- Cart drawer -->
+<aside class="drawer" id="drawer" aria-label="Warenkorb" aria-hidden="true">
+  <div class="dr-head"><h3>Dein Warenkorb</h3><button class="icon-btn" aria-label="Schließen" onclick="closeAll()" style="color:var(--ink)">✕</button></div>
+  <div class="ship-bar" id="shipBar"></div>
+  <div class="dr-body" id="drBody"></div>
+  <div class="dr-foot" id="drFoot"></div>
+</aside>
+
+<!-- Product modal -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Produktdetails"></div>
+
+<!-- Checkout -->
+<div class="co" id="co" role="dialog" aria-modal="true" aria-label="Kasse">
+  <div class="co-head"><div class="wrap">
+    <div class="logo"><span class="logo-word" style="font-size:22px">SCHNAPPY</span><span style="font-size:13px;opacity:.8;margin-left:6px">🔒 Sichere Kasse</span></div>
+    <button class="icon-btn" aria-label="Kasse schließen" onclick="closeCheckout()">✕</button>
+  </div></div>
+  <div class="wrap">
+    <div class="steps" id="steps"><div></div><div></div><div></div></div>
+    <div class="co-grid" id="coGrid"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ---------- Mascot (SVG placeholder for the original logo) ---------- */
+function croc(size){return `
+<svg viewBox="0 0 200 170" width="${size||'100%'}" aria-hidden="true">
+  <path d="M30 120c-10-30 0-70 40-85 25-9 55-6 75 6 10-12 30-12 38 0 6 9 3 20-4 26 10 10 14 25 10 40-6 25-35 40-80 40-40 0-71-7-79-27Z" fill="#3DB54A" stroke="#0B2A16" stroke-width="5"/>
+  <path d="M38 118c30 8 95 10 150-4" fill="none" stroke="#0B2A16" stroke-width="5" stroke-linecap="round"/>
+  <path d="M60 119l7 12 7-11M90 121l7 12 7-12M120 121l7 12 7-12M150 118l6 11 7-12" fill="#fff" stroke="#0B2A16" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="150" cy="40" r="6" fill="#0B2A16"/><circle cx="168" cy="40" r="6" fill="#0B2A16"/>
+  <path d="M56 62l90-14" stroke="#0B2A16" stroke-width="6" stroke-linecap="round"/>
+  <path d="M62 60c2 18 10 27 26 25 14-2 18-12 16-27Z" fill="#111" stroke="#0B2A16" stroke-width="3"/>
+  <path d="M108 54c2 16 10 24 24 22 13-2 17-11 15-26Z" fill="#111" stroke="#0B2A16" stroke-width="3"/>
+  <path d="M70 64l12-1M115 58l12-2" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+  <circle cx="58" cy="95" r="4" fill="#2E9A3B"/><circle cx="72" cy="100" r="3" fill="#2E9A3B"/>
+</svg>`}
+document.getElementById('logoMark').innerHTML=croc(34);
+document.getElementById('logoMark2').innerHTML=croc(34);
+document.getElementById('heroMascot').innerHTML=croc();
+document.getElementById('phoneMascot').innerHTML=croc(150);
+
+function boxSvg(c1,c2,label){return `
+<svg viewBox="0 0 160 150" aria-hidden="true">
+  <path d="M20 55 80 35l60 20v65l-60 22-60-22Z" fill="${c1}" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+  <path d="M80 75v67" stroke="#000" stroke-opacity=".2" stroke-width="2"/>
+  <path d="M20 55l60 20 60-20" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+  <path d="M20 55 80 75l60-20-60-20Z" fill="${c2}"/>
+  <path d="M20 55 6 34l60-21 14 22ZM140 55l14-21-60-21-14 22Z" fill="${c2}" stroke="#000" stroke-opacity=".2" stroke-width="2"/>
+  <text x="50" y="112" font-family="Lilita One, sans-serif" font-size="34" fill="#000" fill-opacity=".55" transform="skewY(18) translate(0,-30)">?</text>
+  <text x="96" y="112" font-family="Lilita One, sans-serif" font-size="16" fill="#000" fill-opacity=".55" transform="skewY(-18) translate(0,48)">${label}</text>
+</svg>`}
+
+/* ---------- Data ---------- */
+const BOXES=[
+ {id:'box-s',cls:'s',name:'Mystery Box S',tag:'EINSTEIGER',price:19.99,was:39.99,val:'Wert 40 €+',items:'5–8 Artikel',pts:['5–8 Überraschungs-Artikel','Spielzeug & Gadgets','Perfekt als Geschenk'],c:['#D9B98A','#E9CFA6'],label:'S',bg:'linear-gradient(160deg,#2E9A3B,#14532A)'},
+ {id:'box-m',cls:'m',name:'Mystery Box M',tag:'BESTSELLER',price:39.99,was:89.99,val:'Wert 90 €+',items:'10–15 Artikel',pts:['10–15 Überraschungs-Artikel','Mind. 1 Markenprodukt','Trend-Produkte inklusive'],c:['#C9A67A','#DDBF92'],label:'M',bg:'linear-gradient(160deg,#1E3A8A,#0F1D4A)'},
+ {id:'box-xxl',cls:'xxl',name:'XXL Super Mystery Box',tag:'⭐ AUS DER LIVE-SHOW',price:79.99,was:199.99,val:'Wert 200 €+',items:'20+ Artikel',pts:['20+ Artikel, randvoll gepackt','Garantiertes Highlight-Produkt','Chance auf Jackpot-Item'],c:['#B98F5E','#D4AF7F'],label:'XXL',bg:'linear-gradient(160deg,#111,#2B2B2B)'}
+];
+const P=[
+ {id:'p1',n:'Riesen-Plüsch Stitch 60 cm',cat:'Spielzeug',p:24.99,w:49.99,e:'🧸',bg:'#DDEBFF',r:'hot',stock:4},
+ {id:'p2',n:'Eiskönigin Puppen-Set (2 Stück)',cat:'Spielzeug',p:14.99,w:34.99,e:'👸',bg:'#E7F0FF',r:'sale'},
+ {id:'p3',n:'Mini-Projektor Sternenhimmel',cat:'Trend',p:19.99,w:44.99,e:'🌌',bg:'#ECE6FF',r:'new'},
+ {id:'p4',n:'Elektrischer Milchaufschäumer',cat:'Haushalt',p:9.99,w:24.99,e:'☕',bg:'#FFF1DC',r:'sale'},
+ {id:'p5',n:'LED Sunset-Lampe',cat:'Trend',p:12.99,w:29.99,e:'🌅',bg:'#FFE3D6',r:'hot',stock:7},
+ {id:'p6',n:'RC Monster-Truck 1:16',cat:'Spielzeug',p:29.99,w:59.99,e:'🚙',bg:'#E0F5E3',r:'sale'},
+ {id:'p7',n:'Squish-Kuscheltier XL',cat:'Spielzeug',p:16.99,w:32.99,e:'🐸',bg:'#E6F8D9',r:'new'},
+ {id:'p8',n:'Kabellose In-Ear Kopfhörer',cat:'Elektronik',p:17.99,w:49.99,e:'🎧',bg:'#EEEEEE',r:'sale',stock:3},
+ {id:'p9',n:'Bluetooth Party-Speaker',cat:'Elektronik',p:22.99,w:54.99,e:'🔊',bg:'#E3E8F0',r:'hot'},
+ {id:'p10',n:'Bausteine-Set „Burg“ 800 Teile',cat:'Spielzeug',p:27.99,w:64.99,e:'🏰',bg:'#FFF4CC',r:'sale'},
+ {id:'p11',n:'Heißluftfritteuse 4,5 L',cat:'Haushalt',p:39.99,w:89.99,e:'🍟',bg:'#FFE9D2',r:'hot',stock:5},
+ {id:'p12',n:'Stanley-Style Thermobecher',cat:'Trend',p:14.99,w:34.99,e:'🥤',bg:'#E2F4F1',r:'new'}
+];
+const ALL=[...BOXES.map(b=>({id:b.id,n:b.name,cat:'Mystery Box',p:b.price,w:b.was,box:b,bg:b.bg})),...P];
+const byId=id=>ALL.find(x=>x.id===id);
+const eur=v=>v.toFixed(2).replace('.',',')+' €';
+const FREE=49, SHIP=4.90;
+
+/* ---------- Announcement ---------- */
+const ann=['🚚 Gratis Versand ab 49 €','🔴 Live-Show heute 19:00 auf Whatnot','🎁 25 € Startguthaben für Whatnot-Neukunden','📦 Bestellt bis 14 Uhr – Versand am selben Tag'];
+document.getElementById('annTrack').innerHTML=[...ann,...ann].map(t=>`<span>${t}</span>`).join('');
+
+/* ---------- Boxes ---------- */
+document.getElementById('boxes').innerHTML=BOXES.map(b=>`
+ <article class="box-card ${b.cls} rv">
+   <span class="tag">${b.tag}</span>
+   <h3 class="d">${b.name}</h3>
+   <div class="box-art">${boxSvg(b.c[0],b.c[1],b.label)}</div>
+   <ul>${b.pts.map(x=>`<li>${x}</li>`).join('')}</ul>
+   <div class="box-price"><b>${eur(b.price)}</b><s>${eur(b.was)}</s><span class="box-value">${b.val}</span></div>
+   <button class="btn ${b.cls==='xxl'?'btn-y':'btn-g'} btn-block" style="${b.cls==='m'?'background:#fff;color:#0F1D4A;box-shadow:0 6px 0 #B9C3E0':''}" onclick="add('${b.id}',this)">In den Warenkorb</button>
+ </article>`).join('');
+
+/* ---------- Product grid ---------- */
+const CATS=['Alle','Spielzeug','Trend','Elektronik','Haushalt'];
+let cat='Alle';
+document.getElementById('chips').innerHTML=CATS.map(c=>`<button class="chip ${c===cat?'on':''}" role="tab" onclick="setCat('${c}')">${c}</button>`).join('');
+function setCat(c){cat=c;document.querySelectorAll('.chip').forEach(el=>el.classList.toggle('on',el.textContent===c));render()}
+const RIB={sale:'',hot:'🔥 Beliebt',new:'Neu'};
+function render(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  const list=P.filter(x=>(cat==='Alle'||x.cat===cat)&&(!q||x.n.toLowerCase().includes(q)||x.cat.toLowerCase().includes(q)));
+  document.getElementById('grid').innerHTML=list.length?list.map(x=>{
+    const pct=Math.round((1-x.p/x.w)*100);
+    return `<article class="card">
+      <div class="card-img" style="background:${x.bg}" onclick="openProduct('${x.id}')" role="button" tabindex="0" aria-label="${x.n} ansehen">
+        <span class="ribbon ${x.r==='sale'?'':x.r}">${x.r==='sale'?'−'+pct+' %':RIB[x.r]}</span>
+        <span class="ph">${x.e}</span>
+      </div>
+      <div class="card-body">
+        <span class="card-cat">${x.cat}</span>
+        <h4 onclick="openProduct('${x.id}')">${x.n}</h4>
+        ${x.stock?`<span class="stock">Nur noch ${x.stock} auf Lager</span>`:''}
+        <div class="price"><b>${eur(x.p)}</b><s>${eur(x.w)}</s></div>
+        <button class="add" onclick="add('${x.id}',this)">+ In den Warenkorb</button>
+      </div>
+    </article>`}).join(''):`<p style="grid-column:1/-1;color:var(--muted);padding:30px 0">Nichts gefunden – probier einen anderen Begriff.</p>`;
+}
+render();
+
+/* ---------- Cart ---------- */
+let cart={};
+try{cart=JSON.parse(localStorage.getItem('schnappy-cart')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('schnappy-cart',JSON.stringify(cart))}catch(e){}};
+const count=()=>Object.values(cart).reduce((a,b)=>a+b,0);
+const sub=()=>Object.entries(cart).reduce((a,[id,q])=>a+(byId(id)?byId(id).p*q:0),0);
+const ship=()=>sub()>=FREE||sub()===0?0:SHIP;
+
+function add(id,btn){
+  cart[id]=(cart[id]||0)+1;save();updateCart();
+  const b=document.getElementById('cartBadge');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');
+  if(btn){const t=btn.innerHTML;btn.classList.add('done');btn.innerHTML='✓ Hinzugefügt';setTimeout(()=>{btn.classList.remove('done');btn.innerHTML=t},1300)}
+  toast('✓ '+byId(id).n+' im Warenkorb');
+}
+function setQty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];save();updateCart()}
+function thumb(x){return x.box?`<div class="line-img" style="background:${x.bg};padding:6px">${boxSvg(x.box.c[0],x.box.c[1],x.box.label)}</div>`:`<div class="line-img" style="background:${x.bg}">${x.e}</div>`}
+function updateCart(){
+  const n=count(),s=sub();
+  const b=document.getElementById('cartBadge');b.textContent=n;b.classList.toggle('on',n>0);
+  document.getElementById('mbarTotal').textContent=eur(s);
+  const left=Math.max(0,FREE-s);
+  document.getElementById('shipBar').innerHTML=(left>0?`Noch <b>${eur(left)}</b> bis zum <b>Gratis-Versand</b> 🚚`:`🎉 Du hast <b>Gratis-Versand</b> freigeschaltet!`)+`<div class="bar"><i style="width:${Math.min(100,s/FREE*100)}%"></i></div>`;
+  const body=document.getElementById('drBody'),foot=document.getElementById('drFoot');
+  if(!n){
+    body.innerHTML=`<div class="empty">${croc(120)}<div class="d">Noch nichts geschnappt</div><p>Deine nächsten Deals warten schon.</p><button class="btn btn-g" style="margin-top:18px" onclick="closeAll();location.hash='#shop'">Zum Shop</button></div>`;
+    foot.innerHTML='';return;
+  }
+  body.innerHTML=Object.entries(cart).map(([id,q])=>{const x=byId(id);return `
+    <div class="line">${thumb(x)}
+      <div><h6>${x.n}</h6><div class="lp">${eur(x.p*q)}</div>
+        <div class="qty"><button aria-label="Weniger" onclick="setQty('${id}',-1)">−</button><span>${q}</span><button aria-label="Mehr" onclick="setQty('${id}',1)">+</button></div></div>
+      <button class="rm" onclick="setQty('${id}',-${q})">Entfernen</button>
+    </div>`}).join('')+(!cart['box-m']&&!cart['box-xxl']?`<div class="upsell">📦<span><b>Mach's spannend:</b> Mystery Box M dazu für 39,99 €</span><button onclick="add('box-m')">+ Dazu</button></div>`:'');
+  foot.innerHTML=`
+    <div class="sum-row"><span>Zwischensumme</span><span>${eur(s)}</span></div>
+    <div class="sum-row"><span>Versand</span><span>${ship()?eur(ship()):'Kostenlos'}</span></div>
+    <div class="sum-row total"><span>Gesamt</span><span>${eur(s+ship())}</span></div>
+    <button class="btn btn-y btn-block" onclick="startCheckout()">Zur Kasse 🔒</button>
+    <small style="text-align:center;color:var(--muted);font-size:12px">inkl. MwSt. · PayPal · Klarna · Apple Pay</small>`;
+}
+updateCart();
+
+/* ---------- Overlays ---------- */
+const ov=document.getElementById('overlay'),dr=document.getElementById('drawer'),md=document.getElementById('modal');
+function lock(on){document.body.style.overflow=on?'hidden':''}
+function openCart(){closeModal();dr.classList.add('on');dr.setAttribute('aria-hidden','false');ov.classList.add('on');lock(true)}
+function closeModal(){md.classList.remove('on')}
+function closeAll(){dr.classList.remove('on');dr.setAttribute('aria-hidden','true');closeModal();ov.classList.remove('on');lock(false)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAll();closeCheckout()}});
+
+function openProduct(id){
+  const x=byId(id),pct=Math.round((1-x.p/x.w)*100);
+  md.innerHTML=`<button class="m-close" aria-label="Schließen" onclick="closeAll()">✕</button>
+   <div class="m-img" style="background:${x.bg}">${x.e}</div>
+   <div class="m-body">
+     <span class="card-cat">${x.cat}</span>
+     <h3>${x.n}</h3>
+     <div class="price"><b>${eur(x.p)}</b><s>${eur(x.w)}</s><span class="box-value">−${pct} %</span></div>
+     <div class="stars">★★★★★ <span style="color:var(--muted);font-size:13px;letter-spacing:0">(${20+id.length*7} Bewertungen)</span></div>
+     <p style="color:var(--muted);font-size:15px">Neuware direkt aus unserem Lager. Originalverpackt, geprüft und blitzschnell verschickt – so günstig gibt's das sonst nur in der Live-Show.</p>
+     <div class="m-points"><div>🚚 Lieferung in 1–3 Werktagen</div><div>↩️ 14 Tage Widerrufsrecht</div><div>🔒 Sicher bezahlen mit PayPal & Klarna</div></div>
+     <button class="btn btn-g btn-block" onclick="add('${x.id}');openCart()">In den Warenkorb – ${eur(x.p)}</button>
+   </div>`;
+  md.classList.add('on');ov.classList.add('on');lock(true);
+}
+
+/* ---------- Checkout (demo, no payment data collected) ---------- */
+const co=document.getElementById('co');let step=0,form={};
+function startCheckout(){closeAll();step=0;co.classList.add('on');lock(true);drawCo()}
+function closeCheckout(){co.classList.remove('on');lock(false)}
+function summary(){
+  return `<div class="panel"><h3>Bestellung</h3>
+   ${Object.entries(cart).map(([id,q])=>{const x=byId(id);return `<div class="mini-line"><span>${q}× ${x.n}</span><b>${eur(x.p*q)}</b></div>`}).join('')}
+   <hr style="border:0;border-top:1px solid var(--line);margin:10px 0">
+   <div class="mini-line"><span>Versand</span><span>${ship()?eur(ship()):'Kostenlos'}</span></div>
+   <div class="mini-line" style="font-size:18px;font-weight:800"><span>Gesamt</span><span>${eur(sub()+ship())}</span></div>
+   <p style="font-size:12px;color:var(--muted);margin-top:6px">inkl. 19 % MwSt.</p></div>`;
+}
+function drawCo(){
+  document.querySelectorAll('#steps div').forEach((d,i)=>d.classList.toggle('on',i<=step));
+  const g=document.getElementById('coGrid');co.scrollTop=0;
+  if(step===0){g.innerHTML=`<form class="panel" onsubmit="event.preventDefault();form=Object.fromEntries(new FormData(this));step=1;drawCo()">
+    <h3>Lieferadresse</h3>
+    <div class="field"><label for="f1">E-Mail</label><input id="f1" name="mail" type="email" required autocomplete="email" placeholder="du@beispiel.de"></div>
+    <div class="row2"><div class="field"><label for="f2">Vorname</label><input id="f2" name="fn" required autocomplete="given-name"></div>
+    <div class="field"><label for="f3">Nachname</label><input id="f3" name="ln" required autocomplete="family-name"></div></div>
+    <div class="field"><label for="f4">Straße & Hausnummer</label><input id="f4" name="st" required autocomplete="street-address"></div>
+    <div class="row2"><div class="field"><label for="f5">PLZ</label><input id="f5" name="plz" required inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code"></div>
+    <div class="field"><label for="f6">Ort</label><input id="f6" name="ort" required autocomplete="address-level2"></div></div>
+    <button class="btn btn-g btn-block" type="submit">Weiter zum Versand</button></form>${summary()}`}
+  if(step===1){g.innerHTML=`<form class="panel" onsubmit="event.preventDefault();step=2;drawCo()">
+    <h3>Versandart</h3>
+    <label class="opt"><input type="radio" name="s" checked><span><b>DHL Standard</b><small>1–3 Werktage</small></span><span class="pm">${ship()?eur(ship()):'Gratis'}</span></label>
+    <label class="opt"><input type="radio" name="s"><span><b>DHL Express</b><small>Morgen da (bis 14 Uhr bestellt)</small></span><span class="pm">9,90 €</span></label>
+    <label class="opt"><input type="radio" name="s"><span><b>Abholung im Lager</b><small>Nach Terminabsprache</small></span><span class="pm">Gratis</span></label>
+    <div style="display:flex;gap:10px;margin-top:6px"><button type="button" class="btn" style="border:2px solid var(--line)" onclick="step=0;drawCo()">Zurück</button><button class="btn btn-g" style="flex:1" type="submit">Weiter zur Zahlung</button></div></form>${summary()}`}
+  if(step===2){g.innerHTML=`<form class="panel" onsubmit="event.preventDefault();finish()">
+    <h3>Zahlungsart</h3>
+    <label class="opt"><input type="radio" name="p" checked><span><b>PayPal</b><small>Schnell & mit Käuferschutz</small></span><span class="pm">PayPal</span></label>
+    <label class="opt"><input type="radio" name="p"><span><b>Klarna</b><small>Rechnung oder Ratenkauf</small></span><span class="pm">Klarna</span></label>
+    <label class="opt"><input type="radio" name="p"><span><b>Apple Pay / Google Pay</b><small>Mit einem Tipp bezahlen</small></span><span class="pm"></span></label>
+    <label class="opt"><input type="radio" name="p"><span><b>Kreditkarte</b><small>Visa, Mastercard</small></span><span class="pm">💳</span></label>
+    <p class="note">Demo-Modus: Es werden keine Zahlungsdaten abgefragt oder übertragen. Im Live-Shop übernimmt Shopify Payments die sichere Abwicklung.</p>
+    <label style="display:flex;gap:10px;font-size:13px;margin:14px 0;align-items:flex-start"><input type="checkbox" required style="margin-top:3px;accent-color:var(--green);width:18px;height:18px">Ich habe die AGB und die Widerrufsbelehrung gelesen und akzeptiere sie.</label>
+    <div style="display:flex;gap:10px"><button type="button" class="btn" style="border:2px solid var(--line)" onclick="step=1;drawCo()">Zurück</button><button class="btn btn-y" style="flex:1" type="submit">Zahlungspflichtig bestellen</button></div></form>${summary()}`}
+}
+function finish(){
+  const nr='SN-'+Math.floor(100000+Math.random()*900000),total=eur(sub()+ship());
+  document.querySelectorAll('#steps div').forEach(d=>d.classList.add('on'));
+  document.getElementById('coGrid').innerHTML=`<div class="panel success" style="grid-column:1/-1">
+    <div class="check">✓</div><h3 class="d" style="color:var(--green-deep)">Geschnappt, ${form.fn||'du'}!</h3>
+    <p style="color:var(--muted);max-width:440px;margin:0 auto">Bestellung <b>${nr}</b> über <b>${total}</b> ist eingegangen. Die Bestätigung geht an ${form.mail||'deine E-Mail'}.</p>
+    <p class="note" style="max-width:440px;margin:18px auto">Das war eine Demo – es wurde nichts bestellt oder bezahlt.</p>
+    <button class="btn btn-g" onclick="cart={};save();updateCart();closeCheckout();scrollTo({top:0,behavior:'smooth'})">Weiter shoppen</button></div>`;
+}
+
+/* ---------- Live countdown + fake chat ---------- */
+function nextShow(){const n=new Date(),t=new Date(n);t.setHours(19,0,0,0);if(n>=t)t.setDate(t.getDate()+1);return t}
+function tick(){
+  const t=nextShow(),d=Math.max(0,t-new Date());
+  const h=Math.floor(d/36e5),m=Math.floor(d%36e5/6e4),s=Math.floor(d%6e4/1e3);
+  document.getElementById('count').innerHTML=[[h,'Std'],[m,'Min'],[s,'Sek']].map(([v,l])=>`<div><b>${String(v).padStart(2,'0')}</b><small>${l}</small></div>`).join('');
+  document.getElementById('nextShow').textContent='Nächste Live-Show: '+t.toLocaleDateString('de-DE',{weekday:'long'})+', 19:00 Uhr auf Whatnot';
+}
+tick();setInterval(tick,1000);
+const msgs=['jonas_hh: XXL Box 🔥🔥','mia.k: wie viel noch?','lukas: 15!!','sarah_b: ich will den Stitch 😍','tim99: 18 €','anna: Schnappy 🐊💚','deniz: 22!'];
+let mi=0,bid=12;
+setInterval(()=>{const c=document.getElementById('chat');const el=document.createElement('div');el.textContent=msgs[mi++%msgs.length];c.appendChild(el);while(c.children.length>3)c.removeChild(c.firstChild);bid+=Math.ceil(Math.random()*3);document.getElementById('bid').textContent='Aktuelles Gebot: '+bid+' €';if(bid>48)bid=12},1800);
+
+/* ---------- Reviews ---------- */
+const R=[['Lisa M.','Hamburg','Die XXL Box war der Wahnsinn – allein der Plüsch war mehr wert als die ganze Box. Komme auf jeden Fall wieder!','#3DB54A'],['Murat K.','Berlin','Schon 3x in der Live-Show gekauft, jetzt endlich auch ohne warten. Versand super schnell.','#1E3A8A'],['Jana S.','Lüneburg','Hab die M-Box meinen Kindern geschenkt, die haben sich gefreut wie an Weihnachten 😄','#F5A400'],['Kevin R.','Bremen','Faire Preise, ehrlicher Support per Insta. Klare Empfehlung.','#FF4D4D']];
+document.getElementById('reviews').innerHTML=R.map(([n,o,t,c])=>`<div class="rev"><div class="stars">★★★★★</div><p>„${t}“</p><div class="rev-who"><i style="background:${c}">${n[0]}</i><span>${n}<small>${o} · Verifizierter Kauf</small></span></div></div>`).join('');
+
+/* ---------- Toast, reveal, sticky bar ---------- */
+let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1800)}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const mbar=document.getElementById('mbar');
+addEventListener('scroll',()=>mbar.classList.toggle('on',scrollY>500),{passive:true});
+</script>
+</body>
+</html>
