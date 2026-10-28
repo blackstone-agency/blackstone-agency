@@ -1,0 +1,50 @@
+{%- comment -%} Schnappy: Vorteilsleiste {%- endcomment -%}
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;{% if section.settings.overlap %} margin-top: -40px; position: relative; z-index: 2;{% endif %}">
+    <div class="sn-trust">
+      {%- for block in section.blocks -%}
+        <div class="sn-trust__item" {{ block.shopify_attributes }}>
+          <span class="sn-trust__icon" aria-hidden="true">{{ block.settings.icon | escape }}</span>
+          <span>{{ block.settings.title | escape }}<small>{{ block.settings.subtitle | escape }}</small></span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Vorteile",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" },
+    { "type": "checkbox", "id": "overlap", "label": "Leicht über den Startbereich schieben", "default": true },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Abstand oben", "default": 0 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 80, "step": 4, "unit": "px", "label": "Abstand unten", "default": 20 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Vorteil",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji", "default": "🚚" },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Schneller Versand" },
+        { "type": "text", "id": "subtitle", "label": "Untertitel", "default": "aus Deutschland" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Schnappy Vorteile",
+      "blocks": [
+        { "type": "item", "settings": { "icon": "🚚", "title": "Schneller Versand", "subtitle": "aus Deutschland" } },
+        { "type": "item", "settings": { "icon": "🔒", "title": "Sicher bezahlen", "subtitle": "PayPal · Klarna · Karte" } },
+        { "type": "item", "settings": { "icon": "↩️", "title": "14 Tage Widerruf", "subtitle": "gesetzlich garantiert" } },
+        { "type": "item", "settings": { "icon": "💬", "title": "Echter Support", "subtitle": "per WhatsApp & Insta" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
