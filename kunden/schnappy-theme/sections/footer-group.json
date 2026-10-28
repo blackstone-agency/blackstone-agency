@@ -157,7 +157,7 @@
       "settings": {
         "always": true,
         "aria_label": "Schnellnavigation",
-        "spacer_scheme": "scheme-3"
+        "spacer_scheme": "scheme-1"
       },
       "blocks": {
         "t0": {
