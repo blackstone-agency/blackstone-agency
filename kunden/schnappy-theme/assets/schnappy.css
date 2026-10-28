@@ -552,7 +552,7 @@ sn-scene, .sn-scene {
 .footer__content-bottom { border-top: 1px solid rgba(var(--color-foreground), 0.1); }
 .footer .list-payment__item svg { height: 3.2rem; width: auto; border-radius: 5px; }
 .footer .copyright__content, .footer .policies a { color: rgba(var(--color-foreground), 0.45); }
-.sn-footer-mega { font-family: var(--sn-logo); font-size: 19.6vw; line-height: 0.74; color: var(--sn-green); text-align: center; margin: 2rem 0 -2.4vw; user-select: none; white-space: nowrap; pointer-events: none; }
+.sn-footer-mega { font-family: var(--sn-logo); font-size: 17.5vw; line-height: 0.8; color: var(--sn-green); text-align: center; margin: 2rem 0 0; padding-bottom: 2vw; user-select: none; white-space: nowrap; pointer-events: none; }
 
 /* ---------- Vorteile & Kundenstimmen (optionale Sektionen) ---------- */
 .sn-trust { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
@@ -603,3 +603,6 @@ sn-scene, .sn-scene {
 .collection__description { color: rgba(var(--color-foreground), 0.62); max-width: 42rem; font-size: 1.65rem; }
 .collection__description p { margin: 0; }
 @media screen and (min-width: 990px) { .sn-reel__word { font-size: clamp(2.6rem, 2.4vw, 3.6rem); } }
+
+/* Dawn blendet leere <div>s aus (div:empty) – 3D-Flächen & Co. müssen sichtbar bleiben */
+.sn-scene .sn-f:empty, sn-scene .sn-f:empty, .sn-ground:empty, .sn-beam:empty, .sn-phone__notch:empty, .sn-tabbar-spacer:empty, .sn-wheel__prize:empty { display: block; }
