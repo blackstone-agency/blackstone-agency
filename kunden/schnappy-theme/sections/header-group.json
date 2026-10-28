@@ -51,10 +51,77 @@
         "sn_live_label": "LIVE 19:00",
         "sn_live_link": ""
       }
+    },
+    "search": {
+      "type": "schnappy-search",
+      "blocks": {
+        "b0": {
+          "type": "chip",
+          "settings": {
+            "label": "Spielzeug"
+          }
+        },
+        "b1": {
+          "type": "chip",
+          "settings": {
+            "label": "Socken"
+          }
+        },
+        "b2": {
+          "type": "chip",
+          "settings": {
+            "label": "Küche"
+          }
+        },
+        "b3": {
+          "type": "chip",
+          "settings": {
+            "label": "Wohnen"
+          }
+        },
+        "b4": {
+          "type": "chip",
+          "settings": {
+            "label": "Elektronik"
+          }
+        },
+        "b5": {
+          "type": "chip",
+          "settings": {
+            "label": "Geschenke"
+          }
+        },
+        "b6": {
+          "type": "chip",
+          "settings": {
+            "label": "Mystery Box"
+          }
+        },
+        "b7": {
+          "type": "chip",
+          "settings": {
+            "label": "Harry Potter"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
+      ],
+      "settings": {
+        "color_scheme": "scheme-3"
+      }
     }
   },
   "order": [
     "ticker",
-    "header"
+    "header",
+    "search"
   ]
 }

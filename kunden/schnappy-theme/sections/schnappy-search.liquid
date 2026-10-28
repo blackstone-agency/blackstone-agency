@@ -1,0 +1,42 @@
+{%- comment -%} Schnappy: große Suchleiste + Kategorie-Schnellwahl (Shop-Look wie bei großen Discountern) {%- endcomment -%}
+<div class="sn-searchbar color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="sn-searchbar__form">
+      <label for="SnSearch-{{ section.id }}" class="visually-hidden">{{ section.settings.placeholder | escape }}</label>
+      {% render 'schnappy-icon', icon: 'search' %}
+      <input id="SnSearch-{{ section.id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ section.settings.placeholder | escape }}" autocomplete="off">
+      <input type="hidden" name="type" value="product">
+      <button type="submit" class="sn-searchbar__btn">{{ section.settings.button | escape }}</button>
+    </form>
+    {%- if section.blocks.size > 0 -%}
+      <nav class="sn-searchbar__chips" aria-label="Kategorien">
+        {%- for block in section.blocks -%}
+          {%- capture href -%}{%- if block.settings.link != blank -%}{{ block.settings.link }}{%- else -%}{{ routes.search_url }}?type=product&q={{ block.settings.label | url_encode }}{%- endif -%}{%- endcapture -%}
+          <a href="{{ href }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Suchleiste",
+  "tag": "section",
+  "class": "section sn-searchbar-section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "placeholder", "label": "Platzhalter", "default": "Wonach suchst du? z. B. Socken, Spielzeug, Küche …" },
+    { "type": "text", "id": "button", "label": "Button-Text", "default": "Suchen" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-3" }
+  ],
+  "blocks": [
+    { "type": "chip", "name": "Kategorie", "settings": [
+      { "type": "text", "id": "label", "label": "Text", "default": "Spielzeug" },
+      { "type": "url", "id": "link", "label": "Link (optional)", "info": "Leer = Suche nach dem Text." }
+    ] }
+  ],
+  "enabled_on": { "groups": ["header"] },
+  "presets": [{ "name": "Schnappy Suchleiste" }]
+}
+{% endschema %}

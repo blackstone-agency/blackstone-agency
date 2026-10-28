@@ -66,7 +66,8 @@
         "color_scheme": "scheme-3",
         "padding_top": 32,
         "padding_bottom": 24
-      }
+      },
+      "disabled": true
     },
     "marquee": {
       "type": "schnappy-ticker",
@@ -121,7 +122,8 @@
         "separator": "✦",
         "color_scheme": "scheme-5",
         "speed": 34
-      }
+      },
+      "disabled": true
     },
     "formel": {
       "type": "schnappy-formel",
@@ -164,7 +166,8 @@
         "card_scheme": "scheme-2",
         "padding_top": 96,
         "padding_bottom": 96
-      }
+      },
+      "disabled": true
     },
     "boxes": {
       "type": "schnappy-mystery-boxes",
@@ -224,20 +227,19 @@
         "start": "2",
         "anchor": "boxen",
         "color_scheme": "scheme-1",
-        "padding_top": 0,
+        "padding_top": 36,
         "padding_bottom": 96
       }
     },
     "deals": {
       "type": "featured-collection",
       "settings": {
-        "title": "Schnapper der Woche.",
+        "title": "Neu im Shop",
         "heading_size": "h1",
-        "description": "<p>Neuware zu Restpostenpreisen. Wenn's weg ist, ist's weg.</p>",
         "show_description": false,
         "description_style": "body",
         "collection": "all",
-        "products_to_show": 8,
+        "products_to_show": 12,
         "columns_desktop": 4,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
@@ -252,8 +254,8 @@
         "enable_desktop_slider": false,
         "full_width": false,
         "swipe_on_mobile": false,
-        "padding_top": 0,
-        "padding_bottom": 96
+        "padding_top": 28,
+        "padding_bottom": 36
       }
     },
     "live": {
@@ -339,7 +341,8 @@
         "color_scheme": "scheme-1",
         "padding_top": 96,
         "padding_bottom": 96
-      }
+      },
+      "disabled": true
     },
     "faq": {
       "type": "collapsible-content",
@@ -437,17 +440,159 @@
         "padding_top": 0,
         "padding_bottom": 24
       }
+    },
+    "promos": {
+      "type": "schnappy-promos",
+      "blocks": {
+        "b0": {
+          "type": "promo",
+          "settings": {
+            "badge": "Bestseller",
+            "title": "Mystery Boxen",
+            "text": "Ab 19,99 € – immer mehr Warenwert als Preis.",
+            "cta": "Box auswählen",
+            "style": "green",
+            "show_box": true,
+            "icon": "gift"
+          }
+        },
+        "b1": {
+          "type": "promo",
+          "settings": {
+            "badge": "Bis −70 %",
+            "title": "Schnapper der Woche",
+            "text": "Neuware zu Restpostenpreisen.",
+            "cta": "Alle Deals",
+            "link": "shopify://collections/all",
+            "style": "yellow",
+            "show_box": false,
+            "icon": "flame"
+          }
+        },
+        "b2": {
+          "type": "promo",
+          "settings": {
+            "badge": "Heute 19:00",
+            "title": "Live auf Whatnot",
+            "text": "Mitbieten ab 1 € – 25 € Startguthaben.",
+            "cta": "Zur Live-Show",
+            "link": "https://www.whatnot.com/invite/schnappyshop",
+            "style": "ink",
+            "show_box": false,
+            "icon": "radio"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_top": 20,
+        "padding_bottom": 8
+      }
+    },
+    "cats": {
+      "type": "schnappy-categories",
+      "blocks": {
+        "b0": {
+          "type": "cat",
+          "settings": {
+            "label": "Neu eingetroffen",
+            "icon": "sparkles",
+            "color": "#3DB54A",
+            "link": "shopify://collections/all"
+          }
+        },
+        "b1": {
+          "type": "cat",
+          "settings": {
+            "label": "Angebote",
+            "icon": "star",
+            "color": "#D92B1F"
+          }
+        },
+        "b2": {
+          "type": "cat",
+          "settings": {
+            "label": "Mystery Boxen",
+            "icon": "package",
+            "color": "#B07F48"
+          }
+        },
+        "b3": {
+          "type": "cat",
+          "settings": {
+            "label": "Spielzeug",
+            "icon": "toy-brick",
+            "color": "#FF7A4D"
+          }
+        },
+        "b4": {
+          "type": "cat",
+          "settings": {
+            "label": "Küche & Haushalt",
+            "icon": "cooking-pot",
+            "color": "#C99510"
+          }
+        },
+        "b5": {
+          "type": "cat",
+          "settings": {
+            "label": "Wohnen",
+            "icon": "lamp",
+            "color": "#8E6CFF"
+          }
+        },
+        "b6": {
+          "type": "cat",
+          "settings": {
+            "label": "Elektronik",
+            "icon": "headphones",
+            "color": "#2A3038"
+          }
+        },
+        "b7": {
+          "type": "cat",
+          "settings": {
+            "label": "Geschenke",
+            "icon": "gift",
+            "color": "#E0457B"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
+      ],
+      "settings": {
+        "heading": "Kategorien",
+        "all_label": "Alle Produkte",
+        "color_scheme": "scheme-1",
+        "padding_top": 28,
+        "padding_bottom": 12
+      }
     }
   },
   "order": [
+    "promos",
+    "cats",
+    "deals",
+    "boxes",
+    "live",
+    "faq",
+    "newsletter",
     "hero",
     "marquee",
     "formel",
-    "boxes",
-    "deals",
-    "live",
-    "community",
-    "faq",
-    "newsletter"
+    "community"
   ]
 }
