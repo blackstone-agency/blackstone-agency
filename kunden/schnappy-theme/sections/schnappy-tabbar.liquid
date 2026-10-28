@@ -28,7 +28,7 @@
             </button>
           {%- when 'cart' -%}
             <a href="{{ routes.cart_url }}" class="sn-tabbar__item sn-tabbar__cart" data-tab-cart {{ block.shopify_attributes }}>
-              <span class="sn-tabbar__icon">{% render 'schnappy-icon', icon: 'shopping-bag' %}</span>
+              <span class="sn-tabbar__icon">{% render 'schnappy-icon', icon: 'cart' %}</span>
               <span class="sn-tabbar__count{% if cart.item_count > 0 %} is-on{% endif %}" data-count aria-hidden="true">{{ cart.item_count }}</span>
               <span class="sn-tabbar__label" data-total data-empty="{{ block.settings.label | escape }}">
                 {%- if cart.item_count > 0 and block.settings.show_total -%}{{ cart.total_price | money }}{%- else -%}{{ block.settings.label | escape }}{%- endif -%}

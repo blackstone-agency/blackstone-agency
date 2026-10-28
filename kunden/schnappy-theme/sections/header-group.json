@@ -24,10 +24,18 @@
             "text": "Live-Shows auf Instagram @schnappy.shop",
             "link": ""
           }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "text": "<strong>Mystery Boxen</strong> ab 9,99 €",
+            "link": ""
+          }
         }
       },
       "block_order": [
         "t0",
+        "t2",
         "t1"
       ]
     },

@@ -193,10 +193,10 @@
                                 {{ item.final_price | money }}
                               </strong>
                             </div>
-                          {%- else -%}
-                            <div class="product-option">
-                              {{ item.original_price | money }}
-                            </div>
+                          {%- elsif item.variant.compare_at_price > item.final_price -%}
+                            <div class="product-option sn-ci-price"><s>{{ item.variant.compare_at_price | money }}</s> <b>{{ item.final_price | money }}</b> <span class="sn-ci-pct">−{{ item.variant.compare_at_price | minus: item.final_price | times: 100 | divided_by: item.variant.compare_at_price }} %</span></div>
+                          {%- elsif item.quantity > 1 -%}
+                            <div class="product-option sn-ci-price">{{ item.original_price | money }} / Stück</div>
                           {%- endif -%}
 
                           {%- if item.product.has_only_default_variant == false
@@ -276,6 +276,7 @@
                                 </span>
                               </div>
                             {%- else -%}
+                              {%- if item.variant.compare_at_price > item.final_price -%}<s class="cart-item__old-price price price--end">{{ item.variant.compare_at_price | times: item.quantity | money }}</s>{%- endif -%}
                               <span class="price price--end">
                                 {{ item.original_line_price | money }}
                               </span>
@@ -541,13 +542,56 @@
             {%- endif -%}
           </div>
 
-          {%- assign sn_saved = 0 -%}
-          {%- for item in cart.items -%}{%- if item.variant.compare_at_price > item.variant.price -%}{%- assign sn_d = item.variant.compare_at_price | minus: item.variant.price | times: item.quantity -%}{%- assign sn_saved = sn_saved | plus: sn_d -%}{%- endif -%}{%- endfor -%}
-          {%- assign sn_saved = sn_saved | plus: cart.total_discount -%}
-          {%- if sn_saved > 0 -%}<p class="sn-cart-saved">🎉 Du sparst <b>{{ sn_saved | money }}</b></p>{%- endif -%}
+          {%- liquid
+            assign sn_regular = 0
+            for item in cart.items
+              assign sn_unit = item.original_price
+              if item.variant.compare_at_price > item.original_price
+                assign sn_unit = item.variant.compare_at_price
+              endif
+              assign sn_line = sn_unit | times: item.quantity
+              assign sn_regular = sn_regular | plus: sn_line
+            endfor
+            assign sn_saved = sn_regular | minus: cart.total_price
+            assign sn_codes = ''
+            for d in cart.discount_applications
+              if d.type == 'discount_code'
+                assign sn_codes = sn_codes | append: d.title | append: ','
+              endif
+            endfor
+          -%}
+          <div class="sn-sum">
+            {%- if sn_saved > 0 -%}
+              <div class="sn-sum__row"><span>Regulärer Preis</span><s>{{ sn_regular | money }}</s></div>
+              <div class="sn-sum__row sn-sum__row--save"><span>🎉 Du sparst bisher</span><b>−{{ sn_saved | money }}</b></div>
+            {%- endif -%}
+            <div class="sn-sum__row"><span>Versand</span><span>{%- if cart.total_price >= 4400 -%}<b class="sn-sum__free">Gratis</b>{%- else -%}an der Kasse · gratis ab 44 €{%- endif -%}</span></div>
+          </div>
+
+          <form class="sn-code" data-sn-code data-codes="{{ sn_codes | escape }}" novalidate>
+            <details class="sn-code__toggle"{% if sn_codes != '' %} open{% endif %}>
+              <summary class="sn-code__label">🏷️ Rabattcode oder Gutschein einlösen</summary>
+              <div class="sn-code__row">
+                <label for="SnCodeInput" class="visually-hidden">Rabattcode</label>
+                <input id="SnCodeInput" class="sn-code__input" type="text" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="z. B. SCHNAPPY10">
+                <button type="submit" class="sn-code__btn">Einlösen</button>
+              </div>
+            </details>
+            <p class="sn-code__msg" role="status" aria-live="polite" data-msg></p>
+            {%- if sn_codes != '' -%}
+              <ul class="sn-code__list" role="list">
+                {%- for d in cart.discount_applications -%}
+                  {%- if d.type == 'discount_code' -%}
+                    <li><span>✓ <b>{{ d.title | escape }}</b> aktiv (−{{ d.total_allocated_amount | money }})</span><button type="button" data-remove="{{ d.title | escape }}" aria-label="Code {{ d.title | escape }} entfernen">Entfernen</button></li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </form>
+
           <div class="totals" role="status">
-            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+            <h2 class="totals__total">Gesamtsumme</h2>
+            <p class="totals__total-value">{{ cart.total_price | money }}</p>
           </div>
 
           <small class="tax-note caption-large rte">
@@ -618,7 +662,7 @@
               disabled
             {% endif %}
           >
-            {% render 'schnappy-icon', icon: 'lock' %} Sicher zur Kasse
+            {% render 'schnappy-icon', icon: 'lock' %} Sicher zur Kasse · {{ cart.total_price | money }}
           </button>
           <div class="sn-cart-trust">
             <p>✓ Lieferung <span data-sn-eta>in 1–3 Werktagen</span> &nbsp;·&nbsp; ✓ 14 Tage Rückgabe</p>

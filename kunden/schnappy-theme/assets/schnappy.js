@@ -588,3 +588,48 @@ document.addEventListener('click', (e) => {
   const d = document.querySelector('[data-sn-dealsbtn]'); if (!d) return;
   e.preventDefault(); e.stopPropagation(); d.open = !d.open;
 }, true);
+
+/* v14: Rabattcode im Einkaufswagen – direkt mit Shopify verknüpft (Cart-API) */
+(function () {
+  const root = () => (window.Shopify && Shopify.routes ? Shopify.routes.root : '/');
+  const codesOf = (form) => (form.dataset.codes || '').split(',').map((c) => c.trim()).filter(Boolean);
+  async function apply(codes, form, tried) {
+    const msg = () => document.querySelector('[data-sn-code] [data-msg]');
+    const btn = form && form.querySelector('.sn-code__btn'); if (btn) { btn.disabled = true; btn.textContent = '…'; }
+    try {
+      const r = await fetch(root() + 'cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ discount: codes.join(','), sections: ['cart-drawer', 'cart-icon-bubble'] }) });
+      if (!r.ok) throw new Error('http');
+      const cart = await r.json();
+      const drawer = document.querySelector('cart-drawer');
+      if (cart.sections && drawer && drawer.renderContents) drawer.renderContents({ id: null, sections: cart.sections });
+      else if (!document.querySelector('cart-drawer')) location.reload();
+      setTimeout(() => {
+        const m = msg(); if (!m || !tried) return;
+        const hit = (cart.discount_codes || []).find((c) => c.code.toLowerCase() === tried.toLowerCase());
+        if (hit && hit.applicable) { m.textContent = '✓ Code „' + hit.code + '“ wurde eingelöst.'; m.className = 'sn-code__msg is-ok'; }
+        else {
+          m.textContent = 'Der Code „' + tried + '“ ist ungültig oder gilt nicht für diesen Einkauf.'; m.className = 'sn-code__msg is-err';
+          const ok = (cart.discount_codes || []).filter((c) => c.applicable).map((c) => c.code);
+          if (hit) fetch(root() + 'cart/update.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ discount: ok.join(',') }) });
+        }
+      }, 60);
+    } catch (e) {
+      // Rückfall: Shopify-Rabattlink (Code wird für die Kasse gespeichert)
+      if (tried) location.href = root() + 'discount/' + encodeURIComponent(tried) + '?redirect=' + encodeURIComponent(location.pathname + location.search);
+    } finally { if (btn) { btn.disabled = false; btn.textContent = 'Einlösen'; } }
+  }
+  document.addEventListener('submit', (e) => {
+    const form = e.target.closest('[data-sn-code]'); if (!form) return;
+    e.preventDefault();
+    const code = (form.querySelector('input[name="code"]').value || '').trim();
+    const m = form.querySelector('[data-msg]');
+    if (!code) { m.textContent = 'Bitte gib einen Code ein.'; m.className = 'sn-code__msg is-err'; return; }
+    const list = codesOf(form); if (!list.some((c) => c.toLowerCase() === code.toLowerCase())) list.push(code);
+    apply(list, form, code);
+  });
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-sn-code] [data-remove]'); if (!b) return;
+    const form = b.closest('[data-sn-code]');
+    apply(codesOf(form).filter((c) => c.toLowerCase() !== b.dataset.remove.toLowerCase()), form, null);
+  });
+})();

@@ -27,7 +27,7 @@
               {%- form 'product', p, novalidate: 'novalidate' -%}
                 <input type="hidden" name="id" value="{{ v.id }}">
                 <div class="product-form__error-message-wrapper" hidden><span class="product-form__error-message"></span></div>
-                <button type="submit" name="add" class="sn-cartbtn"><span>{% render 'schnappy-icon', icon: 'shopping-bag' %} In den Einkaufswagen</span>{%- render 'loading-spinner' -%}</button>
+                <button type="submit" name="add" class="sn-cartbtn"><span>{% render 'schnappy-icon', icon: 'cart' %} In den Einkaufswagen</span>{%- render 'loading-spinner' -%}</button>
               {%- endform -%}
             </product-form>
             <p class="sn-daily__note">Jeden Tag um 0 Uhr ein neuer Schnapper – schau morgen wieder rein.</p>
