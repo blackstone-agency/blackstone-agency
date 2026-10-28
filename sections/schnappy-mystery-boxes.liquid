@@ -1,0 +1,133 @@
+{%- comment -%} Schnappy: Mystery-Box-Kacheln mit direktem "In den Warenkorb" {%- endcomment -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+    {%- if section.settings.heading != blank or section.settings.kicker != blank -%}
+      <div class="sn-head">
+        <div>
+          {%- if section.settings.kicker != blank -%}<p class="sn-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+          <h2>{{ section.settings.heading | escape }}</h2>
+        </div>
+        {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="sn-boxes" style="--sn-cols: {{ section.blocks.size | at_most: 4 | at_least: 1 }};">
+      {%- for block in section.blocks -%}
+        {%- assign box = block.settings.product -%}
+        {%- if box == blank and request.design_mode == false -%}{%- continue -%}{%- endif -%}
+        <article class="sn-box sn-box--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.tag != blank -%}<span class="sn-box__tag">{{ block.settings.tag | escape }}</span>{%- endif -%}
+          <h3 class="sn-box__title">
+            {%- if box != blank -%}
+              <a href="{{ box.url }}">{{ block.settings.title | default: box.title | escape }}</a>
+            {%- else -%}
+              {{ block.settings.title | default: 'Mystery Box' | escape }}
+            {%- endif -%}
+          </h3>
+          <div class="sn-box__art">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250, 500', sizes: '250px' }}
+            {%- else -%}
+              {%- render 'schnappy-box-art', label: block.settings.art_label -%}
+            {%- endif -%}
+          </div>
+          {%- assign points = block.settings.points | newline_to_br | split: '<br />' -%}
+          {%- if block.settings.points != blank -%}
+            <ul>
+              {%- for pt in points -%}
+                {%- assign t = pt | strip -%}
+                {%- if t != blank -%}<li>{{ t | escape }}</li>{%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {%- if box != blank -%}
+            {%- assign v = box.selected_or_first_available_variant -%}
+            <div class="sn-box__price">
+              <b>{{ v.price | money }}</b>
+              {%- if v.compare_at_price > v.price -%}<s>{{ v.compare_at_price | money }}</s>{%- endif -%}
+              {%- if block.settings.value_label != blank -%}<span class="sn-box__value">{{ block.settings.value_label | escape }}</span>{%- endif -%}
+            </div>
+            {%- assign form_id = 'sn-box-form-' | append: section.id | append: '-' | append: block.id -%}
+            <product-form data-section-id="{{ section.id }}">
+              {%- form 'product', box, id: form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" value="{{ v.id }}" class="product-variant-id"{% unless v.available %} disabled{% endunless %}>
+                <div class="product-form__error-message-wrapper" role="alert" hidden>
+                  <span class="product-form__error-message"></span>
+                </div>
+                <button
+                  id="{{ form_id }}-submit"
+                  type="submit"
+                  name="add"
+                  class="button button--full-width"
+                  aria-haspopup="dialog"
+                  {% unless v.available %}disabled{% endunless %}
+                >
+                  <span>
+                    {%- if v.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+                  </span>
+                  <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                  {%- render 'loading-spinner' -%}
+                </button>
+              {%- endform -%}
+            </product-form>
+          {%- else -%}
+            <p class="sn-box__note">Im Theme-Editor ein Produkt auswählen, damit Preis und Warenkorb-Button erscheinen.</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Schnappy Mystery Boxen",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "Der Schnappy-Klassiker" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Mystery Boxen" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Jede Box ist garantiert mehr wert als ihr Preis. Was drin ist? Überraschung – genau wie in der Live-Show." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand oben", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand unten", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "box",
+      "name": "Box",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produkt", "info": "Preis, Streichpreis und Lagerbestand kommen automatisch aus dem Produkt." },
+        { "type": "text", "id": "title", "label": "Titel (optional)", "info": "Leer lassen = Produktname" },
+        { "type": "text", "id": "tag", "label": "Etikett", "default": "BESTSELLER" },
+        { "type": "textarea", "id": "points", "label": "Vorteile (eine Zeile pro Punkt)", "default": "10–15 Überraschungs-Artikel\nMind. 1 Markenprodukt\nTrend-Produkte inklusive" },
+        { "type": "text", "id": "value_label", "label": "Wert-Hinweis", "default": "Wert 90 €+" },
+        {
+          "type": "select", "id": "style", "label": "Farbe", "default": "green",
+          "options": [
+            { "value": "green", "label": "Grün" },
+            { "value": "blue", "label": "Blau" },
+            { "value": "black", "label": "Schwarz/Gold (Premium)" },
+            { "value": "yellow", "label": "Gelb" }
+          ]
+        },
+        { "type": "image_picker", "id": "image", "label": "Bild (optional)", "info": "Ohne Bild wird eine gezeichnete Box angezeigt." },
+        { "type": "text", "id": "art_label", "label": "Aufschrift auf gezeichneter Box", "default": "M" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Schnappy Mystery Boxen",
+      "blocks": [
+        { "type": "box", "settings": { "tag": "EINSTEIGER", "title": "Mystery Box S", "style": "green", "art_label": "S", "value_label": "Wert 40 €+", "points": "5–8 Überraschungs-Artikel\nSpielzeug & Gadgets\nPerfekt als Geschenk" } },
+        { "type": "box", "settings": { "tag": "BESTSELLER", "title": "Mystery Box M", "style": "blue", "art_label": "M", "value_label": "Wert 90 €+", "points": "10–15 Überraschungs-Artikel\nMind. 1 Markenprodukt\nTrend-Produkte inklusive" } },
+        { "type": "box", "settings": { "tag": "⭐ AUS DER LIVE-SHOW", "title": "XXL Super Mystery Box", "style": "black", "art_label": "XXL", "value_label": "Wert 200 €+", "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf Jackpot-Item" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,15 @@
+{%- comment -%}
+  Schnappy-Maskottchen (Platzhalter-Grafik). Wird nur angezeigt, wenn kein eigenes Bild gewählt ist.
+  Nutzung: {% render 'schnappy-mascot', width: 150 %}
+{%- endcomment -%}
+<svg viewBox="0 0 200 170" {% if width %}width="{{ width }}"{% endif %} aria-hidden="true" focusable="false">
+  <path d="M30 120c-10-30 0-70 40-85 25-9 55-6 75 6 10-12 30-12 38 0 6 9 3 20-4 26 10 10 14 25 10 40-6 25-35 40-80 40-40 0-71-7-79-27Z" fill="#3DB54A" stroke="#0B2A16" stroke-width="5"/>
+  <path d="M38 118c30 8 95 10 150-4" fill="none" stroke="#0B2A16" stroke-width="5" stroke-linecap="round"/>
+  <path d="M60 119l7 12 7-11M90 121l7 12 7-12M120 121l7 12 7-12M150 118l6 11 7-12" fill="#fff" stroke="#0B2A16" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="150" cy="40" r="6" fill="#0B2A16"/><circle cx="168" cy="40" r="6" fill="#0B2A16"/>
+  <path d="M56 62l90-14" stroke="#0B2A16" stroke-width="6" stroke-linecap="round"/>
+  <path d="M62 60c2 18 10 27 26 25 14-2 18-12 16-27Z" fill="#111" stroke="#0B2A16" stroke-width="3"/>
+  <path d="M108 54c2 16 10 24 24 22 13-2 17-11 15-26Z" fill="#111" stroke="#0B2A16" stroke-width="3"/>
+  <path d="M70 64l12-1M115 58l12-2" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".85"/>
+  <circle cx="58" cy="95" r="4" fill="#2E9A3B"/><circle cx="72" cy="100" r="3" fill="#2E9A3B"/>
+</svg>

@@ -1,0 +1,313 @@
+{
+  "sections": {
+    "hero": {
+      "type": "schnappy-hero",
+      "blocks": {
+        "b0": {
+          "type": "stat",
+          "settings": {
+            "value": "1.000+",
+            "label": "Follower & Fans"
+          }
+        },
+        "b1": {
+          "type": "stat",
+          "settings": {
+            "value": "−70 %",
+            "label": "bis unter UVP"
+          }
+        },
+        "b2": {
+          "type": "stat",
+          "settings": {
+            "value": "Live",
+            "label": "jeden Abend auf Whatnot"
+          }
+        },
+        "b3": {
+          "type": "sticker",
+          "settings": {
+            "icon": "📦",
+            "title": "Mystery Boxen",
+            "subtitle": "aus der Live-Show",
+            "position": "top-left"
+          }
+        },
+        "b4": {
+          "type": "sticker",
+          "settings": {
+            "icon": "🔥",
+            "title": "bis −70 %",
+            "subtitle": "auf Trend-Produkte",
+            "position": "bottom-right"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-3",
+        "curve": true,
+        "curve_color": "#FFF9EC",
+        "button_label_1": "Mystery Box sichern",
+        "button_label_2": "Alle Deals",
+        "button_link_2": "shopify://collections/all"
+      }
+    },
+    "trust": {
+      "type": "schnappy-trust-bar",
+      "blocks": {
+        "b0": {
+          "type": "item",
+          "settings": {
+            "icon": "🚚",
+            "title": "Schneller Versand",
+            "subtitle": "aus Deutschland"
+          }
+        },
+        "b1": {
+          "type": "item",
+          "settings": {
+            "icon": "🔒",
+            "title": "Sicher bezahlen",
+            "subtitle": "PayPal · Klarna · Karte"
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "icon": "↩️",
+            "title": "14 Tage Widerruf",
+            "subtitle": "gesetzlich garantiert"
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "icon": "💬",
+            "title": "Echter Support",
+            "subtitle": "per WhatsApp & Insta"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "overlap": true
+      }
+    },
+    "boxes": {
+      "type": "schnappy-mystery-boxes",
+      "blocks": {
+        "b0": {
+          "type": "box",
+          "settings": {
+            "tag": "EINSTEIGER",
+            "title": "Mystery Box S",
+            "style": "green",
+            "art_label": "S",
+            "value_label": "Wert 40 €+",
+            "points": "5–8 Überraschungs-Artikel\nSpielzeug & Gadgets\nPerfekt als Geschenk"
+          }
+        },
+        "b1": {
+          "type": "box",
+          "settings": {
+            "tag": "BESTSELLER",
+            "title": "Mystery Box M",
+            "style": "blue",
+            "art_label": "M",
+            "value_label": "Wert 90 €+",
+            "points": "10–15 Überraschungs-Artikel\nMind. 1 Markenprodukt\nTrend-Produkte inklusive"
+          }
+        },
+        "b2": {
+          "type": "box",
+          "settings": {
+            "tag": "⭐ AUS DER LIVE-SHOW",
+            "title": "XXL Super Mystery Box",
+            "style": "black",
+            "art_label": "XXL",
+            "value_label": "Wert 200 €+",
+            "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf Jackpot-Item"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "deals": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Schnapper der Woche",
+        "heading_size": "h1",
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "image_ratio": "square",
+        "show_secondary_image": true,
+        "quick_add": "standard",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "live": {
+      "type": "schnappy-live",
+      "settings": {
+        "color_scheme": "scheme-4",
+        "outer_scheme": "scheme-1"
+      }
+    },
+    "reviews": {
+      "type": "schnappy-reviews",
+      "disabled": true,
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {}
+        },
+        "r2": {
+          "type": "review",
+          "settings": {}
+        },
+        "r3": {
+          "type": "review",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {}
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "b0": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was ist in einer Mystery Box?",
+            "icon": "box",
+            "row_content": "<p>Eine bunte Mischung aus Spielzeug, Trend-Produkten, Haushalts- und Lifestyle-Artikeln. Der Warenwert liegt immer über dem Kaufpreis.</p>"
+          }
+        },
+        "b1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Wie schnell wird versendet?",
+            "icon": "truck",
+            "row_content": "<p>Bestellungen bis 14 Uhr verlassen in der Regel noch am selben Werktag unser Lager. Lieferzeit in Deutschland: 1–3 Werktage.</p>"
+          }
+        },
+        "b2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Ab wann ist der Versand kostenlos?",
+            "icon": "price_tag",
+            "row_content": "<p>Ab 50 € Bestellwert versenden wir innerhalb Deutschlands kostenlos.</p>"
+          }
+        },
+        "b3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Kann ich zurückgeben?",
+            "icon": "return",
+            "row_content": "<p>Ja, du hast ein 14-tägiges Widerrufsrecht. Details findest du in unserer Widerrufsbelehrung.</p>"
+          }
+        },
+        "b4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Was ist der Unterschied zur Live-Show?",
+            "icon": "chat_bubble",
+            "row_content": "<p>In der Live-Show auf Whatnot bietest du live mit. Im Shop kaufst du zum Festpreis – jederzeit, ohne auf die nächste Show zu warten.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "caption": "Kurz erklärt",
+        "heading": "Häufige Fragen",
+        "heading_size": "h1",
+        "heading_alignment": "left",
+        "layout": "none",
+        "color_scheme": "scheme-1",
+        "container_color_scheme": "scheme-2",
+        "open_first_collapsible_row": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "b0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Drop-Alarm & exklusive Codes",
+            "heading_size": "h1"
+          }
+        },
+        "b1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Erfahre als Erstes von neuen Mystery Boxen, Live-Shows und Schnapper-Deals.</p>"
+          }
+        },
+        "b2": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2"
+      ],
+      "settings": {
+        "color_scheme": "scheme-6",
+        "full_width": false,
+        "padding_top": 36,
+        "padding_bottom": 72
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "boxes",
+    "deals",
+    "live",
+    "reviews",
+    "faq",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,137 @@
+{%- comment -%} Schnappy: Live-Shopping mit Countdown zur nächsten Show {%- endcomment -%}
+{%- capture days -%}{% if section.settings.day_0 %}0,{% endif %}{% if section.settings.day_1 %}1,{% endif %}{% if section.settings.day_2 %}2,{% endif %}{% if section.settings.day_3 %}3,{% endif %}{% if section.settings.day_4 %}4,{% endif %}{% if section.settings.day_5 %}5,{% endif %}{% if section.settings.day_6 %}6,{% endif %}{%- endcapture -%}
+<div class="color-{{ section.settings.outer_scheme }} gradient">
+  <div class="page-width" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
+    <div class="sn-live color-{{ section.settings.color_scheme }} gradient">
+      <div>
+        {%- if section.settings.kicker != blank -%}<p class="sn-kicker">{{ section.settings.kicker | escape }}</p>{%- endif -%}
+        <h2>{{ section.settings.heading | escape }}{% if section.settings.heading_highlight != blank %} <em>{{ section.settings.heading_highlight | escape }}</em>{% endif %}</h2>
+        {%- if section.settings.text != blank -%}<div class="sn-live__text rte">{{ section.settings.text }}</div>{%- endif -%}
+
+        <sn-countdown data-days="{{ days }}" data-time="{{ section.settings.time | escape }}" data-duration="{{ section.settings.duration }}" data-platform="{{ section.settings.platform | escape }}">
+          <div class="sn-count" aria-live="off">
+            <div><b data-h>--</b><small>Std</small></div>
+            <div><b data-m>--</b><small>Min</small></div>
+            <div><b data-s>--</b><small>Sek</small></div>
+          </div>
+          <span class="sn-live__now" hidden><span class="sn-dot"></span>JETZT LIVE</span>
+          <p class="sn-live__next" data-next></p>
+        </sn-countdown>
+
+        <div class="sn-hero__buttons" style="margin-top:0">
+          {%- if section.settings.button_label_1 != blank -%}
+            <a class="button button--primary" href="{{ section.settings.button_link_1 }}" target="_blank" rel="noopener">{{ section.settings.button_label_1 | escape }}</a>
+          {%- endif -%}
+          {%- if section.settings.button_label_2 != blank -%}
+            <a class="button button--secondary" href="{{ section.settings.button_link_2 }}" target="_blank" rel="noopener">{{ section.settings.button_label_2 | escape }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="sn-phone" aria-hidden="true">
+        <div class="sn-phone__screen">
+          {%- if section.settings.phone_image != blank -%}
+            {{ section.settings.phone_image | image_url: width: 480 | image_tag: loading: 'lazy', alt: '' }}
+          {%- endif -%}
+          <div class="sn-phone__top"><span class="sn-phone__live">● LIVE</span><span>👁 {{ section.settings.viewers | escape }}</span></div>
+          <div class="sn-phone__center">{%- if section.settings.phone_image == blank -%}{%- render 'schnappy-mascot', width: 150 -%}{%- endif -%}</div>
+          <div>
+            <div class="sn-chat" data-chat data-msgs="{{ section.settings.chat | escape }}"></div>
+            <div class="sn-bid" data-bid>Aktuelles Gebot: 12 €</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  if (!customElements.get('sn-countdown')) {
+    customElements.define('sn-countdown', class extends HTMLElement {
+      connectedCallback() {
+        this.days = (this.dataset.days || '').split(',').filter(Boolean).map(Number);
+        const [h, m] = (this.dataset.time || '19:00').split(':').map(Number);
+        this.h = isNaN(h) ? 19 : h; this.m = isNaN(m) ? 0 : m;
+        this.duration = (Number(this.dataset.duration) || 120) * 60000;
+        this.tick(); this.timer = setInterval(() => this.tick(), 1000);
+      }
+      disconnectedCallback() { clearInterval(this.timer); }
+      next() {
+        const now = new Date();
+        for (let i = -1; i < 8; i++) {
+          const t = new Date(now); t.setDate(now.getDate() + i); t.setHours(this.h, this.m, 0, 0);
+          if (this.days.length && !this.days.includes(t.getDay())) continue;
+          if (t.getTime() + this.duration > now.getTime()) return t;
+        }
+        return null;
+      }
+      tick() {
+        const t = this.next(); const now = Date.now();
+        const count = this.querySelector('.sn-count'), live = this.querySelector('.sn-live__now'), info = this.querySelector('[data-next]');
+        if (!t) { count.hidden = true; info.textContent = ''; return; }
+        const isLive = t.getTime() <= now;
+        count.hidden = isLive; live.hidden = !isLive;
+        const d = Math.max(0, t - now), pad = (v) => String(v).padStart(2, '0');
+        this.querySelector('[data-h]').textContent = pad(Math.floor(d / 36e5));
+        this.querySelector('[data-m]').textContent = pad(Math.floor((d % 36e5) / 6e4));
+        this.querySelector('[data-s]').textContent = pad(Math.floor((d % 6e4) / 1e3));
+        const day = t.toLocaleDateString('de-DE', { weekday: 'long' });
+        info.textContent = isLive ? 'Komm jetzt dazu – die Show läuft!' : 'Nächste Live-Show: ' + day + ', ' + pad(this.h) + ':' + pad(this.m) + ' Uhr' + (this.dataset.platform ? ' auf ' + this.dataset.platform : '');
+      }
+    });
+  }
+  (function () {
+    document.querySelectorAll('[data-chat]').forEach(function (chat) {
+      if (chat.dataset.running) return; chat.dataset.running = '1';
+      var msgs = (chat.dataset.msgs || '').split('|').map(function (s) { return s.trim(); }).filter(Boolean);
+      var bidEl = chat.parentElement.querySelector('[data-bid]'), bid = 12, i = 0;
+      if (!msgs.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      setInterval(function () {
+        var el = document.createElement('div'); el.textContent = msgs[i++ % msgs.length]; chat.appendChild(el);
+        while (chat.children.length > 3) chat.removeChild(chat.firstChild);
+        bid += Math.ceil(Math.random() * 3); if (bid > 48) bid = 12;
+        if (bidEl) bidEl.textContent = 'Aktuelles Gebot: ' + bid + ' €';
+      }, 1800);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Schnappy Live-Shows",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kleine Überschrift", "default": "Live-Shopping" },
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Live dabei sein. Mitbieten." },
+    { "type": "text", "id": "heading_highlight", "label": "Hervorgehobener Teil (gelb)", "default": "Abräumen." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Jede Woche live auf Whatnot & Instagram: Boxen öffnen, Auktionen ab 1 €, exklusive Drops nur für Zuschauer.</p>" },
+    { "type": "header", "content": "Show-Zeiten (für den Countdown)" },
+    { "type": "checkbox", "id": "day_1", "label": "Montag", "default": true },
+    { "type": "checkbox", "id": "day_2", "label": "Dienstag", "default": true },
+    { "type": "checkbox", "id": "day_3", "label": "Mittwoch", "default": true },
+    { "type": "checkbox", "id": "day_4", "label": "Donnerstag", "default": true },
+    { "type": "checkbox", "id": "day_5", "label": "Freitag", "default": true },
+    { "type": "checkbox", "id": "day_6", "label": "Samstag", "default": true },
+    { "type": "checkbox", "id": "day_0", "label": "Sonntag", "default": true },
+    { "type": "text", "id": "time", "label": "Uhrzeit (HH:MM)", "default": "19:00" },
+    { "type": "range", "id": "duration", "min": 30, "max": 300, "step": 15, "unit": "min", "label": "Dauer der Show", "default": 120 },
+    { "type": "text", "id": "platform", "label": "Plattform", "default": "Whatnot" },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "button_label_1", "label": "Button 1 Text", "default": "25 € Startguthaben holen" },
+    { "type": "url", "id": "button_link_1", "label": "Button 1 Link", "default": "https://www.whatnot.com/invite/schnappyshop" },
+    { "type": "text", "id": "button_label_2", "label": "Button 2 Text", "default": "Instagram" },
+    { "type": "url", "id": "button_link_2", "label": "Button 2 Link", "default": "https://www.instagram.com/schnappy.shop" },
+    { "type": "header", "content": "Handy-Vorschau" },
+    { "type": "image_picker", "id": "phone_image", "label": "Bild im Handy (optional)", "info": "z. B. Screenshot aus einer Live-Show, Hochformat" },
+    { "type": "text", "id": "viewers", "label": "Zuschauer-Anzeige", "default": "312" },
+    { "type": "textarea", "id": "chat", "label": "Chat-Nachrichten (mit | trennen)", "default": "jonas_hh: XXL Box 🔥🔥 | mia.k: wie viel noch? | lukas: 15!! | sarah_b: ich will den Plüsch 😍 | tim99: 18 € | anna: Schnappy 🐊💚" },
+    { "type": "header", "content": "Design" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema der Box", "default": "scheme-4" },
+    { "type": "color_scheme", "id": "outer_scheme", "label": "Farbschema außen", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand oben", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Abstand unten", "default": 36 }
+  ],
+  "presets": [{ "name": "Schnappy Live-Shows" }]
+}
+{% endschema %}

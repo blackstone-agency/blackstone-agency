@@ -1,0 +1,12 @@
+{%- comment -%}
+  Mystery-Box-Grafik (Platzhalter, wenn kein Bild gewählt). Nutzung: {% render 'schnappy-box-art', label: 'XXL' %}
+{%- endcomment -%}
+<svg viewBox="0 0 160 150" aria-hidden="true" focusable="false">
+  <path d="M20 55 80 35l60 20v65l-60 22-60-22Z" fill="#C9A67A" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+  <path d="M80 75v67" stroke="#000" stroke-opacity=".2" stroke-width="2"/>
+  <path d="M20 55l60 20 60-20" fill="none" stroke="#000" stroke-opacity=".25" stroke-width="2"/>
+  <path d="M20 55 80 75l60-20-60-20Z" fill="#DDBF92"/>
+  <path d="M20 55 6 34l60-21 14 22ZM140 55l14-21-60-21-14 22Z" fill="#DDBF92" stroke="#000" stroke-opacity=".2" stroke-width="2"/>
+  <text x="50" y="112" font-family="Lilita One, sans-serif" font-size="34" fill="#000" fill-opacity=".55" transform="skewY(18) translate(0,-30)">?</text>
+  <text x="96" y="112" font-family="Lilita One, sans-serif" font-size="16" fill="#000" fill-opacity=".55" transform="skewY(-18) translate(0,48)">{{ label | escape }}</text>
+</svg>
