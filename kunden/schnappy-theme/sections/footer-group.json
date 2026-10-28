@@ -165,8 +165,9 @@
           "settings": {
             "label": "Boxen",
             "icon": "gift",
-            "link": "/#boxen",
-            "live_dot": false
+            "link": "",
+            "live_dot": false,
+            "anchor": "boxen"
           }
         },
         "t1": {
@@ -183,8 +184,9 @@
           "settings": {
             "label": "Live",
             "icon": "radio",
-            "link": "/#live",
-            "live_dot": true
+            "link": "",
+            "live_dot": true,
+            "anchor": "live"
           }
         },
         "t3": {

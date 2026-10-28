@@ -296,6 +296,16 @@
         font-style: normal;
         font-display: swap;
       }
+      @font-face {
+        font-family: 'Inter';
+        src: url('{{ 'inter-var.woff2' | asset_url }}') format('woff2');
+        font-weight: 400 800;
+        font-style: normal;
+        font-display: swap;
+      }
+      :root {
+        --font-body-family: 'Inter', {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+      }
       {%- if settings.sn_display_font %}
         :root {
           --font-heading-family: 'Bricolage Grotesque', {{ settings.type_header_font.family }}, {{ settings.type_header_font.fallback_families }};

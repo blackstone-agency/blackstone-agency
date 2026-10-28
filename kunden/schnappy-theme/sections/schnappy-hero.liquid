@@ -11,13 +11,13 @@
     <div class="sn-hero__grid" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
       <div class="sn-hero__copy">
         {%- if section.settings.eyebrow != blank -%}
-          {%- if section.settings.eyebrow_link != blank -%}
-            <a href="{{ section.settings.eyebrow_link }}" class="sn-livepill">
+          {%- if true -%}
+            <a href="{{ section.settings.eyebrow_link | default: '#live' }}" class="sn-livepill">
           {%- else -%}
             <span class="sn-livepill">
           {%- endif -%}
           <span class="sn-pulse"></span><span>{{ section.settings.eyebrow }}</span>
-          {%- if section.settings.eyebrow_link != blank -%}</a>{%- else -%}</span>{%- endif -%}
+          {%- if true -%}</a>{%- else -%}</span>{%- endif -%}
         {%- endif -%}
 
         <h2 class="sn-display sn-hero__title sn-reveal">
@@ -35,7 +35,7 @@
 
         <div class="sn-btns">
           {%- if section.settings.button_label_1 != blank -%}
-            <a href="{{ section.settings.button_link_1 | default: routes.all_products_collection_url }}" class="button button--primary sn-btn-lg">
+            <a href="{{ section.settings.button_link_1 | default: '#boxen' }}" class="button button--primary sn-btn-lg">
               {{- section.settings.button_label_1 | escape -}}
               {%- render 'schnappy-icon', icon: 'arrow-right' -%}
             </a>

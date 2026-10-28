@@ -81,9 +81,9 @@
         }
       }
     },
-    "type_header_font": "inter_n7",
+    "type_header_font": "assistant_n7",
     "heading_scale": 100,
-    "type_body_font": "inter_n4",
+    "type_body_font": "assistant_n4",
     "body_scale": 100,
     "page_width": 1300,
     "spacing_sections": 0,
@@ -302,9 +302,9 @@
           }
         }
       },
-      "type_header_font": "inter_n7",
+      "type_header_font": "assistant_n7",
       "heading_scale": 100,
-      "type_body_font": "inter_n4",
+      "type_body_font": "assistant_n4",
       "body_scale": 100,
       "page_width": 1300,
       "spacing_sections": 0,
