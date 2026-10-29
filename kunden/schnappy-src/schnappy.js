@@ -673,12 +673,27 @@ document.addEventListener('click', (e) => {
   const SN = (window.SN = window.SN || {});
 
   /* ---------- Toast ---------- */
+  SN.hideToast = function () {
+    const box = document.querySelector('.sn-toast'); if (!box) return;
+    clearTimeout(box._t); box.classList.remove('is-on'); box.style.transform = ''; box.style.opacity = '';
+  };
   SN.toast = function (html, actions, ms) {
     let box = document.querySelector('.sn-toast');
-    if (!box) { box = document.createElement('div'); box.className = 'sn-toast'; box.setAttribute('role', 'status'); box.setAttribute('aria-live', 'polite'); document.body.appendChild(box); }
-    box.innerHTML = '<div class="sn-toast__msg">' + html + '</div>' + (actions || '');
+    if (!box) {
+      box = document.createElement('div'); box.className = 'sn-toast'; box.setAttribute('role', 'status'); box.setAttribute('aria-live', 'polite'); document.body.appendChild(box);
+      // Wegwischen: nach unten oder zur Seite ziehen schließt den Hinweis
+      let sx = 0, sy = 0, dx = 0, dy = 0, drag = false;
+      box.addEventListener('touchstart', (e) => { if (e.target.closest('a, button')) return; const t = e.touches[0]; sx = t.clientX; sy = t.clientY; dx = 0; dy = 0; drag = true; box.style.transition = 'none'; }, { passive: true });
+      box.addEventListener('touchmove', (e) => { if (!drag) return; const t = e.touches[0]; dx = t.clientX - sx; dy = Math.max(0, t.clientY - sy); box.style.transform = 'translate(calc(-50% + ' + dx + 'px), ' + dy + 'px)'; box.style.opacity = String(Math.max(0.2, 1 - (Math.abs(dx) + dy) / 220)); }, { passive: true });
+      box.addEventListener('touchend', () => { if (!drag) return; drag = false; box.style.transition = ''; if (Math.abs(dx) > 70 || dy > 40) SN.hideToast(); else { box.style.transform = ''; box.style.opacity = ''; } });
+      // Weiterscrollen blendet den Hinweis aus – er „verfolgt“ niemanden
+      window.addEventListener('scroll', () => { if (box.classList.contains('is-on') && Date.now() - (box._shown || 0) > 800) SN.hideToast(); }, { passive: true });
+    }
+    box.innerHTML = '<div class="sn-toast__msg">' + html + '</div>' + (actions || '') + '<button type="button" class="sn-toast__x" aria-label="Hinweis schließen">' + icon('x') + '</button>';
+    box.querySelector('.sn-toast__x').addEventListener('click', SN.hideToast);
+    box.style.transform = ''; box.style.opacity = ''; box._shown = Date.now();
     box.classList.add('is-on');
-    clearTimeout(box._t); box._t = setTimeout(() => box.classList.remove('is-on'), ms || 4500);
+    clearTimeout(box._t); box._t = setTimeout(SN.hideToast, ms || 3500);
     return box;
   };
 
@@ -721,7 +736,7 @@ document.addEventListener('click', (e) => {
       });
       this.classList.remove('is-empty');
       const ov = this.querySelector('#CartDrawer-Overlay'); if (ov) ov.addEventListener('click', this.close.bind(this));
-      const t = SN.toast(icon('check') + '<span><b>Geschnappt!</b> Liegt im Einkaufswagen.</span>', '<div class="sn-toast__acts"><button type="button" data-open>Ansehen</button><a href="' + ROOT() + 'checkout">Zur Kasse</a></div>', 5000);
+      const t = SN.toast(icon('check') + '<span><b>Geschnappt!</b> Liegt im Einkaufswagen.</span>', '<div class="sn-toast__acts"><button type="button" data-open>Ansehen</button><a href="' + ROOT() + 'checkout">Zur Kasse</a></div>', 3500);
       const b = t.querySelector('[data-open]'); if (b) b.addEventListener('click', () => { t.classList.remove('is-on'); this.open(); });
       document.dispatchEvent(new CustomEvent('sn:cart-updated'));
     };

@@ -2501,3 +2501,15 @@ ul.sn-cat__grid { margin: 0; padding: 0; }
 /* Grundpreis klein und grau unter dem Preis (PAngV), z. B. „15,98 € / 1 kg“ */
 .price .unit-price, .unit-price { display: block; margin-top: .2rem; color: var(--sn-muted, #5b635d); font-size: 1.2rem; font-weight: 400; line-height: 1.3; letter-spacing: 0; }
 .unit-price .unit-price__value { font-size: inherit; font-weight: inherit; color: inherit; }
+
+/* =====================================================================
+   v29 – Hinweis „Geschnappt!“: verschwindet ganz, wegwischbar, mit ×
+   ===================================================================== */
+.sn-toast { visibility: hidden; opacity: 0; pointer-events: none; transform: translate(-50%, 2.4rem); padding-right: 4.8rem !important; transition: transform .25s ease, opacity .2s ease, visibility 0s linear .25s; touch-action: none; }
+.sn-toast.is-on { visibility: visible; opacity: 1; pointer-events: auto; transform: translate(-50%, 0); transition: transform .25s ease, opacity .2s ease, visibility 0s; }
+@media (max-width: 989px) { .sn-toast { bottom: calc(1.2rem + env(safe-area-inset-bottom)); } }
+body:has(.sn-buybar.is-on) .sn-toast { bottom: calc(8.4rem + env(safe-area-inset-bottom)); }
+.sn-toast__x { position: absolute; top: .4rem; right: .4rem; display: inline-flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; padding: 0; border: 0; border-radius: 6px; background: transparent; color: #fff; cursor: pointer; }
+.sn-toast__x .sn-i { width: 2rem; height: 2rem; }
+.sn-toast__x:focus-visible { outline: 2px solid #ffd21f; outline-offset: -2px; }
+@media (prefers-reduced-motion: reduce) { .sn-toast, .sn-toast.is-on { transition: none; } }

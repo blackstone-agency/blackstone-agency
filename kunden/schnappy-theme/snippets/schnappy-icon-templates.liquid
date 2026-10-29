@@ -1,3 +1,3 @@
 {%- comment -%} Symbol-Vorlagen für JavaScript (Toasts, Merkzettel) {%- endcomment -%}
-{%- assign icons = 'check,heart,gift,plus' | split: ',' -%}
+{%- assign icons = 'check,heart,gift,plus,x' | split: ',' -%}
 {%- for i in icons -%}<template id="sn-icon-{{ i }}">{% render 'schnappy-icon', icon: i %}</template>{%- endfor -%}
