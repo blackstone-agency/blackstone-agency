@@ -14,9 +14,14 @@
     liveDays: {{ section.settings.live_days | json }},
     liveTime: {{ section.settings.live_time | json }},
     liveLink: {{ section.settings.live_link | json }},
-    klarnaFrom: 3000
+    klarnaFrom: 3000,
+    multiQty: {{ section.settings.multi_qty | json }},
+    multiText: {{ section.settings.multi_text | json }},
+    kasse: {{ section.settings.kasse | json }},
+    bestBadges: {{ section.settings.best_badges | json }}
   };
 </script>
+<style>:root { --sn-cmp-label: '{{ section.settings.compare_label | default: 'statt' | escape }} '; }</style>
 
 {%- if section.settings.popup_enable -%}
 <sn-popup class="sn-pop" hidden>
@@ -54,6 +59,11 @@
     { "type": "text", "id": "gift_text", "label": "Text der Belohnung", "default": "Gratis-Überraschung" },
     { "type": "text", "id": "welcome_code", "label": "Willkommens-Code", "info": "Leer = Hinweis aus. Code muss unter Rabatte in Shopify angelegt sein." },
     { "type": "text", "id": "welcome_text", "label": "Text zum Code", "default": "Erste Bestellung? Spar mit dem Code" },
+    { "type": "select", "id": "compare_label", "label": "Wort vor dem Streichpreis", "default": "statt", "options": [ { "value": "statt", "label": "statt (eigener früherer Preis)" }, { "value": "UVP", "label": "UVP (Herstellerpreis)" }, { "value": "vorher", "label": "vorher" } ], "info": "Recht: „statt/vorher“ nur mit eurem niedrigsten Preis der letzten 30 Tage. Ist der Streichpreis die Hersteller-UVP, „UVP“ wählen." },
+    { "type": "number", "id": "multi_qty", "label": "Mengen-Vorteil ab … Artikeln", "default": 0, "info": "0 = aus. Nur einschalten, wenn in Shopify ein automatischer Rabatt dafür angelegt ist." },
+    { "type": "text", "id": "multi_text", "label": "Mengen-Vorteil", "default": "10 % Rabatt" },
+    { "type": "checkbox", "id": "kasse", "label": "„Noch schnell mitnehmen“ im Einkaufswagen (Kleinpreis-Artikel)", "default": true },
+    { "type": "checkbox", "id": "best_badges", "label": "„Bestseller“-Badges auf Produkten (Top 10 nach Verkäufen)", "default": false, "info": "Erst einschalten, wenn es echte Verkäufe gibt – sonst wäre die Angabe irreführend." },
     { "type": "header", "content": "Newsletter-Pop-up" },
     { "type": "checkbox", "id": "popup_enable", "label": "Pop-up anzeigen", "default": true },
     { "type": "range", "id": "popup_delay", "label": "Erscheint nach (Sekunden)", "min": 5, "max": 60, "step": 5, "default": 20 },

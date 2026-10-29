@@ -1,0 +1,11 @@
+{%- comment -%} Schnappy: „Weiter stöbern“ am Ende einer Kategorie – damit kein Klick ins Leere führt {%- endcomment -%}
+<div class="page-width sn-more">
+  <p class="sn-more__t">Weiter stöbern</p>
+  <div class="sn-more__chips">
+    <a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">{% render 'schnappy-icon', icon: 'sparkles' %} Neu eingetroffen</a>
+    <a href="{{ routes.all_products_collection_url }}?filter.v.price.lte=5&sort_by=price-descending">{% render 'schnappy-icon', icon: 'tag' %} Alles unter 5 €</a>
+    <a href="{{ routes.root_url }}#boxen">{% render 'schnappy-icon', icon: 'gift' %} Mystery Boxen</a>
+    <a href="{{ routes.root_url }}#schnapper">{% render 'schnappy-icon', icon: 'zap' %} Schnapper des Tages</a>
+    <button type="button" class="sn-more__surprise" data-sn-surprise>{% render 'schnappy-icon', icon: 'sparkles' %} Überrasch mich!</button>
+  </div>
+</div>

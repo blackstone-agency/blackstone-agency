@@ -3,9 +3,15 @@
   /collections/all?sort_by=best-selling&section_id=schnappy-bestgrid
   Gibt Produktkarten der aktuellen Kollektion in der aufgerufenen Sortierung/Filterung aus.
 {%- endcomment -%}
-{%- if collection -%}
+{%- if search.performed -%}
+  {%- assign sn_list = search.results -%}
+{%- elsif collection -%}
+  {%- assign sn_list = collection.products -%}
+{%- endif -%}
+{%- if sn_list -%}
   <ul class="sn-row__list" role="list">
-    {%- for p in collection.products limit: 10 -%}
+    {%- for p in sn_list limit: 12 -%}
+      {%- if p.object_type and p.object_type != 'product' -%}{%- continue -%}{%- endif -%}
       {%- unless p.available -%}{%- continue -%}{%- endunless -%}
       <li class="sn-row__item">
         {% render 'card-product', card_product: p, media_aspect_ratio: 'square', image_shape: 'default', show_secondary_image: true, show_vendor: false, show_rating: false, lazy_load: true, quick_add: 'standard', section_id: 'schnappy-bestgrid' %}

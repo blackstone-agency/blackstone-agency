@@ -8,11 +8,27 @@
 <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
 {%- liquid
   assign q = section.settings.query | default: 'sort_by=best-selling'
-  assign all_url = routes.all_products_collection_url | append: '?' | append: q
+  assign t = section.settings.title
+  assign skip = false
+  if product
+    assign ptype = product.type | default: ''
+    if q contains '{type}' and ptype == blank
+      assign skip = true
+    endif
+    assign pmax = product.price | divided_by: 100 | plus: 1
+    assign q = q | replace: '{type}', ptype | replace: '{price}', pmax
+    assign t = t | replace: '{type}', ptype | replace: '{price}', pmax
+  endif
+  assign base = routes.all_products_collection_url
+  if q contains 'q='
+    assign base = routes.search_url
+  endif
+  assign all_url = base | append: '?' | append: q
 -%}
-<sn-row class="sn-row page-width" data-url="{{ routes.all_products_collection_url }}?{{ q }}&section_id=schnappy-bestgrid">
+{%- unless skip -%}
+<sn-row class="sn-row page-width" data-url="{{ base }}?{{ q }}&section_id=schnappy-bestgrid">
   <div class="sn-row__head">
-    <h2 class="sn-row__title">{%- if section.settings.icon != blank -%}{% render 'schnappy-icon', icon: section.settings.icon %}{%- endif -%}{{ section.settings.title | escape }}</h2>
+    <h2 class="sn-row__title">{%- if section.settings.icon != blank -%}{% render 'schnappy-icon', icon: section.settings.icon %}{%- endif -%}{{ t | escape }}</h2>
     <div class="sn-row__right">
       <a class="sn-row__all" href="{{ all_url }}">Alle ansehen →</a>
       <div class="sn-row__nav" aria-hidden="true">
@@ -27,6 +43,7 @@
     </ul>
   </div>
 </sn-row>
+{%- endunless -%}
 {% schema %}
 {
   "name": "Schnappy Produktreihe",
@@ -35,7 +52,7 @@
   "settings": [
     { "type": "text", "id": "title", "label": "Überschrift", "default": "Bestseller" },
     { "type": "select", "id": "icon", "label": "Symbol", "default": "flame", "options": [ { "value": "", "label": "Keins" }, { "value": "flame", "label": "Flamme" }, { "value": "tag", "label": "Preisschild" }, { "value": "star", "label": "Stern" }, { "value": "sparkles", "label": "Funkeln" } ] },
-    { "type": "text", "id": "query", "label": "Sortierung/Filter", "default": "sort_by=best-selling", "info": "z. B. sort_by=best-selling oder filter.v.price.lte=5&sort_by=price-descending" }
+    { "type": "text", "id": "query", "label": "Sortierung/Filter", "default": "sort_by=best-selling", "info": "z. B. sort_by=best-selling oder filter.v.price.lte=5. Auf Produktseiten: {type} = Produkttyp, {price} = Preis. Mit q=… wird die Suche genutzt." }
   ],
   "presets": [{ "name": "Schnappy Produktreihe" }]
 }

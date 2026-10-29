@@ -80,6 +80,12 @@
           "settings": {
             "custom_liquid": "{%- assign g = product.metafields.custom.produktsicherheit | default: product.metafields.custom.gpsr -%}\n{%- if g != blank -%}<details class=\"sn-gpsr\"><summary>{% render 'schnappy-icon', icon: 'shield-check' %} Produktsicherheit &amp; Hersteller</summary><div class=\"rte\">{{ g | metafield_tag }}</div></details>{%- endif -%}"
           }
+        },
+        "sn_next": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "<button type=\"button\" class=\"sn-nextfind\" data-sn-surprise data-type=\"{{ product.type | escape }}\" data-exclude=\"{{ product.handle }}\">{% render 'schnappy-icon', icon: 'sparkles' %}<span><b>Nächster Fund</b><small>Zeig mir noch ein Schnäppchen</small></span><i aria-hidden=\"true\">→</i></button>"
+          }
         }
       },
       "block_order": [
@@ -93,6 +99,7 @@
         "buy_buttons",
         "sn_actions",
         "sn_trust",
+        "sn_next",
         "description",
         "shipping",
         "returns",
@@ -148,12 +155,30 @@
     "recs": {
       "type": "schnappy-recs",
       "settings": {}
+    },
+    "more_type": {
+      "type": "schnappy-prodrow",
+      "settings": {
+        "title": "Mehr aus {type}",
+        "icon": "sparkles",
+        "query": "type=product&q={type}"
+      }
+    },
+    "more_cheap": {
+      "type": "schnappy-prodrow",
+      "settings": {
+        "title": "Noch mehr Schnäppchen unter {price} €",
+        "icon": "tag",
+        "query": "filter.v.price.lte={price}&sort_by=best-selling"
+      }
     }
   },
   "order": [
     "main",
     "recs",
+    "more_type",
     "related-products",
+    "more_cheap",
     "recent",
     "disclosures"
   ]

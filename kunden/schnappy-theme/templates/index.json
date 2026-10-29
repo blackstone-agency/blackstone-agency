@@ -11,9 +11,10 @@
             "size": "s",
             "tag": "EINSTEIGER",
             "highlight": false,
-            "value": 40,
+            "value": 0,
             "description": "Der perfekte Einstieg in die Schnappy-Welt. Klein, aber mit ordentlich Biss.",
-            "points": "5–8 Überraschungs-Artikel\nSpielzeug, Gadgets und Lifestyle\nIdeal als Geschenk"
+            "points": "5–8 Überraschungs-Artikel\nSpielzeug, Gadgets und Lifestyle\nIdeal als Geschenk",
+            "items": 0
           }
         },
         "b1": {
@@ -24,9 +25,10 @@
             "size": "m",
             "tag": "BESTSELLER",
             "highlight": true,
-            "value": 90,
+            "value": 50,
             "description": "Unser Bestseller. Die goldene Mitte aus Menge, Marken und Überraschung.",
-            "points": "10–15 Überraschungs-Artikel\nMindestens 1 Markenprodukt\nTrend-Produkte inklusive"
+            "points": "10–15 Überraschungs-Artikel\nMindestens 1 Markenprodukt\nTrend-Produkte inklusive",
+            "items": 10
           }
         },
         "b2": {
@@ -37,9 +39,10 @@
             "size": "xxl",
             "tag": "AUS DER LIVE-SHOW",
             "highlight": false,
-            "value": 200,
+            "value": 0,
             "description": "Die Legende aus der Live-Show. Randvoll gepackt, mit garantiertem Highlight.",
-            "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf ein Jackpot-Item"
+            "points": "20+ Artikel, randvoll gepackt\nGarantiertes Highlight-Produkt\nChance auf ein Jackpot-Item",
+            "items": 0
           }
         }
       },

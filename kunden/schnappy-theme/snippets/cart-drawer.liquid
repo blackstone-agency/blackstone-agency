@@ -72,7 +72,7 @@
         </div>
       {%- endif -%}
       <div class="drawer__header">
-        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}{%- if cart.item_count > 0 -%} <span class="sn-dh-n">{{ cart.item_count }} {% if cart.item_count == 1 %}Fund{% else %}Funde{% endif %}</span>{%- endif -%}</h2>
         <button
           class="drawer__close"
           type="button"
@@ -96,7 +96,7 @@
           {%- endif -%}
           <div class="sn-shipbar__bar"><i style="width: {{ sn_pct }}%"></i></div>
         </div>
-        <div class="sn-tier" data-sn-tier data-total="{{ cart.total_price }}" hidden></div>
+        <div class="sn-tier" data-sn-tier data-total="{{ cart.total_price }}" data-count="{{ cart.item_count }}" hidden></div>
       {%- endif -%}
       <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
@@ -636,7 +636,7 @@
               disabled
             {% endif %}
           >
-            {% render 'schnappy-icon', icon: 'lock' %} Sicher zur Kasse · {{ cart.total_price | money }}
+            <span class="sn-co"><span class="sn-co__main">{% render 'schnappy-icon', icon: 'lock' %} Sicher zur Kasse · {{ cart.total_price | money }}</span>{%- if sn_saved > 0 -%}<small class="sn-co__save">Du sparst {{ sn_saved | money }} bei dieser Bestellung</small>{%- endif -%}</span>
           </button>
           <div class="sn-cart-trust">
             <p><span>{% render 'schnappy-icon', icon: 'truck' %} Lieferung <b data-sn-eta>in 1–3 Werktagen</b></span><span>{% render 'schnappy-icon', icon: 'rotate-ccw' %} 14 Tage Rückgabe</span></p>

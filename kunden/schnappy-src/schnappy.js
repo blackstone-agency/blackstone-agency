@@ -367,6 +367,41 @@
   }
   define('sn-wheel', SnWheel);
 
+  /* ---------- Überrasch mich / Nächster Fund (variable Belohnung) ---------- */
+  document.addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-sn-surprise]'); if (!b) return;
+    e.preventDefault(); b.classList.add('is-busy');
+    const all = (await SN.products()).filter((p) => p.variants && p.variants.some((v) => v.available) && p.handle !== b.dataset.exclude);
+    const seen = new Set(ls.get('sn-recent', []));
+    let pool = b.dataset.type ? all.filter((p) => p.product_type === b.dataset.type) : all;
+    if (pool.length < 2) pool = all;
+    const fresh = pool.filter((p) => !seen.has(p.handle));
+    const pickFrom = fresh.length ? fresh : pool;
+    const p = pickFrom[Math.floor(Math.random() * pickFrom.length)];
+    if (p) location.href = ROOT() + 'products/' + p.handle; else b.classList.remove('is-busy');
+  });
+
+  /* ---------- Echte Bestseller-Badges (Top 10 nach Verkäufen) ---------- */
+  async function bestsellerBadges() {
+    if (!CFG().bestBadges || !document.querySelector('.product-card-wrapper[data-handle]')) return;
+    let top = null;
+    try { const c = JSON.parse(sessionStorage.getItem('sn-top') || 'null'); if (c && Date.now() - c.t < 36e5) top = c.h; } catch (e) {}
+    if (!top) {
+      try {
+        const html = await fetch(ROOT() + 'collections/all?sort_by=best-selling&section_id=schnappy-bestgrid').then((r) => r.text());
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        top = [...doc.querySelectorAll('.product-card-wrapper[data-handle]')].map((x) => x.dataset.handle).slice(0, 10);
+        sessionStorage.setItem('sn-top', JSON.stringify({ t: Date.now(), h: top }));
+      } catch (e) { return; }
+    }
+    const mark = () => document.querySelectorAll('.product-card-wrapper[data-handle]').forEach((c) => {
+      const i = top.indexOf(c.dataset.handle); if (i < 0 || c.querySelector('.sn-bestb')) return;
+      const s = document.createElement('span'); s.className = 'sn-bestb'; s.textContent = i < 3 ? 'Bestseller #' + (i + 1) : 'Bestseller';
+      const inner = c.querySelector('.card__inner'); if (inner) inner.appendChild(s);
+    });
+    mark(); let q = 0; new MutationObserver(() => { if (!q) q = requestAnimationFrame(() => { q = 0; mark(); }); }).observe(document.body, { childList: true, subtree: true });
+  }
+
   /* ---------- Start ---------- */
   const init = () => observeReveal();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
@@ -709,7 +744,7 @@ document.addEventListener('click', (e) => {
       });
       this.classList.remove('is-empty');
       const ov = this.querySelector('#CartDrawer-Overlay'); if (ov) ov.addEventListener('click', this.close.bind(this));
-      const t = SN.toast(icon('check') + '<span><b>Im Einkaufswagen</b></span>', '<div class="sn-toast__acts"><button type="button" data-open>Ansehen</button><a href="' + ROOT() + 'checkout">Zur Kasse</a></div>', 5000);
+      const t = SN.toast(icon('check') + '<span><b>Geschnappt!</b> Liegt im Einkaufswagen.</span>', '<div class="sn-toast__acts"><button type="button" data-open>Ansehen</button><a href="' + ROOT() + 'checkout">Zur Kasse</a></div>', 5000);
       const b = t.querySelector('[data-open]'); if (b) b.addEventListener('click', () => { t.classList.remove('is-on'); this.open(); });
       document.dispatchEvent(new CustomEvent('sn:cart-updated'));
     };
@@ -806,10 +841,12 @@ document.addEventListener('click', (e) => {
   async function enhanceDrawer() {
     const cfg = CFG();
     const tier = document.querySelector('[data-sn-tier]');
-    if (tier && cfg.giftAt > 0 && !tier.dataset.done) {
+    if (tier && !tier.dataset.done && (cfg.giftAt > 0 || cfg.multiQty > 0)) {
       tier.dataset.done = '1';
-      const tot = +tier.dataset.total; const left = cfg.giftAt - tot; const pct = Math.min(100, Math.round((tot / cfg.giftAt) * 100));
-      tier.innerHTML = icon('gift') + '<span>' + (left > 0 ? 'Noch <b>' + eur(left) + '</b> bis zur <b>' + esc(cfg.giftText) + '</b>' : '<b>' + esc(cfg.giftText) + '</b> freigeschaltet!') + '</span><div class="sn-shipbar__bar"><i style="width:' + pct + '%"></i></div>';
+      const tot = +tier.dataset.total; const cnt = +tier.dataset.count; const steps = [];
+      if (cfg.multiQty > 0) { const l = cfg.multiQty - cnt; steps.push({ ok: l <= 0, txt: l > 0 ? 'Noch <b>' + l + ' ' + (l === 1 ? 'Artikel' : 'Artikel') + '</b> bis <b>' + esc(cfg.multiText) + '</b>' : '<b>' + esc(cfg.multiText) + '</b> aktiv!', pct: Math.min(100, Math.round((cnt / cfg.multiQty) * 100)) }); }
+      if (cfg.giftAt > 0) { const l = cfg.giftAt - tot; steps.push({ ok: l <= 0, txt: l > 0 ? 'Noch <b>' + eur(l) + '</b> bis zur <b>' + esc(cfg.giftText) + '</b>' : '<b>' + esc(cfg.giftText) + '</b> freigeschaltet!', pct: Math.min(100, Math.round((tot / cfg.giftAt) * 100)) }); }
+      tier.innerHTML = steps.map((st) => '<div class="sn-tier__s' + (st.ok ? ' is-ok' : '') + '">' + (st.ok ? icon('check') : icon('gift')) + '<span>' + st.txt + '</span><div class="sn-shipbar__bar"><i style="width:' + st.pct + '%"></i></div></div>').join('');
       tier.hidden = false;
     }
     const wel = document.querySelector('[data-sn-welcome]');
@@ -823,14 +860,17 @@ document.addEventListener('click', (e) => {
     if (fill && !fill.dataset.done) {
       fill.dataset.done = '1';
       const tot = +fill.dataset.total; const left = cfg.shipFree - tot;
-      if (tot > 0 && left > 0) {
+      if (tot > 0 && (left > 0 || cfg.kasse !== false)) {
         const all = (await SN.products()).filter((p) => p.variants && p.variants.some((v) => v.available));
         const pr = (p) => Math.round(parseFloat(p.variants.find((v) => v.available).price) * 100);
-        const maker = all.filter((p) => pr(p) >= left).sort((a, b) => pr(a) - pr(b))[0];
-        const cheap = all.filter((p) => pr(p) <= 500 && p !== maker).sort((a, b) => pr(b) - pr(a)).slice(0, maker ? 2 : 3);
+        const inCart = new Set([...document.querySelectorAll('cart-drawer .cart-item__name')].map((x) => (x.getAttribute('href') || '').split('/products/')[1]).filter(Boolean).map((h) => h.split('?')[0]));
+        const allF = all.filter((p) => !inCart.has(p.handle));
+        const maker = left > 0 ? allF.filter((p) => pr(p) >= left).sort((a, b) => pr(a) - pr(b))[0] : null;
+        const pool = allF.filter((p) => pr(p) <= 500 && p !== maker); for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+        const cheap = pool.slice(0, maker ? 2 : 3);
         const pick = (maker ? [maker] : []).concat(cheap);
         if (pick.length) {
-          fill.innerHTML = '<p class="sn-fill__t">' + icon('plus') + ' Passt noch dazu</p><ul class="sn-fill__list" role="list">' + pick.map((p, i) => {
+          fill.innerHTML = '<p class="sn-fill__t">' + icon('plus') + (left > 0 ? ' Passt noch dazu' : ' Noch schnell mitnehmen – unter 5 €') + '</p><ul class="sn-fill__list" role="list">' + pick.map((p, i) => {
             const v = p.variants.find((x) => x.available); const img = p.images && p.images[0] ? p.images[0].src.replace(/(\.[a-z]+)(\?|$)/i, '_160x160$1$2') : '';
             return '<li class="sn-fill__item' + (p === maker ? ' is-maker' : '') + '">' + (img ? '<img src="' + img + '" alt="" width="56" height="56" loading="lazy">' : '') + '<span class="sn-fill__info">' + (p === maker ? '<em>Damit: Gratis-Versand</em>' : '') + '<a href="' + ROOT() + 'products/' + p.handle + '">' + esc(String(p.title).split(' //')[0]) + '</a><b>' + eur(pr(p)) + '</b></span><button type="button" class="sn-fill__add" data-sn-add="' + v.id + '" aria-label="Hinzufügen">+</button></li>';
           }).join('') + '</ul>';
@@ -1039,9 +1079,44 @@ document.addEventListener('click', (e) => {
     setTimeout(() => secs.forEach((s) => s.classList.add('sn-in')), 6000);
   }
 
+  /* ---------- Überrasch mich / Nächster Fund (variable Belohnung) ---------- */
+  document.addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-sn-surprise]'); if (!b) return;
+    e.preventDefault(); b.classList.add('is-busy');
+    const all = (await SN.products()).filter((p) => p.variants && p.variants.some((v) => v.available) && p.handle !== b.dataset.exclude);
+    const seen = new Set(ls.get('sn-recent', []));
+    let pool = b.dataset.type ? all.filter((p) => p.product_type === b.dataset.type) : all;
+    if (pool.length < 2) pool = all;
+    const fresh = pool.filter((p) => !seen.has(p.handle));
+    const pickFrom = fresh.length ? fresh : pool;
+    const p = pickFrom[Math.floor(Math.random() * pickFrom.length)];
+    if (p) location.href = ROOT() + 'products/' + p.handle; else b.classList.remove('is-busy');
+  });
+
+  /* ---------- Echte Bestseller-Badges (Top 10 nach Verkäufen) ---------- */
+  async function bestsellerBadges() {
+    if (!CFG().bestBadges || !document.querySelector('.product-card-wrapper[data-handle]')) return;
+    let top = null;
+    try { const c = JSON.parse(sessionStorage.getItem('sn-top') || 'null'); if (c && Date.now() - c.t < 36e5) top = c.h; } catch (e) {}
+    if (!top) {
+      try {
+        const html = await fetch(ROOT() + 'collections/all?sort_by=best-selling&section_id=schnappy-bestgrid').then((r) => r.text());
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        top = [...doc.querySelectorAll('.product-card-wrapper[data-handle]')].map((x) => x.dataset.handle).slice(0, 10);
+        sessionStorage.setItem('sn-top', JSON.stringify({ t: Date.now(), h: top }));
+      } catch (e) { return; }
+    }
+    const mark = () => document.querySelectorAll('.product-card-wrapper[data-handle]').forEach((c) => {
+      const i = top.indexOf(c.dataset.handle); if (i < 0 || c.querySelector('.sn-bestb')) return;
+      const s = document.createElement('span'); s.className = 'sn-bestb'; s.textContent = i < 3 ? 'Bestseller #' + (i + 1) : 'Bestseller';
+      const inner = c.querySelector('.card__inner'); if (inner) inner.appendChild(s);
+    });
+    mark(); let q = 0; new MutationObserver(() => { if (!q) q = requestAnimationFrame(() => { q = 0; mark(); }); }).observe(document.body, { childList: true, subtree: true });
+  }
+
   /* ---------- Start ---------- */
   function boot() {
-    patchDrawer(); syncHearts(); enhanceDrawer(); watchBubble(); stickyBuy(); galleryDots(); collapseDesc(); homeBits(); a2hs(); reveal(); SN.markImages(); newForYou();
+    patchDrawer(); syncHearts(); enhanceDrawer(); bestsellerBadges(); watchBubble(); stickyBuy(); galleryDots(); collapseDesc(); homeBits(); a2hs(); reveal(); SN.markImages(); newForYou();
     document.querySelectorAll('.sn-sform input[name=q]').forEach((i) => i.setAttribute('enterkeyhint', 'search'));
     let qd = 0; const d = SN.drawer(); if (d) new MutationObserver(() => { if (qd) return; qd = requestAnimationFrame(() => { qd = 0; enhanceDrawer(); }); }).observe(d, { childList: true, subtree: true });
     let qb = 0; new MutationObserver((m) => { let added = false; m.forEach((r) => r.addedNodes.forEach((n) => { if (n.nodeType === 1 && n.querySelector) { added = true; SN.markImages(n); newForYou(n); } })); if (added && !qb) qb = requestAnimationFrame(() => { qb = 0; syncHearts(); }); }).observe(document.body, { childList: true, subtree: true });
