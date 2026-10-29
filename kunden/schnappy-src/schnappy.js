@@ -1081,7 +1081,7 @@ document.addEventListener('click', (e) => {
 
   /* ---------- Start ---------- */
   function boot() {
-    patchDrawer(); syncHearts(); enhanceDrawer(); bestsellerBadges(); watchBubble(); stickyBuy(); galleryDots(); collapseDesc(); homeBits(); a2hs(); reveal(); SN.markImages(); newForYou();
+    patchDrawer(); syncHearts(); enhanceDrawer(); bestsellerBadges(); watchBubble(); stickyBuy(); galleryDots(); collapseDesc(); homeBits(); a2hs(); SN.markImages(); newForYou();
     document.querySelectorAll('.sn-sform input[name=q]').forEach((i) => i.setAttribute('enterkeyhint', 'search'));
     let qd = 0; const d = SN.drawer(); if (d) new MutationObserver(() => { if (qd) return; qd = requestAnimationFrame(() => { qd = 0; enhanceDrawer(); }); }).observe(d, { childList: true, subtree: true });
     let qb = 0; new MutationObserver((m) => { let added = false; m.forEach((r) => r.addedNodes.forEach((n) => { if (n.nodeType === 1 && n.querySelector) { added = true; SN.markImages(n); newForYou(n); } })); if (added && !qb) qb = requestAnimationFrame(() => { qb = 0; syncHearts(); }); }).observe(document.body, { childList: true, subtree: true });

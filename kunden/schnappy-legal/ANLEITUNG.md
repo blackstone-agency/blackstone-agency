@@ -107,3 +107,8 @@ Shopify → **Onlineshop → Seiten → Seite hinzufügen**. Titel eintragen, re
 
 ## 8. Theme v22 (29.10.2026)
 Live lief bis dahin noch v20. Alle Funde, Screenshots und die Klick-Anleitungen stehen in [`kunden/schnappy-bericht-v22.md`](../schnappy-bericht-v22.md) unter „Was du in Shopify einstellen musst“ (A1–A9). Wichtigste Punkte: v22 hochladen, Impressum-Platzhalter entfernen, Mystery-Box-Titel korrigieren, Währungsformat auf `{{amount_with_comma_separator}} €` stellen, Info-Seiten anlegen.
+
+## 9. Theme v24 – schlichte Startseite (Action-Prinzip)
+- Startseite = kompakter Hero + **alle Produkte** als Raster, lädt beim Scrollen automatisch weiter. Keine Slider, kein Lauftext, keine Einblend-/Hover-Effekte, kein Newsletter-Pop-up, keine Tab-Leiste.
+- Die bisherigen Abschnitte (Schnapper des Tages, Kategorien, Bestseller, Mystery-Box-Auswahl, Geschenkideen …) sind nur **ausgeblendet**: Theme anpassen → Startseite → Abschnitt anklicken → Auge-Symbol.
+- **Empfohlen:** Produkte → Kollektionen → Kollektion erstellen „Startseite“ → Automatisiert, Bedingung „Preis ist größer als 0“ → Sortierung „Neueste“ (oder „Meistverkauft“) → Speichern. Dann Theme anpassen → Startseite → „Schnappy Alle Produkte“ → Kollektion „Startseite“ wählen. Ohne diese Auswahl stehen die Produkte alphabetisch.

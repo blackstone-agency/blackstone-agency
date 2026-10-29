@@ -1,5 +1,24 @@
 {
   "sections": {
+    "hero": {
+      "type": "schnappy-hero-simple",
+      "settings": {
+        "kicker": "Markenware zu Restpostenpreisen",
+        "heading": "Schnapp dir die besten Deals.",
+        "subheading": "auf Spielzeug, Haushalt & Elektronik – jeden Tag neue Ware.",
+        "button_label": "Alle Produkte ansehen",
+        "link_label": "Mystery Box ab 9,99 €",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "catalog": {
+      "type": "schnappy-catalog",
+      "settings": {
+        "heading": "Alle Produkte",
+        "per_page": 30,
+        "color_scheme": "scheme-1"
+      }
+    },
     "boxes": {
       "type": "schnappy-boxes",
       "blocks": {
@@ -57,7 +76,8 @@
         "text": "Der Warenwert liegt immer über dem Preis. Was drin ist, bleibt eine Überraschung.",
         "anchor": "boxen",
         "color_scheme": "scheme-1"
-      }
+      },
+      "disabled": true
     },
     "deals": {
       "type": "featured-collection",
@@ -84,7 +104,8 @@
         "swipe_on_mobile": false,
         "padding_top": 28,
         "padding_bottom": 36
-      }
+      },
+      "disabled": true
     },
     "newsletter": {
       "type": "newsletter",
@@ -117,7 +138,8 @@
         "full_width": false,
         "padding_top": 0,
         "padding_bottom": 24
-      }
+      },
+      "disabled": true
     },
     "cats": {
       "type": "schnappy-categories",
@@ -208,13 +230,15 @@
         "color_scheme": "scheme-1",
         "padding_top": 28,
         "padding_bottom": 12
-      }
+      },
+      "disabled": true
     },
     "recent": {
       "type": "schnappy-recent",
       "settings": {
         "heading": "Zuletzt angesehen"
-      }
+      },
+      "disabled": true
     },
     "daily": {
       "type": "schnappy-daily",
@@ -222,7 +246,8 @@
         "kicker": "Schnapper des Tages",
         "limit": 30,
         "color_scheme": "scheme-1"
-      }
+      },
+      "disabled": true
     },
     "hero2": {
       "type": "schnappy-hero2",
@@ -232,11 +257,13 @@
         "subheading": "auf Spielzeug, Haushalt & Elektronik – jeden Tag neue Ware.",
         "button_label": "Alle Deals ansehen",
         "color_scheme": "scheme-1"
-      }
+      },
+      "disabled": true
     },
     "season": {
       "type": "schnappy-season",
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "best": {
       "type": "schnappy-prodrow",
@@ -244,7 +271,8 @@
         "title": "Bestseller",
         "icon": "flame",
         "query": "sort_by=best-selling"
-      }
+      },
+      "disabled": true
     },
     "under5": {
       "type": "schnappy-prodrow",
@@ -252,7 +280,8 @@
         "title": "Alles unter 5 €",
         "icon": "tag",
         "query": "filter.v.price.lte=5&sort_by=price-descending"
-      }
+      },
+      "disabled": true
     },
     "gifts": {
       "type": "schnappy-gifts",
@@ -302,10 +331,13 @@
         "g1",
         "g2",
         "g3"
-      ]
+      ],
+      "disabled": true
     }
   },
   "order": [
+    "hero",
+    "catalog",
     "hero2",
     "season",
     "daily",

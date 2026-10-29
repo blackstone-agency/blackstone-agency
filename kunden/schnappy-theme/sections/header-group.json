@@ -37,7 +37,8 @@
         "t0",
         "t2",
         "t1"
-      ]
+      ],
+      "disabled": true
     },
     "header": {
       "type": "header",
@@ -84,13 +85,15 @@
         "b3": {
           "type": "chip",
           "settings": {
-            "label": "Wohnen", "q": "Deko"
+            "label": "Wohnen",
+            "q": "Deko"
           }
         },
         "b4": {
           "type": "chip",
           "settings": {
-            "label": "Elektronik", "q": "USB"
+            "label": "Elektronik",
+            "q": "USB"
           }
         },
         "b5": {
@@ -102,7 +105,8 @@
         "b6": {
           "type": "chip",
           "settings": {
-            "label": "Mystery Box", "q": "product_type:\"Mystery Box\""
+            "label": "Mystery Box",
+            "q": "product_type:\"Mystery Box\""
           }
         },
         "b7": {

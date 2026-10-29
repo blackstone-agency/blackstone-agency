@@ -93,17 +93,19 @@
         "t2",
         "t3",
         "t4"
-      ]
+      ],
+      "disabled": true
     },
     "newsbar": {
       "type": "schnappy-newsbar",
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "snset": {
       "type": "schnappy-settings",
       "settings": {
         "gift_threshold": 0,
-        "popup_enable": true,
+        "popup_enable": false,
         "popup_delay": 20,
         "live_days": "",
         "live_time": "19:00"
