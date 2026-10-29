@@ -55,3 +55,10 @@ Regeln aus dem Schnappy-Projekt (Okt. 2026). Ziel: Ein Shop klappt **beim ersten
 5. Lesbare Quellen getrennt halten, Assets minifizieren (csso ohne restructure, terser), ungenutztes CSS entfernen.
 6. ZIP als `kunden/<shop>-theme-vN.zip` plus Download-Link. Der Kunde lädt hoch, teilt die Vorschau, veröffentlicht nach Freigabe.
 7. Anleitung `ANLEITUNG.md` mitliefern: Seiten anlegen, Richtlinien einfügen, Einstellungen, Rabattcodes, Checkout-Branding, Versand/Steuern.
+
+## 6. Nachtrag (v20)
+- **Eigene HTML-Elemente** (`<sn-row>`, `<sn-fbt>` …) sind standardmäßig `display: inline` und ignorieren dann `page-width`, Ränder und Breite. Immer `display: block` setzen.
+- **Menü-Knopf (Dawn):** Hamburger- und X-Symbol liegen absolut im `<span>`. Den Span `position: relative` mit fester Größe machen, sonst springt das X beim Öffnen.
+- **Zähler-Badges im Kopf:** Dawn setzt `.header__icon span { height: 100% }`. Badges deshalb mit fester Höhe überschreiben.
+- **Einkaufswagen-Schublade:** Nur Summe, Kasse-Button und Vertrauenszeile unten fixieren. Ersparnis, Rabattcode, Notiz und Vorschläge gehören in den scrollenden Bereich, sonst bleibt für die Artikel kein Platz.
+- **Menü-Schublade nie leer lassen:** Suche, Kategorie-Kacheln, Deals, Promo-Kachel, Hilfe, Social-Kacheln.

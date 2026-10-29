@@ -1,0 +1,34 @@
+{%- comment -%} Schnappy: Inhalt der Menü-Schublade (☰ Kategorien) {%- endcomment -%}
+<div class="sn-md">
+  <form action="{{ routes.search_url }}" method="get" role="search" class="sn-md__search">
+    <input type="hidden" name="type" value="product">
+    <label for="SnMenuSearch" class="visually-hidden">Suchen</label>
+    {% render 'schnappy-icon', icon: 'search' %}
+    <input id="SnMenuSearch" type="search" name="q" placeholder="Produkte suchen …" enterkeyhint="search" autocomplete="off">
+  </form>
+
+  <p class="sn-md__t">Kategorien</p>
+  <ul class="sn-md__cats" role="list">
+    {%- assign cats = 'Spielzeug|toy-brick|spielzeug,Küche & Haushalt|cooking-pot|küche,Wohnen|lamp|wohnen,Elektronik|headphones|elektronik,Socken|heart|socken,Geschenke|gift|geschenk,Harry Potter|star|harry potter,Disney|sparkles|disney' | split: ',' -%}
+    {%- for c in cats -%}
+      {%- assign parts = c | split: '|' -%}
+      <li><a href="{{ routes.search_url }}?type=product&q={{ parts[2] | url_encode }}"><span class="sn-md__ic">{% render 'schnappy-icon', icon: parts[1] %}</span>{{ parts[0] }}</a></li>
+    {%- endfor -%}
+  </ul>
+
+  <p class="sn-md__t">Deals</p>
+  <ul class="sn-md__deals" role="list">
+    <li><a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">{% render 'schnappy-icon', icon: 'sparkles' %}<span>Neu eingetroffen</span></a></li>
+    <li><a href="{{ routes.all_products_collection_url }}?sort_by=best-selling">{% render 'schnappy-icon', icon: 'flame' %}<span>Bestseller</span></a></li>
+    <li><a href="{{ routes.root_url }}#schnapper">{% render 'schnappy-icon', icon: 'zap' %}<span>Schnapper des Tages</span></a></li>
+    <li><a href="{{ routes.all_products_collection_url }}?filter.v.price.lte=5&sort_by=price-descending">{% render 'schnappy-icon', icon: 'tag' %}<span>Alles unter 5 €</span></a></li>
+    <li><a href="{{ routes.all_products_collection_url }}?filter.v.price.lte=10&sort_by=price-descending">{% render 'schnappy-icon', icon: 'tag' %}<span>Alles unter 10 €</span></a></li>
+  </ul>
+
+  <a class="sn-md__promo" href="{{ routes.root_url }}#boxen">
+    <span><b>Mystery Box</b><strong>ab 9,99 €</strong><small>Immer mehr Warenwert als Preis →</small></span>
+    <img src="{{ 'schnappy-box-m.jpg' | asset_url }}" alt="" width="640" height="640" loading="lazy">
+  </a>
+
+  <p class="sn-md__t">Seiten</p>
+</div>

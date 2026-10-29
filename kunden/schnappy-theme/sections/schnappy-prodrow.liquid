@@ -13,16 +13,18 @@
 <sn-row class="sn-row page-width" data-url="{{ routes.all_products_collection_url }}?{{ q }}&section_id=schnappy-bestgrid">
   <div class="sn-row__head">
     <h2 class="sn-row__title">{%- if section.settings.icon != blank -%}{% render 'schnappy-icon', icon: section.settings.icon %}{%- endif -%}{{ section.settings.title | escape }}</h2>
-    <a class="sn-row__all" href="{{ all_url }}">Alle ansehen →</a>
+    <div class="sn-row__right">
+      <a class="sn-row__all" href="{{ all_url }}">Alle ansehen →</a>
+      <div class="sn-row__nav" aria-hidden="true">
+        <button type="button" class="sn-row__btn" data-prev tabindex="-1">‹</button>
+        <button type="button" class="sn-row__btn" data-next tabindex="-1">›</button>
+      </div>
+    </div>
   </div>
   <div class="sn-row__body" data-body>
     <ul class="sn-row__list sn-row__list--skeleton" role="list" aria-hidden="true">
       {%- for i in (1..5) -%}<li class="sn-row__item"><div class="sn-skel"></div></li>{%- endfor -%}
     </ul>
-  </div>
-  <div class="sn-row__nav" aria-hidden="true">
-    <button type="button" class="sn-row__btn" data-prev tabindex="-1">‹</button>
-    <button type="button" class="sn-row__btn" data-next tabindex="-1">›</button>
   </div>
 </sn-row>
 {% schema %}

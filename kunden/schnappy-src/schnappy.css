@@ -2168,3 +2168,88 @@ main .shopify-section, .shopify-section-group-footer-group { overflow-x: clip; }
   .sn-klarna { font-size: 1.2rem; margin-bottom: .4rem; }
   cart-drawer .drawer__footer > details summary { padding: .9rem 0 !important; }
 }
+
+/* ================= v20: Feinschliff Desktop + Handy ================= */
+/* Eigene Elemente sind sonst „inline“ und ignorieren Seitenrand/Breite */
+sn-row, sn-fbt, sn-daily, sn-wishlist, sn-recent, sn-livebar, sn-popup { display: block; }
+sn-row[hidden], sn-fbt[hidden], sn-livebar[hidden], sn-popup[hidden] { display: none !important; }
+
+/* Produktreihen: Kopf sauber, Pfeile neben „Alle ansehen“ */
+.sn-row__head { gap: 1.6rem; }
+.sn-row__right { display: flex; align-items: center; gap: 1.2rem; flex: none; }
+.sn-row__nav { position: static !important; display: flex !important; gap: .6rem; padding: 0 !important; pointer-events: auto; }
+.sn-row__btn { width: 4.4rem; height: 4.4rem; display: grid; place-items: center; font-size: 2.4rem; line-height: 1; padding: 0 0 .3rem; color: #0e1a12; box-shadow: none; }
+.sn-row__btn:hover { border-color: #0e1a12; }
+@media (max-width: 989px) { .sn-row__nav { display: none !important; } }
+
+/* Menü-Knopf: Symbol und Text stehen sauber nebeneinander, auch das X */
+@media screen and (min-width: 990px) {
+  .header.drawer-menu .header__icon--menu > span { position: relative; width: 2.4rem; height: 2.4rem; flex: none; }
+  .header.drawer-menu .header__icon--menu > span .icon, .header.drawer-menu .header__icon--menu > span svg { position: absolute !important; inset: 0 !important; margin: auto !important; width: 2.4rem !important; height: 2.4rem !important; }
+  .header.drawer-menu .header__icon--menu .icon-close { width: 1.8rem !important; height: 1.8rem !important; }
+}
+
+
+/* Merkzettel-Zähler wie beim Einkaufswagen */
+.header__icon.sn-hwish { position: relative; }
+.header__icon.sn-hwish .sn-hwish__n { position: absolute; top: .4rem !important; right: .2rem !important; left: auto !important; bottom: auto !important; width: auto !important; height: 1.8rem !important; min-width: 1.8rem; padding: 0 .45rem; line-height: 1.8rem; font-size: 1.1rem; border-radius: 99px; display: flex !important; align-items: center; justify-content: center; }
+.header__icon.sn-hwish .sn-hwish__n[hidden] { display: none !important; }
+
+/* Einkaufswagen: breiter, Artikel bekommen Platz, Kasse bleibt kompakt unten */
+@media (min-width: 750px) { cart-drawer .drawer__inner { width: 48rem; } }
+.sn-cartx { display: flex; flex-direction: column; gap: .8rem; padding: .4rem 0 1.6rem; }
+.sn-cartx > details { border: 1px solid #e3e6e1; border-radius: 6px; padding: 0 1.2rem; }
+.sn-cartx > details summary { list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 1.1rem 0; font-size: 1.35rem; font-weight: 600; cursor: pointer; }
+.sn-cartx > details summary::-webkit-details-marker { display: none; }
+.sn-cartx > details summary .summary__title { display: flex; justify-content: space-between; width: 100%; align-items: center; }
+.sn-cartx > details summary svg { width: 1.2rem; }
+.sn-cartx > details[open] { padding-bottom: 1.2rem; }
+.sn-cartx .cart__note textarea { min-height: 8rem; border-radius: 6px; font-size: 1.4rem; }
+.sn-cartx .sn-code__toggle > summary { padding: 0 1.2rem !important; min-height: 4.4rem; line-height: 1.2; }
+cart-drawer .drawer__footer { padding-top: 1.2rem; }
+cart-drawer .cart-drawer__footer { gap: .4rem; }
+.sn-upsell { margin: 1.2rem 0 .4rem; }
+@media (max-width: 749px) { cart-drawer cart-drawer-items { min-height: 0; } }
+
+/* Menü-Schublade mit Inhalt */
+.menu-drawer { width: min(42rem, 100vw) !important; }
+.menu-drawer__navigation-container { overflow-y: auto; display: block !important; }
+.sn-md { padding: 1.6rem 2rem 0; }
+.sn-md--foot { padding-bottom: 1.6rem; }
+.sn-md__search { display: flex; align-items: center; gap: .8rem; border: 2px solid #0e3b1a; border-radius: 6px; padding: 0 1.2rem; min-height: 4.8rem; margin-bottom: 1.6rem; background: #fff; }
+.sn-md__search .sn-i { width: 2rem; height: 2rem; color: #5b6b5f; flex: none; }
+.sn-md__search input { flex: 1; min-width: 0; border: 0; outline: 0; font-size: 1.6rem; background: transparent; height: 4.4rem; }
+.sn-md__t { margin: 1.6rem 0 .8rem; font-size: 1.2rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--sn-muted-aa, #586459); }
+.sn-md__cats { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+.sn-md__cats a { display: flex; align-items: center; gap: .8rem; min-height: 5.2rem; padding: .6rem .8rem; border-radius: 8px; background: #fff; border: 1px solid #e3e6e1; color: #0e1a12; text-decoration: none; font-weight: 600; font-size: 1.4rem; line-height: 1.2; }
+.sn-md__cats a:hover { border-color: #1e7f2c; }
+.sn-md__ic { width: 3.6rem; height: 3.6rem; border-radius: 8px; background: #eaf5eb; color: #1e7f2c; display: grid; place-items: center; flex: none; }
+.sn-md__ic .sn-i { width: 2rem; height: 2rem; }
+.sn-md__deals, .sn-md__help { list-style: none; margin: 0; padding: 0; display: grid; }
+.sn-md__deals a { display: flex; align-items: center; gap: 1rem; min-height: 4.8rem; color: #0e1a12; text-decoration: none; font-weight: 600; font-size: 1.5rem; border-bottom: 1px solid #eef0ed; }
+.sn-md__deals .sn-i { width: 2rem; height: 2rem; color: #d92b1f; }
+.sn-md__help a { display: flex; align-items: center; min-height: 4.4rem; color: #3d453f; text-decoration: none; font-size: 1.45rem; }
+.sn-md__help a:hover, .sn-md__deals a:hover { color: #1e7f2c; }
+.sn-md__promo { display: grid; grid-template-columns: minmax(0, 1fr) 9rem; align-items: center; gap: 1rem; margin-top: 1.6rem; padding: 1.2rem 1.2rem 1.2rem 1.6rem; border-radius: 8px; background: #fff7cc; text-decoration: none; color: #0e1a12; }
+.sn-md__promo span { display: flex; flex-direction: column; }
+.sn-md__promo b { font-size: 1.2rem; text-transform: uppercase; letter-spacing: .08em; }
+.sn-md__promo strong { font-size: 2.4rem; line-height: 1.1; }
+.sn-md__promo small { font-size: 1.3rem; color: #1e7f2c; font-weight: 700; margin-top: .3rem; }
+.sn-md__promo img { width: 9rem; height: 9rem; object-fit: cover; border-radius: 6px; mix-blend-mode: multiply; }
+.sn-md__contact { margin: 1.4rem 0 0; font-size: 1.3rem; color: #3d453f; }
+.sn-md__contact a { color: #1e7f2c; font-weight: 600; }
+.sn-md .sn-social { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sn-md .sn-social__a { flex-direction: column; text-align: center; padding: .8rem .4rem; gap: .4rem; }
+.sn-md .sn-social__a span { align-items: center; }
+.sn-md .sn-social__a small { display: none; }
+.menu-drawer__navigation { padding: 0 !important; }
+.menu-drawer__menu-item { padding: 1.1rem 2rem !important; font-size: 1.6rem !important; min-height: 4.8rem; }
+.menu-drawer__menu-item--active { background: transparent !important; color: #1e7f2c !important; font-weight: 700; }
+.menu-drawer__utility-links .list-social { display: none; }
+.menu-drawer__utility-links { padding: 1.2rem 2rem 2.4rem !important; background: #f5f6f4 !important; }
+.menu-drawer__account { min-height: 4.8rem; font-size: 1.5rem !important; }
+@media (max-width: 749px) { .sn-cart-trust .sn-ssl { display: none !important; } }
+/* Menü-Knopf auf allen Größen: Symbole sitzen im Knopf */
+.header__icon--menu > span { position: relative !important; display: block; width: 2.4rem; height: 2.4rem; }
+.header__icon--menu > span .icon, .header__icon--menu > span svg { position: absolute !important; inset: 0 !important; margin: auto !important; }
+@media (max-width: 989px) { .header__icon--menu { display: flex !important; align-items: center; justify-content: center; width: 4.4rem; height: 4.4rem; border-radius: 6px; } }
