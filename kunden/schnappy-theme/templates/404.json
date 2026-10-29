@@ -2,9 +2,18 @@
   "sections": {
     "main": {
       "type": "main-404"
+    },
+    "best": {
+      "type": "schnappy-prodrow",
+      "settings": {
+        "title": "Vielleicht gefällt dir das",
+        "icon": "flame",
+        "query": "sort_by=best-selling"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "best"
   ]
 }

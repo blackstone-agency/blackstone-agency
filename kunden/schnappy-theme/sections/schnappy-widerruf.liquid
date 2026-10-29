@@ -1,0 +1,40 @@
+{%- comment -%} Schnappy: Online-Widerrufsformular („Vertrag widerrufen“) {%- endcomment -%}
+<div class="page-width sn-wf">
+  <h1 class="sn-wf__title">{{ section.settings.heading | escape }}</h1>
+  <div class="sn-wf__text rte">{{ section.settings.text }}</div>
+  {%- form 'contact', id: 'SnWiderruf', class: 'sn-wf__form' -%}
+    {%- if form.posted_successfully? -%}
+      <div class="sn-wf__ok" role="status">
+        <h2>✓ Dein Widerruf ist bei uns eingegangen.</h2>
+        <p>Eingang: <b data-sn-now>{{ 'now' | date: '%d.%m.%Y, %H:%M Uhr' }}</b>. Wir bestätigen dir den Eingang zusätzlich per E-Mail und melden uns mit den nächsten Schritten.</p>
+        <p class="sn-wf__tip">Tipp: Mach dir einen Screenshot dieser Bestätigung.</p>
+      </div>
+    {%- else -%}
+      {%- if form.errors -%}<p class="sn-wf__err" role="alert">Bitte fülle alle Pflichtfelder korrekt aus.</p>{%- endif -%}
+      <input type="hidden" name="contact[Betreff]" value="WIDERRUF">
+      <div class="sn-wf__grid">
+        <label>Vor- und Nachname*<input type="text" name="contact[name]" required autocomplete="name"></label>
+        <label>E-Mail*<input type="email" name="contact[email]" required autocomplete="email"></label>
+        <label>Bestellnummer*<input type="text" name="contact[Bestellnummer]" required placeholder="z. B. #1001"></label>
+        <label>Bestellt am<input type="date" name="contact[Bestelldatum]"></label>
+        <label>Erhalten am<input type="date" name="contact[Erhalten am]"></label>
+        <label class="sn-wf__full">Welche Artikel widerrufst du?*<textarea name="contact[body]" rows="4" required placeholder="Artikelname und Anzahl – oder „gesamte Bestellung“"></textarea></label>
+      </div>
+      <label class="sn-wf__check"><input type="checkbox" name="contact[Erklärung]" value="Hiermit widerrufe ich den von mir abgeschlossenen Vertrag über den Kauf der oben genannten Waren." required> Hiermit widerrufe ich den von mir abgeschlossenen Vertrag über den Kauf der oben genannten Waren.*</label>
+      <button type="submit" class="sn-wf__btn">Vertrag jetzt widerrufen</button>
+      <p class="sn-wf__legal">* Pflichtfelder. Deine Angaben nutzen wir nur zur Bearbeitung des Widerrufs. Mehr in der <a href="/policies/privacy-policy">Datenschutzerklärung</a>.</p>
+    {%- endif -%}
+  {%- endform -%}
+</div>
+{% schema %}
+{
+  "name": "Schnappy Widerruf",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Vertrag widerrufen" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Hier kannst du deinen Vertrag innerhalb der 14-tägigen Widerrufsfrist online widerrufen. Die vollständige Belehrung findest du in unserer <a href=\"/policies/refund-policy\">Widerrufsbelehrung</a>.</p>" }
+  ],
+  "presets": [{ "name": "Schnappy Widerruf" }]
+}
+{% endschema %}

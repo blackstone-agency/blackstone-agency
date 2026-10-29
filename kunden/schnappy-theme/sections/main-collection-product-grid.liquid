@@ -212,6 +212,7 @@
                   </sn-infinite>
                 {%- endif -%}
                 <noscript>{% render 'pagination', paginate: paginate, anchor: '' %}</noscript>
+                <nav class="visually-hidden" aria-label="Alle Seiten">{%- for part in paginate.parts -%}{%- if part.is_link -%}<a href="{{ part.url }}">Seite {{ part.title }}</a>{%- endif -%}{%- endfor -%}</nav>
               {%- endif -%}
             </div>
           {%- endif -%}
@@ -223,6 +224,10 @@
     {%- endif -%}
   </div>
 </collection-component>
+
+{%- if collection.description != blank -%}
+  <div class="page-width sn-coll-desc rte">{{ collection.description }}</div>
+{%- endif -%}
 
 {% schema %}
 {

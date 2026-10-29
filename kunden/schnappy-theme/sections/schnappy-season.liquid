@@ -1,0 +1,39 @@
+{%- comment -%} Schnappy: Saison-Banner – zeigt sich nur zwischen Start- und Enddatum (Format JJJJ-MM-TT) {%- endcomment -%}
+{%- liquid
+  assign today = 'now' | date: '%Y%m%d' | plus: 0
+  assign s = section.settings.start | remove: '-' | plus: 0
+  assign e = section.settings.end | remove: '-' | plus: 0
+  assign active = false
+  if s > 0 and e > 0 and today >= s and today <= e
+    assign active = true
+  endif
+-%}
+{%- if active or request.design_mode -%}
+<div class="page-width">
+  <a class="sn-season" href="{{ section.settings.link | default: routes.all_products_collection_url }}" data-start="{{ s }}" data-end="{{ e }}" style="--bg: {{ section.settings.bg }}; --fg: {{ section.settings.fg }};">
+    <span class="sn-season__emoji" aria-hidden="true">{% render 'schnappy-icon', icon: section.settings.icon %}</span>
+    <span class="sn-season__txt"><b>{{ section.settings.title | escape }}</b> {{ section.settings.text | escape }}</span>
+    <span class="sn-season__cta">{{ section.settings.cta | escape }} →</span>
+  </a>
+  {%- if request.design_mode and active == false -%}<p class="sn-season__hint">Nur im Editor sichtbar – Zeitraum ist nicht aktiv.</p>{%- endif -%}
+</div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Schnappy Saison-Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titel", "default": "Weihnachts-Schnapper" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Geschenke für jedes Budget – rechtzeitig bestellen." },
+    { "type": "text", "id": "cta", "label": "Button", "default": "Zu den Geschenken" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "text", "id": "start", "label": "Start (JJJJ-MM-TT)", "default": "2026-11-15" },
+    { "type": "text", "id": "end", "label": "Ende (JJJJ-MM-TT)", "default": "2026-12-24" },
+    { "type": "select", "id": "icon", "label": "Symbol", "default": "gift", "options": [ { "value": "gift", "label": "Geschenk" }, { "value": "sparkles", "label": "Funkeln" }, { "value": "flame", "label": "Flamme" }, { "value": "star", "label": "Stern" } ] },
+    { "type": "color", "id": "bg", "label": "Hintergrund", "default": "#B42318" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#FFFFFF" }
+  ],
+  "presets": [{ "name": "Schnappy Saison-Banner" }]
+}
+{% endschema %}

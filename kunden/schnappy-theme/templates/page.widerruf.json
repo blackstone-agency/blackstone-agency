@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "schnappy-widerruf",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

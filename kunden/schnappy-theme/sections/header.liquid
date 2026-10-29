@@ -307,6 +307,9 @@
         {%- endcase -%}
       {%- endfor -%}
 
+      <a href="https://www.tiktok.com/@schnappy.shop" class="header__icon sn-hsocial small-hide medium-hide" target="_blank" rel="noopener" aria-label="Schnappy auf TikTok"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M16.6 2h-3.4v13.4a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .8.1V9.1a6.4 6.4 0 1 0 5.5 6.3V8.6a8.1 8.1 0 0 0 4.4 1.3V6.5a4.5 4.5 0 0 1-4.4-4.5Z"/></svg></a>
+      <a href="https://www.instagram.com/schnappy.shop" class="header__icon sn-hsocial small-hide medium-hide" target="_blank" rel="noopener" aria-label="Schnappy auf Instagram">{% render 'schnappy-icon', icon: 'instagram' %}</a>
+      <a href="{{ routes.root_url }}pages/merkzettel" class="header__icon sn-hwish" aria-label="Merkzettel">{% render 'schnappy-icon', icon: 'heart' %}<span class="sn-hwish__n" data-sn-wish-count hidden>0</span></a>
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
         {% if cart == empty %}
           <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>

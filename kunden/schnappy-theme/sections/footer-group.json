@@ -31,111 +31,6 @@
         "sn_wordmark": "SCHNAPPY"
       }
     },
-    "wheel": {
-      "type": "schnappy-prize-wheel",
-      "disabled": true,
-      "blocks": {
-        "w0": {
-          "type": "segment",
-          "settings": {
-            "label": "10 %",
-            "prize": "10 % Rabatt",
-            "code": "SCHNAPP10",
-            "color": "#FFD21F",
-            "weight": 3
-          }
-        },
-        "w1": {
-          "type": "segment",
-          "settings": {
-            "label": "5 %",
-            "prize": "5 % Rabatt",
-            "code": "SCHNAPP5",
-            "color": "#3DB54A",
-            "weight": 3
-          }
-        },
-        "w2": {
-          "type": "segment",
-          "settings": {
-            "label": "Gratis Versand",
-            "prize": "Gratis Versand",
-            "code": "GRATISVERSAND",
-            "color": "#FF7A4D",
-            "weight": 1
-          }
-        },
-        "w3": {
-          "type": "segment",
-          "settings": {
-            "label": "15 %",
-            "prize": "15 % Rabatt",
-            "code": "SCHNAPP15",
-            "color": "#8E6CFF",
-            "weight": 1
-          }
-        },
-        "w4": {
-          "type": "segment",
-          "settings": {
-            "label": "5 %",
-            "prize": "5 % Rabatt",
-            "code": "SCHNAPP5",
-            "color": "#2A3038",
-            "weight": 3
-          }
-        },
-        "w5": {
-          "type": "segment",
-          "settings": {
-            "label": "Mini Box",
-            "prize": "Gratis Mini Box",
-            "code": "MINIBOX",
-            "color": "#E9B530",
-            "weight": 0
-          }
-        },
-        "w6": {
-          "type": "segment",
-          "settings": {
-            "label": "10 %",
-            "prize": "10 % Rabatt",
-            "code": "SCHNAPP10",
-            "color": "#FF4B3E",
-            "weight": 3
-          }
-        },
-        "w7": {
-          "type": "segment",
-          "settings": {
-            "label": "20 %",
-            "prize": "20 % Rabatt",
-            "code": "SCHNAPP20",
-            "color": "#123A21",
-            "weight": 0
-          }
-        }
-      },
-      "block_order": [
-        "w0",
-        "w1",
-        "w2",
-        "w3",
-        "w4",
-        "w5",
-        "w6",
-        "w7"
-      ],
-      "settings": {
-        "kicker": "Nur für Neukunden",
-        "heading": "Dreh am Rad.\nSchnapp dir was.",
-        "text": "Ein Dreh pro Person. Dein Gewinn gilt für die erste Bestellung.",
-        "once": true,
-        "show_trigger": false,
-        "color_scheme": "scheme-3",
-        "trigger_scheme": "scheme-1"
-      }
-    },
     "tabbar": {
       "type": "schnappy-tabbar",
       "settings": {
@@ -199,11 +94,26 @@
         "t3",
         "t4"
       ]
+    },
+    "newsbar": {
+      "type": "schnappy-newsbar",
+      "settings": {}
+    },
+    "snset": {
+      "type": "schnappy-settings",
+      "settings": {
+        "gift_threshold": 0,
+        "popup_enable": true,
+        "popup_delay": 20,
+        "live_days": "",
+        "live_time": "19:00"
+      }
     }
   },
   "order": [
+    "newsbar",
     "footer",
-    "wheel",
-    "tabbar"
+    "tabbar",
+    "snset"
   ]
 }

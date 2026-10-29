@@ -1,0 +1,11 @@
+{%- comment -%} Schnappy: Live-Leiste – erscheint automatisch an Live-Tagen (Einstellung in „Schnappy Einstellungen“) {%- endcomment -%}
+<sn-livebar class="sn-livebar" hidden>
+  <a class="page-width sn-livebar__in" href="https://www.instagram.com/schnappy.shop" target="_blank" rel="noopener" data-link>
+    <span class="sn-livebar__dot" aria-hidden="true"></span>
+    <span data-text>Heute live</span>
+    <span class="sn-livebar__cta">Dabei sein →</span>
+  </a>
+</sn-livebar>
+{% schema %}
+{ "name": "Schnappy Live-Leiste", "tag": "div", "class": "sn-livebar-section", "settings": [ { "type": "paragraph", "content": "Zeitplan unter Fußzeile → Schnappy Einstellungen." } ], "enabled_on": { "groups": ["header"] } }
+{% endschema %}

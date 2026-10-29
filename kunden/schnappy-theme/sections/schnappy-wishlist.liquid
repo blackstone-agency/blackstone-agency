@@ -1,0 +1,20 @@
+{%- comment -%} Schnappy: Merkzettel-Seite (gespeichert im Browser) {%- endcomment -%}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<div class="page-width sn-wl">
+  <div class="sn-wl__head">
+    <h1 class="sn-wl__title">{% render 'schnappy-icon', icon: 'heart' %} {{ section.settings.heading | escape }}</h1>
+    <button type="button" class="sn-recent__clear" data-sn-wl-clear>Alle entfernen</button>
+  </div>
+  <sn-wishlist>
+    <ul class="sn-recent__list sn-wl__list" role="list" data-list></ul>
+    <div class="sn-wl__empty" data-empty hidden>
+      <img src="{{ 'schnappy-sticker.png' | asset_url }}" alt="" width="348" height="389" loading="lazy">
+      <h2>Noch nichts gemerkt.</h2>
+      <p>Tippe auf das ♡ bei einem Produkt, um es hier zu speichern.</p>
+      <a class="sn-h2__btn sn-h2__btn--main" href="{{ routes.all_products_collection_url }}">Produkte entdecken →</a>
+    </div>
+  </sn-wishlist>
+</div>
+{% schema %}
+{ "name": "Schnappy Merkzettel", "tag": "section", "class": "section", "settings": [ { "type": "text", "id": "heading", "label": "Überschrift", "default": "Mein Merkzettel" } ], "presets": [{ "name": "Schnappy Merkzettel" }] }
+{% endschema %}

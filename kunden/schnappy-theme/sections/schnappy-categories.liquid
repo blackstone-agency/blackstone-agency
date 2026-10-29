@@ -11,9 +11,39 @@
         {%- capture href -%}{%- if block.settings.link != blank -%}{{ block.settings.link }}{%- else -%}{{ routes.search_url }}?type=product&q={{ block.settings.label | url_encode }}{%- endif -%}{%- endcapture -%}
         <li {{ block.shopify_attributes }}>
           <a href="{{ href }}" class="sn-cats__tile" style="--c: {{ block.settings.color }};">
-            <span class="sn-cats__icon">
+            {%- liquid
+              assign cat_img = blank
+              if block.settings.image == blank and section.settings.photos
+                assign kw = block.settings.match | default: block.settings.label | downcase | split: ' ' | first | remove: '&'
+                for p in collections.all.products limit: 50
+                  unless p.featured_image
+                    continue
+                  endunless
+                  if kw == 'neu'
+                    assign cat_img = p.featured_image
+                    break
+                  elsif kw == 'angebote'
+                    if p.compare_at_price > p.price
+                      assign cat_img = p.featured_image
+                      break
+                    endif
+                  else
+                    assign hay = p.title | append: ' ' | append: p.type | append: ' ' | downcase
+                    assign tg = p.tags | join: ' ' | downcase
+                    assign hay = hay | append: tg
+                    if hay contains kw
+                      assign cat_img = p.featured_image
+                      break
+                    endif
+                  endif
+                endfor
+              endif
+            -%}
+            <span class="sn-cats__icon{% if cat_img != blank or block.settings.image != blank %} sn-cats__icon--photo{% endif %}">
               {%- if block.settings.image != blank -%}
                 {{ block.settings.image | image_url: width: 240 | image_tag: loading: 'lazy', alt: '', widths: '120, 240' }}
+              {%- elsif cat_img != blank -%}
+                {{ cat_img | image_url: width: 240 | image_tag: loading: 'lazy', alt: '', widths: '120, 240' }}
               {%- else -%}
                 {% render 'schnappy-icon', icon: block.settings.icon %}
               {%- endif -%}
@@ -23,6 +53,13 @@
         </li>
       {%- endfor -%}
     </ul>
+    {%- if section.settings.brands != blank -%}
+      {%- assign brands = section.settings.brands | split: ',' -%}
+      <nav class="sn-brands" aria-label="Marken">
+        <span class="sn-brands__label">Top-Marken:</span>
+        {%- for b in brands -%}{%- assign bt = b | strip -%}{%- if bt != blank -%}<a href="{{ routes.search_url }}?type=product&q={{ bt | url_encode }}">{{ bt | escape }}</a>{%- endif -%}{%- endfor -%}
+      </nav>
+    {%- endif -%}
   </div>
 </div>
 
@@ -35,6 +72,8 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Überschrift", "default": "Kategorien" },
     { "type": "text", "id": "all_label", "label": "Link rechts", "default": "Alle Produkte" },
+    { "type": "checkbox", "id": "photos", "label": "Automatisch Produktfotos statt Symbole", "default": true, "info": "Sucht pro Kategorie ein passendes Produkt (Titel, Produkttyp oder Tag)." },
+    { "type": "text", "id": "brands", "label": "Top-Marken (mit Komma)", "default": "Disney,Pokémon,Harry Potter,Fisher-Price,Clementoni,Happy Socks,Stitch" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" },
     { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Abstand oben", "default": 28 },
     { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Abstand unten", "default": 12 }
@@ -51,7 +90,8 @@
         { "value": "cup-soda", "label": "Trinken" }, { "value": "car", "label": "Auto" }, { "value": "cat", "label": "Tier" }, { "value": "sparkles", "label": "Neu" }
       ] },
       { "type": "color", "id": "color", "label": "Farbe", "default": "#FF7A4D" },
-      { "type": "image_picker", "id": "image", "label": "Eigenes Bild statt Symbol (optional)" }
+      { "type": "image_picker", "id": "image", "label": "Eigenes Bild statt Symbol (optional)" },
+      { "type": "text", "id": "match", "label": "Suchwort fürs Foto (optional)", "info": "Standard: erstes Wort des Namens. Spezial: neu, angebote." }
     ] }
   ],
   "presets": [{ "name": "Schnappy Kategorien" }]

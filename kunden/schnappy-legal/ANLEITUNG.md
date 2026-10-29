@@ -75,3 +75,32 @@ Schnappy hat schon Ware im System, also nur prüfen:
 - [ ] Testbestellung durchführen (Shopify → Zahlungen → Testmodus).
 
 **Hinweis:** Die Rechtstexte sind sorgfältig nach aktuellem Stand erstellt, ersetzen aber keine anwaltliche Prüfung. Für dauerhafte Abmahnsicherheit mit automatischen Updates empfiehlt sich ein Rechtstexte-Abo, z. B. IT-Recht Kanzlei, Händlerbund oder Protected Shops, ca. 10–30 € pro Monat, mit Shopify-Anbindung.
+
+## 7. Theme v19 – einmalig einrichten (ca. 10 Minuten)
+
+### Seiten anlegen
+Shopify → **Onlineshop → Seiten → Seite hinzufügen**. Titel eintragen, rechts unter **Vorlage** die passende wählen, speichern. Die Adresse (Handle) muss genau so heißen:
+
+| Titel | Vorlage | Adresse |
+|---|---|---|
+| Häufige Fragen | `faq` | `/pages/faq` |
+| Live-Shows | `live` | `/pages/live` |
+| Über uns | `ueber-uns` | `/pages/ueber-uns` |
+| Versand & Lieferung | `versand` | `/pages/versand` |
+| Vertrag widerrufen | `widerruf` | `/pages/widerruf` |
+| Merkzettel | `merkzettel` | `/pages/merkzettel` |
+| Kontakt | `contact` | `/pages/contact` (gibt es meist schon) |
+
+### Einstellungen im Theme-Editor
+**Anpassen → Fußzeile → „Schnappy Einstellungen“**:
+- **Live-Tage und Uhrzeit** (z. B. `Mo,Mi,Fr` und `19:00`): Dann erscheint an diesen Tagen automatisch die rote Live-Leiste.
+- **Willkommens-Code**: erst unter Rabatte in Shopify anlegen, dann hier eintragen.
+- **Zweite Belohnung**: nur einschalten, wenn ihr ab dem Betrag wirklich etwas beilegt.
+- **Newsletter-Pop-up**: an/aus, Verzögerung, Texte.
+
+### Optional für noch mehr Wirkung
+- **„Wird oft zusammen gekauft“**: App *Search & Discovery* → Produktempfehlungen → pro Produkt „Ergänzende Produkte“ eintragen. Ohne Eintrag zeigt der Shop ähnliche Produkte.
+- **Produktsicherheit (GPSR)**: Einstellungen → Benutzerdefinierte Daten → Produkte → Metafeld `custom.produktsicherheit` (mehrzeiliger Text) anlegen und pro Produkt Hersteller/Warnhinweise eintragen. Erscheint automatisch als eigener Reiter.
+- **Altersangabe**: Produkt-Tag `alter-3` → „Empfohlen ab 3 Jahren“.
+- **Farb-Punkte**: Varianten-Option „Farbe“ mit Werten wie Rot, Blau, Schwarz.
+- **Widerruf**: Shopify sendet das Formular an eure Shop-E-Mail. Bitte jedem Kunden den Eingang kurz per E-Mail bestätigen (gesetzlich vorgeschrieben).

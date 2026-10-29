@@ -125,9 +125,14 @@
       "settings": {
         "color_scheme": "scheme-3"
       }
+    },
+    "livebar": {
+      "type": "schnappy-livebar",
+      "settings": {}
     }
   },
   "order": [
+    "livebar",
     "ticker",
     "header",
     "search"

@@ -32,6 +32,7 @@
           <li>✓ Gratis Versand ab 44 €</li>
           <li>✓ Versand in 1–2 Werktagen</li>
           <li>✓ PayPal &amp; Klarna</li>
+          <li data-sn-newcount hidden></li>
         </ul>
       </div>
       <ul class="sn-h2__prods" role="list">
@@ -42,7 +43,11 @@
             {%- assign shown = shown | plus: 1 -%}
             <li>
               <a href="{{ p.url }}" class="sn-h2__p">
-                {{ p.featured_image | image_url: width: 400 | image_tag: loading: 'eager', widths: '200, 300, 400', sizes: '(min-width: 990px) 160px, 22vw', alt: p.title }}
+                {%- if shown == 1 -%}
+                  {{ p.featured_image | image_url: width: 400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '200, 300, 400', sizes: '(min-width: 990px) 160px, 22vw', alt: p.title }}
+                {%- else -%}
+                  {{ p.featured_image | image_url: width: 400 | image_tag: loading: 'eager', widths: '200, 300, 400', sizes: '(min-width: 990px) 160px, 22vw', alt: p.title }}
+                {%- endif -%}
                 <span class="sn-h2__tag">
                   {%- if p.compare_at_price > p.price -%}<s>{{ p.compare_at_price | money }}</s>{%- endif -%}
                   <b>{{ p.price | money }}</b>

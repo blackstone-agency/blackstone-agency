@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "schnappy-wishlist",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

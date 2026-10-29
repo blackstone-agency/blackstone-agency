@@ -1,0 +1,35 @@
+{%- comment -%}
+  Schnappy: „Wird oft zusammen gekauft“ – nutzt Shopifys Produktempfehlungen
+  (ergänzende Produkte aus Search & Discovery, sonst ähnliche Produkte).
+{%- endcomment -%}
+{%- if recommendations.performed -%}
+  {%- if recommendations.products_count > 0 -%}
+    <div class="sn-fbt__inner">
+      <ul class="sn-fbt__list" role="list">
+        {%- for p in recommendations.products limit: 3 -%}
+          {%- assign v = p.selected_or_first_available_variant -%}
+          {%- if v.available -%}
+          <li class="sn-fbt__item">
+            <label class="sn-fbt__pick"><input type="checkbox" checked value="{{ v.id }}" data-price="{{ v.price }}"><span class="visually-hidden">Auswählen</span></label>
+            <a href="{{ p.url }}" class="sn-fbt__img">{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}</a>
+            <a href="{{ p.url }}" class="sn-fbt__name">{{ p.title | split: ' //' | first | escape }}</a>
+            <span class="sn-fbt__price">{{ v.price | money }}</span>
+          </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      <div class="sn-fbt__buy">
+        <span>Zusammen: <b data-sum></b></span>
+        <button type="button" class="sn-cartbtn" data-add><span>Ausgewählte in den Einkaufswagen</span></button>
+      </div>
+    </div>
+  {%- endif -%}
+{%- else -%}
+  <sn-fbt class="page-width sn-fbt" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=3&intent=complementary" data-fallback="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit=2&intent=related" hidden>
+    <h2 class="sn-fbt__title">{% render 'schnappy-icon', icon: 'plus' %} Wird oft zusammen gekauft</h2>
+    <div data-body></div>
+  </sn-fbt>
+{%- endif -%}
+{% schema %}
+{ "name": "Schnappy Zusammen kaufen", "tag": "section", "class": "section", "settings": [] }
+{% endschema %}

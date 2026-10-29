@@ -47,6 +47,14 @@
               <a href="{{ routes.all_products_collection_url }}" class="button">
                 {{ 'general.continue_shopping' | t }}
               </a>
+              <div class="sn-empty-more">
+                <p class="sn-empty-more__t">Beliebt gerade:</p>
+                <ul class="sn-empty-more__list" role="list">
+                  {%- for p in collections.all.products limit: 4 -%}{%- if p.available and p.featured_image -%}
+                    <li><a href="{{ p.url }}">{{ p.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: p.title }}<span>{{ p.price | money }}</span></a></li>
+                  {%- endif -%}{%- endfor -%}
+                </ul>
+              </div>
 
               {%- if shop.customer_accounts_enabled and customer == null -%}
                 <p class="cart__login-title h3">{{ 'sections.cart.login.title' | t }}</p>
@@ -82,12 +90,13 @@
         {%- assign sn_pct = cart.total_price | times: 100 | divided_by: sn_threshold | at_most: 100 -%}
         <div class="sn-shipbar">
           {%- if sn_left > 0 -%}
-            Noch <b>{{ sn_left | money }}</b> bis zum <b>Gratis-Versand</b> 🚚
+            {% render 'schnappy-icon', icon: 'truck' %}<span>Noch <b>{{ sn_left | money }}</b> bis zum <b>Gratis-Versand</b></span>
           {%- else -%}
-            🎉 Du hast <b>Gratis-Versand</b> freigeschaltet!
+            {% render 'schnappy-icon', icon: 'shield-check' %}<span>Du hast <b>Gratis-Versand</b> freigeschaltet!</span>
           {%- endif -%}
           <div class="sn-shipbar__bar"><i style="width: {{ sn_pct }}%"></i></div>
         </div>
+        <div class="sn-tier" data-sn-tier data-total="{{ cart.total_price }}" hidden></div>
       {%- endif -%}
       <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
@@ -509,13 +518,14 @@
             <product-form class="sn-upsell" data-section-id="cart-drawer">
               {%- form 'product', sn_up, class: 'sn-upsell__form', novalidate: 'novalidate' -%}
                 <input type="hidden" name="id" value="{{ sn_up.selected_or_first_available_variant.id }}">
-                {%- if sn_up.featured_image -%}<img src="{{ sn_up.featured_image | image_url: width: 120 }}" alt="" width="56" height="56" loading="lazy">{%- else -%}<span class="sn-upsell__ph" aria-hidden="true">🎁</span>{%- endif -%}
+                {%- if sn_up.featured_image -%}<img src="{{ sn_up.featured_image | image_url: width: 120 }}" alt="" width="56" height="56" loading="lazy">{%- else -%}<span class="sn-upsell__ph" aria-hidden="true">{% render 'schnappy-icon', icon: 'gift' %}</span>{%- endif -%}
                 <span class="sn-upsell__txt"><b>Noch was dazu?</b><br>{{ sn_up.title | escape }} · <b class="sn-upsell__price">{{ sn_up.price | money }}</b></span>
                 <div class="product-form__error-message-wrapper" hidden><span class="product-form__error-message"></span></div>
                 <button type="submit" name="add" class="sn-upsell__btn"><span>+ Hinzufügen</span>{%- render 'loading-spinner' -%}</button>
               {%- endform -%}
             </product-form>
           {%- endif -%}
+        {%- if cart != empty -%}<div class="sn-fill" data-sn-fill data-total="{{ cart.total_price }}" hidden></div>{%- endif -%}
       </cart-drawer-items>
       <div class="drawer__footer">
         {%- if settings.show_cart_note -%}
@@ -575,12 +585,12 @@
             endfor
           -%}
           {%- if sn_saved > 0 -%}
-            <div class="sn-save-row"><span>🎉 Du sparst bisher</span><span><s>{{ sn_regular | money }}</s> <b>−{{ sn_saved | money }}</b></span></div>
+            <div class="sn-save-row"><span>{% render 'schnappy-icon', icon: 'tag' %} Du sparst bisher</span><span><s>{{ sn_regular | money }}</s> <b>−{{ sn_saved | money }}</b></span></div>
           {%- endif -%}
 
           <form class="sn-code" data-sn-code data-codes="{{ sn_codes | escape }}" novalidate>
             <details class="sn-code__toggle">
-              <summary class="sn-code__label">🏷️ Rabattcode oder Gutschein</summary>
+              <summary class="sn-code__label"><span>{% render 'schnappy-icon', icon: 'tag' %} Rabattcode oder Gutschein</span></summary>
               <div class="sn-code__row">
                 <label for="SnCodeInput" class="visually-hidden">Rabattcode</label>
                 <input id="SnCodeInput" class="sn-code__input" type="text" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="z. B. SCHNAPPY10">
@@ -588,6 +598,7 @@
               </div>
             </details>
             <p class="sn-code__msg" role="status" aria-live="polite" data-msg></p>
+            {%- if sn_codes == '' -%}<p class="sn-welcome" data-sn-welcome hidden></p>{%- endif -%}
             {%- if sn_codes != '' -%}
               <ul class="sn-code__list" role="list">
                 {%- for d in cart.discount_applications -%}
@@ -623,7 +634,9 @@
             {% render 'schnappy-icon', icon: 'lock' %} Sicher zur Kasse · {{ cart.total_price | money }}
           </button>
           <div class="sn-cart-trust">
-            <p><span>🚚 Lieferung <b data-sn-eta>in 1–3 Werktagen</b></span><span>↩︎ 14 Tage Rückgabe</span></p>
+            <p><span>{% render 'schnappy-icon', icon: 'truck' %} Lieferung <b data-sn-eta>in 1–3 Werktagen</b></span><span>{% render 'schnappy-icon', icon: 'rotate-ccw' %} 14 Tage Rückgabe</span></p>
+            <p class="sn-ssl">{% render 'schnappy-icon', icon: 'lock' %} SSL-verschlüsselte Zahlung über Shopify</p>
+            {%- if cart.total_price >= 3000 -%}<p class="sn-klarna"><span>Klarna.</span> Später oder in 3 Raten bezahlen</p>{%- endif -%}
             <div class="sn-cart-pay">{%- assign sn_pay = 'paypal,klarna,apple_pay,google_pay,visa,master' | split: ',' -%}{%- for t in sn_pay -%}{{ t | payment_type_svg_tag: class: 'icon icon--full-color' }}{%- endfor -%}</div>
           </div>
           <button type="button" class="sn-continue" onclick="this.closest('cart-drawer').close()">← Weiter einkaufen</button>

@@ -11,6 +11,7 @@
         <span class="sn-daily__kicker">{% render 'schnappy-icon', icon: 'zap' %} {{ section.settings.kicker | escape }}</span>
         <p class="sn-daily__timer">Neuer Schnapper in <b data-sn-countdown>--:--:--</b></p>
       </div>
+      <div class="sn-daily__prog" aria-hidden="true"><i data-sn-dayprog></i></div>
       {%- for p in coll.products limit: section.settings.limit -%}
         {%- unless p.available -%}{%- continue -%}{%- endunless -%}
         {%- assign v = p.selected_or_first_available_variant -%}
@@ -30,6 +31,10 @@
                 <button type="submit" name="add" class="sn-cartbtn"><span>{% render 'schnappy-icon', icon: 'cart' %} In den Einkaufswagen</span>{%- render 'loading-spinner' -%}</button>
               {%- endform -%}
             </product-form>
+            <div class="sn-daily__share">
+              <a class="sn-daily__sbtn" href="https://wa.me/?text={{ 'Schnapper des Tages bei Schnappy: ' | append: p.title | append: ' – ' | append: shop.url | append: p.url | url_encode }}" target="_blank" rel="noopener">{% render 'schnappy-icon', icon: 'message-circle' %} WhatsApp</a>
+              <button type="button" class="sn-daily__sbtn" data-sn-share="{{ shop.url }}{{ p.url }}" data-title="{{ p.title | escape }}">{% render 'schnappy-icon', icon: 'arrow-up-right' %} Teilen</button>
+            </div>
             <p class="sn-daily__note">Jeden Tag um 0 Uhr ein neuer Schnapper – schau morgen wieder rein.</p>
           </div>
         </div>

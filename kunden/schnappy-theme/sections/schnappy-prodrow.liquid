@@ -1,0 +1,40 @@
+{%- comment -%}
+  Schnappy: Produktreihe (z. B. Bestseller, Unter 5 €). Die Produkte werden live nach Shopify-Sortierung geladen.
+{%- endcomment -%}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'quick-add.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+{%- liquid
+  assign q = section.settings.query | default: 'sort_by=best-selling'
+  assign all_url = routes.all_products_collection_url | append: '?' | append: q
+-%}
+<sn-row class="sn-row page-width" data-url="{{ routes.all_products_collection_url }}?{{ q }}&section_id=schnappy-bestgrid">
+  <div class="sn-row__head">
+    <h2 class="sn-row__title">{%- if section.settings.icon != blank -%}{% render 'schnappy-icon', icon: section.settings.icon %}{%- endif -%}{{ section.settings.title | escape }}</h2>
+    <a class="sn-row__all" href="{{ all_url }}">Alle ansehen →</a>
+  </div>
+  <div class="sn-row__body" data-body>
+    <ul class="sn-row__list sn-row__list--skeleton" role="list" aria-hidden="true">
+      {%- for i in (1..5) -%}<li class="sn-row__item"><div class="sn-skel"></div></li>{%- endfor -%}
+    </ul>
+  </div>
+  <div class="sn-row__nav" aria-hidden="true">
+    <button type="button" class="sn-row__btn" data-prev tabindex="-1">‹</button>
+    <button type="button" class="sn-row__btn" data-next tabindex="-1">›</button>
+  </div>
+</sn-row>
+{% schema %}
+{
+  "name": "Schnappy Produktreihe",
+  "tag": "section",
+  "class": "section sn-row-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Überschrift", "default": "Bestseller" },
+    { "type": "select", "id": "icon", "label": "Symbol", "default": "flame", "options": [ { "value": "", "label": "Keins" }, { "value": "flame", "label": "Flamme" }, { "value": "tag", "label": "Preisschild" }, { "value": "star", "label": "Stern" }, { "value": "sparkles", "label": "Funkeln" } ] },
+    { "type": "text", "id": "query", "label": "Sortierung/Filter", "default": "sort_by=best-selling", "info": "z. B. sort_by=best-selling oder filter.v.price.lte=5&sort_by=price-descending" }
+  ],
+  "presets": [{ "name": "Schnappy Produktreihe" }]
+}
+{% endschema %}

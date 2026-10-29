@@ -59,7 +59,7 @@
   },
   "newsletter": {
     "label": "E-Mail",
-    "success": "Danke für deine Anmeldung",
+    "success": "Danke! Du bist dabei – folg uns auch auf Instagram, TikTok & Whatnot.",
     "button_label": "Abonnieren"
   },
   "accessibility": {
@@ -279,7 +279,7 @@
       "title": "Dein Einkaufswagen",
       "caption": "Artikel im Einkaufswagen",
       "remove_title": "{{ title }} entfernen",
-      "note": "Spezielle Bestellanweisungen",
+      "note": "Notiz zur Bestellung (z. B. Geschenk)",
       "checkout": "Auschecken",
       "empty": "Dein Einkaufswagen ist leer",
       "product_disclosure": "Produktoffenlegung",

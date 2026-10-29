@@ -1,0 +1,18 @@
+{%- comment -%}
+  Hilfs-Abschnitt (nur per Section-Rendering-API geladen):
+  /collections/all?sort_by=best-selling&section_id=schnappy-bestgrid
+  Gibt Produktkarten der aktuellen Kollektion in der aufgerufenen Sortierung/Filterung aus.
+{%- endcomment -%}
+{%- if collection -%}
+  <ul class="sn-row__list" role="list">
+    {%- for p in collection.products limit: 10 -%}
+      {%- unless p.available -%}{%- continue -%}{%- endunless -%}
+      <li class="sn-row__item">
+        {% render 'card-product', card_product: p, media_aspect_ratio: 'square', image_shape: 'default', show_secondary_image: true, show_vendor: false, show_rating: false, lazy_load: true, quick_add: 'standard', section_id: 'schnappy-bestgrid' %}
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}
+{% schema %}
+{ "name": "Produktliste (intern)", "settings": [] }
+{% endschema %}

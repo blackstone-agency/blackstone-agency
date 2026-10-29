@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "main": {
+      "type": "schnappy-infopage",
+      "settings": {
+        "show_croc": false,
+        "kicker": "Versand",
+        "heading": "Versand & Lieferung",
+        "text": "<p>Wir versenden aus Hamburg. Bestellungen bis 14 Uhr gehen in der Regel noch am selben Werktag raus.</p>"
+      },
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "left": "Versand Deutschland",
+            "right": "4,90 €"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "left": "Ab 44 € Bestellwert",
+            "right": "Gratis"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "left": "Lieferzeit",
+            "right": "1–3 Werktage"
+          }
+        },
+        "c1": {
+          "type": "card",
+          "settings": {
+            "icon": "package",
+            "title": "Sendungsverfolgung",
+            "body": "<p>Du bekommst nach dem Versand eine E-Mail mit Tracking-Link.</p>"
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "icon": "rotate-ccw",
+            "title": "Rückgabe",
+            "body": "<p>14 Tage Widerrufsrecht – <a href=\"/pages/widerruf\">online widerrufen</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "c1",
+        "c2"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

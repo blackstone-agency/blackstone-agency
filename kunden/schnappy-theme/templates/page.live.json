@@ -1,0 +1,53 @@
+{
+  "sections": {
+    "main": {
+      "type": "schnappy-infopage",
+      "settings": {
+        "kicker": "Live-Shopping",
+        "heading": "Live-Shows & Drops",
+        "text": "<p>Bei uns kannst du live mitbieten, Unboxings sehen und Schnäppchen abgreifen. Folge uns, um keine Show zu verpassen – die aktuellen Termine posten wir in unserer Instagram-Story.</p>"
+      },
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "icon": "radio",
+            "title": "Live auf Instagram",
+            "body": "<p>Unboxings, Drops und Live-Deals – folge @schnappy.shop.</p>"
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "icon": "star",
+            "title": "Mitbieten auf Whatnot",
+            "body": "<p>Live-Auktionen mit Startpreisen, die Spaß machen.</p>"
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "icon": "gift",
+            "title": "Im Shop jederzeit",
+            "body": "<p>Keine Zeit für die Show? Alles zum Festpreis hier im Shop.</p>"
+          }
+        },
+        "s": {
+          "type": "social",
+          "settings": {
+            "title": "Folge uns"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "s"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

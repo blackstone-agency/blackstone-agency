@@ -1,0 +1,40 @@
+{%- comment -%} Schnappy: FAQ-Seite mit Sprungmarken und Google-FAQ-Daten {%- endcomment -%}
+<div class="page-width sn-faqp">
+  <h1 class="sn-faqp__title">{{ section.settings.heading | escape }}</h1>
+  {%- if section.settings.intro != blank -%}<p class="sn-faqp__intro">{{ section.settings.intro | escape }}</p>{%- endif -%}
+  <nav class="sn-faqp__toc" aria-label="Themen">
+    {%- for block in section.blocks -%}<a href="#faq-{{ forloop.index }}">{{ block.settings.q | escape }}</a>{%- endfor -%}
+  </nav>
+  <div class="sn-faqp__list">
+    {%- for block in section.blocks -%}
+      <details class="sn-faqp__item" id="faq-{{ forloop.index }}" {{ block.shopify_attributes }}{% if forloop.first %} open{% endif %}>
+        <summary>{{ block.settings.q | escape }}</summary>
+        <div class="rte">{{ block.settings.a }}</div>
+      </details>
+    {%- endfor -%}
+  </div>
+  <p class="sn-faqp__more">Noch Fragen? <a href="mailto:support@schnappy.shop">support@schnappy.shop</a> oder <a href="https://ig.me/m/schnappy.shop" target="_blank" rel="noopener">Instagram-Nachricht</a>.</p>
+</div>
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+  {%- for block in section.blocks -%}
+  { "@type": "Question", "name": {{ block.settings.q | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.a | strip_html | json }} } }{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+] }
+</script>
+{% schema %}
+{
+  "name": "Schnappy FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Überschrift", "default": "Häufige Fragen" },
+    { "type": "text", "id": "intro", "label": "Einleitung", "default": "Alles zu Bestellung, Versand, Rückgabe und Mystery Boxen." }
+  ],
+  "blocks": [ { "type": "qa", "name": "Frage", "settings": [
+    { "type": "text", "id": "q", "label": "Frage", "default": "Frage" },
+    { "type": "richtext", "id": "a", "label": "Antwort", "default": "<p>Antwort</p>" }
+  ] } ],
+  "presets": [{ "name": "Schnappy FAQ" }]
+}
+{% endschema %}

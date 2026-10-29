@@ -1,0 +1,70 @@
+{%- comment -%}
+  Schnappy Shop-Einstellungen (unsichtbar): Belohnungsstufe im Einkaufswagen, Willkommens-Code,
+  Newsletter-Pop-up, Live-Zeitplan. Alles im Theme-Editor unter „Fußzeile“ einstellbar.
+{%- endcomment -%}
+<script>
+  window.SN_CFG = {
+    shipFree: 4400,
+    giftAt: {{ section.settings.gift_threshold | times: 100 | json }},
+    giftText: {{ section.settings.gift_text | json }},
+    welcomeCode: {{ section.settings.welcome_code | json }},
+    welcomeText: {{ section.settings.welcome_text | json }},
+    popup: {{ section.settings.popup_enable | json }},
+    popupDelay: {{ section.settings.popup_delay | json }},
+    liveDays: {{ section.settings.live_days | json }},
+    liveTime: {{ section.settings.live_time | json }},
+    liveLink: {{ section.settings.live_link | json }},
+    klarnaFrom: 3000
+  };
+</script>
+
+{%- if section.settings.popup_enable -%}
+<sn-popup class="sn-pop" hidden>
+  <div class="sn-pop__overlay" data-close></div>
+  <div class="sn-pop__box" role="dialog" aria-modal="true" aria-labelledby="SnPopTitle">
+    <button type="button" class="sn-pop__x" data-close aria-label="Schließen">{% render 'schnappy-icon', icon: 'x' %}</button>
+    <img src="{{ 'schnappy-peek.png' | asset_url }}" alt="" width="360" height="160" class="sn-pop__croc" loading="lazy">
+    <p class="sn-pop__kicker">{{ section.settings.popup_kicker | escape }}</p>
+    <h2 id="SnPopTitle" class="sn-pop__title">{{ section.settings.popup_title | escape }}</h2>
+    <p class="sn-pop__text">{{ section.settings.popup_text | escape }}</p>
+    {%- form 'customer', id: 'SnPopForm', class: 'sn-pop__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter,popup">
+      {%- if form.posted_successfully? -%}
+        <p class="sn-pop__ok" data-ok>✓ Danke! Du bist dabei.</p>
+      {%- else -%}
+        <label for="SnPopEmail" class="visually-hidden">E-Mail</label>
+        <input id="SnPopEmail" type="email" name="contact[email]" required autocomplete="email" placeholder="Deine E-Mail-Adresse" enterkeyhint="send">
+        <button type="submit">{{ section.settings.popup_button | escape }}</button>
+        {%- if form.errors -%}<p class="sn-pop__err">Bitte prüfe deine E-Mail-Adresse.</p>{%- endif -%}
+      {%- endif -%}
+    {%- endform -%}
+    <p class="sn-pop__legal">Kein Spam. Abmeldung jederzeit. Hinweise in der <a href="/policies/privacy-policy">Datenschutzerklärung</a>.</p>
+  </div>
+</sn-popup>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Schnappy Einstellungen",
+  "tag": "div",
+  "class": "sn-settings-section",
+  "settings": [
+    { "type": "header", "content": "Einkaufswagen" },
+    { "type": "number", "id": "gift_threshold", "label": "Zweite Belohnung ab (€)", "default": 0, "info": "0 = aus. Nur einschalten, wenn ihr die Belohnung wirklich beilegt." },
+    { "type": "text", "id": "gift_text", "label": "Text der Belohnung", "default": "Gratis-Überraschung" },
+    { "type": "text", "id": "welcome_code", "label": "Willkommens-Code", "info": "Leer = Hinweis aus. Code muss unter Rabatte in Shopify angelegt sein." },
+    { "type": "text", "id": "welcome_text", "label": "Text zum Code", "default": "Erste Bestellung? Spar mit dem Code" },
+    { "type": "header", "content": "Newsletter-Pop-up" },
+    { "type": "checkbox", "id": "popup_enable", "label": "Pop-up anzeigen", "default": true },
+    { "type": "range", "id": "popup_delay", "label": "Erscheint nach (Sekunden)", "min": 5, "max": 60, "step": 5, "default": 20 },
+    { "type": "text", "id": "popup_kicker", "label": "Kleine Überschrift", "default": "Nichts mehr verpassen" },
+    { "type": "text", "id": "popup_title", "label": "Überschrift", "default": "Neue Drops zuerst per Mail" },
+    { "type": "text", "id": "popup_text", "label": "Text", "default": "Neue Artikel, Schnapper des Tages und exklusive Codes – direkt in dein Postfach." },
+    { "type": "text", "id": "popup_button", "label": "Button", "default": "Anmelden" },
+    { "type": "header", "content": "Live-Shows" },
+    { "type": "text", "id": "live_days", "label": "Live-Tage", "default": "Mo,Mi,Fr", "info": "Kürzel mit Komma: Mo,Di,Mi,Do,Fr,Sa,So. Leer = Leiste aus." },
+    { "type": "text", "id": "live_time", "label": "Uhrzeit", "default": "19:00" },
+    { "type": "url", "id": "live_link", "label": "Link zur Live-Show" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,25 @@
+{%- comment -%} Schnappy: Newsletter-Leiste über dem Fußende (auf allen Seiten außer Startseite) {%- endcomment -%}
+{%- unless template.name == 'index' -%}
+<div class="sn-newsbar">
+  <div class="page-width sn-newsbar__in">
+    <div class="sn-newsbar__txt">{% render 'schnappy-icon', icon: 'mail' %}<span><b>{{ section.settings.title | escape }}</b> {{ section.settings.text | escape }}</span></div>
+    {%- form 'customer', id: 'SnNewsbar', class: 'sn-newsbar__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      {%- if form.posted_successfully? -%}
+        <p class="sn-newsbar__ok">✓ Danke! Du bist dabei.</p>
+      {%- else -%}
+        <label for="SnNewsbarEmail" class="visually-hidden">E-Mail</label>
+        <input id="SnNewsbarEmail" type="email" name="contact[email]" required autocomplete="email" placeholder="Deine E-Mail" enterkeyhint="send">
+        <button type="submit">Anmelden</button>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>
+{%- endunless -%}
+{% schema %}
+{ "name": "Newsletter-Leiste", "tag": "section", "class": "sn-newsbar-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titel", "default": "Neue Drops zuerst:" },
+    { "type": "text", "id": "text", "label": "Text", "default": "Melde dich für den Newsletter an." }
+  ], "enabled_on": { "groups": ["footer"] } }
+{% endschema %}

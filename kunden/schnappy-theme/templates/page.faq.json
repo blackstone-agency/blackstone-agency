@@ -1,0 +1,79 @@
+{
+  "sections": {
+    "main": {
+      "type": "schnappy-faq",
+      "settings": {},
+      "blocks": {
+        "q0": {
+          "type": "qa",
+          "settings": {
+            "q": "Was ist in einer Mystery Box?",
+            "a": "<p>Eine bunte Mischung aus Spielzeug, Trend-Produkten, Haushalts- und Lifestyle-Artikeln – 100 % Neuware. Der Warenwert liegt immer über dem Kaufpreis.</p>"
+          }
+        },
+        "q1": {
+          "type": "qa",
+          "settings": {
+            "q": "Wie schnell wird versendet?",
+            "a": "<p>Bestellungen bis 14 Uhr verlassen in der Regel noch am selben Werktag unser Lager. Lieferzeit in Deutschland: 1–3 Werktage.</p>"
+          }
+        },
+        "q2": {
+          "type": "qa",
+          "settings": {
+            "q": "Ab wann ist der Versand kostenlos?",
+            "a": "<p>Ab 44 € Bestellwert versenden wir innerhalb Deutschlands kostenlos.</p>"
+          }
+        },
+        "q3": {
+          "type": "qa",
+          "settings": {
+            "q": "Welche Zahlungsarten gibt es?",
+            "a": "<p>PayPal, Klarna, Apple Pay, Google Pay sowie Visa und Mastercard.</p>"
+          }
+        },
+        "q4": {
+          "type": "qa",
+          "settings": {
+            "q": "Kann ich zurückgeben?",
+            "a": "<p>Ja, du hast ein 14-tägiges Widerrufsrecht. Online widerrufen kannst du über <a href=\"/pages/widerruf\">Vertrag widerrufen</a>.</p>"
+          }
+        },
+        "q5": {
+          "type": "qa",
+          "settings": {
+            "q": "Ist alles Neuware?",
+            "a": "<p>Ja. Wir verkaufen ausschließlich Neuware – keine B-Ware und keine Gebrauchtware.</p>"
+          }
+        },
+        "q6": {
+          "type": "qa",
+          "settings": {
+            "q": "Was ist der Unterschied zur Live-Show?",
+            "a": "<p>In der Live-Show auf Instagram bietest du live mit. Im Shop kaufst du zum Festpreis – jederzeit.</p>"
+          }
+        },
+        "q7": {
+          "type": "qa",
+          "settings": {
+            "q": "Wie erreiche ich euch?",
+            "a": "<p>Per E-Mail an support@schnappy.shop, telefonisch unter 0152 54919878 oder per Instagram-Nachricht an @schnappy.shop.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q0",
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

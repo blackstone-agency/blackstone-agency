@@ -25,9 +25,44 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+    {%- liquid
+      assign sn_desc = page_description
+      if sn_desc == blank and product
+        assign sn_desc = product.description | strip_html | strip_newlines | truncate: 155
+      endif
+      if sn_desc == blank and collection
+        assign sn_desc = collection.title | append: ' günstig kaufen bei Schnappy – Neuware zu Restpostenpreisen. Gratis Versand ab 44 €.'
+      endif
+      if sn_desc == blank
+        assign sn_desc = 'Schnappy – Neuware zu Restpostenpreisen: Spielzeug, Haushalt, Elektronik und Mystery Boxen ab 9,99 €. Gratis Versand ab 44 €.'
+      endif
+      assign sn_noindex = false
+      if collection and collection.filters
+        for f in collection.filters
+          if f.active_values.size > 0 or f.min_value.value != nil or f.max_value.value != nil
+            assign sn_noindex = true
+          endif
+        endfor
+      endif
+      if current_page > 1 and template.name == 'search'
+        assign sn_noindex = true
+      endif
+    -%}
+    <meta name="description" content="{{ sn_desc | escape }}">
+    {%- if sn_noindex -%}<meta name="robots" content="noindex, follow">{%- endif -%}
+    <link rel="apple-touch-icon" href="{{ 'apple-touch-icon.png' | asset_url }}">
+    <meta name="apple-mobile-web-app-title" content="Schnappy">
+    <meta name="application-name" content="Schnappy">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"Organization","name":"Schnappy","legalName":"Schnappy GbR","url":"{{ shop.url }}","logo":"https:{{ 'schnappy-logo.png' | asset_url }}","email":"support@schnappy.shop","telephone":"+49 152 54919878","address":{"@type":"PostalAddress","streetAddress":"Karl-Strutz-Weg 52b","postalCode":"22119","addressLocality":"Hamburg","addressCountry":"DE"},"sameAs":["https://www.instagram.com/schnappy.shop","https://www.tiktok.com/@schnappy.shop"]}
+    </script>
+    {%- if template.name == 'index' -%}
+    <script type="application/ld+json">
+      {"@context":"https://schema.org","@type":"WebSite","name":"Schnappy","url":"{{ shop.url }}","potentialAction":{"@type":"SearchAction","target":"{{ shop.url }}/search?q={search_term_string}","query-input":"required name=search_term_string"}}
+    </script>
+    {%- endif -%}
 
     {% render 'meta-tags' %}
 
@@ -293,13 +328,6 @@
         font-display: swap;
       }
       @font-face {
-        font-family: 'Bricolage Grotesque';
-        src: url('{{ 'bricolage-grotesque.woff2' | asset_url }}') format('woff2');
-        font-weight: 200 800;
-        font-style: normal;
-        font-display: swap;
-      }
-      @font-face {
         font-family: 'Inter';
         src: url('{{ 'inter-var.woff2' | asset_url }}') format('woff2');
         font-weight: 400 800;
@@ -335,14 +363,8 @@
     {%- endif -%}
 
     {%- unless settings.type_body_font.system? -%}
-      {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
-      {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
     {%- unless settings.type_header_font.system? -%}
-      {% comment %}theme-check-disable AssetPreload{% endcomment %}
-      <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
-      {% comment %}theme-check-enable AssetPreload{% endcomment %}
     {%- endunless -%}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
@@ -443,5 +465,6 @@
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
     {%- render 'schnappy-dealsbtn' -%}
+    {%- render 'schnappy-icon-templates' -%}
   </body>
 </html>
