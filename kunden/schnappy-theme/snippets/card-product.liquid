@@ -401,7 +401,7 @@
                     >
                       <span>
                         {%- if card_product.selected_or_first_available_variant.available -%}
-                          <span class="sn-atc__l">{{ 'products.product.add_to_cart' | t }}</span><span class="sn-atc__s" aria-hidden="true">In den Korb</span>
+                          {% render 'schnappy-icon', icon: 'cart' %}<span class="sn-atc__l">{{ 'products.product.add_to_cart' | t }}</span><span class="sn-atc__s" aria-hidden="true">In den Korb</span>
                         {%- else -%}
                           {{ 'products.product.sold_out' | t }}
                         {%- endif -%}

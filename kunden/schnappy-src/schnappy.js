@@ -429,6 +429,8 @@ if (!customElements.get('sn-infinite')) {
 (function () {
   const KEY = 'sn-view';
   function apply(v) {
+    // Liste/Kompakt nur dort, wo es den Umschalter gibt (Startseite bleibt immer im Raster)
+    if (!document.querySelector('button[data-sn-view]')) v = 'grid';
     document.documentElement.dataset.snView = v;
     document.querySelectorAll('[data-sn-view]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.snView === v));
   }

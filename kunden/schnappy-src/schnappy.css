@@ -2477,3 +2477,27 @@ ul.sn-cat__grid { margin: 0; padding: 0; }
   .sn-daily__share { grid-area: share; margin: 0; }
   .sn-daily__note { grid-area: note; margin: 0; align-self: start; }
 }
+
+/* =====================================================================
+   v28 – Handy-Karte wie outlet46: Preis in einer Zeile, Button mit Einkaufswagen-Symbol
+   ===================================================================== */
+.card-wrapper .quick-add__submit { display: inline-flex !important; align-items: center; justify-content: center; gap: .6rem; }
+.card-wrapper .quick-add__submit .sn-i { width: 1.8rem; height: 1.8rem; flex: none; }
+.card-wrapper .quick-add__submit.loading .sn-i, .card-wrapper .quick-add__submit[aria-disabled="true"] .sn-i { visibility: hidden; }
+@media (max-width: 749px) {
+  html ul#product-grid .price .price__sale { flex-wrap: nowrap !important; align-items: baseline; }
+  html ul#product-grid .price .price__sale .price-item--sale { font-size: 2rem !important; flex: none; }
+  html ul#product-grid .price .price__sale > span:not(.visually-hidden):not(.price-item) { min-width: 0; overflow: hidden; }
+  html[data-sn-view] ul#product-grid .price .price__sale s.price-item, html ul#product-grid .price .price__sale s.price-item--regular { font-size: 1.1rem !important; white-space: nowrap; }
+  ul.product-grid .card-wrapper .quick-add__submit .sn-i { width: 1.7rem; height: 1.7rem; }
+  /* Schnapper: Button einzeilig */
+  .sn-daily .sn-atc__l { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; }
+  .sn-daily .sn-atc__s { display: inline; white-space: nowrap; }
+  .sn-daily .sn-cartbtn > span { display: inline-flex; align-items: center; gap: .6rem; white-space: nowrap; }
+  /* „Kategorien“ / „Filtern & Sortieren“ einzeilig */
+  .sn-cat__mbtn { padding: 0 .8rem; gap: .4rem; font-size: 1.3rem; white-space: nowrap; }
+}
+.card-wrapper .quick-add__submit > span:not(.sold-out-message) { display: inline-flex; align-items: center; gap: .6rem; }
+/* Grundpreis klein und grau unter dem Preis (PAngV), z. B. „15,98 € / 1 kg“ */
+.price .unit-price, .unit-price { display: block; margin-top: .2rem; color: var(--sn-muted, #5b635d); font-size: 1.2rem; font-weight: 400; line-height: 1.3; letter-spacing: 0; }
+.unit-price .unit-price__value { font-size: inherit; font-weight: inherit; color: inherit; }

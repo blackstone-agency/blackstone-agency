@@ -15,7 +15,8 @@
   {%- unless hide_accessibility_label -%}
     <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
   {%- endunless -%}
-  <span class="price-item price-item--last">
-    {{ price | unit_price_with_measurement: measurement }}
+  <span class="unit-price__value">
+    {%- if price contains '€' -%}{{ price }}{%- else -%}{{ price | money_without_currency | append: ' €' }}{%- endif -%}
+    {{- ' / ' -}}{{- measurement.reference_value | default: 1 }} {{ measurement.reference_unit -}}
   </span>
 </small>
