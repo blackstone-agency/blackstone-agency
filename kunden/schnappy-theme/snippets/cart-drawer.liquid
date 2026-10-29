@@ -275,7 +275,7 @@
                                   {{ 'products.product.price.regular_price' | t }}
                                 </span>
                                 <s class="cart-item__old-price price price--end">
-                                  {{ item.original_line_price | money_without_currency | append: ' €' }}
+                                  {{- item.original_line_price | money_without_currency | append: ' €' -}}
                                 </s>
                                 <span class="visually-hidden">
                                   {{ 'products.product.price.sale_price' | t }}

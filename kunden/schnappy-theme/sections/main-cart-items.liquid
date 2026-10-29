@@ -197,7 +197,7 @@
                             </dt>
                             <dd>
                               <s class="cart-item__old-price price price--end">
-                                {{ item.original_line_price | money_without_currency | append: ' €' }}
+                                {{- item.original_line_price | money_without_currency | append: ' €' -}}
                               </s>
                             </dd>
                             <dt class="visually-hidden">
@@ -425,7 +425,7 @@
                             </dt>
                             <dd>
                               <s class="cart-item__old-price price price--end">
-                                {{ item.original_line_price | money_without_currency | append: ' €' }}
+                                {{- item.original_line_price | money_without_currency | append: ' €' -}}
                               </s>
                             </dd>
                             <dt class="visually-hidden">
