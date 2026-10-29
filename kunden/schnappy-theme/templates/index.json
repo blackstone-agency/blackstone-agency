@@ -16,7 +16,8 @@
       "settings": {
         "heading": "Alle Produkte",
         "per_page": 30,
-        "color_scheme": "scheme-1"
+        "color_scheme": "scheme-1",
+        "collection": "startseite"
       }
     },
     "boxes": {
@@ -246,8 +247,7 @@
         "kicker": "Schnapper des Tages",
         "limit": 30,
         "color_scheme": "scheme-1"
-      },
-      "disabled": true
+      }
     },
     "hero2": {
       "type": "schnappy-hero2",
@@ -337,10 +337,10 @@
   },
   "order": [
     "hero",
+    "daily",
     "catalog",
     "hero2",
     "season",
-    "daily",
     "cats",
     "best",
     "deals",

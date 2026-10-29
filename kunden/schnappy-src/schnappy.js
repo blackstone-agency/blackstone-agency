@@ -546,19 +546,29 @@ if (!customElements.get('sn-infinite')) {
   });
 })();
 
-/* v13: Schnapper des Tages – wechselt täglich um 0 Uhr, Countdown bis Mitternacht */
+/* Schnapper des Tages – wechselt täglich um 12:00 Uhr deutscher Zeit (v26) */
+window.SN_NOON = window.SN_NOON || (function () {
+  const fmt = new Intl.DateTimeFormat('de-DE', { timeZone: 'Europe/Berlin', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hourCycle: 'h23' });
+  const berlin = (d) => { const p = {}; fmt.formatToParts(d).forEach((x) => { p[x.type] = +x.value; }); return p; };
+  return {
+    // Nummer des „Schnapper-Tags“: läuft von 12:00 bis 11:59 Uhr am Folgetag
+    day() { const b = berlin(new Date(Date.now() - 12 * 3600e3)); return Math.floor(Date.UTC(b.year, b.month - 1, b.day) / 864e5); },
+    // Sekunden bis zum nächsten Wechsel um 12:00 Uhr
+    left() { const b = berlin(new Date()); let s = 12 * 3600 - (b.hour * 3600 + b.minute * 60 + b.second); if (s <= 0) s += 86400; return s; }
+  };
+})();
 customElements.get('sn-daily') || customElements.define('sn-daily', class extends HTMLElement {
   connectedCallback() {
     const items = [...this.querySelectorAll('[data-sn-daily-item]')];
-    if (items.length) {
-      const now = new Date(); const day = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 864e5) + now.getFullYear() * 366;
-      const pick = day % items.length; items.forEach((el, i) => { el.hidden = i !== pick; });
-    }
-    const out = this.querySelector('[data-sn-countdown]'); if (!out) return;
+    let shown = null;
+    const pick = () => { if (!items.length) return; const d = SN_NOON.day(); if (d === shown) return; shown = d; const i = d % items.length; items.forEach((el, k) => { el.hidden = k !== i; }); };
+    pick();
+    const out = this.querySelector('[data-sn-countdown]'); const bar = this.querySelector('[data-sn-dayprog]');
     const tick = () => {
-      const n = new Date(); const m = new Date(n); m.setHours(24, 0, 0, 0);
-      let s = Math.max(0, Math.floor((m - n) / 1000)); const h = Math.floor(s / 3600); s -= h * 3600; const mi = Math.floor(s / 60); s -= mi * 60;
-      out.textContent = [h, mi, s].map((x) => String(x).padStart(2, '0')).join(':');
+      let s = SN_NOON.left();
+      if (bar) bar.style.width = (s / 864).toFixed(2) + '%';
+      if (out) { const h = Math.floor(s / 3600); s -= h * 3600; const mi = Math.floor(s / 60); s -= mi * 60; out.textContent = [h, mi, s].map((x) => String(x).padStart(2, '0')).join(':'); }
+      pick();
     };
     tick(); this._t = setInterval(tick, 1000);
   }
@@ -967,8 +977,6 @@ document.addEventListener('click', (e) => {
       const d = new Date(); const t = +(d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0'));
       if (t < +s.dataset.start || t > +s.dataset.end) { const sec = s.closest('.shopify-section'); (sec || s).hidden = true; }
     });
-    const bar = document.querySelector('[data-sn-dayprog]');
-    if (bar) { const tick = () => { const n = new Date(); const p = (n.getHours() * 3600 + n.getMinutes() * 60 + n.getSeconds()) / 864; bar.style.width = (100 - p) + '%'; }; tick(); setInterval(tick, 30000); }
     const cnt = document.querySelector('[data-sn-newcount]');
     if (cnt) SN.products().then((ps) => { const wk = Date.now() - 7 * 864e5; const n = ps.filter((p) => new Date(p.published_at || p.created_at).getTime() > wk).length; if (n >= 3) { cnt.textContent = '✓ ' + n + ' neue Artikel diese Woche'; cnt.hidden = false; } });
     document.querySelectorAll('[data-sn-share]').forEach((b) => b.addEventListener('click', async () => {
@@ -976,6 +984,14 @@ document.addEventListener('click', (e) => {
       if (navigator.share) { try { await navigator.share({ title, url }); } catch (e) {} } else { try { await navigator.clipboard.writeText(url); SN.toast('Link kopiert!'); } catch (e) {} }
     }));
   }
+
+  /* ---------- „Kategorien“-Knopf öffnet das Menü (v26) ---------- */
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('[data-sn-open-menu]')) return;
+    const s = document.querySelector('header-drawer details > summary');
+    if (!s) return;
+    window.scrollTo(0, 0); setTimeout(() => s.click(), 60);
+  });
 
   /* ---------- Newsletter-Pop-up (51) ---------- */
   customElements.get('sn-popup') || customElements.define('sn-popup', class extends HTMLElement {

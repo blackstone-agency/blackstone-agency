@@ -1,5 +1,5 @@
 {%- comment -%}
-  Schnappy: Schnapper des Tages – wechselt automatisch jeden Tag um 0 Uhr
+  Schnappy: Schnapper des Tages – wechselt automatisch jeden Tag um 12:00 Uhr (deutsche Zeit)
   (rotiert durch die gewählte Kollektion). Preis = echter Shop-Preis.
 {%- endcomment -%}
 {%- assign coll = section.settings.collection | default: collections.all -%}
@@ -35,7 +35,7 @@
               <a class="sn-daily__sbtn" href="https://wa.me/?text={{ 'Schnapper des Tages bei Schnappy: ' | append: p.title | append: ' – ' | append: shop.url | append: p.url | url_encode }}" target="_blank" rel="noopener">{% render 'schnappy-icon', icon: 'message-circle' %} WhatsApp</a>
               <button type="button" class="sn-daily__sbtn" data-sn-share="{{ shop.url }}{{ p.url }}" data-title="{{ p.title | escape }}">{% render 'schnappy-icon', icon: 'arrow-up-right' %} Teilen</button>
             </div>
-            <p class="sn-daily__note">Jeden Tag um 0 Uhr ein neuer Schnapper – schau morgen wieder rein.</p>
+            <p class="sn-daily__note">Jeden Tag um 12 Uhr ein neuer Schnapper – schau morgen wieder rein.</p>
           </div>
         </div>
       {%- endfor -%}
@@ -50,7 +50,7 @@
   "class": "section",
   "settings": [
     { "type": "text", "id": "kicker", "label": "Titel", "default": "Schnapper des Tages" },
-    { "type": "collection", "id": "collection", "label": "Kollektion", "info": "Aus dieser Kollektion wird jeden Tag automatisch ein anderes Produkt gezeigt. Leer = alle Produkte." },
+    { "type": "collection", "id": "collection", "label": "Kollektion", "info": "Aus dieser Kollektion wird jeden Tag um 12 Uhr automatisch ein anderes Produkt gezeigt. Leer = alle Produkte." },
     { "type": "range", "id": "limit", "label": "Anzahl Produkte im Wechsel", "min": 3, "max": 30, "step": 1, "default": 30 },
     { "type": "color_scheme", "id": "color_scheme", "label": "Farbschema", "default": "scheme-1" }
   ],

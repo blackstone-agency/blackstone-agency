@@ -27,6 +27,10 @@
         <a href="{{ sn_src.url }}?filter.v.price.lte=10&amp;sort_by=price-descending">Bis 10 €</a>
         <a href="{{ sn_src.url }}">Filtern</a>
       </nav>
+      <div class="sn-cat__mbtns">
+        <button type="button" class="sn-cat__mbtn" data-sn-open-menu>{% render 'schnappy-icon', icon: 'grid' %}Kategorien</button>
+        <a class="sn-cat__mbtn" href="{{ sn_src.url }}">{% render 'schnappy-icon', icon: 'search' %}Filtern &amp; Sortieren</a>
+      </div>
     </div>
     {%- paginate sn_src.products by section.settings.per_page -%}
       <ul id="product-grid" class="grid product-grid grid--2-col-tablet-down grid--5-col-desktop sn-cat__grid" role="list">

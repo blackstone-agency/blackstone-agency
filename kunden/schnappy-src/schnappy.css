@@ -2391,3 +2391,89 @@ ul.sn-cat__grid { margin: 0; padding: 0; }
 .sn-reveal { opacity: 1 !important; transform: none !important; }
 #produkte { scroll-margin-top: 8rem; }
 @media (max-width: 389px) { .sn-cat__sort { gap: .6rem; } .sn-cat__sort a { padding: 0 1rem; } }
+
+/* =====================================================================
+   v26 – Handy: kompakte Produktkarten und ruhiger Kopf (Prinzip outlet46)
+   ===================================================================== */
+.sn-cat__mbtns { display: none; }
+.sn-cat__mbtn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 4.4rem; padding: 0 1.2rem; border: 0; border-radius: 6px; background: var(--sn-green); color: #fff; font: inherit; font-size: 1.4rem; font-weight: 700; text-decoration: none; cursor: pointer; }
+.sn-cat__mbtn .sn-i { width: 1.8rem; height: 1.8rem; }
+.sn-cat__mbtn:focus-visible { outline: 3px solid var(--sn-ink); outline-offset: 2px; }
+@media (max-width: 749px) {
+  /* Kopf: Suchleiste bleibt, Kategorie-Chips stattdessen über den „Kategorien“-Knopf */
+  .sn-searchbar__chips { display: none !important; }
+  /* Hero: ohne Button, eine Zeile Vorteile */
+  .sn-hs { padding: 1.6rem; }
+  .sn-hs__title { font-size: 2.6rem; }
+  .sn-hs__actions { display: none; }
+  .sn-hs__usp { display: flex; gap: .4rem 1.4rem; margin-top: 1rem; font-size: 1.25rem; }
+  .sn-hs__usp li:nth-child(2) { display: none; }
+  /* Kopf des Rasters: zwei Knöpfe statt Chips */
+  .sn-cat__sort { display: none; }
+  .sn-cat__mbtns { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; width: 100%; }
+  /* Produktkarten: ohne Rahmen, Bild fast randlos, alles kompakt */
+  ul.product-grid { column-gap: .8rem !important; row-gap: .8rem !important; }
+  ul.product-grid .card.card--card, ul.product-grid .card--standard .card__inner { border: 0 !important; border-radius: 6px !important; box-shadow: none !important; }
+  ul.product-grid .card__inner .media { padding: .4rem !important; }
+  ul.product-grid .card__inner .media img { padding: 0 !important; }
+  ul.product-grid .card__content { padding: .6rem .8rem .8rem !important; }
+  ul.product-grid .card__information { padding: 0 !important; }
+  ul.product-grid .card__heading { margin: 0 0 .4rem !important; font-size: 1.3rem !important; line-height: 1.3 !important; }
+  ul.product-grid .price__sale { flex-wrap: wrap; align-items: baseline; column-gap: .6rem; row-gap: 0; }
+  ul.product-grid .price s.price-item--regular { font-size: 1.2rem !important; }
+  ul.product-grid .sn-cardsave, ul.product-grid .sn-stock { display: none !important; }
+  ul.product-grid .quick-add { padding-top: .6rem !important; margin: 0 !important; }
+  ul.product-grid .card-wrapper .quick-add__submit, ul.product-grid .card-wrapper .quick-add__submit:not([disabled]) { min-height: 3.8rem !important; height: 3.8rem !important; padding: 0 .6rem !important; }
+  ul.product-grid .card-wrapper .quick-add__submit > span { font-size: 1.3rem !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  ul.product-grid .card__badge .badge { padding: .2rem .5rem !important; font-size: 1.1rem !important; }
+}
+/* Kurzer Button-Text auf schmalen Karten (Screenreader lesen weiter den vollen Text) */
+.sn-atc__s { display: none; }
+@media (max-width: 749px) {
+  ul.product-grid .sn-atc__l { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; }
+  ul.product-grid .sn-atc__s { display: inline; font-size: 1.4rem; white-space: nowrap; }
+  /* Preis und Streichpreis in einer Zeile: unsichtbare Hilfstexte nehmen keinen Platz ein */
+  ul.product-grid .price__sale > .visually-hidden { position: absolute !important; }
+}
+/* Schnapper des Tages: schlicht, auf dem Handy kompakt (v26) */
+.sn-daily-wrap { padding: 1.2rem 0 0; }
+@media (max-width: 749px) {
+  .sn-daily__head { padding: .8rem 1.2rem; gap: .4rem 1rem; }
+  .sn-daily__kicker { font-size: 1.35rem; }
+  .sn-daily__timer { font-size: 1.25rem; }
+  .sn-daily__timer b { font-size: 1.4rem; padding: .1rem .6rem; }
+  .sn-daily__item { grid-template-columns: 11rem minmax(0, 1fr); gap: 1.2rem; padding: 1rem 1.2rem 1.2rem; align-items: start; }
+  .sn-daily__title { font-size: 1.4rem; -webkit-line-clamp: 2; margin-bottom: .4rem; }
+  .sn-daily__price { font-size: 2.2rem; gap: .6rem; flex-wrap: wrap; }
+  .sn-daily__price s { font-size: 1.25rem; }
+  .sn-daily .sn-cardsave, .sn-daily__share, .sn-daily__note { display: none !important; }
+  .sn-daily__form { margin-top: .8rem; }
+  .sn-daily .sn-cartbtn { min-height: 4rem !important; }
+}
+@media (max-width: 749px) {
+  html ul#product-grid .price .price__sale { column-gap: .5rem !important; }
+  html ul#product-grid .price .price__sale .price-item--sale { font-size: 2.2rem !important; }
+  html[data-sn-view] ul#product-grid .price .price__sale s.price-item, html ul#product-grid .price .price__sale s.price-item--regular { font-size: 1.15rem !important; }
+}
+/* Schnapper: Streichpreis ebenfalls mit „statt/UVP“, auf dem Desktop flacher */
+.sn-daily__price s::before { content: var(--sn-cmp-label, 'statt '); text-decoration: none; display: inline-block; margin-right: .2em; }
+@media (min-width: 750px) {
+  .sn-daily__item { grid-template-columns: 16rem minmax(0, 1fr) !important; gap: 2rem; padding: 1.2rem 1.6rem !important; }
+  .sn-daily__title { font-size: 2rem; margin-bottom: .6rem; }
+  .sn-daily__price { font-size: 2.8rem; }
+  .sn-daily__form { margin-top: 1rem; }
+  .sn-daily__share { margin-top: .8rem; }
+  .sn-daily__note { margin-top: .6rem; }
+}
+@media (min-width: 990px) {
+  .sn-daily__item { grid-template-columns: 14rem minmax(0, 1fr) minmax(24rem, 30rem) !important; grid-template-areas: "media title form" "media price share" "media save note"; column-gap: 2.4rem; row-gap: .4rem; align-items: center; }
+  .sn-daily__item[hidden] { display: none !important; }
+  .sn-daily__media { grid-area: media; }
+  .sn-daily__info { display: contents; }
+  .sn-daily__title { grid-area: title; align-self: end; margin: 0; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+  .sn-daily__price { grid-area: price; }
+  .sn-daily .sn-cardsave { grid-area: save; justify-self: start; align-self: start; margin: 0; }
+  .sn-daily__form { grid-area: form; max-width: none; margin: 0; align-self: end; }
+  .sn-daily__share { grid-area: share; margin: 0; }
+  .sn-daily__note { grid-area: note; margin: 0; align-self: start; }
+}
