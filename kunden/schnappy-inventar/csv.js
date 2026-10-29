@@ -63,7 +63,7 @@ for (const p of produkte) {
   const gp = p.grundpreis || {};
   const first = {
     Handle: handle, Title: p.titel, 'Body (HTML)': p.beschreibung || '', Vendor: p.marke || 'Schnappy',
-    Type: p.typ || '', Tags: (p.tags || []).join(', '), Published: p.status === 'draft' ? 'FALSE' : 'TRUE',
+    Type: p.typ || '', Tags: (p.tags || []).join(', '), Published: p.onlineshop === false ? 'FALSE' : 'TRUE',
     'Option1 Name': 'Title', 'Option1 Value': 'Default Title', 'Variant SKU': p.sku || '',
     'Variant Grams': p.gramm || '', 'Variant Inventory Tracker': 'shopify', 'Variant Inventory Qty': p.menge ?? '',
     'Variant Inventory Policy': 'deny', 'Variant Fulfillment Service': 'manual',
