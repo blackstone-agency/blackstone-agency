@@ -8,7 +8,7 @@
           "type": "qa",
           "settings": {
             "q": "Was ist in einer Mystery Box?",
-            "a": "<p>Eine bunte Mischung aus Spielzeug, Trend-Produkten, Haushalts- und Lifestyle-Artikeln – 100 % Neuware. Der Warenwert liegt immer über dem Kaufpreis.</p>"
+            "a": "<p>Eine bunte Mischung aus Spielzeug, Trend-Produkten, Haushalts- und Lifestyle-Artikeln. Der Warenwert liegt immer über dem Kaufpreis.</p>"
           }
         },
         "q1": {
@@ -42,8 +42,8 @@
         "q5": {
           "type": "qa",
           "settings": {
-            "q": "Ist alles Neuware?",
-            "a": "<p>Ja. Wir verkaufen ausschließlich Neuware – keine B-Ware und keine Gebrauchtware.</p>"
+            "q": "Ist alles neu?",
+            "a": "<p>Der Großteil ist originalverpackte Neuware. Artikel mit dem Hinweis <b>„Sonderposten“</b> stammen aus Lagerauflösungen: Die Verpackung kann geöffnet sein, der Artikel ist vollständig und wird vor dem Versand geprüft. Das steht immer direkt beim Artikel.</p>"
           }
         },
         "q6": {

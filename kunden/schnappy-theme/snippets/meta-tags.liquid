@@ -2,7 +2,7 @@
   assign og_title = page_title | default: shop.name
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
-  assign og_description = page_description | default: shop.description | default: 'Neuware zu Restpostenpreisen – Mystery Boxen ab 9,99 €, Gratis Versand ab 44 €.'
+  assign og_description = page_description | default: shop.description | default: 'Markenware zu Restpostenpreisen – Mystery Boxen ab 9,99 €, Gratis Versand ab 44 €.'
 
   if request.page_type == 'product'
     assign og_type = 'product'

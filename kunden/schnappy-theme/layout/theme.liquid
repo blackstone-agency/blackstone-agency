@@ -31,10 +31,10 @@
         assign sn_desc = product.description | strip_html | strip_newlines | truncate: 155
       endif
       if sn_desc == blank and collection
-        assign sn_desc = collection.title | append: ' günstig kaufen bei Schnappy – Neuware zu Restpostenpreisen. Gratis Versand ab 44 €.'
+        assign sn_desc = collection.title | append: ' günstig kaufen bei Schnappy – Markenware zu Restpostenpreisen. Gratis Versand ab 44 €.'
       endif
       if sn_desc == blank
-        assign sn_desc = 'Schnappy – Neuware zu Restpostenpreisen: Spielzeug, Haushalt, Elektronik und Mystery Boxen ab 9,99 €. Gratis Versand ab 44 €.'
+        assign sn_desc = 'Schnappy – Markenware zu Restpostenpreisen: Spielzeug, Haushalt, Elektronik und Mystery Boxen ab 9,99 €. Gratis Versand ab 44 €.'
       endif
       assign sn_noindex = false
       if collection and collection.filters

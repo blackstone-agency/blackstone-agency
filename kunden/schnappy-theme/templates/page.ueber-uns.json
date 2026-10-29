@@ -5,15 +5,15 @@
       "settings": {
         "kicker": "Über uns",
         "heading": "Hi, wir sind Schnappy!",
-        "text": "<p>Hinter Schnappy stehen Muhammed-Emin und Emrullah aus Hamburg. Wir kaufen Restposten und Überhänge von Neuware ein und geben die Ersparnis direkt an dich weiter – im Shop und live auf Instagram.</p>"
+        "text": "<p>Hinter Schnappy stehen Muhammed-Emin und Emrullah aus Hamburg. Wir kaufen Restposten, Überhänge und Lagerauflösungen von Markenware ein und geben die Ersparnis direkt an dich weiter – im Shop und live auf Instagram.</p>"
       },
       "blocks": {
         "c1": {
           "type": "card",
           "settings": {
             "icon": "shield-check",
-            "title": "Nur Neuware",
-            "body": "<p>Keine B-Ware, keine Gebrauchtware.</p>"
+            "title": "Ehrlich gekennzeichnet",
+            "body": "<p>Neuware und Sonderposten sind bei jedem Artikel klar gekennzeichnet.</p>"
           }
         },
         "c2": {

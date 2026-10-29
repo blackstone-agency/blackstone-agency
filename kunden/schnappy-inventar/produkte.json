@@ -1,1 +1,130 @@
-[]
+[
+  {
+    "handle": "barista-filterkaffeemaschine-touch-iso",
+    "titel": "Barista Filterkaffeemaschine Touch ISO mit Edelstahl-Isolierkanne",
+    "marke": "Barista",
+    "typ": "Küche & Haushalt",
+    "tags": [
+      "Küche",
+      "Kaffee",
+      "Elektrogeräte"
+    ],
+    "preis": 59.99,
+    "menge": 9,
+    "fotos": [
+      "freigestellt/1-beem-kaffeemaschine.jpg"
+    ],
+    "alt": "Barista Filterkaffeemaschine Touch ISO in Originalverpackung",
+    "status": "draft",
+    "beschreibung": "<p>Frischer Filterkaffee, der stundenlang heiß bleibt – ganz ohne Warmhalteplatte.</p><ul><li>Doppelwandige Edelstahl-Isolierkanne</li><li>Timer: Der Kaffee ist fertig, wenn du aufstehst</li><li>Aromastärke individuell wählbar</li><li>LED-Touchdisplay</li><li>Herausnehmbarer Permanentfilter – keine Papierfilter nötig</li><li>Wassertank 1,25 l für bis zu 8 Tassen</li><li>Inklusive Kaffeelöffel, Farbe Schwarz</li></ul><p><small>Hersteller/Importeur: DS Produkte GmbH, Stormarnring 14, 22145 Stapelfeld, Deutschland</small></p>"
+  },
+  {
+    "handle": "venenwalker-ems-durchblutungsstimulator",
+    "titel": "Venenwalker EMS Durchblutungsstimulator mit 25 Programmen",
+    "marke": "Venenwalker",
+    "typ": "Gesundheit & Wellness",
+    "tags": [
+      "Wellness",
+      "Medizinprodukt",
+      "Elektrogeräte"
+    ],
+    "preis": 39.99,
+    "menge": 30,
+    "fotos": [
+      "freigestellt/2-venenwalker.jpg"
+    ],
+    "alt": "Venenwalker EMS Durchblutungsstimulator in Originalverpackung",
+    "status": "draft",
+    "beschreibung": "<p>Die EMS-Fußplatte für zu Hause: Füße auflegen, Programm wählen und entspannt zurücklehnen.</p><ul><li>Elektrische Muskelstimulation (EMS) über die Fußsohlen</li><li>25 Programme</li><li>Bedienfeld mit Display und Fernbedienung</li><li>Netzbetrieb</li><li>Maße ca. 34,5 × 31,6 × 7,4 cm, Gewicht ca. 1,3 kg</li></ul><p><b>Medizinprodukt.</b> Bitte vor der Anwendung die Gebrauchsanweisung lesen. Mit Herzschrittmacher oder anderen elektronischen Implantaten, in der Schwangerschaft oder bei Venenthrombose nur nach Rücksprache mit dem Arzt anwenden.</p><p><small>Hersteller/Importeur: DS Produkte GmbH, Stormarnring 14, 22145 Stapelfeld, Deutschland</small></p>"
+  },
+  {
+    "handle": "clv-akku-handstaubsauger-kombiset",
+    "titel": "CLV Akku-Handstaubsauger Kombiset, schwarz",
+    "marke": "CLV",
+    "typ": "Küche & Haushalt",
+    "tags": [
+      "Haushalt",
+      "Staubsauger",
+      "Elektrogeräte",
+      "sonderposten"
+    ],
+    "preis": 49.99,
+    "menge": 50,
+    "fotos": [
+      "freigestellt/3-clv-staubsauger-a.jpg"
+    ],
+    "alt": "CLV Akku-Handstaubsauger Kombiset",
+    "status": "draft",
+    "beschreibung": "<p>Kabelloser Akku-Staubsauger im Kombiset – als Handsauger für Auto, Sofa und Krümel oder mit Verlängerungsrohr als Bodenstaubsauger.</p><ul><li>Kabellos mit Akku</li><li>Verlängerungsrohr und Zubehör im Set</li><li>Transparenter Staubbehälter</li><li>Farbe: Schwarz</li><li>Bedienungsanleitung auf Deutsch</li></ul><p><b>Sonderposten aus Lagerauflösung:</b> Die Verpackung kann geöffnet sein. Der Artikel ist vollständig und wird vor dem Versand geprüft.</p>"
+  },
+  {
+    "handle": "flipline-eco-auto-luftentfeuchter-500-g",
+    "titel": "Flipline ECO Auto-Luftentfeuchter 500 g – gegen beschlagene Scheiben",
+    "marke": "Flipline",
+    "typ": "Auto",
+    "tags": [
+      "Auto",
+      "Luftentfeuchter",
+      "Geschenke"
+    ],
+    "preis": 7.99,
+    "menge": 8,
+    "ean": "8720726872263",
+    "gramm": 560,
+    "grundpreis": {
+      "menge": 500,
+      "einheit": "g",
+      "basis": 1,
+      "basiseinheit": "kg"
+    },
+    "fotos": [
+      "freigestellt/4-flipline-a.jpg",
+      "freigestellt/4-flipline-b.jpg"
+    ],
+    "alt": "Flipline ECO Auto-Luftentfeuchter 500 g",
+    "status": "draft",
+    "beschreibung": "<p>Schluss mit beschlagenen Scheiben: Das ECO-Kissen zieht die Feuchtigkeit direkt aus der Luft in deinem Auto.</p><ul><li>Füllung aus natürlichem Tongranulat statt Silikagel</li><li>Nimmt bis zu 40 % seines Eigengewichts an Wasser auf</li><li>Saugfähige Vlies-Hülle</li><li>500 g, hergestellt in Deutschland</li></ul><p><small>Hersteller: Amazing Brands Group Operations GmbH, Im MediaPark 5, 50670 Köln, Deutschland, contact@flipline.info</small></p>"
+  },
+  {
+    "handle": "clv-reise-dampfglaetter",
+    "titel": "CLV Reise-Dampfglätter",
+    "marke": "CLV",
+    "typ": "Küche & Haushalt",
+    "tags": [
+      "Haushalt",
+      "Reise",
+      "Elektrogeräte",
+      "sonderposten"
+    ],
+    "preis": 19.99,
+    "menge": 33,
+    "fotos": [
+      "freigestellt/7-clv-dampfglaetter.jpg"
+    ],
+    "alt": "CLV Reise-Dampfglätter",
+    "status": "draft",
+    "beschreibung": "<p>Knitterfrei unterwegs: Der kompakte Dampfglätter glättet Hemd, Bluse oder Kleid direkt am Bügel – ideal für Reise und Büro.</p><ul><li>Handlich und leicht</li><li>Glättet Kleidung im Hängen, ohne Bügelbrett</li><li>Netzbetrieb mit Schuko-Stecker</li><li>Farbe: Champagner/Silber</li><li>Bedienungsanleitung auf Deutsch</li></ul><p><b>Sonderposten aus Lagerauflösung:</b> Die Verpackung kann geöffnet sein. Der Artikel ist vollständig und wird vor dem Versand geprüft.</p>"
+  },
+  {
+    "handle": "cleanmaxx-akku-vibrationsreiniger",
+    "titel": "CLEANmaxx Akku-Vibrationsreiniger mit abnehmbarer Handbürste",
+    "marke": "CLEANmaxx",
+    "typ": "Küche & Haushalt",
+    "tags": [
+      "Haushalt",
+      "Bodenreinigung",
+      "Elektrogeräte"
+    ],
+    "preis": 24.99,
+    "menge": 1,
+    "ean": "4067522039761",
+    "sku": "13350",
+    "fotos": [
+      "freigestellt/8-cleanmaxx-a.jpg",
+      "freigestellt/8-cleanmaxx-b.jpg"
+    ],
+    "alt": "CLEANmaxx Akku-Vibrationsreiniger in Originalverpackung",
+    "status": "draft",
+    "beschreibung": "<p>Wischen ohne Schrubben: Der Akku-Vibrationsreiniger nimmt dir die Arbeit auf glatten Böden ab – kabellos.</p><ul><li>Kabellos mit Akku</li><li>2 Vibrationsstufen</li><li>3 Aufsätze</li><li>Abnehmbare Handbürste für Ecken, Fugen und Armaturen</li><li>Stiel bis 120 cm verlängerbar</li><li>Ladezeit ca. 2,5–3 Stunden (Netzteil 5 V / 1 A)</li></ul><p><small>Hersteller/Importeur: DS Produkte GmbH, Stormarnring 14, 22145 Stapelfeld, Deutschland</small></p>"
+  }
+]

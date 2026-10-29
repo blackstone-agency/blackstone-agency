@@ -19,5 +19,7 @@
 | `fotos` | nein | Dateinamen aus dem Foto-Ordner, erstes Foto = Hauptbild |
 | `status` | nein | `"draft"` = erst als Entwurf anlegen |
 
+Tag `sonderposten` = Ware aus Lagerauflösung (auch Rückläufer möglich). Die Produktseite zeigt dann „Sonderposten: vollständig, vor Versand geprüft“ statt „Neuware“, die Beschreibung erklärt den Zustand. Nie „Ausstellungsstück“ schreiben, wenn die Ware nicht ausgestellt war.
+
 ## Bilder
 Nur eigene Fotos oder Bilder mit schriftlicher Erlaubnis von Lieferant oder Hersteller verwenden. Produktfotos aus Google, Amazon oder fremden Shops sind urheberrechtlich geschützt (§ 72 UrhG).
