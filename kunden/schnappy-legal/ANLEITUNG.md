@@ -104,3 +104,6 @@ Shopify → **Onlineshop → Seiten → Seite hinzufügen**. Titel eintragen, re
 - **Altersangabe**: Produkt-Tag `alter-3` → „Empfohlen ab 3 Jahren“.
 - **Farb-Punkte**: Varianten-Option „Farbe“ mit Werten wie Rot, Blau, Schwarz.
 - **Widerruf**: Shopify sendet das Formular an eure Shop-E-Mail. Bitte jedem Kunden den Eingang kurz per E-Mail bestätigen (gesetzlich vorgeschrieben).
+
+## 8. Theme v22 (29.10.2026)
+Live lief bis dahin noch v20. Alle Funde, Screenshots und die Klick-Anleitungen stehen in [`kunden/schnappy-bericht-v22.md`](../schnappy-bericht-v22.md) unter „Was du in Shopify einstellen musst“ (A1–A9). Wichtigste Punkte: v22 hochladen, Impressum-Platzhalter entfernen, Mystery-Box-Titel korrigieren, Währungsformat auf `{{amount_with_comma_separator}} €` stellen, Info-Seiten anlegen.

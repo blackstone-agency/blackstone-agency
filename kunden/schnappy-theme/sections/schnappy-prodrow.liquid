@@ -16,6 +16,11 @@
       assign skip = true
     endif
     assign pmax = product.price | divided_by: 100 | plus: 1
+    if pmax <= 50
+      assign pmax = pmax | plus: 4 | divided_by: 5 | times: 5
+    else
+      assign pmax = pmax | plus: 9 | divided_by: 10 | times: 10
+    endif
     assign q = q | replace: '{type}', ptype | replace: '{price}', pmax
     assign t = t | replace: '{type}', ptype | replace: '{price}', pmax
   endif

@@ -22,8 +22,8 @@
           </a>
           <div class="sn-daily__info">
             <a href="{{ p.url }}" class="sn-daily__title">{{ p.title | escape }}</a>
-            <div class="sn-daily__price"><span data-sn-price>{{ v.price | money }}</span>{%- if v.compare_at_price > v.price -%}<s>{{ v.compare_at_price | money }}</s>{%- endif -%}</div>
-            {%- if v.compare_at_price > v.price -%}<p class="sn-cardsave">Du sparst {{ v.compare_at_price | minus: v.price | money }}</p>{%- endif -%}
+            <div class="sn-daily__price"><span data-sn-price>{{ v.price | money_without_currency | append: ' €' }}</span>{%- if v.compare_at_price > v.price -%}<s>{{ v.compare_at_price | money_without_currency | append: ' €' }}</s>{%- endif -%}</div>
+            {%- if v.compare_at_price > v.price -%}<p class="sn-cardsave">Du sparst {{ v.compare_at_price | minus: v.price | money_without_currency | append: ' €' }}</p>{%- endif -%}
             <product-form class="sn-daily__form" data-section-id="{{ section.id }}">
               {%- form 'product', p, novalidate: 'novalidate' -%}
                 <input type="hidden" name="id" value="{{ v.id }}">

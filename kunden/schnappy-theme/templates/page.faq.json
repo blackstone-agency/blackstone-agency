@@ -36,7 +36,7 @@
           "type": "qa",
           "settings": {
             "q": "Kann ich zurückgeben?",
-            "a": "<p>Ja, du hast ein 14-tägiges Widerrufsrecht. Online widerrufen kannst du über <a href=\"/pages/widerruf\">Vertrag widerrufen</a>.</p>"
+            "a": "<p>Ja, du hast ein 14-tägiges Widerrufsrecht. Online widerrufen kannst du über <a href=\"/pages/contact?view=widerruf\">Vertrag widerrufen</a>.</p>"
           }
         },
         "q5": {

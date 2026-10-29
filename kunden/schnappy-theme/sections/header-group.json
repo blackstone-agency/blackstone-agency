@@ -84,13 +84,13 @@
         "b3": {
           "type": "chip",
           "settings": {
-            "label": "Wohnen"
+            "label": "Wohnen", "q": "Deko"
           }
         },
         "b4": {
           "type": "chip",
           "settings": {
-            "label": "Elektronik"
+            "label": "Elektronik", "q": "USB"
           }
         },
         "b5": {
@@ -102,7 +102,7 @@
         "b6": {
           "type": "chip",
           "settings": {
-            "label": "Mystery Box"
+            "label": "Mystery Box", "q": "product_type:\"Mystery Box\""
           }
         },
         "b7": {

@@ -47,6 +47,9 @@
       if current_page > 1 and template.name == 'search'
         assign sn_noindex = true
       endif
+      if request.page_type == 'page' and template.suffix != blank and page.template_suffix != template.suffix
+        assign sn_noindex = true
+      endif
     -%}
     <meta name="description" content="{{ sn_desc | escape }}">
     {%- if sn_noindex -%}<meta name="robots" content="noindex, follow">{%- endif -%}

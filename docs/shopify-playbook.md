@@ -62,3 +62,11 @@ Regeln aus dem Schnappy-Projekt (Okt. 2026). Ziel: Ein Shop klappt **beim ersten
 - **Zähler-Badges im Kopf:** Dawn setzt `.header__icon span { height: 100% }`. Badges deshalb mit fester Höhe überschreiben.
 - **Einkaufswagen-Schublade:** Nur Summe, Kasse-Button und Vertrauenszeile unten fixieren. Ersparnis, Rabattcode, Notiz und Vorschläge gehören in den scrollenden Bereich, sonst bleibt für die Artikel kein Platz.
 - **Menü-Schublade nie leer lassen:** Suche, Kategorie-Kacheln, Deals, Promo-Kachel, Hilfe, Social-Kacheln.
+
+## 7. Nachtrag (v22, Live-Audit)
+- **Preisformat:** Nie `| money` direkt ausgeben – das Admin-Format kann „€65,99“ sein. Im Theme `| money_without_currency | append: ' €'` (geschütztes Leerzeichen) und im Admin das Format auf `{{amount_with_comma_separator}} €` stellen.
+- **Fehlende Seiten abfangen:** `/pages/contact?view=<vorlage>` rendert jede Seitenvorlage, auch wenn die Seite nicht angelegt ist. Links über ein Snippet bauen (`schnappy-page-url`), das bei fehlender Seite darauf ausweicht; diese Ansichten `noindex`.
+- **Nach jedem Release live prüfen, welches Theme veröffentlicht ist** (`Shopify.theme.name` im Quelltext).
+- **Kategorie-Kacheln** nie nur nach dem Namen suchen lassen: Shopify-Suche kennt `product_type:"…"`; besser Produkttyp pflegen und Kollektionen verlinken.
+- **Einkaufswagen:** Nur Summe, Steuerzeile und Kasse-Button fixieren (Ziel: ≥ 3 Artikel sichtbar auf 390 × 844). Listen in der Schublade mit `grid-template-columns: minmax(0, 1fr)`.
+- **JS-Blöcke nicht doppelt einfügen** – nach Änderungen `grep` auf Abschnitts-Kommentare.

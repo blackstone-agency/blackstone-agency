@@ -1,0 +1,15 @@
+{%- comment -%}
+  URL einer Info-Seite (faq, live, ueber-uns, versand, widerruf, merkzettel).
+  Ist die Seite im Shopify-Admin noch nicht angelegt, zeigt die Kontaktseite
+  die passende Vorlage über ?view= – so führt kein Link ins Leere.
+  Aufruf: {% render 'schnappy-page-url', handle: 'widerruf' %}
+{%- endcomment -%}
+{%- liquid
+  assign sn_page = pages[handle]
+  if sn_page.id != blank
+    echo sn_page.url
+  else
+    assign sn_root = routes.root_url | append: '/' | replace: '//', '/'
+    echo sn_root | append: 'pages/contact?view=' | append: handle
+  endif
+-%}

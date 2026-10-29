@@ -43,7 +43,7 @@
           "settings": {
             "icon": "rotate-ccw",
             "title": "Rückgabe",
-            "body": "<p>14 Tage Widerrufsrecht – <a href=\"/pages/widerruf\">online widerrufen</a>.</p>"
+            "body": "<p>14 Tage Widerrufsrecht – <a href=\"/pages/contact?view=widerruf\">online widerrufen</a>.</p>"
           }
         }
       },

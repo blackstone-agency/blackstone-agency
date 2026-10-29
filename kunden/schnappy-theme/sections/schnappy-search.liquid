@@ -5,7 +5,7 @@
     {%- if section.blocks.size > 0 -%}
       <nav class="sn-searchbar__chips" aria-label="Kategorien">
         {%- for block in section.blocks -%}
-          {%- capture href -%}{%- if block.settings.link != blank -%}{{ block.settings.link }}{%- else -%}{{ routes.search_url }}?type=product&q={{ block.settings.label | url_encode }}{%- endif -%}{%- endcapture -%}
+          {%- capture href -%}{% render 'schnappy-cat-href', link: block.settings.link, q: block.settings.q, label: block.settings.label %}{%- endcapture -%}
           <a href="{{ href }}" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</a>
         {%- endfor -%}
       </nav>
@@ -27,7 +27,8 @@
   "blocks": [
     { "type": "chip", "name": "Kategorie", "settings": [
       { "type": "text", "id": "label", "label": "Text", "default": "Spielzeug" },
-      { "type": "url", "id": "link", "label": "Link (optional)", "info": "Leer = Suche nach dem Text." }
+      { "type": "url", "id": "link", "label": "Link (optional)", "info": "Leer = Suche nach dem Text." },
+      { "type": "text", "id": "q", "label": "Suchbegriff oder Pfad", "info": "Optional, wenn kein Link gesetzt ist. Z. B. product_type:\"Mystery Box\" oder /collections/all?sort_by=created-descending" }
     ] }
   ],
   "enabled_on": { "groups": ["header"] },

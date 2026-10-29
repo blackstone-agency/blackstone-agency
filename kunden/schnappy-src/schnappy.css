@@ -2289,3 +2289,45 @@ cart-drawer .cart__checkout-button { padding-top: .8rem !important; padding-bott
 .sn-more__surprise { background: #ffd21f; border-color: #ffd21f; }
 .sn-more__surprise .sn-i { color: #0e1a12; }
 @media (max-width: 749px) { .sn-more__chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: -1.5rem; padding-right: 1.5rem; } .sn-more__chips > * { flex: none; } }
+
+/* =====================================================================
+   v22 – Fixes aus dem Live-Audit (29.10.2026)
+   ===================================================================== */
+/* „Geschnappt!“-Hinweis: Text oben, „Ansehen“ + „Zur Kasse“ darunter je halbe Breite – nichts ragt mehr heraus */
+@media (max-width: 749px) {
+  .sn-toast { flex-wrap: wrap; row-gap: .8rem; padding-left: 1.4rem; padding-right: 1.4rem; }
+  .sn-toast__msg { flex: 1 1 100%; min-width: 0; }
+  .sn-toast__acts { flex: 1 1 100%; }
+  .sn-toast__acts > * { flex: 1 1 0; justify-content: center; min-width: 0; }
+}
+/* Schnapper des Tages: Teilen-Buttons umbrechen statt abschneiden */
+.sn-daily__share { flex-wrap: wrap; }
+@media (max-width: 749px) { .sn-daily__sbtn { flex: 1 1 calc(50% - .3rem); justify-content: center; } }
+/* Leere Empfehlungen (z. B. bei Mystery Boxen) hinterlassen keine Lücke */
+product-recommendations.related-products:not(.product-recommendations--loaded) { padding: 0 !important; margin: 0 !important; min-height: 0 !important; }
+/* Produktseite: nur eine Steuer-/Versandzeile („inkl. MwSt., zzgl. Versand“) */
+.product__info-container .product__tax { display: none; }
+/* Streichpreis auch auf der Produktseite mit „statt“/„UVP“ kennzeichnen */
+.product__info-container .price s.price-item--regular::before { content: var(--sn-cmp-label, 'statt '); text-decoration: none; display: inline-block; margin-right: .2em; }
+/* Fußzeile Desktop: Kontakt-Spalte breit genug für die E-Mail-Adresse */
+@media (min-width: 990px) { .footer__blocks-wrapper { grid-template-columns: 1.3fr repeat(3, minmax(0, 1fr)) minmax(21rem, 1.2fr) !important; } }
+.sn-fcol--contact a[href^="mailto"] { overflow-wrap: normal; word-break: normal; white-space: nowrap; }
+/* Einkaufswagen: deutlich mehr Platz für die Artikel (Handy + Desktop) –
+   unten bleiben nur Gesamtsumme, Steuerzeile und Kasse-Button fest, alles andere scrollt mit */
+cart-drawer .drawer__footer { padding-top: .9rem; }
+cart-drawer .cart-drawer__footer { gap: .2rem; }
+cart-drawer .drawer__footer .totals { margin: 0; }
+cart-drawer .sn-taxline { margin: 0 0 .4rem; font-size: 1.2rem; }
+.sn-cart-after { margin-top: .4rem; padding: 1.4rem 0 1.8rem; border-top: 1px solid #eef0ed; }
+.sn-cart-after .sn-continue { display: block; margin: 1rem auto 0; }
+cart-drawer .cart-items .cart-item { padding-top: 1rem !important; padding-bottom: 1rem !important; row-gap: .6rem; }
+cart-drawer .cart-item__quantity .quantity { min-height: 3.8rem; }
+@media (max-width: 749px) {
+  cart-drawer .cart-items .cart-item { grid-template: "media details totals" auto "media qty qty" auto / 6.4rem minmax(0, 1fr) auto !important; column-gap: 1rem; }
+  cart-drawer .cart-item__media, cart-drawer .cart-item__image { width: 6.4rem !important; }
+  cart-drawer .cart-item__image { height: 6.4rem !important; }
+  cart-drawer .cart-item__media { min-height: 6.4rem; }
+}
+/* Vorschläge „Passt noch dazu / Noch schnell mitnehmen“ bleiben innerhalb der Schublade */
+.sn-fill__list { grid-template-columns: minmax(0, 1fr); }
+.sn-fill__item { min-width: 0; }

@@ -49,8 +49,8 @@
                   {{ p.featured_image | image_url: width: 400 | image_tag: loading: 'eager', widths: '200, 300, 400', sizes: '(min-width: 990px) 160px, 22vw', alt: p.title }}
                 {%- endif -%}
                 <span class="sn-h2__tag">
-                  {%- if p.compare_at_price > p.price -%}<s>{{ p.compare_at_price | money }}</s>{%- endif -%}
-                  <b>{{ p.price | money }}</b>
+                  {%- if p.compare_at_price > p.price -%}<s>{{ p.compare_at_price | money_without_currency | append: ' €' }}</s>{%- endif -%}
+                  <b>{{ p.price | money_without_currency | append: ' €' }}</b>
                 </span>
               </a>
             </li>

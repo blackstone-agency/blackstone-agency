@@ -18,7 +18,7 @@
       <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
     {%- endunless -%}
 
-    {%- assign formatted_balance = gift_card.balance | money_without_trailing_zeros | strip_html -%}
+    {%- assign formatted_balance = gift_card.balance | money_without_currency | replace: ',00', '' | append: ' €' | strip_html -%}
 
     <title>{{ 'gift_cards.issued.title' | t: value: formatted_balance, shop: shop.name }}</title>
 
@@ -110,9 +110,9 @@
       <div class="gift-card__price">
         <h1>
           {% if settings.currency_code_enabled %}
-            {{ gift_card.balance | money_with_currency }}
+            {{ gift_card.balance | money_without_currency | append: ' €' }}
           {% else %}
-            {{ gift_card.balance | money }}
+            {{ gift_card.balance | money_without_currency | append: ' €' }}
           {% endif %}
         </h1>
         {%- if gift_card.enabled == false or gift_card.expired -%}

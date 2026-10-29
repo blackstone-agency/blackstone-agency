@@ -31,7 +31,7 @@
               <span class="sn-tabbar__icon">{% render 'schnappy-icon', icon: 'cart' %}</span>
               <span class="sn-tabbar__count{% if cart.item_count > 0 %} is-on{% endif %}" data-count aria-hidden="true">{{ cart.item_count }}</span>
               <span class="sn-tabbar__label" data-total data-empty="{{ block.settings.label | escape }}">
-                {%- if cart.item_count > 0 and block.settings.show_total -%}{{ cart.total_price | money }}{%- else -%}{{ block.settings.label | escape }}{%- endif -%}
+                {%- if cart.item_count > 0 and block.settings.show_total -%}{{ cart.total_price | money_without_currency | append: ' €' }}{%- else -%}{{ block.settings.label | escape }}{%- endif -%}
               </span>
               <span class="visually-hidden" data-count-label>{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
             </a>

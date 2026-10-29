@@ -18,7 +18,8 @@
     multiQty: {{ section.settings.multi_qty | json }},
     multiText: {{ section.settings.multi_text | json }},
     kasse: {{ section.settings.kasse | json }},
-    bestBadges: {{ section.settings.best_badges | json }}
+    bestBadges: {{ section.settings.best_badges | json }},
+    wishUrl: {% capture sn_wu %}{% render 'schnappy-page-url', handle: 'merkzettel' %}{% endcapture %}{{ sn_wu | strip | json }}
   };
 </script>
 <style>:root { --sn-cmp-label: '{{ section.settings.compare_label | default: 'statt' | escape }} '; }</style>

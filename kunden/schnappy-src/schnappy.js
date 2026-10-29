@@ -367,41 +367,6 @@
   }
   define('sn-wheel', SnWheel);
 
-  /* ---------- Überrasch mich / Nächster Fund (variable Belohnung) ---------- */
-  document.addEventListener('click', async (e) => {
-    const b = e.target.closest('[data-sn-surprise]'); if (!b) return;
-    e.preventDefault(); b.classList.add('is-busy');
-    const all = (await SN.products()).filter((p) => p.variants && p.variants.some((v) => v.available) && p.handle !== b.dataset.exclude);
-    const seen = new Set(ls.get('sn-recent', []));
-    let pool = b.dataset.type ? all.filter((p) => p.product_type === b.dataset.type) : all;
-    if (pool.length < 2) pool = all;
-    const fresh = pool.filter((p) => !seen.has(p.handle));
-    const pickFrom = fresh.length ? fresh : pool;
-    const p = pickFrom[Math.floor(Math.random() * pickFrom.length)];
-    if (p) location.href = ROOT() + 'products/' + p.handle; else b.classList.remove('is-busy');
-  });
-
-  /* ---------- Echte Bestseller-Badges (Top 10 nach Verkäufen) ---------- */
-  async function bestsellerBadges() {
-    if (!CFG().bestBadges || !document.querySelector('.product-card-wrapper[data-handle]')) return;
-    let top = null;
-    try { const c = JSON.parse(sessionStorage.getItem('sn-top') || 'null'); if (c && Date.now() - c.t < 36e5) top = c.h; } catch (e) {}
-    if (!top) {
-      try {
-        const html = await fetch(ROOT() + 'collections/all?sort_by=best-selling&section_id=schnappy-bestgrid').then((r) => r.text());
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        top = [...doc.querySelectorAll('.product-card-wrapper[data-handle]')].map((x) => x.dataset.handle).slice(0, 10);
-        sessionStorage.setItem('sn-top', JSON.stringify({ t: Date.now(), h: top }));
-      } catch (e) { return; }
-    }
-    const mark = () => document.querySelectorAll('.product-card-wrapper[data-handle]').forEach((c) => {
-      const i = top.indexOf(c.dataset.handle); if (i < 0 || c.querySelector('.sn-bestb')) return;
-      const s = document.createElement('span'); s.className = 'sn-bestb'; s.textContent = i < 3 ? 'Bestseller #' + (i + 1) : 'Bestseller';
-      const inner = c.querySelector('.card__inner'); if (inner) inner.appendChild(s);
-    });
-    mark(); let q = 0; new MutationObserver(() => { if (!q) q = requestAnimationFrame(() => { q = 0; mark(); }); }).observe(document.body, { childList: true, subtree: true });
-  }
-
   /* ---------- Start ---------- */
   const init = () => observeReveal();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
@@ -763,7 +728,7 @@ document.addEventListener('click', (e) => {
     e.preventDefault(); e.stopPropagation();
     const h = b.dataset.snHeart; let w = wish();
     if (w.includes(h)) { w = w.filter((x) => x !== h); SN.toast('Vom Merkzettel entfernt'); }
-    else { w.unshift(h); SN.toast(icon('heart') + '<span>Gemerkt! <a href="' + ROOT() + 'pages/merkzettel">Merkzettel ansehen</a></span>'); }
+    else { w.unshift(h); SN.toast(icon('heart') + '<span>Gemerkt! <a href="' + (CFG().wishUrl || ROOT() + 'pages/merkzettel') + '">Merkzettel ansehen</a></span>'); }
     ls.set(WKEY, w.slice(0, 60)); syncHearts();
   });
   SN.cardHTML = function (p) {
@@ -1017,7 +982,7 @@ document.addEventListener('click', (e) => {
     connectedCallback() {
       const cfg = CFG(); const shown = ls.get('sn-pop', 0);
       const posted = /customer_posted=true/.test(location.search) || location.hash === '#SnPopForm' || this.querySelector('[data-ok]');
-      const open = () => { if (this._open) return; this._open = true; this.hidden = false; requestAnimationFrame(() => this.classList.add('is-on')); ls.set('sn-pop', Date.now()); const i = this.querySelector('input[type=email]'); if (i && !isMobile()) setTimeout(() => i.focus(), 300); };
+      const open = () => { if (this._open) return; const cb = document.getElementById('shopify-pc__banner'); if (cb && cb.offsetParent !== null && getComputedStyle(cb).visibility !== 'hidden') { setTimeout(open, 4000); return; } this._open = true; this.hidden = false; requestAnimationFrame(() => this.classList.add('is-on')); ls.set('sn-pop', Date.now()); const i = this.querySelector('input[type=email]'); if (i && !isMobile()) setTimeout(() => i.focus(), 300); };
       const close = () => { this.classList.remove('is-on'); setTimeout(() => { this.hidden = true; }, 250); };
       this.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', close));
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !this.hidden) close(); });

@@ -13,7 +13,7 @@
             <label class="sn-fbt__pick"><input type="checkbox" checked value="{{ v.id }}" data-price="{{ v.price }}"><span class="visually-hidden">Auswählen</span></label>
             <a href="{{ p.url }}" class="sn-fbt__img">{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: p.title }}{%- endif -%}</a>
             <a href="{{ p.url }}" class="sn-fbt__name">{{ p.title | split: ' //' | first | escape }}</a>
-            <span class="sn-fbt__price">{{ v.price | money }}</span>
+            <span class="sn-fbt__price">{{ v.price | money_without_currency | append: ' €' }}</span>
           </li>
           {%- endif -%}
         {%- endfor -%}

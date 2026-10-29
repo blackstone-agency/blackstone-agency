@@ -9,7 +9,7 @@
 
   <p class="sn-md__t">Kategorien</p>
   <ul class="sn-md__cats" role="list">
-    {%- assign cats = 'Spielzeug|toy-brick|spielzeug,Küche & Haushalt|cooking-pot|küche,Wohnen|lamp|wohnen,Elektronik|headphones|elektronik,Socken|heart|socken,Geschenke|gift|geschenk,Harry Potter|star|harry potter,Disney|sparkles|disney' | split: ',' -%}
+    {%- assign cats = 'Spielzeug|toy-brick|spielzeug,Küche & Haushalt|cooking-pot|küche,Wohnen|lamp|deko,Elektronik|headphones|usb,Socken|heart|socken,Geschenke|gift|geschenk,Harry Potter|star|harry potter,Disney|sparkles|disney' | split: ',' -%}
     {%- for c in cats -%}
       {%- assign parts = c | split: '|' -%}
       <li><a href="{{ routes.search_url }}?type=product&q={{ parts[2] | url_encode }}"><span class="sn-md__ic">{% render 'schnappy-icon', icon: parts[1] %}</span>{{ parts[0] }}</a></li>

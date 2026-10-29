@@ -34,12 +34,12 @@
             <h3 class="sn-bx__name">{%- if p -%}<a href="{{ p.url }}">{{ block.settings.title | default: p.title | escape }}</a>{%- else -%}{{ block.settings.title | escape }}{%- endif -%}</h3>
             {%- if block.settings.description != blank -%}<p class="sn-bx__desc">{{ block.settings.description | escape }}</p>{%- endif -%}
             <div class="sn-bx__price">
-              {%- if p -%}<span class="sn-bx__now">{{ p.price | money }}</span>{%- endif -%}
+              {%- if p -%}<span class="sn-bx__now">{{ p.price | money_without_currency | append: ' €' }}</span>{%- endif -%}
               {%- if block.settings.value > 0 -%}<span class="sn-bx__value">Warenwert mind. <b>{{ block.settings.value }} €</b></span>{%- endif -%}
             </div>
             {%- if p and block.settings.items > 0 -%}
               {%- assign per = p.price | divided_by: block.settings.items -%}
-              <p class="sn-bx__per">nur ca. <b>{{ per | money }}</b> pro Artikel{%- if block.settings.value > 0 -%}{%- assign ratio = block.settings.value | times: 100 | divided_by: p.price -%}{%- if ratio >= 2 -%} · über <b>{{ ratio }}×</b> Warenwert{%- endif -%}{%- endif -%}</p>
+              <p class="sn-bx__per">nur ca. <b>{{ per | money_without_currency | append: ' €' }}</b> pro Artikel{%- if block.settings.value > 0 -%}{%- assign ratio = block.settings.value | times: 100 | divided_by: p.price -%}{%- if ratio >= 2 -%} · über <b>{{ ratio }}×</b> Warenwert{%- endif -%}{%- endif -%}</p>
             {%- endif -%}
             {%- if block.settings.points != blank -%}
               <ul class="sn-bx__points" role="list">

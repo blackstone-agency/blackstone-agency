@@ -23,10 +23,10 @@
             "product": "mystery-box-m",
             "title": "Mystery Box M",
             "size": "m",
-            "tag": "BESTSELLER",
+            "tag": "EMPFEHLUNG",
             "highlight": true,
             "value": 50,
-            "description": "Unser Bestseller. Die goldene Mitte aus Menge, Marken und Überraschung.",
+            "description": "Unsere Empfehlung: die goldene Mitte aus Menge, Marken und Überraschung.",
             "points": "10–15 Überraschungs-Artikel\nMindestens 1 Markenprodukt\nTrend-Produkte inklusive",
             "items": 10
           }
@@ -128,13 +128,14 @@
             "label": "Neu eingetroffen",
             "icon": "sparkles",
             "color": "#3DB54A",
-            "link": "shopify://collections/all"
+            "q": "/collections/all?sort_by=created-descending"
           }
         },
         "b1": {
           "type": "cat",
           "settings": {
             "label": "Angebote",
+            "q": "/collections/all?sort_by=best-selling",
             "icon": "star",
             "color": "#D92B1F"
           }
@@ -143,6 +144,7 @@
           "type": "cat",
           "settings": {
             "label": "Mystery Boxen",
+            "q": "product_type:\"Mystery Box\"",
             "icon": "package",
             "color": "#B07F48"
           }
@@ -167,6 +169,7 @@
           "type": "cat",
           "settings": {
             "label": "Wohnen",
+            "q": "Deko",
             "icon": "lamp",
             "color": "#8E6CFF"
           }
@@ -175,6 +178,7 @@
           "type": "cat",
           "settings": {
             "label": "Elektronik",
+            "q": "USB",
             "icon": "headphones",
             "color": "#2A3038"
           }

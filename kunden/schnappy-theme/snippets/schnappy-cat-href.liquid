@@ -1,0 +1,18 @@
+{%- comment -%}
+  Ziel einer Kategorie-Kachel/-Schnellwahl. Reihenfolge: Link > Pfad (beginnt mit /) > Suchbegriff > Name.
+  Aufruf: {% render 'schnappy-cat-href', link: block.settings.link, q: block.settings.q, label: block.settings.label %}
+{%- endcomment -%}
+{%- liquid
+  if link != blank
+    echo link
+  else
+    assign sn_q = q | default: label | strip
+    assign sn_first = sn_q | slice: 0
+    if sn_first == '/'
+      echo sn_q
+    else
+      assign sn_enc = sn_q | url_encode
+      echo routes.search_url | append: '?type=product&q=' | append: sn_enc
+    endif
+  endif
+-%}
