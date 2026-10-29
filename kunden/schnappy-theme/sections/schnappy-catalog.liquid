@@ -12,7 +12,15 @@
   if collection
     assign sn_src = collection
   else
-    assign sn_src = section.settings.collection | default: collections.all
+    assign sn_src = collections.all
+    assign sn_pick = section.settings.collection
+    comment
+      Gewählte Kollektion nur nutzen, wenn sie das ganze Sortiment enthält –
+      sonst fehlen Artikel auf der Startseite (dann alle Produkte zeigen).
+    endcomment
+    if sn_pick != blank and sn_pick.products_count >= collections.all.products_count
+      assign sn_src = sn_pick
+    endif
   endif
 -%}
 <div id="produkte" class="sn-cat color-{{ section.settings.color_scheme }}">
